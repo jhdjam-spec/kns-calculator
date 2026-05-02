@@ -40,7 +40,7 @@ kns-calculator/
 └── ENGINEER_NOTES.md (внутри 02_dataset/) — пометки «работает / не работает / нужна проверка»
 ```
 
-## Состояние проекта (2026-05-02)
+## Состояние проекта (2026-05-03)
 
 | Этап | Статус |
 |---|---|
@@ -50,11 +50,34 @@ kns-calculator/
 | JSON-схема насоса + 14 seed-записей | ✅ |
 | Эталонный кейс верификации (KAIQUAN 50WQ/S 20-22-3, проект АртВинд Мысхако) | ✅ |
 | Спецификация Inputs (L0/L1/L2 + Zod) | ✅ |
-| Спецификация алгоритма матчинга | 🟡 в работе |
-| Спецификация hand-off пакета (PDF + BOM + JSON для CRM) | 🟡 в работе |
-| Реализация Python backend | ⬜ |
+| Спецификация алгоритма матчинга | ✅ |
+| Спецификация hand-off пакета (PDF + BOM + JSON для CRM) | ✅ |
+| Deep research: нормы РФ + гидравлика + анти-паттерны | ✅ |
+| **Backend MVP (Python + FastAPI + fluids)** | ✅ **27/27 тестов** |
 | Реализация React frontend | ⬜ |
 | Парсинг PDF-каталогов производителей | ⬜ |
+| Multi-agent оркестрация (LangGraph) | ⬜ |
+
+## Быстрый старт backend
+
+```bash
+cd backend
+pip install -e ".[dev]"
+pytest                                              # 27/27 ✅
+uvicorn pump_calculator.api:app --reload --port 8000
+# Open http://localhost:8000/docs
+```
+
+Эталонный тест: вход Q=21.2 м³/ч, ΔH=10 м, L=0, тип=domestic → возвращает **KAIQUAN 50WQ/S 20-22-3** (как в реальном проекте АртВинд Мысхако) с composite_score 0.624.
+
+```python
+from pump_calculator import select_pumps
+from pump_calculator.schemas import L0Input
+
+result = select_pumps(L0Input(Q_m3h=21.2, dH_m=10, L_m=0, wastewater_type="domestic"))
+print(result.results.budget.brand, result.results.budget.model)
+# → KAIQUAN 50WQ/S 20-22-3
+```
 
 ## Архитектура (high-level)
 

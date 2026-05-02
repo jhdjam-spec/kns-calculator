@@ -156,9 +156,9 @@
 | Фаза | Что | Статус |
 |---|---|---|
 | 0. Research | Web-research + локальный аудит + датасет | ✅ |
-| 1. Specification | Inputs / Matching / Hand-off | 🟡 |
-| 2. Backend MVP | FastAPI + fluids + JSON-БД | ⬜ |
-| 3. Frontend MVP | React Wizard L0 | ⬜ |
+| 1. Specification | Inputs / Matching / Hand-off | ✅ |
+| 2. Backend MVP | FastAPI + fluids + JSON-БД | ✅ **27/27 тестов** |
+| 3. Frontend MVP | React Wizard L0 | ⬜ next |
 | 4. PDF Generator | hand-off артефакты | ⬜ |
 | 5. ETL парсер | docling+PlotDigitizer для PDF-каталогов | ⬜ |
 | 6. Multi-agent | Coordinator → Hydro/Catalog/Engineer/Docs (LangGraph) | ⬜ |

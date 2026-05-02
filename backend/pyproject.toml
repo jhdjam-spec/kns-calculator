@@ -1,0 +1,52 @@
+[project]
+name = "pump_calculator"
+version = "0.1.0"
+description = "Backend engine for kns-calculator: primary pump selection for КНС/НС/СПД"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "kns-calculator contributors" },
+]
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.6",
+    "fluids>=1.0.27",
+    "scipy>=1.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.27",
+    "ruff>=0.4",
+]
+
+[project.urls]
+Repository = "https://github.com/jhdjam-spec/kns-calculator"
+Issues = "https://github.com/jhdjam-spec/kns-calculator/issues"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pump_calculator*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+# N-rules (naming) выключены: проект использует физические обозначения переменных
+# (Q_m3h, dH_m, H_full, NPSH, Re, BEP) — это инженерный домен, переименовывать нельзя.

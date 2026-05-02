@@ -227,8 +227,8 @@
     "_description": "Минимальный свободный проход рабочего колеса в зависимости от типа стоков. Используется как жёсткий фильтр в алгоритме подбора.",
     "_source": "Wilo / KSB / Grundfos best practices + СП 32",
     "domestic":   {"min": 50, "label": "Хоз-бытовые (квартирные стоки, гостиницы, рестораны)", "impeller_types": ["vortex", "single-channel", "multi-channel"]},
-    "drainage":   {"min": 10, "label": "Дренаж/ливнёвка чистая (отстоянная)",                 "impeller_types": ["open", "channel"]},
-    "industrial": {"min": 80, "label": "Производственные с включениями",                       "impeller_types": ["vortex", "cutter"]}
+    "drainage":   {"min": 10, "label": "Дренаж/ливнёвка чистая (отстоянная)",                 "impeller_types": ["open", "semi-open", "channel", "single-channel", "multi-channel", "vortex"]},
+    "industrial": {"min": 80, "label": "Производственные с включениями",                       "impeller_types": ["vortex", "cutter", "single-channel", "multi-channel", "channel"]}
   },
 
   "pump_power_safety_factor": {
