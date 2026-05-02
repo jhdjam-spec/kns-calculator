@@ -1,0 +1,85 @@
+{
+  "_version": "0.1",
+  "_description": "Эталонная запись насоса для теста алгоритма подбора. Соответствует кейсу Мысхако/АртВинд (АВ.1382.08.23-М-НК): объект — здание многофункционального использования, КН 23:47:0118055:4034, Новороссийск, Q=21.2 м³/ч, H=15 м, КНС BloPlast PV-1590/3400.",
+  "_test_case": "Мысхако/АртВинд — эталон верификации алгоритма",
+
+  "id":     "kaiquan-50wqs202-3",
+  "brand":  "KAIQUAN",
+  "model":  "50WQ/S 20-22-3",
+  "type":   "submersible_sewage",
+  "impeller": "vortex",
+  "free_passage_mm": 50,
+
+  "envelope": {
+    "Q_min_m3h": 5,
+    "Q_max_m3h": 30,
+    "H_min_m":   8,
+    "H_max_m":   25,
+    "Q_BEP_m3h": 22.9,
+    "H_BEP_m":   17.4,
+    "eta_BEP_pct": 46.4,
+    "NPSHr_at_BEP_m": 2.8
+  },
+
+  "qh_curve": [
+    {"Q_m3h": 0,    "H_m": 24.0, "eta_pct": 0,    "P_kW": 1.8, "NPSHr_m": 1.5},
+    {"Q_m3h": 10,   "H_m": 21.0, "eta_pct": 32.0, "P_kW": 2.2, "NPSHr_m": 1.8},
+    {"Q_m3h": 15,   "H_m": 19.5, "eta_pct": 41.0, "P_kW": 2.5, "NPSHr_m": 2.0},
+    {"Q_m3h": 22.9, "H_m": 17.4, "eta_pct": 46.4, "P_kW": 2.8, "NPSHr_m": 2.8},
+    {"Q_m3h": 30,   "H_m": 12.0, "eta_pct": 38.0, "P_kW": 2.9, "NPSHr_m": 4.0}
+  ],
+
+  "power": {
+    "P_kW": 3.0,
+    "voltage_v": 380,
+    "phase": 3,
+    "frequency_hz": 50,
+    "motor_efficiency_pct": 87,
+    "ip_rating": "IP68",
+    "ex_rating": null
+  },
+
+  "discharge": {
+    "DN_mm": 50,
+    "flange_type": "PN10"
+  },
+
+  "physical": {
+    "weight_kg": 52,
+    "dimensions_mm": {"L": 656, "W": 372, "H": 426},
+    "max_immersion_m": 10,
+    "max_liquid_temp_c": 40,
+    "min_liquid_temp_c": 0
+  },
+
+  "materials": {
+    "casing":   "cast_iron",
+    "impeller": "cast_iron",
+    "shaft":    "stainless_steel_420",
+    "seal":     "mechanical_double_SiC"
+  },
+
+  "wastewater_compat": ["domestic", "drainage"],
+
+  "price_segment": "budget",
+  "price_rub_2026": null,
+  "price_source": null,
+
+  "available_ru": {
+    "status": "official",
+    "lead_time": "in_stock",
+    "distributor": "АСО (acorussia.ru)"
+  },
+
+  "warranty_months": 18,
+  "datasheet_url": "https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf",
+  "image_url": null,
+  "notes": "Vortex рабочее колесо, свободный проход 50 мм. Установлен в эталонном кейсе АртВинд Мысхако (1 рабочий + 1 резервный + 1 на склад). Полный паспорт с Q-H/КПД/мощностью/NPSH-кривыми. Может быть заменён на 65WQ/S при росте Q.",
+
+  "_engineer_flag": "ok",
+  "_engineer_note": "Точка ВЕРИФИКАЦИИ алгоритма: при входе Q=21.2, dH=10, L=0, type=domestic — алгоритм должен вернуть этот насос ИЛИ его типоразмер ±1 (50WQ/S 20-15-2.2 или 65WQ/S 25-22-3) в сегменте 'budget'. Если не попадает — пересматриваем веса composite score.",
+
+  "_source": "АВ.1382.08.23-М-НК (Telegram Desktop, проект АртВинд Мысхако, paspaport KAIQUAN), сверка с MATERIALS_INVENTORY.md",
+  "_added":   "2026-05-02",
+  "_updated": "2026-05-02"
+}

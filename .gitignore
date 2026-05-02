@@ -1,0 +1,40 @@
+# Build / IDE
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.local
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+.next/
+
+# Tests / coverage
+.coverage
+coverage/
+htmlcov/
+.pytest_cache/
+
+# Local data / private artifacts
+*.local.json
+private/
+secret/
+*-private.*
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+temp/
+*.tmp

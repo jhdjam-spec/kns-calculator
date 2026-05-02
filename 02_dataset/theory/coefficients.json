@@ -1,0 +1,460 @@
+{
+  "_version": "0.2",
+  "_updated": "2026-05-02",
+  "_description": "Машинно-читаемые таблицы коэффициентов для гидравлических расчётов. Источники процитированы по полю _source.",
+  "_changelog_v0_2": [
+    "ζ Идельчика — пересмотрены под фактические значения (отвод 90° R/D=1.5 = 0.21, не 0.75)",
+    "Добавлена таблица скорости звука в трубах (wave_speed_ms_by_pipe_material) для расчёта гидроудара по Жуковскому",
+    "Обновлена pump_starts_per_hour_max — консервативная таблица из R2",
+    "Добавлена redundancy_table_sp32_t17 — реконструированная по СНиП 2.04.02-84 табл. 32 (родительский СП 32 табл. 17)",
+    "Добавлена K_gen_min — литературные значения 0.2-0.9",
+    "Добавлены PN-классы для ПЭ100 SDR (pn_by_sdr_pe100)",
+    "Обновлены v_max в velocity_limits_ms по СП 32 §5.4: металл 8 м/с, неметалл 4 м/с",
+    "Добавлена hi_976_viscosity_correction для промстоков (HI 9.6.7)",
+    "Добавлены AOR/POR диапазоны (ansi_hi_963_operating_regions)",
+    "Добавлена motor_starting_method_by_power (DOL/SS/VFD выбор по мощности)"
+  ],
+
+  "pipe_roughness_mm": {
+    "_description": "Эквивалентная шероховатость k_э стенки трубопровода, мм. Применяется в формуле Альтшуля и при расчёте λ через формулу Кольбрука-Уайта.",
+    "_source": "https://ros-pipe.ru/clauses/raschet-poter-napora-v-truboprovodakh/",
+    "_engineer_note": "ПРОВЕРИТЬ для бетона и Корсис на следующем этапе deep-research. Значения для ПЭ/ПВХ/чугуна — это типовые литературные, не из СП 31.",
+    "values": {
+      "steel_seamless_new":      {"min": 0.014, "max": 0.05,  "default": 0.02,  "label": "Сталь бесшовная новая"},
+      "steel_welded_new":        {"min": 0.05,  "max": 0.15,  "default": 0.10,  "label": "Сталь сварная новая"},
+      "steel_corroded":          {"min": 0.15,  "max": 0.30,  "default": 0.20,  "label": "Сталь после умеренной коррозии"},
+      "steel_old_rusted":        {"min": 1.0,   "max": 3.0,   "default": 1.5,   "label": "Сталь старая ржавая"},
+      "cast_iron_new":           {"min": 0.25,  "max": 0.50,  "default": 0.30,  "label": "Чугун новый"},
+      "cast_iron_old":           {"min": 1.0,   "max": 1.5,   "default": 1.2,   "label": "Чугун старый"},
+      "pe100_sdr17":             {"min": 0.007, "max": 0.010, "default": 0.007, "label": "ПЭ100 SDR17 (default для напорной канализации)"},
+      "pvc":                     {"min": 0.01,  "max": 0.02,  "default": 0.015, "label": "ПВХ"},
+      "pp":                      {"min": 0.01,  "max": 0.02,  "default": 0.015, "label": "Полипропилен"},
+      "asbestos_cement":         {"min": 0.03,  "max": 0.10,  "default": 0.06,  "label": "Асбоцемент"},
+      "concrete":                {"min": 0.30,  "max": 3.00,  "default": 1.0,   "label": "Бетон / железобетон", "_engineer_note": "Большой разброс — использовать только при явном указании пользователя"},
+      "korsis_pe_corrugated":    {"min": 0.01,  "max": 0.02,  "default": 0.01,  "label": "Корсис ПЭ гофрированная (внутренняя стенка гладкая)"}
+    }
+  },
+
+  "local_resistance_zeta": {
+    "_description": "Коэффициенты местных сопротивлений ζ для расчёта H_м = ζ·v²/(2g). Турбулентный режим. Обновлено в v0.2 по результатам R2 deep-research (Идельчик).",
+    "_source": "Идельчик И.Е. «Справочник по гидравлическим сопротивлениям» + R2 deep-research (29 источников). Engineering Toolbox + Crane TP-410.",
+    "_engineer_note": "v0.2: значения для отводов и тройников приведены к Идельчику. Старые литературные default (0.75/0.30) были завышены.",
+    "values": {
+      "valve_gate_open_100":     {"zeta": 0.15, "label": "Задвижка открытая 100%"},
+      "valve_gate_open_75":      {"zeta": 0.30, "label": "Задвижка открытая 75%"},
+      "valve_gate_open_50":      {"zeta": 2.0,  "label": "Задвижка открытая 50%"},
+      "valve_gate_open_25":      {"zeta": 17.0, "label": "Задвижка открытая 25%"},
+      "valve_check_DN50_80":     {"zeta": 8.0,  "label": "Обратный клапан DN 50-80 (доминирует в обвязке КНС!)", "_engineer_note": "Большой разброс по производителям — VAG 6.0, шаровые китайские 4.5, swing/wafer 2-3"},
+      "valve_check_DN100_150":   {"zeta": 5.0,  "label": "Обратный клапан DN 100-150"},
+      "valve_check_DN200_300":   {"zeta": 2.5,  "label": "Обратный клапан DN 200-300"},
+      "valve_check_nozzle":      {"zeta": 1.5,  "label": "Обратный клапан nozzle-check (антиударный, для длинных трасс)"},
+      "elbow_90_RD1":            {"zeta": 0.30, "label": "Отвод 90° R/D=1.0 (стандарт)"},
+      "elbow_90_RD15":           {"zeta": 0.21, "label": "Отвод 90° R/D=1.5 (предпочтителен в КНС)", "_engineer_note": "Точное Идельчик. Не 0.75!"},
+      "elbow_90_RD2":            {"zeta": 0.15, "label": "Отвод 90° R/D=2.0 (плавный)"},
+      "elbow_90_segment_3":      {"zeta": 0.50, "label": "Отвод 90° сварной 3-секционный"},
+      "elbow_45_RD15":           {"zeta": 0.13, "label": "Отвод 45° R/D=1.5", "_engineer_note": "Точное Идельчик. Не 0.30!"},
+      "tee_pass_through":        {"zeta": 0.10, "label": "Тройник проходной (поток прямо)", "_engineer_note": "Идельчик: реально ≈0.10, не 0.50"},
+      "tee_branch_to_side":      {"zeta": 1.00, "label": "Тройник на поворот (поток в боковой отвод)"},
+      "tee_combine_flows":       {"zeta": 0.80, "label": "Тройник на слияние потоков"},
+      "reducer_smooth_15deg":    {"zeta": 0.10, "label": "Плавный переходник (D1>D2, угол ≤15°)"},
+      "expander_smooth_15deg":   {"zeta": 0.30, "label": "Плавный расширитель (D1<D2, угол ≤15°)"},
+      "entrance_sharp":          {"zeta": 0.50, "label": "Вход с острыми кромками"},
+      "entrance_rounded":        {"zeta": 0.05, "label": "Вход скруглённый"},
+      "exit_to_reservoir":       {"zeta": 1.00, "label": "Выход в резервуар"},
+      "auto_coupling_DN50_100":  {"zeta": 0.80, "label": "Автомуфта (АТМ) DN 50-100", "_engineer_note": "Типовое — производители паспортов не дают, разброс 0.5-1.5"},
+      "auto_coupling_DN150_300": {"zeta": 1.20, "label": "Автомуфта (АТМ) DN 150-300"},
+      "ball_valve":              {"zeta": 0.10, "label": "Шаровой кран открытый"},
+      "butterfly_valve":         {"zeta": 0.45, "label": "Поворотный затвор открытый"},
+      "air_release_valve":       {"zeta": 0.50, "label": "Воздухоотводчик в работе (мин. сечения)"}
+    },
+    "typical_kns_obvyazka_sum_zeta": {
+      "_description": "Сумма ζ для типовой обвязки КНС (4 отвода 90° R/D=1.5 + АТМ DN50-100 + задвижка + обратный клапан DN50-80 + выход в резервуар)",
+      "items": ["4×elbow_90_RD15 (0.84)", "auto_coupling_DN50_100 (0.80)", "valve_gate_open_100 (0.15)", "valve_check_DN50_80 (8.0)", "exit_to_reservoir (1.0)"],
+      "sum_zeta": 10.79,
+      "_engineer_note": "Доминирует обратный клапан (~74% от Σζ). Снижение ζ_check (например, выбор nozzle-check 1.5 вместо ball-check 8.0) даст экономию H_м в 4 раза. Для калькулятора это means: при v=1.5 м/с, типовая Σζ ≈ 10.8, H_м ≈ 1.24 м (а не фиксированные 2.0)."
+    },
+    "default_total_factor_legacy": {
+      "_description": "DEPRECATED v0.2. Старая упрощённая модель H_м = factor × H_тр. Использовать только если состав обвязки совсем неизвестен.",
+      "min_factor": 0.10,
+      "default_factor": 0.15,
+      "max_factor": 0.30,
+      "_engineer_note": "DEPRECATED: для L=0 эта формула давала 0; теперь рекомендуем считать через Σζ × v²/(2g)."
+    }
+  },
+
+  "K_gen_max": {
+    "_description": "Общий максимальный коэффициент неравномерности водоотведения (СП 32.13330.2018, таблица 1, раздел 5.1)",
+    "_source": "https://www.politerm.com/zuludrain/webhelp/app_qsr.html (косвенная цитата СП 32). R1 deep-research подтвердил.",
+    "_engineer_note": "Для промежуточных значений Q использовать линейную интерполяцию.",
+    "table": [
+      {"q_avg_ls": 5,    "k_gen_max": 2.5},
+      {"q_avg_ls": 10,   "k_gen_max": 2.1},
+      {"q_avg_ls": 20,   "k_gen_max": 1.9},
+      {"q_avg_ls": 50,   "k_gen_max": 1.7},
+      {"q_avg_ls": 100,  "k_gen_max": 1.6},
+      {"q_avg_ls": 300,  "k_gen_max": 1.55},
+      {"q_avg_ls": 500,  "k_gen_max": 1.5},
+      {"q_avg_ls": 1000, "k_gen_max": 1.47},
+      {"q_avg_ls": 5000, "k_gen_max": 1.44}
+    ],
+    "below_5_ls": 3.0
+  },
+
+  "K_gen_min": {
+    "_description": "Общий минимальный коэффициент неравномерности (для расчёта мин. уровня в приёмном резервуаре). Добавлено в v0.2.",
+    "_source": "СП 32.13330.2018 табл. 1 (литературные значения, R1 deep-research)",
+    "_engineer_note": "Чем больше Q, тем стабильнее поток (K_gen.min ближе к 1). Малые объекты — большие колебания.",
+    "table": [
+      {"q_avg_ls": 5,    "k_gen_min": 0.20},
+      {"q_avg_ls": 10,   "k_gen_min": 0.30},
+      {"q_avg_ls": 20,   "k_gen_min": 0.45},
+      {"q_avg_ls": 50,   "k_gen_min": 0.60},
+      {"q_avg_ls": 100,  "k_gen_min": 0.70},
+      {"q_avg_ls": 300,  "k_gen_min": 0.80},
+      {"q_avg_ls": 500,  "k_gen_min": 0.85},
+      {"q_avg_ls": 1000, "k_gen_min": 0.88},
+      {"q_avg_ls": 5000, "k_gen_min": 0.90}
+    ],
+    "below_5_ls": 0.15
+  },
+
+  "velocity_limits_ms": {
+    "_description": "Расчётные скорости в трубопроводах. Обновлено в v0.2 по СП 32 §5.4 (R1 deep-research).",
+    "_source": "СП 32.13330.2018 §5.4, СП 31.13330.2012 §11",
+    "self_flow_min_domestic": {
+      "value": 0.7,
+      "unit": "m/s",
+      "label": "Минимум в самотёчной бытовой канализации (СП 32 §5.4)"
+    },
+    "self_flow_min_treated": {
+      "value": 0.4,
+      "unit": "m/s",
+      "label": "Минимум в самотёчной канализации после очистных (осветлённые/биоочищенные)"
+    },
+    "self_flow_min_rainwater_p_033": {
+      "value": 0.6,
+      "unit": "m/s",
+      "label": "Минимум для ливневой канализации при P=0.33 года"
+    },
+    "pressure_pipe_min": {
+      "value": 0.7,
+      "unit": "m/s",
+      "label": "Минимум в напорном коллекторе (избежание заиливания, СП 32 косвенно)"
+    },
+    "pressure_pipe_recommended_min": {
+      "value": 1.0,
+      "unit": "m/s",
+      "label": "Рекомендуемый минимум для напорной канализации"
+    },
+    "pressure_pipe_recommended_max": {
+      "value": 1.5,
+      "unit": "m/s",
+      "label": "Рекомендуемый максимум — компромисс энергии и износа (default v_target = 1.2)"
+    },
+    "pressure_pipe_max_metal": {
+      "value": 8.0,
+      "unit": "m/s",
+      "label": "Максимум для металлических труб (сталь, чугун) по СП 32 §5.4"
+    },
+    "pressure_pipe_max_plastic": {
+      "value": 4.0,
+      "unit": "m/s",
+      "label": "Максимум для неметаллических труб (ПЭ, ПВХ) по СП 32 §5.4"
+    },
+    "_engineer_note": "v0.2: норма СП 32 разрешает до 8 м/с (металл) и 4 м/с (неметалл), но для энергоэффективности и износа default v_target = 1.2 м/с."
+  },
+
+  "wave_speed_ms_by_pipe_material": {
+    "_description": "Скорость распространения ударной волны (звука в жидкости в трубе) для расчёта гидроудара по Жуковскому ΔH = a·v/g",
+    "_source": "R2 deep-research (Жуковский). Зависит от модуля упругости трубы и сжимаемости жидкости.",
+    "values": {
+      "steel":               {"a_min": 1100, "a_max": 1250, "default": 1150, "label": "Сталь"},
+      "cast_iron":           {"a_min": 1000, "a_max": 1200, "default": 1100, "label": "Чугун, ВЧШГ"},
+      "concrete":            {"a_min": 1200, "a_max": 1400, "default": 1300, "label": "Бетон/железобетон"},
+      "asbestos_cement":     {"a_min": 1000, "a_max": 1200, "default": 1100, "label": "Асбоцемент"},
+      "pe100":               {"a_min": 290,  "a_max": 350,  "default": 320,  "label": "ПЭ100 (низкая a → меньше гидроудар, но T_крит маленький)"},
+      "pvc":                 {"a_min": 300,  "a_max": 600,  "default": 450,  "label": "ПВХ"},
+      "pp":                  {"a_min": 300,  "a_max": 400,  "default": 350,  "label": "Полипропилен"},
+      "korsis_pe":           {"a_min": 290,  "a_max": 350,  "default": 320,  "label": "Корсис ПЭ"}
+    },
+    "critical_time_formula": "T_крит = 2·L / a (сек) — критическое время закрытия задвижки. При t_закрытия < T_крит — прямой удар Жуковского.",
+    "_engineer_note": "Для ПЭ100 при L=2000 м T_крит = 12.5 сек — задвижки и обратные клапаны должны закрываться медленнее."
+  },
+
+  "hydraulic_shock_zhukovsky": {
+    "_description": "Расчёт гидроудара по Жуковскому при остановке насоса или закрытии задвижки",
+    "formula": "ΔH = a · v / g  [м]",
+    "_source": "R2 deep-research, классика Н.Е. Жуковского",
+    "trigger_for_calculator": {
+      "L_m_min": 500,
+      "_note": "При L > 500 м — обязательный расчёт гидроудара и выбор PN-класса трубы по сумме (H_full + ΔH)"
+    },
+    "protection_methods": [
+      "Время закрытия задвижки t ≥ 10 × T_крит",
+      "Обратные клапаны nozzle-check (ζ=1.5) вместо ball-check (ζ=8)",
+      "Гидроколпак / surge tank для L > 500 м",
+      "Soft-stop / ramp-down ЧРП для остановки насоса"
+    ]
+  },
+
+  "pn_by_sdr_pe100": {
+    "_description": "Класс рабочего давления ПЭ100 по SDR при 20°C. Формула PN = 160 / (SDR - 1) бар.",
+    "_source": "ГОСТ 18599-2001, R2 deep-research",
+    "values": {
+      "SDR11":   {"pn_bar_20c": 16,   "label": "ПЭ100 SDR11 PN16"},
+      "SDR13.6": {"pn_bar_20c": 12.5, "label": "ПЭ100 SDR13.6 PN12.5"},
+      "SDR17":   {"pn_bar_20c": 10,   "label": "ПЭ100 SDR17 PN10 (default для напорной канализации)"},
+      "SDR21":   {"pn_bar_20c": 8,    "label": "ПЭ100 SDR21 PN8"},
+      "SDR26":   {"pn_bar_20c": 6.3,  "label": "ПЭ100 SDR26 PN6.3"},
+      "SDR33":   {"pn_bar_20c": 5,    "label": "ПЭ100 SDR33 PN5"}
+    },
+    "temperature_correction": {
+      "20c": 1.00,
+      "30c": 0.87,
+      "40c": 0.74,
+      "50c": 0.62,
+      "60c": 0.50
+    },
+    "_engineer_note": "Для горячих стоков (T>30°C) реальный PN снижается. При T=60°C SDR17 держит только 5 бар вместо 10."
+  },
+
+  "standard_pipe_diameters_mm": {
+    "_description": "Типоразмерный ряд напорных трубопроводов ПЭ100",
+    "values": [50, 63, 75, 90, 110, 125, 140, 160, 180, 200, 225, 250, 280, 315, 355, 400, 450, 500, 560, 630]
+  },
+
+  "free_passage_by_wastewater_type_mm": {
+    "_description": "Минимальный свободный проход рабочего колеса в зависимости от типа стоков. Используется как жёсткий фильтр в алгоритме подбора.",
+    "_source": "Wilo / KSB / Grundfos best practices + СП 32",
+    "domestic":   {"min": 50, "label": "Хоз-бытовые (квартирные стоки, гостиницы, рестораны)", "impeller_types": ["vortex", "single-channel", "multi-channel"]},
+    "drainage":   {"min": 10, "label": "Дренаж/ливнёвка чистая (отстоянная)",                 "impeller_types": ["open", "channel"]},
+    "industrial": {"min": 80, "label": "Производственные с включениями",                       "impeller_types": ["vortex", "cutter"]}
+  },
+
+  "pump_power_safety_factor": {
+    "_description": "Запас по мощности на валу (умножается на расчётную P_вал)",
+    "_source": "ГОСТ Р 53682, типовая инженерная практика",
+    "default": 1.15,
+    "by_segment": {
+      "domestic":   1.10,
+      "drainage":   1.15,
+      "industrial": 1.25
+    }
+  },
+
+  "head_safety_factor": {
+    "_description": "Запас по напору в формуле H_full = (dH + H_тр + H_м) × (1 + factor)",
+    "default": 0.10,
+    "min": 0.05,
+    "max": 0.20,
+    "_engineer_note": "5% — для коротких внутренних обвязок (L=0). 20% — для длинных трасс L>1000м с неопределёнными местными потерями."
+  },
+
+  "pump_starts_per_hour_max": {
+    "_description": "Максимальное число пусков насоса в час z (для расчёта объёма приёмного резервуара V = Q/(4z)). Обновлено в v0.2 по R2 deep-research.",
+    "_source": "Grundfos SE/SL (единая 20), KSB градуирует по кВт, Wilo Rexa, ABS Sulzer. АВОК.",
+    "_engineer_note": "v0.2: значения сделаны более консервативными для гарантии запаса. Малые насосы выдерживают 30 пусков/час, большие (>90 кВт) — только 6.",
+    "by_power_kw": [
+      {"P_max_kW": 4,    "z": 30, "label": "Малые погружные ≤4 кВт"},
+      {"P_max_kW": 7.5,  "z": 20, "label": "Средние 4-7.5 кВт"},
+      {"P_max_kW": 15,   "z": 15, "label": "7.5-15 кВт"},
+      {"P_max_kW": 30,   "z": 12, "label": "15-30 кВт"},
+      {"P_max_kW": 55,   "z": 10, "label": "30-55 кВт"},
+      {"P_max_kW": 90,   "z": 8,  "label": "55-90 кВт"},
+      {"P_max_kW": 9999, "z": 6,  "label": "Большие >90 кВт (городские КНС)"}
+    ],
+    "_min_run_time_seconds": {
+      "_description": "Минимальное время непрерывной работы для предотвращения cycling-смерти двигателя",
+      "small_under_15kw": 60,
+      "medium_15_55kw": 180,
+      "large_over_55kw": 600,
+      "_engineer_note": "Если расчётный V_приёмного даёт run-time меньше — увеличиваем V (или принимаем больший z пенальти)."
+    }
+  },
+
+  "wastewater_density_kgm3": {
+    "_description": "Плотность жидкости для расчёта мощности на валу N = ρ·g·Q·H/η",
+    "domestic":   {"value": 1010, "label": "Хоз-бытовые стоки"},
+    "drainage":   {"value": 1000, "label": "Дренажные/ливневые (приближённо вода)"},
+    "industrial": {"value": 1050, "label": "Промстоки (общая оценка, уточнять у инженера)"},
+    "water_clean":{"value": 1000, "label": "Чистая вода (для СПД)"}
+  },
+
+  "atmospheric_pressure_m": {
+    "_description": "Атмосферное давление в м водяного столба для расчёта NPSHa",
+    "sea_level": 10.33,
+    "_engineer_note": "Для погружных насосов NPSH практически не лимитирует — не используется в L0-расчёте."
+  },
+
+  "vapour_pressure_water_m": {
+    "_description": "Давление насыщенных паров воды в м водяного столба, для NPSHa",
+    "by_temp_c": [
+      {"T_C": 10, "Hv_m": 0.125},
+      {"T_C": 20, "Hv_m": 0.238},
+      {"T_C": 30, "Hv_m": 0.433},
+      {"T_C": 40, "Hv_m": 0.752},
+      {"T_C": 50, "Hv_m": 1.258},
+      {"T_C": 60, "Hv_m": 2.031},
+      {"T_C": 80, "Hv_m": 4.825},
+      {"T_C": 100,"Hv_m": 10.33}
+    ]
+  },
+
+  "norms_water_consumption_lpd": {
+    "_description": "Нормы водопотребления (= водоотведения) на единицу, л/потр./сут. Для калькулятора Q-from-norms в режиме «Любитель».",
+    "_source": "СП 30.13330.2020 табл. А.2 (фрагмент)",
+    "_engineer_note": "ПРОБЕЛ: полная таблица содержит ~50 строк (общежития, школы, больницы, ТРЦ, склады). На следующем этапе извлечь полностью.",
+    "values": {
+      "apartment_basic":         {"min": 70,  "max": 200, "default": 130, "unit_label": "чел", "label": "Жилой дом квартирного типа (с горячим водоснабжением)"},
+      "cottage_premium":         {"min": 200, "max": 300, "default": 250, "unit_label": "чел", "label": "Коттедж благоустроенный"},
+      "hotel_3star":             {"min": 200, "max": 250, "default": 220, "unit_label": "номер", "label": "Гостиница 3*+"},
+      "hotel_per_guest":         {"min": 110, "max": 180, "default": 150, "unit_label": "гость", "label": "Гостиница (на 1 гостя)"},
+      "office_no_shower":        {"min": 12,  "max": 25,  "default": 16,  "unit_label": "чел", "label": "Офис (без душа)"},
+      "office_with_shower":      {"min": 60,  "max": 80,  "default": 70,  "unit_label": "чел", "label": "Офис (с душевыми)"},
+      "trc_per_m2":              {"min": 4,   "max": 8,   "default": 6,   "unit_label": "м² торговой площади", "label": "ТРЦ"},
+      "cafe_restaurant":         {"min": 12,  "max": 25,  "default": 18,  "unit_label": "посетитель", "label": "Кафе/ресторан (на 1 посетителя)"},
+      "school":                  {"min": 10,  "max": 12,  "default": 11,  "unit_label": "учащийся", "label": "Школа"},
+      "kindergarten":            {"min": 75,  "max": 100, "default": 85,  "unit_label": "ребёнок", "label": "Детский сад"},
+      "bath_sauna":              {"min": 180, "max": 300, "default": 230, "unit_label": "посетитель", "label": "Баня/сауна"}
+    }
+  },
+
+  "redundancy_by_category": {
+    "_description": "DEPRECATED v0.2 — заменена на redundancy_table_sp32_t17 (точная таблица).",
+    "_engineer_note": "Использовать новую таблицу redundancy_table_sp32_t17.",
+    "I":   {"working_min": 2, "reserve_min": 1, "spare_storage": "24-72h", "label": "Крупные города"},
+    "II":  {"working_min": 1, "reserve_min": 1, "spare_storage": "optional", "label": "Средние н/п"},
+    "III": {"working_min": 1, "reserve_min": 1, "spare_storage": "no", "label": "До 5000 чел."}
+  },
+
+  "redundancy_table_sp32_t17": {
+    "_description": "Точная таблица резервирования по СП 32 табл. 17. Реконструирована через родительский СНиП 2.04.02-84 табл. 32 (числа в СП 32 не менялись изм.№1). R1 deep-research.",
+    "_source": "СП 32.13330.2018 табл. 17 / СНиП 2.04.02-84 табл. 32",
+    "_columns": "n_working — число рабочих агрегатов; reserve_I/II/III — минимальное число резервных по категории",
+    "_engineer_note": "Резерв категорий I и II — в помещении КНС, готов к замене за 2-4 часа. Для дождевой канализации III категории — допустимо N+0.",
+    "table": [
+      {"n_working_range": "1-6",  "reserve_I": 2, "reserve_II": 1, "reserve_III": 1},
+      {"n_working_range": "7-9",  "reserve_I": 2, "reserve_II": 2, "reserve_III": 1},
+      {"n_working_range": ">=10", "reserve_I": 2, "reserve_II": 2, "reserve_III": 2}
+    ],
+    "special_cases": {
+      "rainwater_III": {"reserve": 0, "label": "Дождевая III кат. — допустимо N+0 (без резерва)"},
+      "always_at_least_one_in_storage_for_I": true
+    }
+  },
+
+  "hi_976_viscosity_correction": {
+    "_description": "Поправки на вязкость по ANSI/HI 9.6.7 (для промстоков и плотных жидкостей)",
+    "_source": "Hydraulic Institute Standard 9.6.7-2010, R2 deep-research",
+    "_engineer_note": "Применять ТОЛЬКО при ν > 5 cSt. Для воды ν = 1 cSt — поправки не нужны.",
+    "trigger_viscosity_cst": 5,
+    "B_formula": "B = 16.5 · √ν · H^0.0625 / (Q^0.375 · N^0.25)",
+    "applicable_range_B": [1, 40],
+    "correction_table_examples": [
+      {"viscosity_cst": 5,   "C_Q": 0.96, "C_H": 0.96, "C_eta": 0.92, "label": "Граница применимости"},
+      {"viscosity_cst": 20,  "C_Q": 0.92, "C_H": 0.92, "C_eta": 0.78},
+      {"viscosity_cst": 50,  "C_Q": 0.88, "C_H": 0.88, "C_eta": 0.65, "label": "Густые промстоки"},
+      {"viscosity_cst": 100, "C_Q": 0.82, "C_H": 0.82, "C_eta": 0.55},
+      {"viscosity_cst": 200, "C_Q": 0.75, "C_H": 0.75, "C_eta": 0.42, "label": "Шламы, далеко от воды"}
+    ],
+    "application_formula": "Q_real = Q_паспорт · C_Q;  H_real = H_паспорт · C_H;  η_real = η_паспорт · C_eta"
+  },
+
+  "ansi_hi_963_operating_regions": {
+    "_description": "Допустимые зоны работы насоса по ANSI/HI 9.6.3 (Allowable Operating Region и Preferred Operating Region)",
+    "_source": "ANSI/HI 9.6.3-2017, R3 deep-research",
+    "POR": {
+      "label": "Preferred Operating Region",
+      "Q_min_pct_of_BEP": 70,
+      "Q_max_pct_of_BEP": 120,
+      "use_case": "Continuous operation (постоянная работа). КНС/НС/СПД — ОБЯЗАТЕЛЬНО POR."
+    },
+    "AOR": {
+      "label": "Allowable Operating Region",
+      "Q_min_pct_of_BEP": 40,
+      "Q_max_pct_of_BEP": 150,
+      "use_case": "Intermittent operation (кратковременные пиковые режимы)"
+    },
+    "outside_AOR_consequences": [
+      "Износ подшипников и уплотнений ускоряется в 2-5 раз",
+      "Повышенная вибрация",
+      "Кавитационная зона (особенно <50% Q_BEP)",
+      "Recirculation на низких Q",
+      "Cavitation на высоких Q"
+    ],
+    "_engineer_note": "Калькулятор должен ставить penalty в composite_score для кандидатов вне POR. Кандидаты вне AOR — НЕ показывать вообще."
+  },
+
+  "motor_starting_method_by_power": {
+    "_description": "Метод пуска электродвигателя в зависимости от мощности",
+    "_source": "Производители ШУ (ABB, Schneider, ОНИКС, Блорэй) + R3 deep-research",
+    "rules": [
+      {"P_max_kW": 7.5,   "method": "DOL",  "label": "Direct On-Line (прямой пуск) — допустим"},
+      {"P_max_kW": 22,    "method": "SS",   "label": "Soft-Start — рекомендуется"},
+      {"P_max_kW": 75,    "method": "SS",   "label": "Soft-Start — обязателен"},
+      {"P_max_kW": 9999,  "method": "VFD",  "label": "ЧРП обязателен (>75 кВт)"}
+    ],
+    "always_VFD_for": [
+      "СПД (постоянное давление)",
+      "Cutter (измельчитель) — высокий пусковой момент",
+      "Объекты со слабой сетью (низкий Iк)"
+    ],
+    "_engineer_note": "Прямой пуск >7.5 кВт даёт пусковой ток ×6-7 от Iном — провалы напряжения, износ контакторов, штрафы энергосбыта."
+  },
+
+  "motor_protection_required": {
+    "_description": "Обязательные защиты двигателя в шкафу управления",
+    "_source": "R3 deep-research, IEC 60034",
+    "by_power_kw": [
+      {"P_min_kW": 0,    "P_max_kW": 5.5,  "required": ["thermal_overload"], "recommended": ["PTC"]},
+      {"P_min_kW": 5.5,  "P_max_kW": 7.5,  "required": ["thermal_overload", "PTC_or_PT100"], "recommended": ["phase_monitor"]},
+      {"P_min_kW": 7.5,  "P_max_kW": 9999, "required": ["thermal_overload", "PTC_or_PT100", "phase_monitor"]}
+    ],
+    "_engineer_note": "phase_monitor для 3ф >7.5 кВт обязателен: reverse phase = вибрация и износ за часы; single-phasing = сгорание за 5-30 секунд."
+  },
+
+  "anchoring_safety_factor": {
+    "_description": "Якорение корпуса КНС при УГВ выше дна (риск всплытия)",
+    "_source": "NPCA Best Practices for Buried Concrete Tanks, R3 deep-research",
+    "SF_minimum": 1.10,
+    "SF_recommended": 1.25,
+    "trigger_for_calculator": "ground_water_level выше дна корпуса И корпус выполнен из ПЭ/HDPE (удельный вес 0.97 — всплывает)",
+    "_engineer_note": "ПЭ-корпус без якорения при УГВ выше дна → всплытие при опорожнении на сервис. Рассчитываем якорную плиту по подъёмной силе."
+  },
+
+  "pump_to_wall_clearance_mm": {
+    "_description": "Минимальный зазор между погружным насосом и стенкой корпуса для cooling flow вокруг мотора",
+    "_source": "Grundfos / Wilo install manuals, R3 deep-research",
+    "value_min_mm": 100,
+    "value_recommended_mm": 150,
+    "consequence_if_violated": "Нарушение охлаждения мотора → перегрев → срабатывание PTC каждые 20 минут → cycling-смерть двигателя",
+    "_engineer_note": "Без shroud (обтекателя) нужна v_поток >0.5 м/с вдоль мотора. С shroud зазор может быть меньше."
+  },
+
+  "spd_pressure_differential": {
+    "_description": "Минимальный перепад давления старт/стоп для СПД",
+    "_source": "Wilo / Grundfos / KSB СПД manuals, R3 deep-research",
+    "min_delta_p_bar": 0.5,
+    "recommended_delta_p_bar": 1.0,
+    "max_delta_p_bar": 1.4,
+    "consequence_if_below_min": "Пуск каждые 5-10 секунд → cycling-смерть мотора",
+    "_engineer_note": "Для СПД калькулятор ОБЯЗАН проверять ΔP. Также: датчик всаса (P_всас < 0.5 бар → стоп) для защиты от сухого хода."
+  },
+
+  "price_segments": {
+    "_description": "3 ценовых сегмента для итогового подбора. Менеджер показывает 3 варианта клиенту.",
+    "budget": {
+      "label": "Бюджет",
+      "brands": ["KAIQUAN", "LEO", "Aquario", "Belamos", "Unipump"],
+      "_engineer_note": "Aquario/Belamos/Unipump — только для мини-КНС (Q<25 м³/ч), для промышленных не подходят"
+    },
+    "mid": {
+      "label": "Средний",
+      "brands": ["Antarus", "Pedrollo"]
+    },
+    "premium": {
+      "label": "Премиум",
+      "brands": ["Grundfos", "Wilo", "KSB"]
+    }
+  }
+}

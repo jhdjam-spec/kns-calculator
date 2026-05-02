@@ -1,0 +1,133 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-02",
+  "_description": "JSON-схема одной записи насоса в БД калькулятора. Используется как образец для парсинга PDF-каталогов (через docling+PlotDigitizer).",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "brand", "model", "type", "envelope", "wastewater_compat", "price_segment", "available_ru"],
+  "properties": {
+    "id":            {"type": "string", "description": "Уникальный идентификатор: kebab-case '{brand}-{model}'"},
+    "brand":         {"type": "string", "enum": ["KAIQUAN", "Antarus", "LEO", "Aquario", "Belamos", "Unipump", "Grundfos", "Wilo", "KSB", "Pedrollo"]},
+    "model":         {"type": "string", "description": "Точная маркировка из паспорта производителя"},
+    "type": {
+      "type": "string",
+      "enum": ["submersible_sewage", "submersible_drainage", "submersible_cutter", "submersible_vortex", "dry_pit_sewage", "multistage_vertical", "booster_station"]
+    },
+    "impeller":      {"type": "string", "enum": ["vortex", "single-channel", "multi-channel", "open", "semi-open", "cutter", "closed"]},
+    "free_passage_mm": {"type": "number", "description": "Минимальный свободный проход рабочего колеса, мм"},
+
+    "envelope": {
+      "type": "object",
+      "required": ["Q_min_m3h", "Q_max_m3h", "H_min_m", "H_max_m"],
+      "properties": {
+        "Q_min_m3h":  {"type": "number"},
+        "Q_max_m3h":  {"type": "number"},
+        "H_min_m":    {"type": "number"},
+        "H_max_m":    {"type": "number"},
+        "Q_BEP_m3h":  {"type": "number", "description": "Q в точке максимального КПД (Best Efficiency Point)"},
+        "H_BEP_m":    {"type": "number"},
+        "eta_BEP_pct":{"type": "number", "description": "КПД в BEP, %"},
+        "NPSHr_at_BEP_m": {"type": "number"}
+      }
+    },
+
+    "qh_curve": {
+      "type": "array",
+      "description": "Точки Q-H кривой из паспорта (минимум 5 точек: shutoff, 25%, 50%, BEP, 125%)",
+      "items": {
+        "type": "object",
+        "required": ["Q_m3h", "H_m"],
+        "properties": {
+          "Q_m3h":  {"type": "number"},
+          "H_m":    {"type": "number"},
+          "eta_pct":{"type": "number"},
+          "P_kW":   {"type": "number"},
+          "NPSHr_m":{"type": "number"}
+        }
+      }
+    },
+
+    "power": {
+      "type": "object",
+      "required": ["P_kW", "voltage_v", "phase"],
+      "properties": {
+        "P_kW":      {"type": "number", "description": "Номинальная мощность двигателя"},
+        "voltage_v": {"type": "number", "enum": [220, 380]},
+        "phase":     {"type": "number", "enum": [1, 3]},
+        "frequency_hz": {"type": "number", "default": 50},
+        "motor_efficiency_pct": {"type": "number"},
+        "ip_rating": {"type": "string", "description": "IP54/IP68/IP69"},
+        "ex_rating": {"type": "string", "description": "ATEX/Ex по ГОСТ. null если не взрывозащищён"}
+      }
+    },
+
+    "discharge": {
+      "type": "object",
+      "properties": {
+        "DN_mm":     {"type": "number", "description": "Диаметр напорного патрубка"},
+        "flange_type": {"type": "string", "description": "PN6/PN10/PN16/threaded"}
+      }
+    },
+
+    "physical": {
+      "type": "object",
+      "properties": {
+        "weight_kg": {"type": "number"},
+        "dimensions_mm": {
+          "type": "object",
+          "properties": {"L": {"type": "number"}, "W": {"type": "number"}, "H": {"type": "number"}}
+        },
+        "max_immersion_m": {"type": "number"},
+        "max_liquid_temp_c": {"type": "number"},
+        "min_liquid_temp_c": {"type": "number"}
+      }
+    },
+
+    "materials": {
+      "type": "object",
+      "properties": {
+        "casing":    {"type": "string", "examples": ["cast_iron", "stainless_steel_304", "stainless_steel_316"]},
+        "impeller":  {"type": "string"},
+        "shaft":     {"type": "string"},
+        "seal":      {"type": "string", "examples": ["mechanical_double_SiC", "mechanical_double_carbide"]}
+      }
+    },
+
+    "wastewater_compat": {
+      "type": "array",
+      "description": "Допустимые типы стоков для этого насоса",
+      "items": {"type": "string", "enum": ["domestic", "drainage", "industrial", "clean_water"]}
+    },
+
+    "price_segment":  {"type": "string", "enum": ["budget", "mid", "premium"]},
+    "price_rub_2026": {"type": "number", "description": "Ориентировочная цена в РФ, рубли. null если нет данных"},
+    "price_source":   {"type": "string", "description": "Источник цены: 'Аркада 2026' / 'Wilo Select' / 'parsing kqpump.com 2026-04' / null"},
+
+    "available_ru": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status":     {"type": "string", "enum": ["official", "parallel_import", "stock_only", "discontinued"]},
+        "lead_time":  {"type": "string", "description": "Например: 'in_stock' / '2-4_weeks' / '8-12_weeks'"},
+        "distributor":{"type": "string"}
+      }
+    },
+
+    "warranty_months":{"type": "number"},
+    "datasheet_url":  {"type": "string", "format": "uri"},
+    "image_url":      {"type": "string", "format": "uri"},
+    "notes":          {"type": "string"},
+
+    "_engineer_flag": {
+      "type": "string",
+      "enum": ["ok", "needs_review", "not_recommended", "deprecated"],
+      "default": "ok",
+      "description": "Инженерная пометка: ok=использовать, needs_review=проверить данные, not_recommended=не подходит для нашего сегмента, deprecated=снят с производства"
+    },
+    "_engineer_note": {"type": "string", "description": "Текстовый комментарий инженера (если _engineer_flag != 'ok')"},
+
+    "_source": {"type": "string", "description": "Откуда занесён насос: ручной ввод / docling-parser-v0.1 / Wilo-Select / Grundfos GPC API"},
+    "_added":  {"type": "string", "format": "date"},
+    "_updated":{"type": "string", "format": "date"}
+  }
+}
