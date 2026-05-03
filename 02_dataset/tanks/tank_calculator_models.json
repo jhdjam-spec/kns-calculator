@@ -1,0 +1,121 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-03",
+  "_description": "Машинно-читаемые модели калькуляторов ёмкостей. Источник №1: Серво-Юг 'Калькулятор стоимости емкостей.ods'.",
+
+  "horizontal_pp_tank": {
+    "_label": "Горизонтальная ПП-ёмкость (товарная)",
+    "_source_file": "Калькулятор стоимости емкостей.ods (Серво-Юг)",
+    "material": "first_grade_polypropylene",
+    "discrete_diameters_mm": [960, 1280, 1430, 1500, 1910, 2000, 2100, 2200, 2300, 2400, 2500, 3000, 3200, 3400, 3600],
+    "discrete_thicknesses_mm": [5, 6, 8, 10, 12, 15, 20],
+    "discrete_baffle_steps_m": [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10],
+    "discrete_bands_options": [2, 4, 6, 8, 10],
+    "discrete_profiles_options": [2, 4, 6, 8, 10],
+
+    "sheets_per_baffle_lookup": {
+      "_description": "Кол-во раскраиваемых листов на одну перегородку (зависит от D)",
+      "by_D_mm": {
+        "960": 0.33, "1280": 0.50, "1430": 0.50, "1500": 0.50,
+        "1910": 1.00, "2000": 1.00, "2100": 1.00, "2200": 1.00,
+        "2300": 1.50, "2400": 1.50, "2500": 1.50,
+        "3000": 2.00, "3200": 2.30, "3400": 2.50, "3600": 2.60
+      }
+    },
+
+    "constants": {
+      "rho_sheet_kg_per_mm_per_sheet": 4.14,
+      "_rho_note": "Кг материала на 1 мм толщины и 1 стандартный лист (ρ_PP × 4.5 м²-лист). Извлечено из формулы массы корпуса.",
+      "profile_kg_per_m": 3.6,
+      "profile_kg_per_m_note": "Удельная масса усиливающего профиля. Конкретный SKU не уточнён.",
+      "pp_overhead_factor": 1.15,
+      "pp_overhead_note": "Коэффициент отходов ПП (15%). Применяется к стоимости.",
+      "pp_doubling_factor": 2.0,
+      "pp_doubling_note": "Из формулы Серво-Юг: cost_pp = mass × price × 1.15 × 2. Точный смысл коэффициента 2 НЕ УТОЧНЁН — вероятно конверсия нетто→брутто или двойная стенка. ⚠️ запросить у Серво-Юг",
+      "standard_sheet_size_mm": [1500, 3000],
+      "band_meters_per_sheet": 100,
+      "band_factor_11": 11,
+      "band_factor_note": "В формуле sheets_bands = ceil(L_bands_m / 100 × 11). Что значит 11 — неясно (вероятно ширина полосы в мм или коэф. отходов). ⚠️ уточнить."
+    },
+
+    "default_prices_rub_2026": {
+      "pp_kg": 240,
+      "profile_m": 1060,
+      "_note": "Цены 'на лист ODS' от Серво-Юг. Меняются — запрашивать актуальные."
+    },
+
+    "formulas": {
+      "V_m3": "math.pi * (D_mm/2)**2 * L_mm / 1_000_000_000",
+      "n_baffles": "ceil(L_mm / baffle_step_m / 1000) + 1",
+      "total_bands": "(n_baffles - 1) * bands_per_section",
+      "length_bands_m": "total_bands * math.pi * D_mm / 1000",
+      "length_profiles_corpus_m": "profiles_longitudinal * L_mm / 1000",
+      "length_profiles_baffles_m": "n_baffles * D_mm * profiles_per_baffle / 1000",
+      "length_profiles_total_m": "length_bands_m + length_profiles_corpus_m + length_profiles_baffles_m",
+      "sheets_corpus": "ceil(L_mm / 1500 * D_mm * math.pi / 3000, step=0.5)",
+      "sheets_baffles": "n_baffles * sheets_per_baffle_lookup[D_mm]",
+      "sheets_bands": "ceil(length_bands_m / 100 * 11, step=0.5)",
+      "mass_corpus_kg": "4.14 * (sheets_corpus * t_corpus + sheets_baffles * t_baffle + sheets_bands * t_band)",
+      "mass_profiles_kg": "length_profiles_total_m * 3.6",
+      "mass_total_kg": "mass_corpus_kg + mass_profiles_kg",
+      "cost_pp_rub": "mass_corpus_kg * price_pp_kg * 1.15 * 2",
+      "cost_profiles_rub": "length_profiles_total_m * price_profile_m",
+      "cost_total_rub": "cost_pp_rub + cost_profiles_rub"
+    },
+
+    "_engineer_notes": [
+      "Модель — калькулятор СТОИМОСТИ, не прочности. Толщина стенки задаётся пользователем, без проверки гидростатики.",
+      "Для горизонтальных ёмкостей в земле необходимо отдельно проверять прочность на грунтовое давление (не входит в эту модель).",
+      "Коэффициент '×2' в cost_pp_rub — открытый вопрос (см. constants.pp_doubling_note)."
+    ]
+  },
+
+  "fiberglass_tank": {
+    "_label": "Стеклопластиковая ёмкость",
+    "_status": "PLACEHOLDER — модель пока не извлечена",
+    "_engineer_note": "Серво-Юг отдельно стеклопластиковые делает, для них своя модель. Если будет ODS-файл — добавим аналогично horizontal_pp_tank. Сейчас можно использовать те же геометрические формулы, но с другими константами плотности материала и удельных цен."
+  },
+
+  "kns_vertical_corpus": {
+    "_label": "Вертикальный корпус КНС из ПП",
+    "_derived_from": "horizontal_pp_tank (упрощено)",
+    "_description": "Вертикальная цилиндрическая ёмкость. Перегородок нет (или только нижнее дно и верхняя крышка). Часто без бандажей в средней части — заменяется усиленной стенкой.",
+
+    "geometry_diff_from_horizontal": {
+      "n_baffles": 2,
+      "_n_note": "Только дно и крышка. Боковая стенка непрерывна.",
+      "h_to_d_max_ratio": 4,
+      "h_to_d_max_note": "См. NOT_OK-22: H/D > 4 → проблемы с монтажом и обслуживанием"
+    },
+
+    "additional_costs_not_in_base_model": [
+      {"item": "Якорная плита (anchor slab)", "trigger": "GWT > floor_level", "note": "Удельный вес HDPE 0.97 → всплывает при УГВ выше дна. SF ≥ 1.25 (NPCA)"},
+      {"item": "Расширенное основание", "trigger": "weak_soil"},
+      {"item": "Люк ревизионный", "trigger": "always"},
+      {"item": "Вентиляция", "trigger": "always"},
+      {"item": "Кабельные вводы", "trigger": "always"},
+      {"item": "Трубные вводы (подводящий + напорный + вентиляция)", "trigger": "always"}
+    ],
+
+    "minimum_wall_thickness_mm_by_depth": {
+      "_engineer_note": "Эмпирические значения для ПП-корпуса в земле. ⚠️ для production-релиза верифицировать СП 70.13330 и расчётом на боковое давление грунта.",
+      "table": [
+        {"H_corpus_m_max": 2.0, "t_min_mm": 8},
+        {"H_corpus_m_max": 3.0, "t_min_mm": 10},
+        {"H_corpus_m_max": 4.0, "t_min_mm": 12},
+        {"H_corpus_m_max": 5.0, "t_min_mm": 15},
+        {"H_corpus_m_max": 6.0, "t_min_mm": 20}
+      ]
+    },
+
+    "minimum_dome_thickness_mm": 12,
+
+    "h_to_d_recommendations": {
+      "_description": "Рекомендуемое соотношение H/D для удобства монтажа и обслуживания",
+      "min": 1.0,
+      "preferred_min": 1.5,
+      "preferred_max": 3.0,
+      "max": 4.0
+    }
+  }
+}

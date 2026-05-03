@@ -21,7 +21,7 @@ type стоков (хоз-быт/дренаж/пром)       │   Премиу
                                         └──────────────────────────┘
 ```
 
-**Эталон верификации:** KAIQUAN 50WQ/S 20-22-3 (проект АртВинд Мысхако, Q=21.2, dH=10, L=0, domestic). Алгоритм возвращает его в сегменте `budget` с composite_score ≈ 0.624. ✅ ПРОЙДЕНО.
+**Тестовый кейс (smoke-check, не «эталон»):** Q=21.2, dH=10, L=0, domestic. Алгоритм возвращает KAIQUAN 50WQ/S 20-22-3 в сегменте `budget` с composite_score ≈ 0.67 — этот насос фигурирует в реальном проекте АртВинд Мысхако. Это проверка что алгоритм даёт разумный результат на типовом входе, **не доказательство правильности подбора** (для этого нужен калибровочный набор из десятков размеченных кейсов).
 
 ---
 
@@ -243,7 +243,7 @@ if pump_depth_m > 4: triggers.append("auto_corpus_deep")
 │   ├── schema.json            ← JSON-schema записи насоса
 │   ├── pumps.json             ← 14 насосов envelope-only
 │   ├── producers.json         ← 8 брендов (KAIQUAN, Antarus, LEO, Aquario/Belamos/Unipump, Grundfos, Wilo, KSB, Pedrollo)
-│   └── seed_kaiquan_50WQS202.json  ← эталон верификации
+│   └── seed_kaiquan_50WQS202.json  ← seed-запись для тестового кейса
 └── fittings/
     └── fittings_seed.json     ← обвязка КНС/СПД с типовыми ценами 2026
 ```

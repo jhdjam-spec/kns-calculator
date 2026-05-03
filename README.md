@@ -48,17 +48,20 @@ kns-calculator/
 | Датасет 8 производителей (Grundfos, Wilo, KSB, KAIQUAN, Antarus, LEO, Pedrollo, Aquario/Belamos/Unipump) | ✅ |
 | Теория расчётов с инженерными пометками | ✅ |
 | JSON-схема насоса + 14 seed-записей | ✅ |
-| Эталонный кейс верификации (KAIQUAN 50WQ/S 20-22-3, проект АртВинд Мысхако) | ✅ |
+| Тестовый кейс из реального проекта (АртВинд Мысхако, KAIQUAN 50WQ/S 20-22-3) | ✅ |
 | Спецификация Inputs (L0/L1/L2 + Zod) | ✅ |
 | Спецификация алгоритма матчинга | ✅ |
 | Спецификация hand-off пакета (PDF + BOM + JSON для CRM) | ✅ |
 | Deep research: нормы РФ + гидравлика + анти-паттерны | ✅ |
 | **Backend MVP (Python + FastAPI + fluids)** | ✅ **27/27 тестов** |
-| Реализация React frontend | ⬜ |
+| **Frontend MVP (Next.js 14 + Tailwind + Zod)** | ✅ **30/30 тестов** |
+| **Калькуляторы ёмкостей (ПП, корпус КНС)** | ✅ модель из ODS Серво-Юг |
 | Парсинг PDF-каталогов производителей | ⬜ |
 | Multi-agent оркестрация (LangGraph) | ⬜ |
 
-## Быстрый старт backend
+## Быстрый старт
+
+### Backend (FastAPI на :8000)
 
 ```bash
 cd backend
@@ -68,7 +71,18 @@ uvicorn pump_calculator.api:app --reload --port 8000
 # Open http://localhost:8000/docs
 ```
 
-Эталонный тест: вход Q=21.2 м³/ч, ΔH=10 м, L=0, тип=domestic → возвращает **KAIQUAN 50WQ/S 20-22-3** (как в реальном проекте АртВинд Мысхако) с composite_score 0.624.
+### Frontend (Next.js на :3000)
+
+```bash
+cd frontend
+npm install
+npm test                                            # 30/30 ✅
+npm run dev
+# Open http://localhost:3000 (подбор насоса)
+# Open http://localhost:3000/tanks (калькуляторы ёмкостей)
+```
+
+Тестовый кейс (без претензии на «эталон»): вход Q=21.2 м³/ч, ΔH=10 м, L=0, тип=domestic → возвращает **KAIQUAN 50WQ/S 20-22-3** — этот насос фигурирует в реальном проекте АртВинд Мысхако. Это smoke-проверка, что алгоритм даёт разумный результат на типовом случае; не доказательство «правильности» подбора.
 
 ```python
 from pump_calculator import select_pumps
