@@ -53,9 +53,10 @@ kns-calculator/
 | Спецификация алгоритма матчинга | ✅ |
 | Спецификация hand-off пакета (PDF + BOM + JSON для CRM) | ✅ |
 | Deep research: нормы РФ + гидравлика + анти-паттерны | ✅ |
-| **Backend MVP (Python + FastAPI + fluids)** | ✅ **27/27 тестов** |
+| **Backend MVP (Python + FastAPI + fluids)** | ✅ **36/36 тестов** |
 | **Frontend MVP (Next.js 14 + Tailwind + Zod)** | ✅ **30/30 тестов** |
 | **Калькуляторы ёмкостей (ПП, корпус КНС)** | ✅ модель из ODS Серво-Юг |
+| **PDF hand-off (опросник клиенту + BOM-черновик)** | ✅ reportlab, кириллица |
 | Парсинг PDF-каталогов производителей | ⬜ |
 | Multi-agent оркестрация (LangGraph) | ⬜ |
 

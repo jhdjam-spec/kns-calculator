@@ -4,8 +4,11 @@ from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
+from pydantic import BaseModel, Field
 
 from pump_calculator import __version__, catalog
+from pump_calculator.handoff import generate_bom_pdf, generate_questionnaire_pdf
 from pump_calculator.matching import select_pumps as run_selection
 from pump_calculator.schemas import L0Input, SelectionRequest, SelectionResult
 
@@ -96,3 +99,54 @@ def list_producers() -> list:
 def list_coefficients() -> dict:
     """Все коэффициенты, формулы и таблицы из 02_dataset/theory/coefficients.json."""
     return catalog.load_coefficients()
+
+
+# ---------------------- Phase 4 hand-off PDF ----------------------
+
+
+class QuestionnaireRequest(BaseModel):
+    """Запрос на генерацию PDF опросного листа клиенту."""
+
+    selection: SelectionResult
+    object_name: str = Field("", description="Название объекта (опционально)")
+    client_company: str = Field("", description="Заказчик (компания)")
+    client_contact: str = Field("", description="Контакт")
+    city: str = Field("", description="Город / регион")
+    kp_number: str = Field("", description="№ КП / запроса")
+
+
+@app.post("/handoff/questionnaire", tags=["handoff"], response_class=Response)
+def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
+    """Генерация PDF опросного листа клиенту (Артефакт 1)."""
+    try:
+        pdf_bytes = generate_questionnaire_pdf(
+            req.selection,
+            object_name=req.object_name,
+            client_company=req.client_company,
+            client_contact=req.client_contact,
+            city=req.city,
+            kp_number=req.kp_number,
+        )
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {e}") from e
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="kns_questionnaire.pdf"'},
+    )
+
+
+@app.post("/handoff/bom", tags=["handoff"], response_class=Response)
+def handoff_bom(selection: SelectionResult) -> Response:
+    """Генерация PDF BOM-черновика (Артефакт 2). 3 ценовых сегмента."""
+    try:
+        pdf_bytes = generate_bom_pdf(selection)
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {e}") from e
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="kns_bom_draft.pdf"'},
+    )

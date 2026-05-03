@@ -39,3 +39,54 @@ export async function healthCheck(): Promise<HealthInfo> {
   }
   return (await res.json()) as HealthInfo;
 }
+
+// ----------- Phase 4 PDF endpoints -----------
+
+export interface QuestionnaireMeta {
+  object_name?: string;
+  client_company?: string;
+  client_contact?: string;
+  city?: string;
+  kp_number?: string;
+}
+
+/** Скачать PDF опросный лист как Blob (для триггера download). */
+export async function fetchQuestionnairePdf(
+  selection: SelectionResult,
+  meta: QuestionnaireMeta = {}
+): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/handoff/questionnaire`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ selection, ...meta }),
+  });
+  if (!res.ok) {
+    throw new Error(`Questionnaire PDF failed: ${res.status}`);
+  }
+  return res.blob();
+}
+
+/** Скачать PDF BOM-черновика. */
+export async function fetchBomPdf(selection: SelectionResult): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/handoff/bom`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(selection),
+  });
+  if (!res.ok) {
+    throw new Error(`BOM PDF failed: ${res.status}`);
+  }
+  return res.blob();
+}
+
+/** Триггерит скачивание Blob как файла в браузере. */
+export function triggerDownload(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}

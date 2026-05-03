@@ -36,6 +36,14 @@ def load_producers() -> list[dict[str, Any]]:
         return json.load(f)
 
 
+@lru_cache(maxsize=1)
+def _load_fittings() -> dict[str, Any]:
+    """Шаблоны обвязки КНС/СПД с типовыми ценами 2026."""
+    path = DATASET_ROOT / "fittings" / "fittings_seed.json"
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
 def get_default_pipe_roughness_mm(material: str = "pe100_sdr17") -> float:
     """Эквивалентная шероховатость k_э (мм) по умолчанию."""
     coeffs = load_coefficients()
