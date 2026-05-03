@@ -3,7 +3,6 @@
   "_updated": "2026-05-02",
   "_description": "Каталог насосов для алгоритма подбора. Текущая версия — envelope-only (диапазоны Q/H/P без полных кривых). Полные Q-H кривые добавляются при парсинге PDF-каталогов производителей (см. ETL-пайплайн docling+PlotDigitizer).",
   "_engineer_note": "Каждая запись помечена _engineer_flag. needs_review = envelope взят из producers_dataset.json как агрегат серии, не паспорт конкретной модели. Для production нужны точные паспорта.",
-
   "pumps": [
     {
       "id": "kaiquan-50wqs202-3",
@@ -12,12 +11,35 @@
       "type": "submersible_sewage",
       "impeller": "vortex",
       "free_passage_mm": 50,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 30, "H_min_m": 8, "H_max_m": 25, "Q_BEP_m3h": 22.9, "H_BEP_m": 17.4, "eta_BEP_pct": 46.4, "NPSHr_at_BEP_m": 2.8},
-      "power": {"P_kW": 3.0, "voltage_v": 380, "phase": 3, "ip_rating": "IP68", "ex_rating": null},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 30,
+        "H_min_m": 8,
+        "H_max_m": 25,
+        "Q_BEP_m3h": 22.9,
+        "H_BEP_m": 17.4,
+        "eta_BEP_pct": 46.4,
+        "NPSHr_at_BEP_m": 2.8
+      },
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "budget",
-      "available_ru": {"status": "official", "distributor": "АСО (acorussia.ru)"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО (acorussia.ru)"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Эталонная точка верификации (АртВинд Мысхако)",
       "_source": "Паспорт АВ.1382.08.23-М-НК"
@@ -29,12 +51,33 @@
       "type": "submersible_sewage",
       "impeller": "single-channel",
       "free_passage_mm": 65,
-      "envelope": {"Q_min_m3h": 30, "Q_max_m3h": 130, "H_min_m": 10, "H_max_m": 30, "Q_BEP_m3h": null, "H_BEP_m": null, "eta_BEP_pct": null},
-      "power": {"P_kW": 18.5, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 65},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 30,
+        "Q_max_m3h": 130,
+        "H_min_m": 10,
+        "H_max_m": 30,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null
+      },
+      "power": {
+        "P_kW": 18.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "budget",
-      "available_ru": {"status": "official", "distributor": "АСО"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Envelope оценочный — нужны точные значения из паспорта 65WQS215-18.5.pdf (есть в Telegram Desktop)",
       "_source": "Имя файла + producers_dataset.json"
@@ -46,17 +89,37 @@
       "type": "submersible_sewage",
       "impeller": "single-channel",
       "free_passage_mm": 100,
-      "envelope": {"Q_min_m3h": 1500, "Q_max_m3h": 2500, "H_min_m": 15, "H_max_m": 30, "Q_BEP_m3h": null, "H_BEP_m": null, "eta_BEP_pct": null},
-      "power": {"P_kW": 80, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 200},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 1500,
+        "Q_max_m3h": 2500,
+        "H_min_m": 15,
+        "H_max_m": 30,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null
+      },
+      "power": {
+        "P_kW": 80,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 200
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "budget",
-      "available_ru": {"status": "official", "distributor": "АСО"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Крупный канализационный для городских КНС. Envelope нужно уточнять по паспорту WQ2290-2136-80.pdf",
       "_source": "Имя файла"
     },
-
     {
       "id": "antarus-nk1-50",
       "brand": "Antarus",
@@ -64,12 +127,33 @@
       "type": "submersible_sewage",
       "impeller": "single-channel",
       "free_passage_mm": 50,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 100, "H_min_m": 5, "H_max_m": 40, "Q_BEP_m3h": null, "H_BEP_m": null, "eta_BEP_pct": null},
-      "power": {"P_kW": 1.1, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 100,
+        "H_min_m": 5,
+        "H_max_m": 40,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null
+      },
+      "power": {
+        "P_kW": 1.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "mid",
-      "available_ru": {"status": "official", "distributor": "Antarus прямой"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "Antarus прямой"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Серия НК1 — envelope обобщённый, нужны точные модели (НК1-50/22-15-1.1, НК1-65/...)",
       "_source": "search.antarus.su"
@@ -81,12 +165,31 @@
       "type": "submersible_sewage",
       "impeller": "multi-channel",
       "free_passage_mm": 100,
-      "envelope": {"Q_min_m3h": 100, "Q_max_m3h": 600, "H_min_m": 5, "H_max_m": 50, "Q_BEP_m3h": 252, "H_BEP_m": 30},
-      "power": {"P_kW": 22, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 150},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 100,
+        "Q_max_m3h": 600,
+        "H_min_m": 5,
+        "H_max_m": 50,
+        "Q_BEP_m3h": 252,
+        "H_BEP_m": 30
+      },
+      "power": {
+        "P_kW": 22,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 150
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "mid",
-      "available_ru": {"status": "official"},
+      "available_ru": {
+        "status": "official"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Соответствует кейсу 'Большая КНС 70 л/с' из MATERIALS_INVENTORY (HK2-150-28-150-22-TB-10M)",
       "_source": "MATERIALS_INVENTORY.md + producers_dataset.json"
@@ -98,17 +201,34 @@
       "type": "booster_station",
       "impeller": "multi-channel",
       "free_passage_mm": 0,
-      "envelope": {"Q_min_m3h": 1, "Q_max_m3h": 30, "H_min_m": 30, "H_max_m": 80, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 3.0, "voltage_v": 380, "phase": 3, "ip_rating": "IP54"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["clean_water"],
+      "envelope": {
+        "Q_min_m3h": 1,
+        "Q_max_m3h": 30,
+        "H_min_m": 30,
+        "H_max_m": 80,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
       "price_segment": "mid",
-      "available_ru": {"status": "official"},
+      "available_ru": {
+        "status": "official"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Станция повышения давления, 2 насоса MLV3 в параллель. Цена ~700 526 ₽ у Теплосервис-Сибирь.",
       "_source": "producers_dataset.json"
     },
-
     {
       "id": "leo-xks-50",
       "brand": "LEO Group",
@@ -116,17 +236,36 @@
       "type": "submersible_sewage",
       "impeller": "vortex",
       "free_passage_mm": 35,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 80, "H_min_m": 5, "H_max_m": 25, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 0.55, "voltage_v": 220, "phase": 1, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 80,
+        "H_min_m": 5,
+        "H_max_m": 25,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 0.55,
+        "voltage_v": 220,
+        "phase": 1,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "budget",
-      "available_ru": {"status": "official", "distributor": "NT-RT"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "NT-RT"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Бюджетный entry-level. Свободный проход 35мм — на грани для гостиниц/ТРЦ. Лучше для коттеджей.",
       "_source": "leo.nt-rt.ru"
     },
-
     {
       "id": "wilo-rexa-pro-v05",
       "brand": "Wilo",
@@ -134,12 +273,33 @@
       "type": "submersible_sewage",
       "impeller": "vortex",
       "free_passage_mm": 50,
-      "envelope": {"Q_min_m3h": 10, "Q_max_m3h": 100, "H_min_m": 5, "H_max_m": 30, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 1.5, "voltage_v": 380, "phase": 3, "ip_rating": "IP68", "ex_rating": "Ex-опция"},
-      "discharge": {"DN_mm": 80},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 10,
+        "Q_max_m3h": 100,
+        "H_min_m": 5,
+        "H_max_m": 30,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex-опция"
+      },
+      "discharge": {
+        "DN_mm": 80
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "official", "distributor": "ВИЛО РУС (российская сборка)"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС (российская сборка)"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Серия Rexa PRO — envelope обобщённый. Конкретные модели V05/V06/V08 — через Wilo-Select 4.",
       "_source": "selectonline.ru"
@@ -151,12 +311,32 @@
       "type": "submersible_sewage",
       "impeller": "channel",
       "free_passage_mm": 100,
-      "envelope": {"Q_min_m3h": 100, "Q_max_m3h": 5000, "H_min_m": 10, "H_max_m": 80, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 11, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 100},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 100,
+        "Q_max_m3h": 5000,
+        "H_min_m": 10,
+        "H_max_m": 80,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 11,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "official", "distributor": "ВИЛО РУС (российская сборка)"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС (российская сборка)"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно",
       "_source": "wilo.com/ru, selectonline.ru"
@@ -168,17 +348,35 @@
       "type": "booster_station",
       "impeller": "multi-channel",
       "free_passage_mm": 0,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 500, "H_min_m": 20, "H_max_m": 200, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 1.5, "voltage_v": 380, "phase": 3, "ip_rating": "IP54"},
-      "discharge": {"DN_mm": 65},
-      "wastewater_compat": ["clean_water"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 500,
+        "H_min_m": 20,
+        "H_max_m": 200,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "official", "distributor": "ВИЛО РУС"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Станция повышения давления для жилых/коммерческих объектов. С PLC и ЧРП. Эталон премиум-сегмента СПД.",
       "_source": "wilo.com/ru"
     },
-
     {
       "id": "grundfos-sl1-9-30",
       "brand": "Grundfos",
@@ -186,12 +384,33 @@
       "type": "submersible_sewage",
       "impeller": "single-channel",
       "free_passage_mm": 65,
-      "envelope": {"Q_min_m3h": 10, "Q_max_m3h": 250, "H_min_m": 5, "H_max_m": 40, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 9, "voltage_v": 380, "phase": 3, "ip_rating": "IP68", "ex_rating": "Ex II 2G опция"},
-      "discharge": {"DN_mm": 65},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 10,
+        "Q_max_m3h": 250,
+        "H_min_m": 5,
+        "H_max_m": 40,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 9,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "parallel_import", "lead_time": "4-12_weeks"},
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт — статус нестабильный. В апр 2025 47 позиций исключены из перечня — уточнять конкретно эту модель.",
       "_source": "Grundfos Product Center"
@@ -203,17 +422,34 @@
       "type": "booster_station",
       "impeller": "multi-channel",
       "free_passage_mm": 0,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 60, "H_min_m": 30, "H_max_m": 120, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 1.5, "voltage_v": 380, "phase": 3, "ip_rating": "IP54"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["clean_water"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 60,
+        "H_min_m": 30,
+        "H_max_m": 120,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "parallel_import"},
+      "available_ru": {
+        "status": "parallel_import"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Эталон премиум СПД на базе CR-серии. Аналог — Wilo-COR MVIE.",
       "_source": "Grundfos Product Center"
     },
-
     {
       "id": "ksb-amarex",
       "brand": "KSB",
@@ -221,12 +457,32 @@
       "type": "submersible_sewage",
       "impeller": "vortex",
       "free_passage_mm": 50,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 200, "H_min_m": 5, "H_max_m": 40, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 1.1, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 200,
+        "H_min_m": 5,
+        "H_max_m": 40,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "official", "distributor": "ООО КСБ Москва"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "ООО КСБ Москва"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Конкретная модель внутри серии — через KSB EasySelect",
       "_source": "ksb.com"
@@ -238,17 +494,35 @@
       "type": "submersible_sewage",
       "impeller": "channel",
       "free_passage_mm": 100,
-      "envelope": {"Q_min_m3h": 100, "Q_max_m3h": 6000, "H_min_m": 10, "H_max_m": 100, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 30, "voltage_v": 380, "phase": 3, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 150},
-      "wastewater_compat": ["domestic", "industrial"],
+      "envelope": {
+        "Q_min_m3h": 100,
+        "Q_max_m3h": 6000,
+        "H_min_m": 10,
+        "H_max_m": 100,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 30,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 150
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
       "price_segment": "premium",
-      "available_ru": {"status": "official"},
+      "available_ru": {
+        "status": "official"
+      },
       "_engineer_flag": "ok",
       "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные)",
       "_source": "ksb.com"
     },
-
     {
       "id": "pedrollo-vxm-15-50",
       "brand": "Pedrollo",
@@ -256,18 +530,457 @@
       "type": "submersible_sewage",
       "impeller": "vortex",
       "free_passage_mm": 50,
-      "envelope": {"Q_min_m3h": 5, "Q_max_m3h": 30, "H_min_m": 5, "H_max_m": 18, "Q_BEP_m3h": null, "H_BEP_m": null},
-      "power": {"P_kW": 1.1, "voltage_v": 220, "phase": 1, "ip_rating": "IP68"},
-      "discharge": {"DN_mm": 50},
-      "wastewater_compat": ["domestic", "drainage"],
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 30,
+        "H_min_m": 5,
+        "H_max_m": 18,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.1,
+        "voltage_v": 220,
+        "phase": 1,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
       "price_segment": "mid",
-      "available_ru": {"status": "official", "distributor": "pedrollo.ru"},
+      "available_ru": {
+        "status": "official",
+        "distributor": "pedrollo.ru"
+      },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Малая КНС для частных домов/коттеджей. Однофазная — упрощает монтаж.",
       "_source": "pedrollo.com"
+    },
+    {
+      "id": "kaiquan-65wq-s-30-22-5-5",
+      "brand": "KAIQUAN",
+      "model": "65WQ/S 30-22-5.5",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 60.0,
+        "H_min_m": 12.0,
+        "H_max_m": 30.0,
+        "Q_BEP_m3h": 36.44,
+        "H_BEP_m": 22.93,
+        "eta_BEP_pct": 51.0,
+        "NPSHr_at_BEP_m": 3.14
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 30.0,
+          "eta_pct": 0.0,
+          "P_kW": 3.5,
+          "NPSHr_m": 1.5
+        },
+        {
+          "Q_m3h": 15.0,
+          "H_m": 28.0,
+          "eta_pct": 35.0,
+          "P_kW": 4.2,
+          "NPSHr_m": 1.8
+        },
+        {
+          "Q_m3h": 30.0,
+          "H_m": 25.0,
+          "eta_pct": 50.0,
+          "P_kW": 4.8,
+          "NPSHr_m": 2.5
+        },
+        {
+          "Q_m3h": 45.0,
+          "H_m": 20.0,
+          "eta_pct": 48.0,
+          "P_kW": 5.3,
+          "NPSHr_m": 4.0
+        },
+        {
+          "Q_m3h": 60.0,
+          "H_m": 12.0,
+          "eta_pct": 32.0,
+          "P_kW": 5.5,
+          "NPSHr_m": 6.0
+        }
+      ],
+      "power": {
+        "P_kW": 5.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 65.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО (acorussia.ru)",
+        "lead_time": "склад РФ 1-7 дней"
+      },
+      "warranty_months": 18,
+      "datasheet_url": "https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf",
+      "image_url": null,
+      "notes": "Демо-запись для Phase 5 ETL. Точные точки Q-H требуют верификации по официальному паспорту KAIQUAN.",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "phase5-etl-seed-2026-05-03",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "kaiquan-80wq-s-50-22-7-5",
+      "brand": "KAIQUAN",
+      "model": "80WQ/S 50-22-7.5",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 100.0,
+        "H_min_m": 8.0,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": 57.5,
+        "H_BEP_m": 23.26,
+        "eta_BEP_pct": 55.0,
+        "NPSHr_at_BEP_m": 3.31
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0,
+          "eta_pct": 0.0,
+          "P_kW": 5.0,
+          "NPSHr_m": 1.5
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 30.0,
+          "eta_pct": 40.0,
+          "P_kW": 6.0,
+          "NPSHr_m": 2.0
+        },
+        {
+          "Q_m3h": 50.0,
+          "H_m": 25.0,
+          "eta_pct": 55.0,
+          "P_kW": 6.8,
+          "NPSHr_m": 2.8
+        },
+        {
+          "Q_m3h": 75.0,
+          "H_m": 18.0,
+          "eta_pct": 50.0,
+          "P_kW": 7.3,
+          "NPSHr_m": 4.5
+        },
+        {
+          "Q_m3h": 100.0,
+          "H_m": 8.0,
+          "eta_pct": 30.0,
+          "P_kW": 7.5,
+          "NPSHr_m": 6.5
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО (acorussia.ru)",
+        "lead_time": null
+      },
+      "warranty_months": 18,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": "Демо-запись. Точные точки Q-H требуют верификации.",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "phase5-etl-seed-2026-05-03",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "kaiquan-100wq-s-100-22-15",
+      "brand": "KAIQUAN",
+      "model": "100WQ/S 100-22-15",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 200.0,
+        "H_min_m": 8.0,
+        "H_max_m": 35.0,
+        "Q_BEP_m3h": 112.5,
+        "H_BEP_m": 25.99,
+        "eta_BEP_pct": 60.6,
+        "NPSHr_at_BEP_m": 3.88
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 35.0,
+          "eta_pct": 0.0,
+          "P_kW": 10.0,
+          "NPSHr_m": 2.0
+        },
+        {
+          "Q_m3h": 50.0,
+          "H_m": 32.0,
+          "eta_pct": 45.0,
+          "P_kW": 12.0,
+          "NPSHr_m": 2.5
+        },
+        {
+          "Q_m3h": 100.0,
+          "H_m": 28.0,
+          "eta_pct": 60.0,
+          "P_kW": 13.0,
+          "NPSHr_m": 3.5
+        },
+        {
+          "Q_m3h": 150.0,
+          "H_m": 20.0,
+          "eta_pct": 55.0,
+          "P_kW": 14.0,
+          "NPSHr_m": 5.0
+        },
+        {
+          "Q_m3h": 200.0,
+          "H_m": 8.0,
+          "eta_pct": 30.0,
+          "P_kW": 15.0,
+          "NPSHr_m": 7.0
+        }
+      ],
+      "power": {
+        "P_kW": 15.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "official",
+        "distributor": "АСО (acorussia.ru)",
+        "lead_time": null
+      },
+      "warranty_months": 18,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": "Демо-запись. Подходит для городских КНС средней мощности.",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "phase5-etl-seed-2026-05-03",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "antarus-нк2-100-22",
+      "brand": "Antarus",
+      "model": "НК2-100/22",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 120.0,
+        "H_min_m": 5.0,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": 69.0,
+        "H_BEP_m": 19.72,
+        "eta_BEP_pct": 52.5,
+        "NPSHr_at_BEP_m": 3.45
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0,
+          "eta_pct": 0.0,
+          "P_kW": 7.5,
+          "NPSHr_m": 1.8
+        },
+        {
+          "Q_m3h": 30.0,
+          "H_m": 26.0,
+          "eta_pct": 38.0,
+          "P_kW": 8.5,
+          "NPSHr_m": 2.2
+        },
+        {
+          "Q_m3h": 60.0,
+          "H_m": 22.0,
+          "eta_pct": 52.0,
+          "P_kW": 9.5,
+          "NPSHr_m": 3.0
+        },
+        {
+          "Q_m3h": 90.0,
+          "H_m": 14.0,
+          "eta_pct": 48.0,
+          "P_kW": 10.5,
+          "NPSHr_m": 4.5
+        },
+        {
+          "Q_m3h": 120.0,
+          "H_m": 5.0,
+          "eta_pct": 28.0,
+          "P_kW": 11.0,
+          "NPSHr_m": 6.5
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "mid",
+      "available_ru": {
+        "status": "official",
+        "distributor": "Antarus прямой",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": "https://antarus.su/pump/canalization/nk2",
+      "image_url": null,
+      "notes": "Демо-запись. Российский конкурент Wilo/Grundfos в среднем сегменте.",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "phase5-etl-seed-2026-05-03",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "wilo-wilo-rexa-pro-v08da",
+      "brand": "Wilo",
+      "model": "Wilo-Rexa PRO V08DA",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 90.0,
+        "H_min_m": 4.0,
+        "H_max_m": 22.0,
+        "Q_BEP_m3h": 50.36,
+        "H_BEP_m": 15.72,
+        "eta_BEP_pct": 56.1,
+        "NPSHr_at_BEP_m": 2.82
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 22.0,
+          "eta_pct": 0.0,
+          "P_kW": 4.5,
+          "NPSHr_m": 1.8
+        },
+        {
+          "Q_m3h": 20.0,
+          "H_m": 20.0,
+          "eta_pct": 40.0,
+          "P_kW": 5.5,
+          "NPSHr_m": 2.0
+        },
+        {
+          "Q_m3h": 45.0,
+          "H_m": 17.0,
+          "eta_pct": 55.0,
+          "P_kW": 6.0,
+          "NPSHr_m": 2.5
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 11.0,
+          "eta_pct": 50.0,
+          "P_kW": 6.3,
+          "NPSHr_m": 4.0
+        },
+        {
+          "Q_m3h": 90.0,
+          "H_m": 4.0,
+          "eta_pct": 28.0,
+          "P_kW": 6.5,
+          "NPSHr_m": 6.0
+        }
+      ],
+      "power": {
+        "P_kW": 6.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС (рос. сборка)",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": "https://wilo.com/ru/ru/",
+      "image_url": null,
+      "notes": "Демо-запись. Vortex колесо — для коммерческих/гостиничных стоков.",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "phase5-etl-seed-2026-05-03",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
     }
   ],
-
   "_NOT_RECOMMENDED": [
     {
       "brand": "Aquario",
