@@ -51,7 +51,10 @@ include = ["pump_calculator*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
-addopts = "-v --tb=short"
+addopts = "-v --tb=short -m 'not slow'"
+markers = [
+    "slow: тяжёлые ETL-тесты, прогоняющие docling (по умолчанию пропускаются; запускать через `-m slow`)",
+]
 
 [tool.ruff]
 line-length = 100
