@@ -42,7 +42,18 @@ print(result.results.budget.brand, result.results.budget.model)
 pytest
 ```
 
-Эталонный тест верификации — `tests/test_matching_myshako.py` — должен пройти, иначе алгоритм поломан.
+Тестовый кейс — `tests/test_matching_myshako.py` — smoke-test на основе реального проекта АртВинд Мысхако. Не эталон верификации (для этого нужен калибровочный набор), но если он не проходит — алгоритм работает плохо.
+
+## Перед `git push` — локально прогнать что и в CI
+
+```bash
+make ci          # ruff check + pytest (mirror Backend CI)
+# или вручную:
+ruff check pump_calculator tests
+pytest
+```
+
+Если ruff падает локально — `make fix` авто-исправит большинство проблем (импорты, неиспользуемые переменные).
 
 ## Архитектура
 
