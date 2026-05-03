@@ -234,7 +234,8 @@ LLM-режим (`use_llm=True`, требует `ANTHROPIC_API_KEY`): Pydantic-AI
 |---|---|---|---|
 | **Pedrollo** | ✅ ETL v1 | [VX 50Hz datasheet](https://www.pedrollo.com/wp-content/uploads/schede-tecniche/EN/VX_EN-datasheet_50Hz.pdf) | 16 (VXm + VX серий /35 и /50) |
 | **KSB** | ✅ ETL v1 (stub Q-H) | [Amarex KRT 50Hz](https://www.lenntech.com/Data-sheets/KSB-AmaRex-KRT-50-Hz-EN-L.pdf) | 84 моделей (S/F/E/D/K/C × DN 40-300); все Q-H — stub envelope, требуют замены |
-| KAIQUAN | ⚠️ ETL stub | [WQ catalog 40 МБ](https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf) | 6 manual; Phase 6.7 (scan + OCR) |
+| **Antarus** | ✅ ETL v1 (stub Q-H) | [НК Руководство 2023 (с-о-к.ru)](https://www.c-o-k.ru/library/instructions/antarus/kanalizacionnye-nasosy/35874/131021.pdf) | 75 моделей НК1/НК2; Q/H/passage/P закодированы в имени; Q-H stub envelope |
+| KAIQUAN | ⚠️ ETL stub | [WQ catalog 40 МБ](https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf) | 6 manual; Phase 6.8 (scan + OCR) |
 | Wilo | ⚠️ ETL stub | [Rexa catalog](https://cms.media.wilo.com/cdndoc/wilo249379/6929984/wilo249379.pdf) | 4 manual |
 | Antarus | ⚠️ ETL stub | [НК manual ru](https://www.c-o-k.ru/library/instructions/antarus/kanalizacionnye-nasosy/35874/131021.pdf) | 4 manual; Cyrillic CID/WinAnsi баг |
 | Grundfos | ⚠️ manual | parallel import 2026 | 2 manual |
@@ -257,8 +258,18 @@ extractor-модули, выбираемые автоматически по `--
   Реальные кривые добавятся Phase 6.6.2 (curve_digitizer) или ручным импортом.
 - **Whitelist DN**: 40, 50, 65, 80, 100, 150, 200, 250, 300 (отсекает мусор)
 
+### `antarus_extractor.py` (Phase 6.7)
+- **Когда**: `--brand Antarus`
+- **Что**: парсит Antarus НК/HK имена моделей через regex
+  `(HK|НК)[12]-Q-H-passage-P_kW(-TB|-E)?-depth[MМ]`
+- **Уникально**: Q, H, free_passage, P_kW закодированы прямо в имени модели
+- **Q-H**: stub envelope из (Q_nom, H_nom) с допущением H_shutoff = 1.25 × H_nom
+- **PDF font mapping**: «HK» → «НК» нормализуется при парсинге
+- **Cyrillic mojibake**: на тестовом PDF (с-о-к.ru мирор) НЕ воспроизводился —
+  pdfplumber справляется. Если попадётся mojibake-PDF — расширить через
+  ToUnicode CMap rebuild
+
 ### Будущие
-- `antarus_extractor.py` (Phase 6.7) — ru caталоги с Cyrillic CID/WinAnsi
 - `kaiquan_extractor.py` (Phase 6.8) — scan + OCR pipeline через docling
 
 Регистрируются в `pipeline.py::_select_extractor()`.

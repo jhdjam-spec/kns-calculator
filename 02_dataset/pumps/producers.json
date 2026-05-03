@@ -48,8 +48,15 @@
       "registration_required": true,
       "categories": ["насосные установки", "гидромодули", "насосы", "канализационные", "станции I подъёма"]
     },
-    "catalog_pdf_url": "https://antarus.su/pump/canalization",
+    "catalog_pdf_url": "https://www.c-o-k.ru/library/instructions/antarus/kanalizacionnye-nasosy/35874/131021.pdf",
     "datasheet_format": ["Q-H", "P_kW", "BIM-модели"],
+    "etl_status": {
+      "covered_by_etl_v1": true,
+      "models_imported": 75,
+      "source_pdf": "https://www.c-o-k.ru/library/instructions/antarus/kanalizacionnye-nasosy/35874/131021.pdf",
+      "etl_run": "2026-05-03",
+      "notes": "Серии НК1/НК2 импортированы через etl Phase 6.7 antarus_extractor. Q, H, free_passage, P_kW закодированы в имени модели (HK1-50-10-10-0,75-10M). Cyrillic CID/WinAnsi mojibake на этом конкретном PDF не воспроизводился — pdfplumber справился. Q-H stub envelope из (Q_nom, H_nom) — все модели NEEDS REVIEW. PDF font mapping HK→НК нормализован при парсинге."
+    },
     "price_segment": "mid",
     "typical_price_50WQ_eq_rub": null,
     "lead_time_ru": "склад РФ",

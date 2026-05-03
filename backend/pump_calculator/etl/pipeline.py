@@ -26,6 +26,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
+from pump_calculator.etl.pdf.antarus_extractor import (
+    extract_antarus_pumps_from_chunks,
+    extract_antarus_qh_curves_from_chunks,
+)
 from pump_calculator.etl.pdf.docling_runner import DocumentChunk, run_docling
 from pump_calculator.etl.pdf.ksb_extractor import (
     extract_ksb_pumps_from_chunks,
@@ -45,11 +49,14 @@ def _select_extractor(brand: str):
     """Выбрать pump extractor по бренду.
 
     Pedrollo, Wilo, generic → table_extractor (rule-based табличный)
-    KSB → ksb_extractor (специализированный для KRT designation tables)
-    Будущее: Antarus, KAIQUAN — отдельные модули
+    KSB → ksb_extractor (KRT designation tables)
+    Antarus → antarus_extractor (Q/H/passage/P закодированы в имени модели)
     """
-    if brand.upper() == "KSB":
+    brand_up = brand.upper()
+    if brand_up == "KSB":
         return extract_ksb_pumps_from_chunks
+    if brand_up == "ANTARUS":
+        return extract_antarus_pumps_from_chunks
     return lambda chunks, brand_hint: extract_pumps_from_chunks(
         chunks, brand_hint=brand_hint, use_llm=False
     )
@@ -59,10 +66,14 @@ def _select_qh_extractor(brand: str):
     """Выбрать Q-H extractor по бренду.
 
     Pedrollo, generic → qh_extractor (численные таблицы Q-H)
-    KSB → ksb stub Q-H (envelope-based parabolic, требует review)
+    KSB → ksb stub Q-H (envelope из selection chart)
+    Antarus → antarus stub Q-H (envelope из Q_nom/H_nom в имени)
     """
-    if brand.upper() == "KSB":
+    brand_up = brand.upper()
+    if brand_up == "KSB":
         return extract_ksb_qh_curves_from_chunks
+    if brand_up == "ANTARUS":
+        return extract_antarus_qh_curves_from_chunks
     return extract_qh_curves_from_chunks
 
 
