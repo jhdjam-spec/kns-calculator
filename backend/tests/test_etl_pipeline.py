@@ -111,14 +111,14 @@ def test_pipeline_missing_pdf_raises(tmp_path: Path) -> None:
 # ----- review.py ----------------------------------------------------------
 
 
-def test_review_build_diff_report_for_new_brand(pedrollo_run: ParseResult) -> None:
-    """Для бренда без существующих записей в pumps.json — все validated «новые»."""
-    # В тестовой БД pumps.json Pedrollo пока нет — все 16 (или сколько прошло) → новые
+def test_review_build_diff_report_structure(pedrollo_run: ParseResult) -> None:
+    """diff-отчёт всегда содержит секции (новые / совпадения / только в БД)."""
     diff = build_diff_report(pedrollo_run.validated, brand="Pedrollo")
     assert "# ETL diff-отчёт" in diff
-    assert "Новые модели" in diff
-    # Должна быть секция таблицы новых моделей
-    assert "| id |" in diff
+    assert "Pedrollo" in diff
+    assert "Новые модели" in diff  # секция всегда упомянута в саммари
+    assert "Совпадают по id" in diff
+    assert "merge" in diff.lower()  # подсказка про команду merge
 
 
 def test_review_handles_empty_validated() -> None:

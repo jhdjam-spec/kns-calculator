@@ -1,0 +1,962 @@
+[
+  {
+    "brand": "Pedrollo",
+    "model": "VX 10/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 11.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 10.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 9.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 5.7
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 0.75,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 10/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 8.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 8.2
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 3.8
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 2.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 0.75,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 15/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 14.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 13.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 12.8
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 11.2
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 7.7
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 1.1,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 15/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 11.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 10.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 9.8
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 8.7
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 5.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 4.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 3.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 39.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 1.1,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 20/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 15.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 14.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 13.0
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 10.3
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 5.8
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 3.8
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 1.5,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 20/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 13.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 12.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 10.7
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 9.5
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 39.0,
+        "H_m": 2.5
+      }
+    ],
+    "P_kW": 1.5,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 8/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 5.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 2.7
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 1.0
+      }
+    ],
+    "P_kW": 0.55,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VX 8/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.8
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 2.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 0.55,
+    "voltage_v": 380,
+    "phase": 3,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 10/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 11.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 10.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 9.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 5.7
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 0.75,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 10/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 8.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 8.2
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 3.8
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 2.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 0.75,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 15/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 14.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 13.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 12.8
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 11.2
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 7.7
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 1.1,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 15/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 11.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 10.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 9.8
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 8.7
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 5.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 4.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 3.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 39.0,
+        "H_m": 2.0
+      }
+    ],
+    "P_kW": 1.1,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 20/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 15.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 14.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 13.0
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 10.3
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 5.8
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 3.8
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 1.5,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 20/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 13.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 12.5
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 11.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 10.7
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 9.5
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 30.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 33.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 39.0,
+        "H_m": 2.5
+      }
+    ],
+    "P_kW": 1.5,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 8/35",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 40.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 9.0
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 8.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 7.5
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 5.5
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 2.7
+      },
+      {
+        "Q_m3h": 21.0,
+        "H_m": 1.0
+      }
+    ],
+    "P_kW": 0.55,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 40.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  },
+  {
+    "brand": "Pedrollo",
+    "model": "VXm 8/50",
+    "type": "submersible_sewage",
+    "impeller": null,
+    "free_passage_mm": 50.0,
+    "qh_curve": [
+      {
+        "Q_m3h": 0.0,
+        "H_m": 6.5
+      },
+      {
+        "Q_m3h": 3.0,
+        "H_m": 6.0
+      },
+      {
+        "Q_m3h": 6.0,
+        "H_m": 5.8
+      },
+      {
+        "Q_m3h": 12.0,
+        "H_m": 5.0
+      },
+      {
+        "Q_m3h": 18.0,
+        "H_m": 4.0
+      },
+      {
+        "Q_m3h": 24.0,
+        "H_m": 2.5
+      },
+      {
+        "Q_m3h": 27.0,
+        "H_m": 1.5
+      }
+    ],
+    "P_kW": 0.55,
+    "voltage_v": 230,
+    "phase": 1,
+    "ip_rating": "IP68",
+    "discharge_DN_mm": 50.0,
+    "wastewater_compat": [
+      "domestic",
+      "drainage",
+      "industrial"
+    ],
+    "price_segment": "premium",
+    "available_ru_status": "official",
+    "distributor": "Pedrollo Россия (pedrollo.ru)",
+    "warranty_months": 24,
+    "source": "pdfplumber-pedrollo-2026-05"
+  }
+]

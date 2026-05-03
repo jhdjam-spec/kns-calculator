@@ -239,6 +239,13 @@
     },
     "catalog_pdf_url": "https://www.pedrollo.com/en/products/",
     "datasheet_format": ["Q-H", "КПД", "P_kW"],
+    "etl_status": {
+      "covered_by_etl_v1": true,
+      "models_imported": 16,
+      "source_pdf": "https://www.pedrollo.com/wp-content/uploads/schede-tecniche/EN/VX_EN-datasheet_50Hz.pdf",
+      "etl_run": "2026-05-03",
+      "notes": "Серия VX/VXm (погружные малой КНС) — 8 типоразмеров × 2 фазности импортированы через etl Phase 6 pipeline (pdfplumber + table_extractor + qh_extractor). Все записи помечены _engineer_flag=needs_review."
+    },
     "price_segment": "mid",
     "typical_price_50WQ_eq_rub": null,
     "lead_time_ru": "2-4 нед (склад РФ)",
