@@ -43,3 +43,6 @@ backend/.pytest_cache/
 backend/**/__pycache__/
 backend/**/*.egg-info/
 backend/.ruff_cache/
+
+# Phase 6 ETL: артефакты прогонов (только финальный validated JSON попадает в 02_dataset/etl_seed/)
+backend/runs/
