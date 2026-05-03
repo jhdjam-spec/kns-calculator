@@ -2257,6 +2257,5819 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-s-40-252",
+      "brand": "KSB",
+      "model": "KRT S 40-252",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 7.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 6.6,
+        "H_max_m": 22.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 22.0
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 20.5
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 15.98
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 11.83
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 6.6
+        }
+      ],
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 40.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-40-252",
+      "brand": "KSB",
+      "model": "KRT F 40-252",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 25.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 5.61,
+        "H_max_m": 18.7,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 18.7
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 17.42
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 13.59
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 10.06
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 5.61
+        }
+      ],
+      "power": {
+        "P_kW": 3.3,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 40.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-40-252",
+      "brand": "KSB",
+      "model": "KRT K 40-252",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 15.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 6.6,
+        "H_max_m": 22.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 22.0
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 20.5
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 15.98
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 11.83
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 6.6
+        }
+      ],
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 40.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-50-215",
+      "brand": "KSB",
+      "model": "KRT F 50-215",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 42.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 5.61,
+        "H_max_m": 18.7,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 18.7
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 17.42
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 13.59
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 10.06
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 5.61
+        }
+      ],
+      "power": {
+        "P_kW": 3.3,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 50.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-s-50-216",
+      "brand": "KSB",
+      "model": "KRT S 50-216",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 4.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 6.6,
+        "H_max_m": 22.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 22.0
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 20.5
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 15.98
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 11.83
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 6.6
+        }
+      ],
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 50.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-50-216",
+      "brand": "KSB",
+      "model": "KRT F 50-216",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 25.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 40.0,
+        "H_min_m": 5.61,
+        "H_max_m": 18.7,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 18.7
+        },
+        {
+          "Q_m3h": 12.5,
+          "H_m": 17.42
+        },
+        {
+          "Q_m3h": 25.0,
+          "H_m": 13.59
+        },
+        {
+          "Q_m3h": 32.5,
+          "H_m": 10.06
+        },
+        {
+          "Q_m3h": 40.0,
+          "H_m": 5.61
+        }
+      ],
+      "power": {
+        "P_kW": 3.3,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 50.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-65-215",
+      "brand": "KSB",
+      "model": "KRT F 65-215",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 65.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 65.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-65-216",
+      "brand": "KSB",
+      "model": "KRT E 65-216",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 65.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-65-217",
+      "brand": "KSB",
+      "model": "KRT F 65-217",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 65.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 65.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-80-215",
+      "brand": "KSB",
+      "model": "KRT F 80-215",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-80-216",
+      "brand": "KSB",
+      "model": "KRT F 80-216",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-80-216",
+      "brand": "KSB",
+      "model": "KRT E 80-216",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-80-252",
+      "brand": "KSB",
+      "model": "KRT F 80-252",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-80-253",
+      "brand": "KSB",
+      "model": "KRT F 80-253",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-80-253",
+      "brand": "KSB",
+      "model": "KRT E 80-253",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-80-253",
+      "brand": "KSB",
+      "model": "KRT K 80-253",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 33.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-80-315",
+      "brand": "KSB",
+      "model": "KRT D 80-315",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-80-315",
+      "brand": "KSB",
+      "model": "KRT K 80-315",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 33.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-80-317",
+      "brand": "KSB",
+      "model": "KRT F 80-317",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 7.14,
+        "H_max_m": 23.8,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 23.8
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 22.17
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 17.29
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 12.8
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 7.14
+        }
+      ],
+      "power": {
+        "P_kW": 8.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-80-317",
+      "brand": "KSB",
+      "model": "KRT D 80-317",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 112.0,
+        "H_min_m": 8.4,
+        "H_max_m": 28.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 28.0
+        },
+        {
+          "Q_m3h": 35.0,
+          "H_m": 26.09
+        },
+        {
+          "Q_m3h": 70.0,
+          "H_m": 20.34
+        },
+        {
+          "Q_m3h": 91.0,
+          "H_m": 15.06
+        },
+        {
+          "Q_m3h": 112.0,
+          "H_m": 8.4
+        }
+      ],
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 80.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-100-215",
+      "brand": "KSB",
+      "model": "KRT F 100-215",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 8.16,
+        "H_max_m": 27.2,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 27.2
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 25.34
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 19.76
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 14.63
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 8.16
+        }
+      ],
+      "power": {
+        "P_kW": 12.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-100-253",
+      "brand": "KSB",
+      "model": "KRT E 100-253",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-100-253",
+      "brand": "KSB",
+      "model": "KRT D 100-253",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-253",
+      "brand": "KSB",
+      "model": "KRT K 100-253",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-100-254",
+      "brand": "KSB",
+      "model": "KRT F 100-254",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 8.16,
+        "H_max_m": 27.2,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 27.2
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 25.34
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 19.76
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 14.63
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 8.16
+        }
+      ],
+      "power": {
+        "P_kW": 12.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-254",
+      "brand": "KSB",
+      "model": "KRT K 100-254",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 71.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-100-315",
+      "brand": "KSB",
+      "model": "KRT F 100-315",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 8.16,
+        "H_max_m": 27.2,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 27.2
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 25.34
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 19.76
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 14.63
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 8.16
+        }
+      ],
+      "power": {
+        "P_kW": 12.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-100-315",
+      "brand": "KSB",
+      "model": "KRT E 100-315",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-100-315",
+      "brand": "KSB",
+      "model": "KRT D 100-315",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 75.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-315",
+      "brand": "KSB",
+      "model": "KRT K 100-315",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-100-316",
+      "brand": "KSB",
+      "model": "KRT D 100-316",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 85.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-100-316",
+      "brand": "KSB",
+      "model": "KRT F 100-316",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 8.16,
+        "H_max_m": 27.2,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 27.2
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 25.34
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 19.76
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 14.63
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 8.16
+        }
+      ],
+      "power": {
+        "P_kW": 12.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-316",
+      "brand": "KSB",
+      "model": "KRT K 100-316",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-100-317",
+      "brand": "KSB",
+      "model": "KRT E 100-317",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-400",
+      "brand": "KSB",
+      "model": "KRT K 100-400",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-100-403",
+      "brand": "KSB",
+      "model": "KRT D 100-403",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-100-401",
+      "brand": "KSB",
+      "model": "KRT F 100-401",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 8.16,
+        "H_max_m": 27.2,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 27.2
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 25.34
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 19.76
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 14.63
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 8.16
+        }
+      ],
+      "power": {
+        "P_kW": 12.1,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-100-401",
+      "brand": "KSB",
+      "model": "KRT E 100-401",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-100-401",
+      "brand": "KSB",
+      "model": "KRT K 100-401",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 50.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 208.0,
+        "H_min_m": 9.6,
+        "H_max_m": 32.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.0
+        },
+        {
+          "Q_m3h": 65.0,
+          "H_m": 29.81
+        },
+        {
+          "Q_m3h": 130.0,
+          "H_m": 23.25
+        },
+        {
+          "Q_m3h": 169.0,
+          "H_m": 17.21
+        },
+        {
+          "Q_m3h": 208.0,
+          "H_m": 9.6
+        }
+      ],
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 100.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-253",
+      "brand": "KSB",
+      "model": "KRT D 150-253",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-150-315",
+      "brand": "KSB",
+      "model": "KRT F 150-315",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 120.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 9.69,
+        "H_max_m": 32.3,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.3
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 29.79
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 22.25
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 15.32
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 9.69
+        }
+      ],
+      "power": {
+        "P_kW": 24.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-315",
+      "brand": "KSB",
+      "model": "KRT D 150-315",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-317",
+      "brand": "KSB",
+      "model": "KRT D 150-317",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-150-317",
+      "brand": "KSB",
+      "model": "KRT E 150-317",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 110.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-150-317",
+      "brand": "KSB",
+      "model": "KRT K 150-317",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-400",
+      "brand": "KSB",
+      "model": "KRT D 150-400",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-150-400",
+      "brand": "KSB",
+      "model": "KRT K 150-400",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-f-150-401",
+      "brand": "KSB",
+      "model": "KRT F 150-401",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 135.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 9.69,
+        "H_max_m": 32.3,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 32.3
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 29.79
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 22.25
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 15.32
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 9.69
+        }
+      ],
+      "power": {
+        "P_kW": 24.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-150-401",
+      "brand": "KSB",
+      "model": "KRT E 150-401",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 115.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-401",
+      "brand": "KSB",
+      "model": "KRT D 150-401",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 110.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-403",
+      "brand": "KSB",
+      "model": "KRT D 150-403",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-150-403",
+      "brand": "KSB",
+      "model": "KRT K 150-403",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-150-503",
+      "brand": "KSB",
+      "model": "KRT D 150-503",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-150-503",
+      "brand": "KSB",
+      "model": "KRT K 150-503",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 420.0,
+        "H_min_m": 11.4,
+        "H_max_m": 38.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 38.0
+        },
+        {
+          "Q_m3h": 140.0,
+          "H_m": 35.04
+        },
+        {
+          "Q_m3h": 280.0,
+          "H_m": 26.18
+        },
+        {
+          "Q_m3h": 364.0,
+          "H_m": 18.02
+        },
+        {
+          "Q_m3h": 420.0,
+          "H_m": 11.4
+        }
+      ],
+      "power": {
+        "P_kW": 22.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 150.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-e-200-401",
+      "brand": "KSB",
+      "model": "KRT E 200-401",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 120.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-200-315",
+      "brand": "KSB",
+      "model": "KRT D 200-315",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-315",
+      "brand": "KSB",
+      "model": "KRT K 200-315",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 70.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-316",
+      "brand": "KSB",
+      "model": "KRT K 200-316",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-317",
+      "brand": "KSB",
+      "model": "KRT K 200-317",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-318",
+      "brand": "KSB",
+      "model": "KRT K 200-318",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-200-400",
+      "brand": "KSB",
+      "model": "KRT D 200-400",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-200-402",
+      "brand": "KSB",
+      "model": "KRT D 200-402",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-402",
+      "brand": "KSB",
+      "model": "KRT K 200-402",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 80.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-200-405",
+      "brand": "KSB",
+      "model": "KRT D 200-405",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 90.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-403",
+      "brand": "KSB",
+      "model": "KRT K 200-403",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 90.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-504",
+      "brand": "KSB",
+      "model": "KRT K 200-504",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 76.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-200-503",
+      "brand": "KSB",
+      "model": "KRT D 200-503",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 90.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-200-505",
+      "brand": "KSB",
+      "model": "KRT K 200-505",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 90.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 900.0,
+        "H_min_m": 13.5,
+        "H_max_m": 45.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 45.0
+        },
+        {
+          "Q_m3h": 300.0,
+          "H_m": 41.5
+        },
+        {
+          "Q_m3h": 600.0,
+          "H_m": 31.0
+        },
+        {
+          "Q_m3h": 780.0,
+          "H_m": 21.34
+        },
+        {
+          "Q_m3h": 900.0,
+          "H_m": 13.5
+        }
+      ],
+      "power": {
+        "P_kW": 37.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 200.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-250-400",
+      "brand": "KSB",
+      "model": "KRT D 250-400",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 120.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-250-401",
+      "brand": "KSB",
+      "model": "KRT K 250-401",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 105.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-250-402",
+      "brand": "KSB",
+      "model": "KRT D 250-402",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 106.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-250-403",
+      "brand": "KSB",
+      "model": "KRT K 250-403",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 107.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-250-632",
+      "brand": "KSB",
+      "model": "KRT K 250-632",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 105.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-250-900",
+      "brand": "KSB",
+      "model": "KRT K 250-900",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 110.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 250.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-300-400",
+      "brand": "KSB",
+      "model": "KRT D 300-400",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 150.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-400",
+      "brand": "KSB",
+      "model": "KRT K 300-400",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-401",
+      "brand": "KSB",
+      "model": "KRT K 300-401",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 135.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-300-402",
+      "brand": "KSB",
+      "model": "KRT D 300-402",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-403",
+      "brand": "KSB",
+      "model": "KRT K 300-403",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 102.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-420",
+      "brand": "KSB",
+      "model": "KRT K 300-420",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 100.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-500",
+      "brand": "KSB",
+      "model": "KRT K 300-500",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 90.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-300-502",
+      "brand": "KSB",
+      "model": "KRT D 300-502",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 102.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-d-300-505",
+      "brand": "KSB",
+      "model": "KRT D 300-505",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 127.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
+    },
+    {
+      "id": "ksb-krt-k-300-505",
+      "brand": "KSB",
+      "model": "KRT K 300-505",
+      "type": "submersible_sewage",
+      "impeller": "multi-channel",
+      "free_passage_mm": 102.0,
+      "envelope": {
+        "Q_min_m3h": 0.0,
+        "Q_max_m3h": 2100.0,
+        "H_min_m": 18.0,
+        "H_max_m": 60.0,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null,
+        "eta_BEP_pct": null,
+        "NPSHr_at_BEP_m": null
+      },
+      "qh_curve": [
+        {
+          "Q_m3h": 0.0,
+          "H_m": 60.0
+        },
+        {
+          "Q_m3h": 750.0,
+          "H_m": 54.64
+        },
+        {
+          "Q_m3h": 1500.0,
+          "H_m": 38.57
+        },
+        {
+          "Q_m3h": 1950.0,
+          "H_m": 23.79
+        },
+        {
+          "Q_m3h": 2100.0,
+          "H_m": 18.0
+        }
+      ],
+      "power": {
+        "P_kW": 55.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": null
+      },
+      "discharge": {
+        "DN_mm": 300.0
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "distributor": "ksb.nt-rt.ru / Petroplan",
+        "lead_time": null
+      },
+      "warranty_months": 24,
+      "datasheet_url": null,
+      "image_url": null,
+      "notes": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_source": "pdfplumber-ksb-2026-05",
+      "_added": "2026-05-03",
+      "_updated": "2026-05-03"
     }
   ],
   "_NOT_RECOMMENDED": [

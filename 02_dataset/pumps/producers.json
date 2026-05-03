@@ -204,8 +204,15 @@
       "registration_required": "базовый без регистрации; для скачивания — с регистрацией",
       "features": ["конфигуратор по применениям", "Q-H подбор", "арматура + насосы"]
     },
-    "catalog_pdf_url": "https://www.ksb.com/",
+    "catalog_pdf_url": "https://www.lenntech.com/Data-sheets/KSB-AmaRex-KRT-50-Hz-EN-L.pdf",
     "datasheet_format": ["Q-H", "КПД", "NPSH", "P_kW", "сертификаты", "BIM"],
+    "etl_status": {
+      "covered_by_etl_v1": true,
+      "models_imported": 84,
+      "source_pdf": "https://www.lenntech.com/Data-sheets/KSB-AmaRex-KRT-50-Hz-EN-L.pdf",
+      "etl_run": "2026-05-03",
+      "notes": "Серия Amarex KRT (импеллеры F/S/E/D/K/C, DN 40-300) импортирована через etl Phase 6.6 ksb_extractor. Q-H у KSB только графически — все импортированные модели имеют STUB Q-H (parabolic envelope) и помечены _engineer_flag=needs_review. Реальные кривые — Phase 6.6.2 curve_digitizer или ручной импорт."
+    },
     "price_segment": "premium",
     "typical_price_50WQ_eq_rub": 350000,
     "lead_time_ru": "4-10 нед",

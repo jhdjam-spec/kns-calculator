@@ -27,6 +27,10 @@ from pathlib import Path
 from typing import Literal
 
 from pump_calculator.etl.pdf.docling_runner import DocumentChunk, run_docling
+from pump_calculator.etl.pdf.ksb_extractor import (
+    extract_ksb_pumps_from_chunks,
+    extract_ksb_qh_curves_from_chunks,
+)
 from pump_calculator.etl.pdf.pdfplumber_runner import run_pdfplumber
 from pump_calculator.etl.pdf.qh_extractor import extract_qh_curves_from_chunks
 from pump_calculator.etl.pdf.splitter import split_pdf
@@ -35,6 +39,31 @@ from pump_calculator.etl.pdf.table_extractor import (
     extract_pumps_from_chunks,
 )
 from pump_calculator.etl.schemas import RawPumpRecord
+
+
+def _select_extractor(brand: str):
+    """Выбрать pump extractor по бренду.
+
+    Pedrollo, Wilo, generic → table_extractor (rule-based табличный)
+    KSB → ksb_extractor (специализированный для KRT designation tables)
+    Будущее: Antarus, KAIQUAN — отдельные модули
+    """
+    if brand.upper() == "KSB":
+        return extract_ksb_pumps_from_chunks
+    return lambda chunks, brand_hint: extract_pumps_from_chunks(
+        chunks, brand_hint=brand_hint, use_llm=False
+    )
+
+
+def _select_qh_extractor(brand: str):
+    """Выбрать Q-H extractor по бренду.
+
+    Pedrollo, generic → qh_extractor (численные таблицы Q-H)
+    KSB → ksb stub Q-H (envelope-based parabolic, требует review)
+    """
+    if brand.upper() == "KSB":
+        return extract_ksb_qh_curves_from_chunks
+    return extract_qh_curves_from_chunks
 
 
 @dataclass
@@ -207,8 +236,9 @@ def parse_catalog(
             runtime_sec=time.perf_counter() - started,
         )
 
-    # 3. Extract pump drafts
-    drafts = extract_pumps_from_chunks(document_chunks, brand_hint=brand, use_llm=False)
+    # 3. Extract pump drafts (выбираем extractor по бренду)
+    extractor = _select_extractor(brand)
+    drafts = extractor(document_chunks, brand)
     drafts_path = run_dir / "03_drafts.json"
     drafts_path.write_text(
         json.dumps(
@@ -219,8 +249,9 @@ def parse_catalog(
         encoding="utf-8",
     )
 
-    # 4. Extract Q-H curves
-    curves = extract_qh_curves_from_chunks(document_chunks)
+    # 4. Extract Q-H curves (выбираем Q-H extractor по бренду)
+    qh_extractor = _select_qh_extractor(brand)
+    curves = qh_extractor(document_chunks)
     curves_path = run_dir / "04_curves.json"
     curves_path.write_text(
         json.dumps(

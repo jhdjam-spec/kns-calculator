@@ -233,13 +233,35 @@ LLM-режим (`use_llm=True`, требует `ANTHROPIC_API_KEY`): Pydantic-AI
 | Бренд | Статус | PDF-источник | Модели |
 |---|---|---|---|
 | **Pedrollo** | ✅ ETL v1 | [VX 50Hz datasheet](https://www.pedrollo.com/wp-content/uploads/schede-tecniche/EN/VX_EN-datasheet_50Hz.pdf) | 16 (VXm + VX серий /35 и /50) |
-| KAIQUAN | ⚠️ ETL stub | [WQ catalog 40 МБ](https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf) | 6 manual; ETL Phase 6.6 |
+| **KSB** | ✅ ETL v1 (stub Q-H) | [Amarex KRT 50Hz](https://www.lenntech.com/Data-sheets/KSB-AmaRex-KRT-50-Hz-EN-L.pdf) | 84 моделей (S/F/E/D/K/C × DN 40-300); все Q-H — stub envelope, требуют замены |
+| KAIQUAN | ⚠️ ETL stub | [WQ catalog 40 МБ](https://www.kqpump.com/uploads/Catalog--WQ%20Submersible%20Sewage%20Pump.pdf) | 6 manual; Phase 6.7 (scan + OCR) |
 | Wilo | ⚠️ ETL stub | [Rexa catalog](https://cms.media.wilo.com/cdndoc/wilo249379/6929984/wilo249379.pdf) | 4 manual |
-| KSB | ⚠️ ETL stub | [Amarex KRT](https://www.lenntech.com/Data-sheets/KSB-AmaRex-KRT-50-Hz-EN-L.pdf) | 2 manual |
 | Antarus | ⚠️ ETL stub | [НК manual ru](https://www.c-o-k.ru/library/instructions/antarus/kanalizacionnye-nasosy/35874/131021.pdf) | 4 manual; Cyrillic CID/WinAnsi баг |
 | Grundfos | ⚠️ manual | parallel import 2026 | 2 manual |
 | LEO | ⚠️ manual | brochure только | 1 manual |
 | Aquario/Belamos/Unipump | — | HTML-карточки | — |
+
+## Brand-specific extractors
+
+Базовый `table_extractor.py` использует rule-based парсинг markdown-таблиц
+(работает для каталогов с явными таблицами моделей: Pedrollo, Wilo, generic).
+
+Для брендов со специфической структурой каталога подключаются специализированные
+extractor-модули, выбираемые автоматически по `--brand` флагу:
+
+### `ksb_extractor.py` (Phase 6.6)
+- **Когда**: `--brand KSB`
+- **Что**: парсит KSB Amarex KRT designation tables (стр 18-21 booklet)
+  через regex `KRT [F/S/E/D/K/C] [DN]-[D2]`
+- **Q-H**: стабы (parabolic envelope по DN), помечены `needs_review`.
+  Реальные кривые добавятся Phase 6.6.2 (curve_digitizer) или ручным импортом.
+- **Whitelist DN**: 40, 50, 65, 80, 100, 150, 200, 250, 300 (отсекает мусор)
+
+### Будущие
+- `antarus_extractor.py` (Phase 6.7) — ru caталоги с Cyrillic CID/WinAnsi
+- `kaiquan_extractor.py` (Phase 6.8) — scan + OCR pipeline через docling
+
+Регистрируются в `pipeline.py::_select_extractor()`.
 
 ## Troubleshooting
 
