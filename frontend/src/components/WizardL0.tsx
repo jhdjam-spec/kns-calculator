@@ -27,7 +27,8 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
     resolver: zodResolver(wizardFormSchema),
     defaultValues: {
       Q_unit: "m3h",
-      wastewater_type: "domestic",
+      // Опциональные поля по умолчанию пусты — backend подставит дефолт
+      wastewater_type: "" as unknown as WastewaterType,
     },
     mode: "onSubmit",
   });
@@ -80,14 +81,15 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       {/* dH */}
       <div>
         <label htmlFor="dH_m" className="block text-sm font-medium mb-1">
-          Перепад точек ΔH, м <span className="text-red-600">*</span>
+          Перепад точек ΔH, м{" "}
+          <span className="text-gray-400 text-xs font-normal">(опционально, default 5 м)</span>
         </label>
         <input
           id="dH_m"
           type="number"
           step="any"
           inputMode="decimal"
-          placeholder="Например: 10"
+          placeholder="Например: 10 (или оставьте пустым)"
           className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
           aria-invalid={!!errors.dH_m}
           {...register("dH_m")}
@@ -105,14 +107,15 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       {/* L */}
       <div>
         <label htmlFor="L_m" className="block text-sm font-medium mb-1">
-          Длина напорной трассы L, м <span className="text-red-600">*</span>
+          Длина напорной трассы L, м{" "}
+          <span className="text-gray-400 text-xs font-normal">(опционально, default 50 м)</span>
         </label>
         <input
           id="L_m"
           type="number"
           step="any"
           inputMode="decimal"
-          placeholder="0 — если только внутренняя обвязка"
+          placeholder="0 — только внутренняя; 50 — типовая внутриплощадочная"
           className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
           aria-invalid={!!errors.L_m}
           {...register("L_m")}
@@ -130,9 +133,25 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       {/* Тип стоков */}
       <fieldset>
         <legend className="block text-sm font-medium mb-1">
-          Тип стоков <span className="text-red-600">*</span>
+          Тип стоков{" "}
+          <span className="text-gray-400 text-xs font-normal">(опционально, default хоз-бытовые)</span>
         </legend>
         <div className="space-y-2">
+          <label className="flex items-start gap-2 cursor-pointer">
+            <input
+              type="radio"
+              value=""
+              className="mt-1"
+              defaultChecked
+              {...register("wastewater_type")}
+            />
+            <span>
+              <span className="font-medium text-gray-500">Не выбрано</span>
+              <span className="block text-xs text-gray-400">
+                Калькулятор подставит «хоз-бытовые» — наиболее частый сценарий
+              </span>
+            </span>
+          </label>
           {WASTEWATER_OPTIONS.map((opt) => (
             <label key={opt} className="flex items-start gap-2 cursor-pointer">
               <input

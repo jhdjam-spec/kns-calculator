@@ -15,7 +15,7 @@ describe("<WizardL0>", () => {
     expect(screen.getByRole("button", { name: /Подобрать насос/i })).toBeInTheDocument();
   });
 
-  it("при сабмите валидной формы вызывает onSubmit с L0Input", async () => {
+  it("при сабмите формы с явно выбранным типом стоков отправляет все 4 поля", async () => {
     const user = userEvent.setup();
     const handle = vi.fn();
     render(<WizardL0 onSubmit={handle} />);
@@ -23,6 +23,12 @@ describe("<WizardL0>", () => {
     await user.type(document.getElementById("Q_value")!, "21.2");
     await user.type(screen.getByLabelText(/Перепад точек/i), "10");
     await user.type(screen.getByLabelText(/Длина напорной трассы/i), "0");
+    // Выбираем radio domestic явно (есть несколько вариантов с именем «Хоз-бытовые»)
+    const radios = screen.getAllByRole("radio");
+    const domesticRadio = radios.find(
+      (r) => (r as HTMLInputElement).value === "domestic"
+    )!;
+    await user.click(domesticRadio);
     await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
 
     await waitFor(() => {
@@ -36,7 +42,24 @@ describe("<WizardL0>", () => {
     });
   });
 
-  it("блокирует сабмит при пустых полях", async () => {
+  it("сабмит с одним только Q отправляет минимальный L0Input (опциональные поля backend подставит)", async () => {
+    const user = userEvent.setup();
+    const handle = vi.fn();
+    render(<WizardL0 onSubmit={handle} />);
+
+    await user.type(document.getElementById("Q_value")!, "21.2");
+    // dH, L, wastewater_type — оставляем по умолчанию (пустые)
+    await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
+
+    await waitFor(() => expect(handle).toHaveBeenCalledTimes(1));
+    const arg = handle.mock.calls[0][0];
+    expect(arg.Q_m3h).toBe(21.2);
+    expect(arg.dH_m).toBeUndefined();
+    expect(arg.L_m).toBeUndefined();
+    expect(arg.wastewater_type).toBeUndefined();
+  });
+
+  it("блокирует сабмит при пустом Q (Q обязательный)", async () => {
     const user = userEvent.setup();
     const handle = vi.fn();
     render(<WizardL0 onSubmit={handle} />);

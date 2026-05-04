@@ -28,6 +28,16 @@ const AVAIL_BADGES: Record<string, { label: string; cls: string }> = {
   discontinued: { label: "снят с производства", cls: "bg-red-100 text-red-800" },
 };
 
+const CONFIDENCE_LABELS: Record<"low" | "medium" | "high", { label: string; cls: string }> = {
+  low: { label: "грубая оценка", cls: "bg-gray-100 text-gray-700" },
+  medium: { label: "оценка по прайсу 2026", cls: "bg-blue-100 text-blue-800" },
+  high: { label: "точная по БД", cls: "bg-green-100 text-green-800" },
+};
+
+function formatRub(rub: number): string {
+  return new Intl.NumberFormat("ru-RU").format(rub);
+}
+
 export function PumpCard({ segment, pump }: PumpCardProps) {
   return (
     <article
@@ -81,6 +91,51 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
               </>
             )}
           </dl>
+
+          {pump.price_estimate_rub > 0 && (
+            <div className="mt-2 border-t border-gray-200 pt-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-xs text-gray-500">Ориентировочно комплект 1+1</span>
+                <span
+                  className={clsx(
+                    "text-[10px] px-1.5 py-0.5 rounded-full font-medium",
+                    CONFIDENCE_LABELS[pump.price_confidence].cls
+                  )}
+                  title="Уровень уверенности оценки: low — heuristic, medium — обвязка из АРКАДА КП 29.01.2026, high — все позиции из БД"
+                >
+                  {CONFIDENCE_LABELS[pump.price_confidence].label}
+                </span>
+              </div>
+              <p className="text-2xl font-bold tabular-nums">
+                {formatRub(pump.price_estimate_rub)} ₽
+              </p>
+              <details className="mt-1 text-xs text-gray-600">
+                <summary className="cursor-pointer hover:text-gray-900 select-none">
+                  разбивка по позициям
+                </summary>
+                <dl className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-0.5 pl-2 tabular-nums">
+                  <dt>Насос (×2)</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.pump_rub)}</dd>
+                  <dt>АТМ</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.atm_rub)}</dd>
+                  <dt>Задвижка</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.valve_rub)}</dd>
+                  <dt>Обр. клапан</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.check_valve_rub)}</dd>
+                  <dt>Направляющие</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.rails_rub)}</dd>
+                  <dt>Шкаф управления</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.cabinet_rub)}</dd>
+                  <dt>Поплавки</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.floats_rub)}</dd>
+                  <dt>Цепь</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.chain_rub)}</dd>
+                  <dt>Корпус КНС</dt>
+                  <dd className="text-right">{formatRub(pump.price_breakdown.corpus_rub)}</dd>
+                </dl>
+              </details>
+            </div>
+          )}
 
           <footer className="flex flex-wrap gap-2 mt-auto pt-2">
             {AVAIL_BADGES[pump.available_ru_status] && (

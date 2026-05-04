@@ -28,6 +28,20 @@ const SAMPLE_PUMP: PumpResult = {
   duty_point: { Q_m3h: 21.2, H_m: 12.6 },
   aor_zone: "POR",
   notes: [],
+  price_estimate_rub: 837_000,
+  price_breakdown: {
+    pump_rub: 150_000,
+    atm_rub: 45_400,
+    valve_rub: 26_400,
+    check_valve_rub: 13_200,
+    rails_rub: 24_000,
+    cabinet_rub: 200_000,
+    floats_rub: 20_000,
+    chain_rub: 8_000,
+    corpus_rub: 350_000,
+    total_rub: 837_000,
+  },
+  price_confidence: "medium",
 };
 
 describe("<PumpCard>", () => {
@@ -55,5 +69,22 @@ describe("<PumpCard>", () => {
   it("выводит score с двумя знаками после запятой", () => {
     render(<PumpCard segment="budget" pump={SAMPLE_PUMP} />);
     expect(screen.getByText(/0.67/)).toBeInTheDocument();
+  });
+
+  it("показывает оценочную цену комплекта в рублях", () => {
+    render(<PumpCard segment="budget" pump={SAMPLE_PUMP} />);
+    // Цена форматируется через Intl.NumberFormat ru-RU — пробельный разделитель
+    expect(screen.getByText(/837\s*000\s*₽/)).toBeInTheDocument();
+    expect(screen.getByText(/оценка по прайсу 2026/i)).toBeInTheDocument();
+  });
+
+  it("не показывает блок цены если price_estimate_rub = 0", () => {
+    render(
+      <PumpCard
+        segment="mid"
+        pump={{ ...SAMPLE_PUMP, price_estimate_rub: 0 }}
+      />
+    );
+    expect(screen.queryByText(/Ориентировочно комплект/i)).not.toBeInTheDocument();
   });
 });

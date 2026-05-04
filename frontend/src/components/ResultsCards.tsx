@@ -8,7 +8,7 @@ export interface ResultsCardsProps {
 }
 
 export function ResultsCards({ result }: ResultsCardsProps) {
-  const { results, computed, candidates_total, warnings } = result;
+  const { results, computed, candidates_total, warnings, assumptions } = result;
 
   return (
     <section aria-label="Результаты подбора" className="space-y-5">
@@ -24,6 +24,22 @@ export function ResultsCards({ result }: ResultsCardsProps) {
           Кандидатов после фильтрации: {candidates_total}
         </p>
       </header>
+
+      {assumptions.length > 0 && (
+        <aside className="rounded-md bg-blue-50 border border-blue-200 p-3">
+          <h4 className="text-sm font-semibold text-blue-900 mb-1">
+            Подставленные значения
+          </h4>
+          <p className="text-xs text-blue-800 mb-1">
+            Часть полей не заполнена — калькулятор использовал безопасные дефолты:
+          </p>
+          <ul className="text-sm text-blue-900 list-disc pl-5">
+            {assumptions.map((a) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+        </aside>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <PumpCard segment="budget" pump={results.budget} />

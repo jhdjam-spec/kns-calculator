@@ -102,3 +102,40 @@ describe("wizardFormToL0Input", () => {
     expect(result.wastewater_type).toBe("domestic");
   });
 });
+
+describe("L0Input — опциональные поля (Phase 6+)", () => {
+  it("принимает только Q_m3h без остальных полей", () => {
+    const ok = l0InputSchema.safeParse({ Q_m3h: 21.2 });
+    expect(ok.success).toBe(true);
+  });
+
+  it("wizardFormToL0Input не отправляет undefined-поля", () => {
+    const result = wizardFormToL0Input({
+      Q_value: 21.2,
+      Q_unit: "m3h",
+      dH_m: undefined,
+      L_m: undefined,
+      wastewater_type: undefined,
+    });
+    expect(result.Q_m3h).toBe(21.2);
+    expect("dH_m" in result).toBe(false);
+    expect("L_m" in result).toBe(false);
+    expect("wastewater_type" in result).toBe(false);
+  });
+
+  it("wizardFormSchema преобразует пустую строку в undefined", () => {
+    const r = wizardFormSchema.safeParse({
+      Q_value: "21.2",
+      Q_unit: "m3h",
+      dH_m: "",
+      L_m: "",
+      wastewater_type: "",
+    });
+    expect(r.success).toBe(true);
+    if (r.success) {
+      expect(r.data.dH_m).toBeUndefined();
+      expect(r.data.L_m).toBeUndefined();
+      expect(r.data.wastewater_type).toBeUndefined();
+    }
+  });
+});

@@ -17,6 +17,21 @@ export const pumpEnvelopeSchema = z.object({
   NPSHr_at_BEP_m: z.number().nullable().optional(),
 });
 
+export const priceBreakdownSchema = z.object({
+  pump_rub: z.number().default(0),
+  atm_rub: z.number().default(0),
+  valve_rub: z.number().default(0),
+  check_valve_rub: z.number().default(0),
+  rails_rub: z.number().default(0),
+  cabinet_rub: z.number().default(0),
+  floats_rub: z.number().default(0),
+  chain_rub: z.number().default(0),
+  corpus_rub: z.number().default(0),
+  total_rub: z.number().default(0),
+});
+
+export type PriceBreakdown = z.infer<typeof priceBreakdownSchema>;
+
 export const pumpResultSchema = z.object({
   id: z.string(),
   brand: z.string(),
@@ -34,6 +49,14 @@ export const pumpResultSchema = z.object({
   duty_point: z.record(z.number()).nullable().optional(),
   aor_zone: z.enum(["POR", "AOR", "outside"]).nullable().optional(),
   notes: z.array(z.string()).default([]),
+  // Phase 6+ — первичная оценка цены КНС-комплекта
+  price_estimate_rub: z.number().default(0),
+  price_breakdown: priceBreakdownSchema.default({
+    pump_rub: 0, atm_rub: 0, valve_rub: 0, check_valve_rub: 0,
+    rails_rub: 0, cabinet_rub: 0, floats_rub: 0, chain_rub: 0,
+    corpus_rub: 0, total_rub: 0,
+  }),
+  price_confidence: z.enum(["low", "medium", "high"]).default("low"),
 });
 
 export type PumpResult = z.infer<typeof pumpResultSchema>;
@@ -65,6 +88,8 @@ export const selectionResultSchema = z.object({
   warnings: z.array(z.string()),
   engineer_handoff_required: z.boolean(),
   trigger_reasons: z.array(z.string()),
+  // Phase 6+ — список дефолтов, подставленных при неполном L0
+  assumptions: z.array(z.string()).default([]),
 });
 
 export type SelectionResult = z.infer<typeof selectionResultSchema>;
