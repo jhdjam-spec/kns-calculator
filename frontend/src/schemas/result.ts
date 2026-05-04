@@ -28,6 +28,9 @@ export const priceBreakdownSchema = z.object({
   chain_rub: z.number().default(0),
   corpus_rub: z.number().default(0),
   total_rub: z.number().default(0),
+  // Phase 9: диапазон цены (зависит от полноты ввода)
+  total_low_rub: z.number().default(0),
+  total_high_rub: z.number().default(0),
 });
 
 export type PriceBreakdown = z.infer<typeof priceBreakdownSchema>;
@@ -90,6 +93,9 @@ export const selectionResultSchema = z.object({
   trigger_reasons: z.array(z.string()),
   // Phase 6+ — список дефолтов, подставленных при неполном L0
   assumptions: z.array(z.string()).default([]),
+  // Phase 9 — полнота ввода и человекочитаемая сводка
+  completeness_pct: z.number().int().min(0).max(100).default(100),
+  summary_text: z.string().default(""),
 });
 
 export type SelectionResult = z.infer<typeof selectionResultSchema>;

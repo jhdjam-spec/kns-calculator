@@ -157,9 +157,30 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
                   {CONFIDENCE_LABELS[pump.price_confidence].label}
                 </span>
               </div>
-              <p className="text-2xl font-bold tabular-nums">
-                {formatRub(pump.price_estimate_rub)} ₽
-              </p>
+              {/* Phase 9: показываем диапазон цены если spread > 5%, иначе точную */}
+              {(() => {
+                const low = pump.price_breakdown.total_low_rub;
+                const high = pump.price_breakdown.total_high_rub;
+                const total = pump.price_estimate_rub;
+                const showRange = high - low > total * 0.05 && low > 0 && high > 0;
+                if (showRange) {
+                  return (
+                    <>
+                      <p className="text-xl md:text-2xl font-bold tabular-nums leading-tight">
+                        {formatRub(low)} – {formatRub(high)} ₽
+                      </p>
+                      <p className="text-xs text-gray-500 tabular-nums">
+                        ориентир ≈ {formatRub(total)} ₽
+                      </p>
+                    </>
+                  );
+                }
+                return (
+                  <p className="text-2xl font-bold tabular-nums">
+                    {formatRub(total)} ₽
+                  </p>
+                );
+              })()}
               <p className="text-[10px] text-gray-500 mt-0.5">
                 Без монтажа, доставки и пуско-наладки. Точную цену согласует инженер.
               </p>

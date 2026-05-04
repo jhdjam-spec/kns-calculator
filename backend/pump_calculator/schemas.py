@@ -100,6 +100,10 @@ class PriceBreakdown(BaseModel):
     chain_rub: int = 0
     corpus_rub: int = 0
     total_rub: int = 0
+    # Phase 9: диапазон цены — учитывает полноту входных данных
+    # При неполном вводе диапазон шире (±20-30%), при полном — узкий (±5-10%)
+    total_low_rub: int = Field(0, description="Нижняя граница диапазона цены, ₽")
+    total_high_rub: int = Field(0, description="Верхняя граница диапазона цены, ₽")
 
 
 class PumpResult(BaseModel):
@@ -142,7 +146,7 @@ class SelectionResultsBySegment(BaseModel):
 class SelectionResult(BaseModel):
     """Финальный ответ калькулятора."""
 
-    schema_version: str = "1.1"
+    schema_version: str = "1.2"
     input: SelectionRequest
     computed: ComputedHydraulics
     results: SelectionResultsBySegment
@@ -153,6 +157,17 @@ class SelectionResult(BaseModel):
     assumptions: list[str] = Field(
         default_factory=list,
         description="Дефолты, подставленные при отсутствии данных (например, 'dH_m не указан, использован 5.0 м')",
+    )
+    # Phase 9: полнота ввода и человекочитаемый прогноз
+    completeness_pct: int = Field(
+        100,
+        ge=0,
+        le=100,
+        description="Процент заполнения входных данных (0-100). 100 — все поля L0+L1 заданы.",
+    )
+    summary_text: str = Field(
+        "",
+        description="Человекочитаемая сводка: 'Для гостиницы 50 номеров — ориентир 800k-1.2M ₽ в эконом-сегменте...'",
     )
 
 

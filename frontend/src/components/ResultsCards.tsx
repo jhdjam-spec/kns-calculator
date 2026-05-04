@@ -8,15 +8,45 @@ export interface ResultsCardsProps {
 }
 
 export function ResultsCards({ result }: ResultsCardsProps) {
-  const { results, computed, candidates_total, warnings, assumptions } = result;
+  const { results, computed, candidates_total, warnings, assumptions, summary_text, completeness_pct } = result;
+
+  // Phase 9: цвет полосы прогресса по полноте ввода
+  const completenessColor =
+    completeness_pct >= 80 ? "bg-green-500" :
+    completeness_pct >= 50 ? "bg-yellow-500" :
+    "bg-orange-500";
 
   return (
     <section aria-label="Результаты подбора" className="space-y-5">
       <header>
         <h2 className="text-2xl font-bold">Подобрали 3 варианта</h2>
-        <p className="text-sm text-gray-600 mt-1">
-          Бюджет, средний и премиум сегменты. Цены ориентировочные — точную смету подготовит инженер.
-        </p>
+
+        {/* Phase 9: человекочитаемая сводка */}
+        {summary_text && (
+          <p className="text-sm text-gray-700 mt-2 leading-relaxed">
+            {summary_text}
+          </p>
+        )}
+
+        {/* Phase 9: индикатор полноты ввода */}
+        <div className="mt-3 flex items-center gap-3">
+          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className={`h-full ${completenessColor} transition-all`}
+              style={{ width: `${completeness_pct}%` }}
+              title={`Заполнено ${completeness_pct}% параметров`}
+            />
+          </div>
+          <span className="text-xs text-gray-600 whitespace-nowrap">
+            Данных: {completeness_pct}%
+            {completeness_pct < 70 && (
+              <span className="text-orange-600 ml-1">
+                — заполните параметры для точности
+              </span>
+            )}
+          </span>
+        </div>
+
         <details className="mt-2 text-xs text-gray-500">
           <summary className="cursor-pointer hover:text-gray-700 select-none">
             Детали расчёта (для инженера) →

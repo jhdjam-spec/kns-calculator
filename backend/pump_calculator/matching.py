@@ -8,6 +8,11 @@ from __future__ import annotations
 from typing import Any
 
 from pump_calculator import catalog
+from pump_calculator.forecast import (
+    build_summary_text,
+    calculate_completeness_pct,
+    fill_price_ranges,
+)
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
 from pump_calculator.pricing import estimate_kns_kit_price, estimate_spd_kit_price
 from pump_calculator.schemas import (
@@ -420,13 +425,30 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         if "auto_no_match" not in triggers:
             triggers.append("auto_no_match")
 
+    # Phase 9: полнота входа + диапазон цен + человекочитаемая сводка
+    # NB: считаем по **исходному** L0 (без apply_l0_defaults), чтобы дефолты
+    # не учитывались как «заданные данные».
+    completeness_pct = calculate_completeness_pct(L0, L1)
+    fill_price_ranges(results, completeness_pct)
+    handoff_required = bool(triggers)
+    summary_text = build_summary_text(
+        L0=L0_filled,
+        L1=L1,
+        results=results,
+        completeness_pct=completeness_pct,
+        candidates_total=candidates_total,
+        handoff_required=handoff_required,
+    )
+
     return SelectionResult(
         input=SelectionRequest(L0=L0_filled, L1=L1),
         computed=computed,
         results=results,
         candidates_total=candidates_total,
         warnings=warnings,
-        engineer_handoff_required=bool(triggers),
+        engineer_handoff_required=handoff_required,
         trigger_reasons=triggers,
         assumptions=assumptions,
+        completeness_pct=completeness_pct,
+        summary_text=summary_text,
     )
