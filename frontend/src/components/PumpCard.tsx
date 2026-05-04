@@ -113,7 +113,7 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
             <p className="text-base text-gray-700">{pump.model}</p>
           </div>
 
-          <dl className="text-sm grid grid-cols-2 gap-x-4 gap-y-1">
+          <dl className="text-sm grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
             <dt className="text-gray-500">Мощность</dt>
             <dd>{pump.P_kW} кВт</dd>
 

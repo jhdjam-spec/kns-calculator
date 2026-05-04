@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,6 +13,7 @@ import {
   type WastewaterType,
   type WizardFormValues,
 } from "@/schemas/input";
+import { QHelper } from "./QHelper";
 
 export interface WizardL0Props {
   onSubmit: (values: ReturnType<typeof wizardFormToSelectionRequest>) => void;
@@ -25,6 +27,7 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitted },
   } = useForm<WizardFormValues>({
     resolver: zodResolver(wizardFormSchema),
@@ -37,6 +40,9 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
     mode: "onSubmit",
   });
 
+  // Подсказка от QHelper — что было подставлено через помощник по типу объекта
+  const [qHint, setQHint] = useState<string | null>(null);
+
   return (
     <form
       onSubmit={handleSubmit((values) => onSubmit(wizardFormToSelectionRequest(values)))}
@@ -44,6 +50,15 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       aria-label="Форма подбора насоса L0"
       noValidate
     >
+      {/* Помощник по типу объекта (Q-калькулятор по СП 30) */}
+      <QHelper
+        onCalculate={(Q, description) => {
+          setValue("Q_value", Q, { shouldValidate: true });
+          setValue("Q_unit", "m3h");
+          setQHint(description);
+        }}
+      />
+
       {/* Q + единица */}
       <div>
         <label htmlFor="Q_value" className="block text-sm font-medium mb-1">
@@ -72,6 +87,11 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
             ))}
           </select>
         </div>
+        {qHint && (
+          <p className="mt-1 text-xs text-blue-700">
+            ✓ Подставлено из помощника: {qHint}
+          </p>
+        )}
         {errors.Q_value && (
           <p className="mt-1 text-sm text-red-600" role="alert">
             {errors.Q_value.message}
@@ -202,23 +222,26 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
         </div>
         <p className="mt-1 text-xs text-gray-500">
           ПЭ — стандарт Серво-Юг (любой типоразмер под заказ).
-          Стеклопластик — точная формула из xlsx-калькулятора Серво-Юг (5 стандартных D).
+          Стеклопластик — 5 стандартных диаметров от 800 до 2400 мм, дешевле для малых объектов.
         </p>
       </fieldset>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="w-full md:w-auto rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium px-6 py-3 transition"
-      >
-        {isPending ? "Подбираю..." : "Подобрать насос"}
-      </button>
+      {/* Sticky на мобильных — чтобы не скроллить вверх к кнопке */}
+      <div className="sticky bottom-0 -mx-4 px-4 py-3 bg-white/90 backdrop-blur border-t border-gray-200 md:static md:mx-0 md:px-0 md:py-0 md:bg-transparent md:backdrop-blur-none md:border-0">
+        <button
+          type="submit"
+          disabled={isPending}
+          className="w-full md:w-auto rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold px-6 py-3 shadow-sm transition"
+        >
+          {isPending ? "Подбираю варианты..." : "Подобрать насос"}
+        </button>
 
-      {isSubmitted && Object.keys(errors).length > 0 && (
-        <p className="text-sm text-red-600" role="alert">
-          Заполните все обязательные поля корректно.
-        </p>
-      )}
+        {isSubmitted && Object.keys(errors).length > 0 && (
+          <p className="text-sm text-red-600 mt-1" role="alert">
+            Заполните обязательные поля.
+          </p>
+        )}
+      </div>
     </form>
   );
 }

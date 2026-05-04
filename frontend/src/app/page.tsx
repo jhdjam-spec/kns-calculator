@@ -10,12 +10,32 @@ export default function HomePage() {
   const mutation = usePumpSelection();
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-5xl space-y-8">
+    <main className="container mx-auto px-4 py-6 md:py-8 max-w-5xl space-y-6 md:space-y-8">
+      {/* Брендинг Серво-Юг */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-gray-200">
+        <div>
+          <p className="text-base md:text-lg font-bold text-blue-900 leading-tight">
+            ИНСЕРВО · Серво-Юг
+          </p>
+          <p className="text-xs text-gray-600">
+            Производство КНС, ЛОС и резервуаров с 2009 года · Адыгея, аул Хатукай
+          </p>
+        </div>
+        <div className="text-sm">
+          <a href="tel:+78002224457" className="block font-semibold text-blue-900 hover:underline">
+            8 (800) 222-44-57
+          </a>
+          <a href="mailto:zakaz@inservo.ru" className="text-xs text-gray-600 hover:underline">
+            zakaz@inservo.ru
+          </a>
+        </div>
+      </div>
+
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl md:text-3xl font-bold">
           Подбор насоса для канализационной станции
         </h1>
-        <p className="text-gray-700">
+        <p className="text-sm md:text-base text-gray-700">
           Введите параметры объекта — получите 3 варианта комплекта с ориентировочной ценой.
           Подходит для гостиниц, коттеджей, небольших производств.
         </p>

@@ -21,7 +21,7 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
     setErrorMsg(null);
     try {
       const blob = await fetchQuestionnairePdf(result);
-      triggerDownload(blob, "kns_questionnaire.pdf");
+      triggerDownload(blob, "Опросный_лист_КНС.pdf");
       setQState("idle");
     } catch (e) {
       setQState("error");
@@ -34,7 +34,7 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
     setErrorMsg(null);
     try {
       const blob = await fetchBomPdf(result);
-      triggerDownload(blob, "kns_bom_draft.pdf");
+      triggerDownload(blob, "Спецификация_КНС.pdf");
       setBomState("idle");
     } catch (e) {
       setBomState("error");
@@ -54,45 +54,52 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
     >
       <header>
         <h3 className={`text-lg font-semibold ${handoffNeeded ? "text-blue-900" : "text-green-900"}`}>
-          {handoffNeeded ? "Требуется инженерный расчёт" : "Типовой случай"}
+          {handoffNeeded ? "Передать инженеру Серво-Юг" : "Можно формировать КП"}
         </h3>
       </header>
 
       {handoffNeeded ? (
         <>
           <p className="text-sm text-blue-900">
-            Условия задачи требуют дополнительной проработки специалистом:
+            Условия задачи требуют дополнительного расчёта инженером:
           </p>
           <ul className="text-sm text-blue-900 list-disc pl-5 space-y-1">
             {result.trigger_reasons.map((reason) => (
               <li key={reason}>{triggerReasonLabels[reason] ?? reason}</li>
             ))}
           </ul>
+          <p className="text-xs text-blue-800 pt-1">
+            Скачайте опросный лист и спецификацию — отправьте инженеру или заказчику для согласования.
+          </p>
         </>
       ) : (
         <p className="text-sm text-green-900">
-          ✅ Можно отправить КП клиенту по выбранному варианту. Опросник пригодится
-          для уточнений; BOM-черновик — для согласования цены.
+          Можно отправить коммерческое предложение клиенту по выбранному варианту.
+          Опросный лист — для уточнения деталей; спецификация — для согласования цены.
         </p>
       )}
 
-      <div className="flex flex-wrap gap-2 pt-2">
-        <button
-          type="button"
-          onClick={downloadQuestionnaire}
-          disabled={qState === "loading"}
-          className="rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium px-4 py-2 text-sm"
-        >
-          {qState === "loading" ? "Готовим PDF..." : "📄 Опросный лист (PDF)"}
-        </button>
-
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2 pt-2">
         <button
           type="button"
           onClick={downloadBom}
           disabled={bomState === "loading"}
-          className="rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium px-4 py-2 text-sm"
+          className="rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold px-4 py-2.5 text-sm shadow-sm transition flex-1 sm:flex-initial"
         >
-          {bomState === "loading" ? "Готовим PDF..." : "📋 BOM-черновик (PDF)"}
+          {bomState === "loading"
+            ? "Готовим PDF..."
+            : "Сформировать КП (PDF)"}
+        </button>
+
+        <button
+          type="button"
+          onClick={downloadQuestionnaire}
+          disabled={qState === "loading"}
+          className="rounded-md bg-white border border-blue-600 text-blue-700 hover:bg-blue-50 disabled:opacity-50 font-medium px-4 py-2.5 text-sm transition flex-1 sm:flex-initial"
+        >
+          {qState === "loading"
+            ? "Готовим PDF..."
+            : "Опросный лист клиенту"}
         </button>
       </div>
 
@@ -103,9 +110,8 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
       )}
 
       <p className="text-xs text-gray-600 pt-1">
-        Опросник — структурированная анкета 10 секций для уточнения у клиента.
-        BOM-черновик — таблица 8+ позиций обвязки × 3 ценовых сегмента с
-        ориентировочными ценами 2026.
+        <strong>Спецификация (КП)</strong> — таблица оборудования с ценами по 3 сегментам.{" "}
+        <strong>Опросный лист</strong> — анкета на 10 разделов для согласования с клиентом.
       </p>
     </aside>
   );
