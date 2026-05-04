@@ -10,10 +10,13 @@ heuristic-оценки для насосов и Серво-Юг корпусов
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pump_calculator import catalog
+from pump_calculator.pricing_glass import estimate_glass_corpus_price_rub
 from pump_calculator.schemas import PriceBreakdown, PriceSegment
+
+CorpusMaterial = Literal["pe", "glass"]
 
 # ---------- Heuristic: цена насоса ----------
 # Базис: АРКАДА КП 29.01.2026 + публичные прайсы 2026
@@ -80,15 +83,20 @@ def _price_for_dn(price_examples: dict[str, int], dn: str) -> int | None:
 
 # ---------- Корпус КНС: подбор по Q ----------
 
-def estimate_corpus_price_rub(Q_m3h: float) -> int:
-    """Грубая оценка цены ПЭ-корпуса КНС Серво-Юг по производительности.
+def estimate_corpus_price_rub(Q_m3h: float, material: CorpusMaterial = "pe") -> int:
+    """Грубая оценка цены корпуса КНС по производительности и материалу.
 
-    Базис: examples в fittings_seed.json::kns_common_items[corpus]:
+    material="pe" (default) — ПЭ-корпус Серво-Юг (heuristic от Q):
       Q≤30 → ~350 000 ₽ (D1500/H3200)
       Q≈21–60 → ~400 000 ₽ (D1590/H3400 — АртВинд)
       Q≥250 → ~1 500 000 ₽ (D4200/H4010)
-    Между точками — линейная интерполяция.
+    material="glass" — стеклопластик (точная формула из калькулятора Серво-Юг,
+      см. pricing_glass.py).
     """
+    if material == "glass":
+        return estimate_glass_corpus_price_rub(Q_m3h)
+
+    # ПЭ — кусочно-линейная интерполяция по эталонным точкам
     if Q_m3h <= 30:
         return 350_000
     if Q_m3h <= 60:
@@ -127,8 +135,13 @@ def estimate_kns_kit_price(
     discharge_DN_mm: float | None,
     segment: PriceSegment,
     n_pumps: int = 2,  # 1 раб + 1 рез по умолчанию
+    corpus_material: CorpusMaterial = "pe",
 ) -> tuple[PriceBreakdown, str]:
     """Полная оценка цены КНС-комплекта.
+
+    corpus_material:
+      "pe" (default) — ПЭ-корпус Серво-Юг
+      "glass" — стеклопластиковый корпус (точная формула из калькулятора Серво-Юг)
 
     Возвращает (PriceBreakdown, confidence).
     confidence:
@@ -186,8 +199,8 @@ def estimate_kns_kit_price(
     # 7. Цепь
     chain_rub = 4_000 * n_pumps
 
-    # 8. Корпус КНС (heuristic от Q)
-    corpus_rub = estimate_corpus_price_rub(Q_m3h)
+    # 8. Корпус КНС (heuristic от Q + материал)
+    corpus_rub = estimate_corpus_price_rub(Q_m3h, material=corpus_material)
 
     total = (
         pump_total + atm_rub + valve_rub + check_valve_rub
