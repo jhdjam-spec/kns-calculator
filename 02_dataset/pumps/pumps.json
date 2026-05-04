@@ -5,6 +5,46 @@
   "_engineer_note": "Каждая запись помечена _engineer_flag. needs_review = envelope взят из producers_dataset.json как агрегат серии, не паспорт конкретной модели. Для production нужны точные паспорта.",
   "pumps": [
     {
+      "id": "kaiquan-65wqs223-22",
+      "brand": "KAIQUAN",
+      "model": "65WQ/S223-2.2",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65,
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 30,
+        "H_min_m": 6,
+        "H_max_m": 25,
+        "Q_BEP_m3h": 18,
+        "H_BEP_m": 18,
+        "eta_BEP_pct": 50.0,
+        "NPSHr_at_BEP_m": 2.5
+      },
+      "power": {
+        "P_kW": 2.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "budget",
+      "price_rub_2026": 85384,
+      "available_ru": {
+        "status": "official",
+        "distributor": "АРКАДА Сочи"
+      },
+      "_engineer_flag": "ok",
+      "_engineer_note": "Бытовая канализация, малый-средний объект. Эталон цены: КП инженера Серво-Юг 2026 — 85384 ₽/шт. Для гостиниц <100 номеров, частных коттеджей с подвальной канализацией.",
+      "_source": "Реальное КП инженера Серво-Юг (фото 2026-05-04) + АРКАДА КП 29.01.2026"
+    },
+    {
       "id": "kaiquan-50wqs202-3",
       "brand": "KAIQUAN",
       "model": "50WQ/S 20-22-3",

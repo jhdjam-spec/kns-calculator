@@ -34,16 +34,23 @@ PUMP_MIN_RUB: dict[str, int] = {"budget": 30_000, "mid": 90_000, "premium": 250_
 PUMP_MAX_RUB: dict[str, int] = {"budget": 250_000, "mid": 600_000, "premium": 2_500_000}
 
 
-def estimate_pump_price_rub(P_kW: float, segment: PriceSegment) -> int:
-    """Оценка цены одного насоса по мощности и ценовому сегменту.
+def estimate_pump_price_rub(
+    P_kW: float,
+    segment: PriceSegment,
+    explicit_price_rub: int | None = None,
+) -> int:
+    """Цена одного насоса.
 
-    Линейная регрессия от мощности с клампами по сегменту.
+    Если задана `explicit_price_rub` (из поля pump.price_rub_2026 в БД) — используется
+    точное значение. Иначе — heuristic от мощности и сегмента с клампами.
     """
+    if explicit_price_rub and explicit_price_rub > 0:
+        return int(explicit_price_rub)
+
     rate = PUMP_RUB_PER_KW.get(segment, 50_000)
     raw = max(P_kW, 0.5) * rate
     raw = max(raw, PUMP_MIN_RUB[segment])
     raw = min(raw, PUMP_MAX_RUB[segment])
-    # Округление до 1000 ₽
     return int(round(raw / 1000.0) * 1000)
 
 
@@ -116,14 +123,15 @@ def estimate_corpus_price_rub(Q_m3h: float, material: CorpusMaterial = "pe") -> 
 def estimate_cabinet_price_rub(P_kW: float, segment: PriceSegment) -> int:
     """ШУ зависит от: суммарной мощности всех насосов и сегмента.
 
-    Базис fittings_seed.json::kns_common_items[ШУ]:
-      budget — ОНИКС МК4-2×3кВт-АВР: 266 364 ₽
+    Базис: реальные КП Серво-Юг 2026:
+      budget — простой ШУ для 2×2.2 кВт = 128 000 ₽ (КП инженера 2026-05-04)
+      mid — ОНИКС МК4-2×3кВт-АВР = 266 364 ₽ (АРКАДА 29.01.2026)
       premium — Wilo CC-FC: ~750 000 ₽ (для 3×110 кВт = 753 350 ₽)
     Линейная зависимость от P_kW с минимальным порогом.
     """
-    base = {"budget": 200_000, "mid": 320_000, "premium": 500_000}[segment]
-    extra_per_kw = {"budget": 8_000, "mid": 12_000, "premium": 20_000}[segment]
-    raw = base + max(P_kW - 3, 0) * extra_per_kw
+    base = {"budget": 100_000, "mid": 240_000, "premium": 450_000}[segment]
+    extra_per_kw = {"budget": 6_000, "mid": 12_000, "premium": 20_000}[segment]
+    raw = base + max(P_kW - 2.2, 0) * extra_per_kw
     return int(round(raw / 1000.0) * 1000)
 
 
@@ -136,17 +144,23 @@ def estimate_kns_kit_price(
     segment: PriceSegment,
     n_pumps: int = 2,  # 1 раб + 1 рез по умолчанию
     corpus_material: CorpusMaterial = "pe",
+    explicit_pump_price_rub: int | None = None,
+    include_corpus: bool = True,
+    include_rails: bool = True,
 ) -> tuple[PriceBreakdown, str]:
     """Полная оценка цены КНС-комплекта.
 
-    corpus_material:
-      "pe" (default) — ПЭ-корпус Серво-Юг
-      "glass" — стеклопластиковый корпус (точная формула из калькулятора Серво-Юг)
+    Параметры:
+      explicit_pump_price_rub — точная цена насоса из поля pump.price_rub_2026 в БД.
+          Если задана, перебивает heuristic estimate_pump_price_rub.
+      corpus_material: "pe" (Серво-Юг ПЭ) или "glass" (стеклопластик).
+      include_corpus / include_rails — для малых КНС с готовым приямком корпус
+          и направляющие могут не понадобиться (как в КП 65WQ/S223-2.2 для Q=0.5).
 
     Возвращает (PriceBreakdown, confidence).
     confidence:
-      'high'   — все позиции из fittings_seed.json (DN-точная цена)
-      'medium' — частичные точные + heuristic для насоса/корпуса
+      'high'   — explicit_pump_price + DN-обвязка из fittings_seed.json
+      'medium' — частичные точные + heuristic
       'low'    — большинство heuristic
     """
     fittings = catalog._load_fittings()
@@ -158,8 +172,8 @@ def estimate_kns_kit_price(
     hits_from_db = 0
     total_db_lookups = 0
 
-    # 1. Насос (heuristic — нет в БД)
-    pump_unit = estimate_pump_price_rub(P_kW, segment)
+    # 1. Насос — точная цена из БД (если есть) или heuristic
+    pump_unit = estimate_pump_price_rub(P_kW, segment, explicit_price_rub=explicit_pump_price_rub)
     pump_total = pump_unit * n_pumps
 
     # 2-4. АТМ + задвижка + обр.клапан (по DN)
@@ -187,7 +201,7 @@ def estimate_kns_kit_price(
             if price:
                 hits_from_db += 1
                 check_valve_rub = price * n_pumps
-        elif pos == 5:  # Направляющие
+        elif pos == 5 and include_rails:  # Направляющие
             rails_rub = item.get("price_typical_rub_2026", 12_000) * n_pumps
 
     # 5. ШУ (heuristic, attached к фактической мощности насосов рабочих)
@@ -198,22 +212,34 @@ def estimate_kns_kit_price(
     floats_rub = 4 * 5_000
 
     # 7. Цепь
-    chain_rub = 4_000 * n_pumps
+    chain_rub = 4_000 * n_pumps if include_rails else 0
 
-    # 8. Корпус КНС (heuristic от Q + материал)
-    corpus_rub = estimate_corpus_price_rub(Q_m3h, material=corpus_material)
+    # 8. Корпус КНС (опционально — для готовых приямков выключить)
+    corpus_rub = (
+        estimate_corpus_price_rub(Q_m3h, material=corpus_material)
+        if include_corpus else 0
+    )
 
     total = (
         pump_total + atm_rub + valve_rub + check_valve_rub
         + rails_rub + cabinet_rub + floats_rub + chain_rub + corpus_rub
     )
 
-    # Confidence: если все 3 fitting-DN из БД — medium, иначе low
+    # Confidence:
+    # - high: точная цена насоса из БД + точная DN-обвязка
+    # - medium: только DN-обвязка точная (heuristic насос)
+    # - low: всё heuristic
+    has_explicit_pump = bool(explicit_pump_price_rub and explicit_pump_price_rub > 0)
     if total_db_lookups > 0:
         ratio = hits_from_db / total_db_lookups
-        confidence = "medium" if ratio >= 0.66 else "low"
+        if has_explicit_pump and ratio >= 0.66:
+            confidence = "high"
+        elif ratio >= 0.66:
+            confidence = "medium"
+        else:
+            confidence = "low"
     else:
-        confidence = "low"
+        confidence = "medium" if has_explicit_pump else "low"
 
     breakdown = PriceBreakdown(
         pump_rub=pump_total,

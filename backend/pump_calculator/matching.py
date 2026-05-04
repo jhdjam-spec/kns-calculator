@@ -93,13 +93,28 @@ def filter_by_wastewater_type(
 def filter_by_envelope(
     pumps: list[dict[str, Any]], Q_m3h: float, H_full_m: float
 ) -> list[dict[str, Any]]:
-    """Шаг 4: Q ∈ [Q_min·0.85, Q_max·1.15], H_full ∈ [H_min, H_max·1.05]."""
+    """Шаг 4: Q ∈ [Q_min·0.85, Q_max·1.15], H_full ∈ [H_min, H_max·1.05].
+
+    Reality: для бытовой канализации Q_клиент часто **меньше** минимума насосной
+    серии (нет канализационных <5 м³/ч). Инженер ставит ближайший доступный
+    канализационный с большим запасом по Q — это нормально, важнее DN ≥65 и
+    free_passage. Поэтому **нижняя граница Q ослаблена до 0.05·Q_min**: насос
+    «больше нужного» допускается, выше — отсекаем (overflow точно).
+    """
     out = []
     for p in pumps:
         e = p["envelope"]
-        if not (e["Q_min_m3h"] * 0.85 <= Q_m3h <= e["Q_max_m3h"] * 1.15):
+        # Q: насос может быть до 20× больше нужного по Q (Q_клиент ≥ 5% Q_min).
+        # Это инженерная практика для бытовой канализации.
+        if Q_m3h > e["Q_max_m3h"] * 1.15:
             continue
-        if not (e["H_min_m"] <= H_full_m <= e["H_max_m"] * 1.05):
+        if Q_m3h < e["Q_min_m3h"] * 0.05:
+            continue
+        # H: верхняя граница строгая (H_full > H_max → не дотянет).
+        # Нижняя граница ослаблена для канализационных (см. КП Серво-Юг 2026:
+        # H_full=1.92м, ставят KAIQUAN с H_min=6м — насос «слишком сильный»
+        # допустим, только КПД ниже).
+        if H_full_m > e["H_max_m"] * 1.05:
             continue
         out.append(p)
     return out
@@ -145,16 +160,31 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
 
     base_score = 0.40 * bep_prox + 0.25 * eta + 0.20 * h_q + 0.10 * avail + 0.05 * warranty
 
-    # AOR/POR penalty
+    # Pulsed-mode bonus: для малых Q бытовой канализации (< 5 м³/ч)
+    # инженеры предпочитают **минимальный достаточный** насос — меньше Q_BEP,
+    # ниже цена, реалистичнее циклы. Если Q_клиент < 5 м³/ч и это
+    # submersible_sewage — добавляем бонус за **низкую мощность** и
+    # минимальный достаточный DN (65 мм для бытовой канализации).
+    if pump.get("type") == "submersible_sewage" and Q_m3h < 5.0:
+        P_kW = (pump.get("power") or {}).get("P_kW", 100)
+        DN_mm = (pump.get("discharge") or {}).get("DN_mm", 200)
+        # Меньше кВт → выше бонус (инвертированная нормировка)
+        small_pump_bonus = max(0.0, 1.0 - P_kW / 20.0)  # 0 для 20+ кВт, 1 для 0 кВт
+        # DN65–80 — оптимум для бытовой; больше или меньше — penalty
+        dn_optimal = 1.0 if 65 <= DN_mm <= 80 else 0.5
+        base_score += 0.30 * small_pump_bonus * dn_optimal
+
+    # AOR/POR penalty — только для continuous duty (СПД, чистая вода).
+    # Submersible sewage работает в pulsed mode, формальный AOR не применим.
     zone = aor_zone(Q_m3h, e.get("Q_BEP_m3h"))
-    if zone == "outside":
-        # Вне AOR — кандидат уже должен быть отсечён, но если попал — штраф
+    if pump.get("type") == "submersible_sewage":
+        # Не штрафуем — насос пускается на короткие циклы
+        score = base_score
+    elif zone == "outside":
         score = base_score * 0.3
     elif zone == "AOR":
-        # В AOR но вне POR — penalty
         score = base_score * 0.7
     else:
-        # POR или нет данных Q_BEP — без штрафа
         score = base_score
 
     breakdown = {
@@ -170,14 +200,31 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
 
 
 def filter_by_aor(pumps: list[dict[str, Any]], Q_m3h: float) -> list[dict[str, Any]]:
-    """Шаг 5а (новое в v0.2): отсечь кандидатов вне AOR (40-150% Q_BEP)."""
+    """Шаг 5а: отсечь кандидатов вне AOR (40-150% Q_BEP).
+
+    **Important:** AOR (ANSI/HI 9.6.3) применим к **continuous duty** —
+    непрерывной работе. Канализационные погружные (submersible_sewage)
+    работают в **on/off cycling** режиме (поплавковое управление, циклы
+    1-5 минут), и формально могут быть «outside AOR» по моментальной точке,
+    но это нормальная практика для бытовой канализации с малым притоком.
+
+    Реальный кейс: КП Серво-Юг 2026 для Q=0.5 м³/ч ставит KAIQUAN с Q_BEP=18 —
+    Q/Q_BEP = 2.8% (outside по HI), но насос пускается раз в 30 минут и
+    работает в свою BEP-точку короткое время.
+
+    Для booster_station (СПД) AOR-фильтр сохраняем — там continuous duty.
+    """
     out = []
     for p in pumps:
         Q_BEP = p["envelope"].get("Q_BEP_m3h")
         if not Q_BEP:
-            # Нет данных Q_BEP — пропускаем без AOR-фильтра, но с пометкой
             out.append(p)
             continue
+        # Submersible sewage с pulsed duty — AOR не применяем
+        if p.get("type") == "submersible_sewage":
+            out.append(p)
+            continue
+        # Booster / clean water — continuous duty, AOR обязателен
         zone = aor_zone(Q_m3h, Q_BEP)
         if zone == "outside":
             continue
@@ -200,8 +247,14 @@ def make_pump_result(
     P_kW = (pump.get("power") or {}).get("P_kW", 0)
     DN_mm = (pump.get("discharge") or {}).get("DN_mm")
     segment = pump["price_segment"]
+    explicit_pump_price = pump.get("price_rub_2026")
 
-    # Первичная оценка цены КНС-комплекта (1 раб + 1 рез по умолчанию)
+    # Очень малые бытовые насосы (Q < 5 м³/ч, DN ≤65) обычно ставят в
+    # готовый приямок без полноценного ПЭ-корпуса КНС — как в реальном
+    # КП Серво-Юг для KAIQUAN 65WQ/S223-2.2 (Q=0.5 м³/ч, частный коттедж).
+    # Для Q ≥ 5 (типовая КНС многоквартирной/гостиничной) корпус нужен.
+    is_small_kit = Q_m3h < 5.0 and (DN_mm or 0) <= 65
+
     price_breakdown, confidence = estimate_kns_kit_price(
         P_kW=P_kW,
         Q_m3h=Q_m3h,
@@ -209,6 +262,9 @@ def make_pump_result(
         segment=segment,
         n_pumps=2,
         corpus_material=corpus_material,  # type: ignore[arg-type]
+        explicit_pump_price_rub=explicit_pump_price,
+        include_corpus=not is_small_kit,
+        include_rails=not is_small_kit,
     )
 
     return PumpResult(
