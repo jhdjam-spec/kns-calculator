@@ -198,7 +198,94 @@ const PRESETS: ObjectPreset[] = [
     unit_label: "посетителей в день",
     typical_units: "обычно 100–1500",
   },
+  {
+    id: "housing_complex",
+    label: "Жилой комплекс / микрорайон",
+    description: "На квартиру (3 жителя × 200 л + полив территории) — 700 л/сут",
+    litres_per_unit_per_day: 700,
+    k_gen: 2.0,
+    unit_label: "квартир",
+    typical_units: "обычно 200–3000",
+  },
+  {
+    id: "cottage_village",
+    label: "Коттеджный посёлок",
+    description: "На дом (4 жителя × 230 л) — 920 л/сут",
+    litres_per_unit_per_day: 920,
+    k_gen: 3.0,
+    unit_label: "домохозяйств",
+    typical_units: "обычно 30–500",
+  },
+  {
+    id: "mall_large",
+    label: "ТРЦ / гипермаркет (большой)",
+    description: "Площадь × 4 л/м² в сутки (фуд-корт + санузлы + клининг)",
+    litres_per_unit_per_day: 4,
+    k_gen: 2.0,
+    unit_label: "м² торговой площади",
+    typical_units: "обычно 5000–80000",
+  },
+  {
+    id: "airport_station",
+    label: "Аэропорт / ж/д вокзал",
+    description: "Пассажир в день — 8 л (туалеты + общепит + клининг)",
+    litres_per_unit_per_day: 8,
+    k_gen: 2.0,
+    unit_label: "пассажиров в день",
+    typical_units: "обычно 5000–100000",
+  },
 ];
+
+/**
+ * Расчёт дождевой канализации (drainage) — по площади водосбора и
+ * интенсивности дождя для региона. СП 32.13330.2018 п. 7.4-7.10.
+ *
+ * Q (л/с) = ψ × q20 × F × β    где:
+ *   ψ — коэф. стока (асфальт 0.95, газон 0.10, кровля 1.0, среднее 0.6-0.8)
+ *   q20 — интенсивность дождя 20 мин для региона, л/с·га
+ *   F — площадь водосбора, га
+ *   β — коэф. учёта неравномерности, обычно 0.65-0.85
+ *
+ * Возвращает Q в м³/ч (для совместимости с калькулятором КНС).
+ */
+interface RegionRain {
+  id: string;
+  label: string;
+  q20: number; // л/с·га, СП 32 карта 1
+}
+
+const RAIN_REGIONS: RegionRain[] = [
+  { id: "south_krd", label: "Юг РФ (Краснодар, Ростов, Сочи)", q20: 90 },
+  { id: "south_volga", label: "Поволжье (Волгоград, Астрахань)", q20: 70 },
+  { id: "moscow", label: "Москва, центр РФ", q20: 80 },
+  { id: "spb_north", label: "Санкт-Петербург, Северо-Запад", q20: 60 },
+  { id: "ural", label: "Урал (Екатеринбург, Челябинск)", q20: 65 },
+  { id: "siberia", label: "Сибирь (Новосибирск, Красноярск)", q20: 55 },
+  { id: "far_east", label: "Дальний Восток (Хабаровск, Владивосток)", q20: 95 },
+];
+
+interface SurfaceType {
+  id: string;
+  label: string;
+  psi: number;
+}
+
+const SURFACE_TYPES: SurfaceType[] = [
+  { id: "asphalt", label: "Асфальт / дороги / парковки", psi: 0.95 },
+  { id: "roof", label: "Кровля зданий", psi: 1.0 },
+  { id: "mixed_urban", label: "Смешанная городская (среднее)", psi: 0.7 },
+  { id: "lawn", label: "Газоны / зелёная зона", psi: 0.1 },
+  { id: "gravel", label: "Гравий / щебень", psi: 0.4 },
+];
+
+function calculateDrainageQ(area_ha: number, q20: number, psi: number): number {
+  // Q (л/с) = ψ × q20 × F × β    где β=0.75 типичное усреднение
+  const beta = 0.75;
+  const Q_ls = psi * q20 * area_ha * beta;
+  // л/с → м³/ч: × 3.6
+  const Q_m3h = Q_ls * 3.6;
+  return Math.round(Q_m3h * 10) / 10;
+}
 
 function calculateQ(preset: ObjectPreset, units: number): number {
   const Q_avg_m3h = (units * preset.litres_per_unit_per_day) / 1000 / 24;
@@ -207,15 +294,34 @@ function calculateQ(preset: ObjectPreset, units: number): number {
   return Math.round(Q_peak * 10) / 10;
 }
 
+type Mode = "domestic" | "drainage";
+
 export function QHelper({ onCalculate }: QHelperProps) {
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<Mode>("domestic");
+
+  // Domestic state
   const [presetId, setPresetId] = useState<string>("hotel");
   const [units, setUnits] = useState<string>("");
 
+  // Drainage state
+  const [regionId, setRegionId] = useState<string>("south_krd");
+  const [surfaceId, setSurfaceId] = useState<string>("mixed_urban");
+  const [areaM2, setAreaM2] = useState<string>("");
+
   const preset = PRESETS.find((p) => p.id === presetId)!;
   const unitsNum = parseFloat(units);
-  const isValid = !isNaN(unitsNum) && unitsNum > 0;
-  const calculatedQ = isValid ? calculateQ(preset, unitsNum) : null;
+  const isDomesticValid = !isNaN(unitsNum) && unitsNum > 0;
+  const domesticQ = isDomesticValid ? calculateQ(preset, unitsNum) : null;
+
+  const region = RAIN_REGIONS.find((r) => r.id === regionId)!;
+  const surface = SURFACE_TYPES.find((s) => s.id === surfaceId)!;
+  const areaM2Num = parseFloat(areaM2);
+  const isDrainageValid = !isNaN(areaM2Num) && areaM2Num > 0;
+  const areaHa = isDrainageValid ? areaM2Num / 10000 : 0;
+  const drainageQ = isDrainageValid
+    ? calculateDrainageQ(areaHa, region.q20, surface.psi)
+    : null;
 
   return (
     <div className="rounded-lg border border-blue-200 bg-blue-50/50 p-3">
@@ -230,74 +336,203 @@ export function QHelper({ onCalculate }: QHelperProps) {
 
       {open && (
         <div className="mt-3 space-y-3">
-          <p className="text-xs text-gray-600">
-            Расчёт по нормам водоотведения СП 30.13330.2020 + коэффициент часовой
-            неравномерности по СП 32.13330.2018.
-          </p>
-
-          {/* Тип объекта */}
-          <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
-              Тип объекта
-            </label>
-            <select
-              value={presetId}
-              onChange={(e) => setPresetId(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white"
+          {/* Режим: бытовые/промышленные стоки или дождевая канализация */}
+          <div role="tablist" className="flex gap-1 rounded-md bg-blue-100 p-1">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "domestic"}
+              onClick={() => setMode("domestic")}
+              className={clsx(
+                "flex-1 rounded px-3 py-1.5 text-xs font-medium transition",
+                mode === "domestic"
+                  ? "bg-white text-blue-900 shadow-sm"
+                  : "text-blue-700 hover:bg-blue-50"
+              )}
             >
-              {PRESETS.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.label}
-                </option>
-              ))}
-            </select>
-            <p className="mt-1 text-xs text-gray-500">{preset.description}</p>
+              Бытовые / промышленные
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === "drainage"}
+              onClick={() => setMode("drainage")}
+              className={clsx(
+                "flex-1 rounded px-3 py-1.5 text-xs font-medium transition",
+                mode === "drainage"
+                  ? "bg-white text-blue-900 shadow-sm"
+                  : "text-blue-700 hover:bg-blue-50"
+              )}
+            >
+              Дождевая канализация
+            </button>
           </div>
 
-          {/* Количество единиц */}
-          <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
-              Количество {preset.unit_label}{" "}
-              <span className="text-gray-400 font-normal">({preset.typical_units})</span>
-            </label>
-            <input
-              type="number"
-              step="any"
-              inputMode="decimal"
-              value={units}
-              onChange={(e) => setUnits(e.target.value)}
-              placeholder="Введите число"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
-            />
-          </div>
+          {mode === "domestic" && (
+            <>
+              <p className="text-xs text-gray-600">
+                Расчёт по нормам водоотведения СП 30.13330.2020 Прил. А +
+                коэффициент часовой неравномерности по СП 32.13330.2018.
+              </p>
 
-          {/* Расчётный Q */}
-          {calculatedQ !== null && (
-            <div className="rounded-md bg-white border border-blue-200 p-3">
-              <p className="text-xs text-gray-600 mb-1">Расчётный пиковый расход:</p>
-              <p className="text-2xl font-bold text-blue-900">
-                {calculatedQ} м³/ч
+              {/* Тип объекта */}
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Тип объекта
+                </label>
+                <select
+                  aria-label="Тип объекта"
+                  value={presetId}
+                  onChange={(e) => setPresetId(e.target.value)}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white"
+                >
+                  {PRESETS.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-gray-500">{preset.description}</p>
+              </div>
+
+              {/* Количество единиц */}
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Количество {preset.unit_label}{" "}
+                  <span className="text-gray-400 font-normal">
+                    ({preset.typical_units})
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  step="any"
+                  inputMode="decimal"
+                  value={units}
+                  onChange={(e) => setUnits(e.target.value)}
+                  placeholder="Введите число"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+
+              {domesticQ !== null && (
+                <div className="rounded-md bg-white border border-blue-200 p-3">
+                  <p className="text-xs text-gray-600 mb-1">
+                    Расчётный пиковый расход:
+                  </p>
+                  <p className="text-2xl font-bold text-blue-900">
+                    {domesticQ} м³/ч
+                  </p>
+                  <p className="text-[10px] text-gray-500 mt-1">
+                    {unitsNum} × {preset.litres_per_unit_per_day} л/сут × коэф.
+                    неравномерности {preset.k_gen} ÷ 24 ч
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onCalculate(
+                        domesticQ,
+                        `${preset.label}, ${unitsNum} ${preset.unit_label}`
+                      );
+                      setOpen(false);
+                    }}
+                    className="mt-2 w-full rounded-md py-2 px-3 text-sm font-medium transition bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    Подставить в форму расчёта
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {mode === "drainage" && (
+            <>
+              <p className="text-xs text-gray-600">
+                Расчёт по СП 32.13330.2018 п. 7.4-7.10:
+                Q&nbsp;=&nbsp;ψ×q₂₀×F×β, где F — площадь водосбора (га).
               </p>
-              <p className="text-[10px] text-gray-500 mt-1">
-                {unitsNum} × {preset.litres_per_unit_per_day} л/сут × коэф. неравномерности {preset.k_gen} ÷ 24 ч
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  onCalculate(
-                    calculatedQ,
-                    `${preset.label}, ${unitsNum} ${preset.unit_label}`
-                  );
-                  setOpen(false);
-                }}
-                className={clsx(
-                  "mt-2 w-full rounded-md py-2 px-3 text-sm font-medium transition",
-                  "bg-blue-600 hover:bg-blue-700 text-white"
-                )}
-              >
-                Подставить в форму расчёта
-              </button>
-            </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Регион (для интенсивности дождя q₂₀)
+                </label>
+                <select
+                  aria-label="Регион"
+                  value={regionId}
+                  onChange={(e) => setRegionId(e.target.value)}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white"
+                >
+                  {RAIN_REGIONS.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.label} (q₂₀ = {r.q20} л/с·га)
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Тип поверхности (коэф. стока ψ)
+                </label>
+                <select
+                  aria-label="Тип поверхности"
+                  value={surfaceId}
+                  onChange={(e) => setSurfaceId(e.target.value)}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white"
+                >
+                  {SURFACE_TYPES.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.label} (ψ = {s.psi})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">
+                  Площадь водосбора, м²{" "}
+                  <span className="text-gray-400 font-normal">
+                    (1 га = 10 000 м²)
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  step="any"
+                  inputMode="decimal"
+                  value={areaM2}
+                  onChange={(e) => setAreaM2(e.target.value)}
+                  placeholder="Например, 50000 (5 га)"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+
+              {drainageQ !== null && (
+                <div className="rounded-md bg-white border border-blue-200 p-3">
+                  <p className="text-xs text-gray-600 mb-1">
+                    Расчётный максимальный приток дождевых стоков:
+                  </p>
+                  <p className="text-2xl font-bold text-blue-900">
+                    {drainageQ} м³/ч
+                  </p>
+                  <p className="text-[10px] text-gray-500 mt-1">
+                    F = {areaHa.toFixed(2)} га × ψ = {surface.psi} × q₂₀ = {region.q20}{" "}
+                    л/с·га × β = 0.75 × 3.6 → м³/ч
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onCalculate(
+                        drainageQ,
+                        `Дождевая, ${areaM2Num.toLocaleString("ru")} м² (${surface.label.toLowerCase()}, ${region.label})`
+                      );
+                      setOpen(false);
+                    }}
+                    className="mt-2 w-full rounded-md py-2 px-3 text-sm font-medium transition bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    Подставить в форму расчёта
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
