@@ -40,6 +40,8 @@ const SAMPLE_PUMP: PumpResult = {
     chain_rub: 8_000,
     corpus_rub: 350_000,
     total_rub: 837_000,
+    total_low_rub: 750_000,
+    total_high_rub: 920_000,
   },
   price_confidence: "medium",
 };
