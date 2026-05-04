@@ -21,17 +21,63 @@ const SEGMENT_BG = {
   premium: "bg-premium/10",
 } as const;
 
-const AVAIL_BADGES: Record<string, { label: string; cls: string }> = {
-  official: { label: "официально в РФ", cls: "bg-green-100 text-green-800" },
-  parallel_import: { label: "параллельный импорт", cls: "bg-yellow-100 text-yellow-800" },
-  stock_only: { label: "только со склада", cls: "bg-orange-100 text-orange-800" },
-  discontinued: { label: "снят с производства", cls: "bg-red-100 text-red-800" },
+const AVAIL_BADGES: Record<string, { label: string; cls: string; hint: string }> = {
+  official: {
+    label: "Официальная поставка",
+    cls: "bg-green-100 text-green-800",
+    hint: "В наличии у российского дилера. Срок поставки обычно 2–6 недель.",
+  },
+  parallel_import: {
+    label: "Параллельный импорт",
+    cls: "bg-yellow-100 text-yellow-800",
+    hint: "Через параллельный импорт. Срок поставки 8–14 недель, цена выше каталожной.",
+  },
+  stock_only: {
+    label: "Только со склада",
+    cls: "bg-orange-100 text-orange-800",
+    hint: "Только остатки на складе дилера. Уточняйте наличие — количество ограничено.",
+  },
+  discontinued: {
+    label: "Снят с производства",
+    cls: "bg-red-100 text-red-800",
+    hint: "Производитель снял модель. Запросите у инженера актуальный аналог.",
+  },
 };
 
-const CONFIDENCE_LABELS: Record<"low" | "medium" | "high", { label: string; cls: string }> = {
-  low: { label: "грубая оценка", cls: "bg-gray-100 text-gray-700" },
-  medium: { label: "оценка по прайсу 2026", cls: "bg-blue-100 text-blue-800" },
-  high: { label: "точная по БД", cls: "bg-green-100 text-green-800" },
+const CONFIDENCE_LABELS: Record<"low" | "medium" | "high", { label: string; cls: string; hint: string }> = {
+  low: {
+    label: "ориентировочно",
+    cls: "bg-gray-100 text-gray-700",
+    hint: "Грубая оценка — точные цены уточнит инженер при подготовке КП.",
+  },
+  medium: {
+    label: "по прайсу 2026",
+    cls: "bg-blue-100 text-blue-800",
+    hint: "Цены обвязки взяты из коммерческого прайса 2026. Цена насоса — оценочная.",
+  },
+  high: {
+    label: "проверено по КП",
+    cls: "bg-green-100 text-green-800",
+    hint: "И насос, и обвязка — точные цены из реальных КП поставщиков 2026.",
+  },
+};
+
+const ZONE_LABELS: Record<"POR" | "AOR" | "outside", { label: string; cls: string; hint: string }> = {
+  POR: {
+    label: "Оптимально",
+    cls: "bg-green-100 text-green-800",
+    hint: "Насос работает в точке наилучшего КПД — максимальная эффективность и срок службы.",
+  },
+  AOR: {
+    label: "Допустимо",
+    cls: "bg-yellow-100 text-yellow-800",
+    hint: "Насос работает в допустимом режиме, но КПД на 5–10% ниже оптимума.",
+  },
+  outside: {
+    label: "Не рекомендуем",
+    cls: "bg-red-100 text-red-800",
+    hint: "Точка работы за пределами рекомендуемого режима — повышенный износ.",
+  },
 };
 
 function formatRub(rub: number): string {
@@ -51,8 +97,11 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
       <header className="flex items-baseline justify-between">
         <h3 className="text-lg font-bold capitalize">{segmentLabels[segment]}</h3>
         {pump && (
-          <span className="text-sm text-gray-600">
-            score: <strong>{pump.score.toFixed(2)}</strong>
+          <span
+            className="text-xs text-gray-500"
+            title={`Совпадение с запросом: ${(pump.score * 100).toFixed(0)}%. Учитывает близость к точке наилучшего КПД, доступность в РФ, гарантию.`}
+          >
+            ★ {(pump.score * 100).toFixed(0)}%
           </span>
         )}
       </header>
@@ -94,14 +143,16 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
 
           {pump.price_estimate_rub > 0 && (
             <div className="mt-2 border-t border-gray-200 pt-2">
-              <div className="flex items-baseline justify-between">
-                <span className="text-xs text-gray-500">Ориентировочно комплект 1+1</span>
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-xs text-gray-600">
+                  Цена комплекта (рабочий + резервный насос)
+                </span>
                 <span
                   className={clsx(
-                    "text-[10px] px-1.5 py-0.5 rounded-full font-medium",
+                    "text-[10px] px-1.5 py-0.5 rounded-full font-medium whitespace-nowrap",
                     CONFIDENCE_LABELS[pump.price_confidence].cls
                   )}
-                  title="Уровень уверенности оценки: low — heuristic, medium — обвязка из АРКАДА КП 29.01.2026, high — все позиции из БД"
+                  title={CONFIDENCE_LABELS[pump.price_confidence].hint}
                 >
                   {CONFIDENCE_LABELS[pump.price_confidence].label}
                 </span>
@@ -109,29 +160,44 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
               <p className="text-2xl font-bold tabular-nums">
                 {formatRub(pump.price_estimate_rub)} ₽
               </p>
+              <p className="text-[10px] text-gray-500 mt-0.5">
+                Без монтажа, доставки и пуско-наладки. Точную цену согласует инженер.
+              </p>
               <details className="mt-1 text-xs text-gray-600">
                 <summary className="cursor-pointer hover:text-gray-900 select-none">
-                  разбивка по позициям
+                  Из чего состоит комплект →
                 </summary>
                 <dl className="mt-1.5 grid grid-cols-2 gap-x-3 gap-y-0.5 pl-2 tabular-nums">
-                  <dt>Насос (×2)</dt>
+                  <dt>2 насоса (рабочий + резервный)</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.pump_rub)}</dd>
-                  <dt>АТМ</dt>
+                  <dt>Трубные муфты</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.atm_rub)}</dd>
-                  <dt>Задвижка</dt>
+                  <dt>Задвижки</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.valve_rub)}</dd>
-                  <dt>Обр. клапан</dt>
+                  <dt>Обратные клапаны</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.check_valve_rub)}</dd>
-                  <dt>Направляющие</dt>
-                  <dd className="text-right">{formatRub(pump.price_breakdown.rails_rub)}</dd>
+                  {pump.price_breakdown.rails_rub > 0 && (
+                    <>
+                      <dt>Направляющие</dt>
+                      <dd className="text-right">{formatRub(pump.price_breakdown.rails_rub)}</dd>
+                    </>
+                  )}
                   <dt>Шкаф управления</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.cabinet_rub)}</dd>
-                  <dt>Поплавки</dt>
+                  <dt>Поплавки уровня</dt>
                   <dd className="text-right">{formatRub(pump.price_breakdown.floats_rub)}</dd>
-                  <dt>Цепь</dt>
-                  <dd className="text-right">{formatRub(pump.price_breakdown.chain_rub)}</dd>
-                  <dt>Корпус КНС</dt>
-                  <dd className="text-right">{formatRub(pump.price_breakdown.corpus_rub)}</dd>
+                  {pump.price_breakdown.chain_rub > 0 && (
+                    <>
+                      <dt>Цепь</dt>
+                      <dd className="text-right">{formatRub(pump.price_breakdown.chain_rub)}</dd>
+                    </>
+                  )}
+                  {pump.price_breakdown.corpus_rub > 0 && (
+                    <>
+                      <dt>Корпус КНС</dt>
+                      <dd className="text-right">{formatRub(pump.price_breakdown.corpus_rub)}</dd>
+                    </>
+                  )}
                 </dl>
               </details>
             </div>
@@ -144,21 +210,20 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
                   "text-xs px-2 py-0.5 rounded-full font-medium",
                   AVAIL_BADGES[pump.available_ru_status].cls
                 )}
+                title={AVAIL_BADGES[pump.available_ru_status].hint}
               >
                 {AVAIL_BADGES[pump.available_ru_status].label}
               </span>
             )}
-            {pump.aor_zone && (
+            {pump.aor_zone && ZONE_LABELS[pump.aor_zone] && (
               <span
                 className={clsx(
                   "text-xs px-2 py-0.5 rounded-full font-medium",
-                  pump.aor_zone === "POR" && "bg-green-100 text-green-800",
-                  pump.aor_zone === "AOR" && "bg-yellow-100 text-yellow-800",
-                  pump.aor_zone === "outside" && "bg-red-100 text-red-800"
+                  ZONE_LABELS[pump.aor_zone].cls
                 )}
-                title="Зона работы насоса (ANSI/HI 9.6.3): POR — preferred, AOR — allowable"
+                title={ZONE_LABELS[pump.aor_zone].hint}
               >
-                {pump.aor_zone}
+                {ZONE_LABELS[pump.aor_zone].label}
               </span>
             )}
           </footer>

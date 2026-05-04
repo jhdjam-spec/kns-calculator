@@ -51,8 +51,10 @@ describe("<PumpCard>", () => {
     expect(screen.getByText("50WQ/S 20-22-3")).toBeInTheDocument();
     expect(screen.getByText("3 кВт")).toBeInTheDocument();
     expect(screen.getByText("50 мм")).toBeInTheDocument();
-    expect(screen.getByText(/официально в РФ/i)).toBeInTheDocument();
-    expect(screen.getByText("POR")).toBeInTheDocument();
+    // Новый русский бейдж доступности
+    expect(screen.getByText(/Официальная поставка/i)).toBeInTheDocument();
+    // POR теперь отображается как "Оптимально"
+    expect(screen.getByText("Оптимально")).toBeInTheDocument();
   });
 
   it("показывает заголовок 'Бюджет' для segment=budget", () => {
@@ -66,16 +68,17 @@ describe("<PumpCard>", () => {
     expect(screen.getByText(/Нет подходящих кандидатов/i)).toBeInTheDocument();
   });
 
-  it("выводит score с двумя знаками после запятой", () => {
+  it("выводит совпадение в процентах вместо score", () => {
     render(<PumpCard segment="budget" pump={SAMPLE_PUMP} />);
-    expect(screen.getByText(/0.67/)).toBeInTheDocument();
+    // 0.671 → 67%
+    expect(screen.getByText(/67%/)).toBeInTheDocument();
   });
 
   it("показывает оценочную цену комплекта в рублях", () => {
     render(<PumpCard segment="budget" pump={SAMPLE_PUMP} />);
-    // Цена форматируется через Intl.NumberFormat ru-RU — пробельный разделитель
     expect(screen.getByText(/837\s*000\s*₽/)).toBeInTheDocument();
-    expect(screen.getByText(/оценка по прайсу 2026/i)).toBeInTheDocument();
+    // Confidence label теперь "по прайсу 2026"
+    expect(screen.getByText(/по прайсу 2026/i)).toBeInTheDocument();
   });
 
   it("не показывает блок цены если price_estimate_rub = 0", () => {

@@ -9,9 +9,9 @@ export const wastewaterTypeSchema = z.enum(["domestic", "drainage", "industrial"
 export type WastewaterType = z.infer<typeof wastewaterTypeSchema>;
 
 export const wastewaterTypeLabels: Record<WastewaterType, string> = {
-  domestic: "Хоз-бытовые",
-  drainage: "Дренаж / ливнёвка",
-  industrial: "Производственные",
+  domestic: "Бытовая канализация",
+  drainage: "Дождевая / дренаж",
+  industrial: "Промышленные стоки",
 };
 
 export const qUnitSchema = z.enum(["m3h", "ls", "m3sut"]);

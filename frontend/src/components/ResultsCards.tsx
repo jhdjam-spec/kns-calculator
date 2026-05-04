@@ -13,16 +13,28 @@ export function ResultsCards({ result }: ResultsCardsProps) {
   return (
     <section aria-label="Результаты подбора" className="space-y-5">
       <header>
-        <h2 className="text-2xl font-bold">Топ-3 насоса</h2>
+        <h2 className="text-2xl font-bold">Подобрали 3 варианта</h2>
         <p className="text-sm text-gray-600 mt-1">
-          Расчёт: D = <strong>{computed.D_mm} мм</strong>, v = {computed.v_ms.toFixed(2)} м/с,{" "}
-          H<sub>full</sub> = <strong>{computed.H_full_m.toFixed(1)} м</strong> (потери трения{" "}
-          {computed.H_tr_m.toFixed(1)} м, местные {computed.H_m_m.toFixed(1)} м, запас{" "}
-          {(computed.safety_factor * 100).toFixed(0)}%)
+          Бюджет, средний и премиум сегменты. Цены ориентировочные — точную смету подготовит инженер.
         </p>
-        <p className="text-xs text-gray-500 mt-1">
-          Кандидатов после фильтрации: {candidates_total}
-        </p>
+        <details className="mt-2 text-xs text-gray-500">
+          <summary className="cursor-pointer hover:text-gray-700 select-none">
+            Детали расчёта (для инженера) →
+          </summary>
+          <div className="mt-1.5 pl-3 space-y-0.5">
+            <p>
+              Подобран диаметр напорной трубы: <strong>{computed.D_mm} мм</strong>{" "}
+              (скорость потока {computed.v_ms.toFixed(2)} м/с)
+            </p>
+            <p>
+              Полный напор насоса: <strong>{computed.H_full_m.toFixed(1)} м</strong>
+              {" — "}
+              из них потери трения {computed.H_tr_m.toFixed(1)} м, местные {computed.H_m_m.toFixed(1)} м,
+              запас {(computed.safety_factor * 100).toFixed(0)}%
+            </p>
+            <p>Прошло фильтрацию: {candidates_total} насосов из БД</p>
+          </div>
+        </details>
       </header>
 
       {assumptions.length > 0 && (

@@ -12,10 +12,12 @@ export default function HomePage() {
   return (
     <main className="container mx-auto px-4 py-8 max-w-5xl space-y-8">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold">kns-calculator</h1>
-        <p className="text-gray-600">
-          Первичный подбор насоса для КНС / НС / станций повышения давления.
-          Ввод 4 поля — топ-3 насоса в ценовых сегментах. MIT, open-source.
+        <h1 className="text-3xl font-bold">
+          Подбор насоса для канализационной станции
+        </h1>
+        <p className="text-gray-700">
+          Введите параметры объекта — получите 3 варианта комплекта с ориентировочной ценой.
+          Подходит для гостиниц, коттеджей, небольших производств.
         </p>
         <nav className="text-sm flex gap-3 mt-2">
           <span className="font-semibold border-b-2 border-blue-600 pb-0.5">
@@ -25,18 +27,6 @@ export default function HomePage() {
             Калькуляторы ёмкостей →
           </Link>
         </nav>
-        <p className="text-xs text-gray-500 mt-2">
-          <a
-            href="https://github.com/jhdjam-spec/kns-calculator"
-            target="_blank"
-            rel="noreferrer"
-            className="underline"
-          >
-            Репозиторий на GitHub
-          </a>
-          {" · "}
-          <span>Backend на FastAPI + CalebBell/fluids · Frontend на Next.js 14</span>
-        </p>
       </header>
 
       <section>

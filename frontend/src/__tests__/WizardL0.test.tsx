@@ -9,7 +9,7 @@ describe("<WizardL0>", () => {
 
     // Поле расхода ищем по id (label "Расход" есть и у группы — не уникален)
     expect(document.getElementById("Q_value")).toBeInTheDocument();
-    expect(screen.getByLabelText(/Перепад точек/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Перепад высот/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Длина напорной трассы/i)).toBeInTheDocument();
     expect(screen.getByText(/Тип стоков/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Подобрать насос/i })).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("<WizardL0>", () => {
     render(<WizardL0 onSubmit={handle} />);
 
     await user.type(document.getElementById("Q_value")!, "21.2");
-    await user.type(screen.getByLabelText(/Перепад точек/i), "10");
+    await user.type(screen.getByLabelText(/Перепад высот/i), "10");
     await user.type(screen.getByLabelText(/Длина напорной трассы/i), "0");
     // Выбираем radio domestic явно (есть несколько вариантов с именем «Хоз-бытовые»)
     const radios = screen.getAllByRole("radio");
@@ -101,7 +101,7 @@ describe("<WizardL0>", () => {
 
     await user.type(document.getElementById("Q_value")!, "5.9");
     await user.selectOptions(screen.getByLabelText(/Единицы расхода/i), "ls");
-    await user.type(screen.getByLabelText(/Перепад точек/i), "10");
+    await user.type(screen.getByLabelText(/Перепад высот/i), "10");
     await user.type(screen.getByLabelText(/Длина напорной трассы/i), "0");
     await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
 

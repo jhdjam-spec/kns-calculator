@@ -78,22 +78,22 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
           </p>
         )}
         <p className="mt-1 text-xs text-gray-500">
-          Пиковый расход стоков. Для м³/сут применяйте K_gen вручную или попросите инженера.
+          Сколько кубометров стоков в час в самый загруженный момент. Если знаете только суточный объём — переключите единицы (м³/сут), пересчитаем сами.
         </p>
       </div>
 
       {/* dH */}
       <div>
         <label htmlFor="dH_m" className="block text-sm font-medium mb-1">
-          Перепад точек ΔH, м{" "}
-          <span className="text-gray-400 text-xs font-normal">(опционально, default 5 м)</span>
+          Перепад высот, м{" "}
+          <span className="text-gray-400 text-xs font-normal">(если не знаете — оставьте пустым)</span>
         </label>
         <input
           id="dH_m"
           type="number"
           step="any"
           inputMode="decimal"
-          placeholder="Например: 10 (или оставьте пустым)"
+          placeholder="Например: 10"
           className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
           aria-invalid={!!errors.dH_m}
           {...register("dH_m")}
@@ -104,22 +104,22 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
           </p>
         )}
         <p className="mt-1 text-xs text-gray-500">
-          Геометрический напор: уровень жидкости в приёмном резервуаре → точка сброса.
+          На сколько метров выше точки сброса находится самая нижняя точка стоков. Не знаете — поставьте 8–10 м с запасом, инженер уточнит по геодезии.
         </p>
       </div>
 
       {/* L */}
       <div>
         <label htmlFor="L_m" className="block text-sm font-medium mb-1">
-          Длина напорной трассы L, м{" "}
-          <span className="text-gray-400 text-xs font-normal">(опционально, default 50 м)</span>
+          Длина напорной трассы, м{" "}
+          <span className="text-gray-400 text-xs font-normal">(если не знаете — оставьте пустым)</span>
         </label>
         <input
           id="L_m"
           type="number"
           step="any"
           inputMode="decimal"
-          placeholder="0 — только внутренняя; 50 — типовая внутриплощадочная"
+          placeholder="Например: 100. Поставьте 0 если КНС стоит вплотную к коллектору"
           className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
           aria-invalid={!!errors.L_m}
           {...register("L_m")}
@@ -130,7 +130,7 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
           </p>
         )}
         <p className="mt-1 text-xs text-gray-500">
-          При L &gt; 500 м расчёт гидроудара (Жуковский) обязателен — будет передано инженеру.
+          Расстояние от насоса до точки сброса (коллектор водоканала, ЛОС, водоём). Длинные трассы (более 500 м) — передадим инженеру для дополнительного расчёта.
         </p>
       </div>
 
@@ -138,7 +138,7 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       <fieldset>
         <legend className="block text-sm font-medium mb-1">
           Тип стоков{" "}
-          <span className="text-gray-400 text-xs font-normal">(опционально, default хоз-бытовые)</span>
+          <span className="text-gray-400 text-xs font-normal">(не выбрано — будет «бытовая канализация»)</span>
         </legend>
         <div className="space-y-2">
           <label className="flex items-start gap-2 cursor-pointer">
@@ -152,7 +152,7 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
             <span>
               <span className="font-medium text-gray-500">Не выбрано</span>
               <span className="block text-xs text-gray-400">
-                Калькулятор подставит «хоз-бытовые» — наиболее частый сценарий
+                Подставим «бытовая канализация» — самый частый случай
               </span>
             </span>
           </label>
@@ -167,9 +167,9 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
               <span>
                 <span className="font-medium">{wastewaterTypeLabels[opt]}</span>
                 <span className="block text-xs text-gray-500">
-                  {opt === "domestic" && "Квартирные стоки, гостиницы, офисы — нужен свободный проход ≥ 50 мм"}
-                  {opt === "drainage" && "Чистая ливнёвка, дренаж — допустимы насосы со свободным проходом ≥ 10 мм"}
-                  {opt === "industrial" && "С включениями, абразивом, pH ≠ 7 — обязательно уточнение у инженера"}
+                  {opt === "domestic" && "Дома, гостиницы, офисы, кафе, апартаменты"}
+                  {opt === "drainage" && "Дождевая вода и дренаж (чистая вода без волокон)"}
+                  {opt === "industrial" && "Промышленные стоки (с песком, химией, агрессивные)"}
                 </span>
               </span>
             </label>
