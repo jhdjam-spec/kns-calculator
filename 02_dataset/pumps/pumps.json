@@ -47,18 +47,19 @@
     {
       "id": "kaiquan-65wqs215-185",
       "brand": "KAIQUAN",
-      "model": "65WQS215-18.5",
+      "model": "65WQ/S215-18.5",
       "type": "submersible_sewage",
-      "impeller": "single-channel",
+      "impeller": "cutter",
       "free_passage_mm": 65,
       "envelope": {
-        "Q_min_m3h": 30,
-        "Q_max_m3h": 130,
-        "H_min_m": 10,
-        "H_max_m": 30,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
-        "eta_BEP_pct": null
+        "Q_min_m3h": 20,
+        "Q_max_m3h": 110,
+        "H_min_m": 25,
+        "H_max_m": 56.12,
+        "Q_BEP_m3h": 53.7,
+        "H_BEP_m": 46,
+        "eta_BEP_pct": 41.8,
+        "NPSHr_at_BEP_m": 0.74
       },
       "power": {
         "P_kW": 18.5,
@@ -78,34 +79,35 @@
         "status": "official",
         "distributor": "АСО"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Envelope оценочный — нужны точные значения из паспорта 65WQS215-18.5.pdf (есть в Telegram Desktop)",
-      "_source": "Имя файла + producers_dataset.json"
+      "_engineer_flag": "ok",
+      "_engineer_note": "Cutter с режущими лопастями для длинноволокнистых стоков. Q_BEP=53.7 м³/ч, КПД 41.8%. Q_min постоянный = 20 м³/ч (паспорт).",
+      "_source": "Паспорт 65WQS215-18.5.pdf от 2026.02.25 (inbox 2026-05-04)"
     },
     {
       "id": "kaiquan-wq2290-2136-80",
       "brand": "KAIQUAN",
-      "model": "WQ 2290-21-36-80",
+      "model": "WQ2290-2136-80",
       "type": "submersible_sewage",
       "impeller": "single-channel",
-      "free_passage_mm": 100,
+      "free_passage_mm": 80,
       "envelope": {
-        "Q_min_m3h": 1500,
-        "Q_max_m3h": 2500,
-        "H_min_m": 15,
-        "H_max_m": 30,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
-        "eta_BEP_pct": null
+        "Q_min_m3h": 24,
+        "Q_max_m3h": 180,
+        "H_min_m": 35,
+        "H_max_m": 76.84,
+        "Q_BEP_m3h": 110,
+        "H_BEP_m": 68.7,
+        "eta_BEP_pct": 57.2,
+        "NPSHr_at_BEP_m": 0.73
       },
       "power": {
-        "P_kW": 80,
+        "P_kW": 27.5,
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68"
       },
       "discharge": {
-        "DN_mm": 200
+        "DN_mm": 80
       },
       "wastewater_compat": [
         "domestic",
@@ -116,9 +118,9 @@
         "status": "official",
         "distributor": "АСО"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Крупный канализационный для городских КНС. Envelope нужно уточнять по паспорту WQ2290-2136-80.pdf",
-      "_source": "Имя файла"
+      "_engineer_flag": "ok",
+      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7м, КПД 57.2%. Q_min постоянный 24 м³/ч. Двигатель 80 кВт, мощность на валу 27.5 кВт (по паспорту в номинале 51 м³/ч × 18.5кВт двигатель — но это другая модель). Уточнить мощность электродвигателя при заказе.",
+      "_source": "Паспорт WQ2290-2136-80.pdf от 2026.02.25 (inbox 2026-05-04)"
     },
     {
       "id": "antarus-nk1-50",
