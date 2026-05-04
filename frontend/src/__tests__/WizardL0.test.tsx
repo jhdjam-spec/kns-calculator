@@ -34,11 +34,15 @@ describe("<WizardL0>", () => {
     await waitFor(() => {
       expect(handle).toHaveBeenCalledTimes(1);
     });
+    // Контракт onSubmit: SelectionRequest = { L0, L1? }
     expect(handle.mock.calls[0][0]).toEqual({
-      Q_m3h: 21.2,
-      dH_m: 10,
-      L_m: 0,
-      wastewater_type: "domestic",
+      L0: {
+        Q_m3h: 21.2,
+        dH_m: 10,
+        L_m: 0,
+        wastewater_type: "domestic",
+      },
+      // L1 не отправляется при corpus_material="pe" (default)
     });
   });
 
@@ -52,11 +56,32 @@ describe("<WizardL0>", () => {
     await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
 
     await waitFor(() => expect(handle).toHaveBeenCalledTimes(1));
-    const arg = handle.mock.calls[0][0];
-    expect(arg.Q_m3h).toBe(21.2);
-    expect(arg.dH_m).toBeUndefined();
-    expect(arg.L_m).toBeUndefined();
-    expect(arg.wastewater_type).toBeUndefined();
+    const req = handle.mock.calls[0][0];
+    expect(req.L0.Q_m3h).toBe(21.2);
+    expect(req.L0.dH_m).toBeUndefined();
+    expect(req.L0.L_m).toBeUndefined();
+    expect(req.L0.wastewater_type).toBeUndefined();
+    // PE (default) — L1 не отправляется
+    expect(req.L1).toBeUndefined();
+  });
+
+  it("сабмит с corpus_material=glass отправляет L1.corpus_material", async () => {
+    const user = userEvent.setup();
+    const handle = vi.fn();
+    render(<WizardL0 onSubmit={handle} />);
+
+    await user.type(document.getElementById("Q_value")!, "21.2");
+    // Выбираем стеклопластик
+    const radios = screen.getAllByRole("radio");
+    const glassRadio = radios.find(
+      (r) => (r as HTMLInputElement).value === "glass"
+    )!;
+    await user.click(glassRadio);
+    await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
+
+    await waitFor(() => expect(handle).toHaveBeenCalledTimes(1));
+    const req = handle.mock.calls[0][0];
+    expect(req.L1).toEqual({ corpus_material: "glass" });
   });
 
   it("блокирует сабмит при пустом Q (Q обязательный)", async () => {
@@ -81,8 +106,8 @@ describe("<WizardL0>", () => {
     await user.click(screen.getByRole("button", { name: /Подобрать насос/i }));
 
     await waitFor(() => expect(handle).toHaveBeenCalled());
-    const arg = handle.mock.calls[0][0];
-    expect(arg.Q_m3h).toBeCloseTo(21.24, 2);
+    const req = handle.mock.calls[0][0];
+    expect(req.L0.Q_m3h).toBeCloseTo(21.24, 2);
   });
 
   it("отображает 'Подбираю...' при isPending", () => {

@@ -59,6 +59,32 @@ export const l0InputSchema = z.object({
 
 export type L0Input = z.infer<typeof l0InputSchema>;
 
+/** Материал корпуса КНС (опциональный L1-параметр). */
+export const corpusMaterialSchema = z.enum(["pe", "glass"]);
+export type CorpusMaterial = z.infer<typeof corpusMaterialSchema>;
+
+export const corpusMaterialLabels: Record<CorpusMaterial, string> = {
+  pe: "Полиэтилен (ПЭ)",
+  glass: "Стеклопластик",
+};
+
+/** L1Input — расширенные параметры. Сейчас на frontend используем только corpus_material;
+ * остальные поля backend поддерживает но wizard их пока не предлагает.
+ */
+export const l1InputSchema = z.object({
+  corpus_material: corpusMaterialSchema.optional(),
+});
+
+export type L1Input = z.infer<typeof l1InputSchema>;
+
+/** Запрос на /select — обёртка с L0 и опциональным L1. */
+export const selectionRequestSchema = z.object({
+  L0: l0InputSchema,
+  L1: l1InputSchema.optional(),
+});
+
+export type SelectionRequest = z.infer<typeof selectionRequestSchema>;
+
 /** Форма пользователя — с unit; опциональные поля приходят пустыми строками. */
 export const wizardFormSchema = z.object({
   Q_value: z
@@ -77,19 +103,33 @@ export const wizardFormSchema = z.object({
   wastewater_type: z.union([wastewaterTypeSchema, z.literal("")]).transform(
     (v): WastewaterType | undefined => (v === "" ? undefined : v),
   ),
+  // L1 — материал корпуса (default "pe" чтобы radio было выбрано визуально)
+  corpus_material: corpusMaterialSchema.default("pe"),
 });
 
 export type WizardFormValues = z.infer<typeof wizardFormSchema>;
 
-/** Преобразование формы в L0Input для отправки на backend.
+/** Преобразование формы в SelectionRequest для отправки на backend.
  * Опциональные поля передаём только если заданы; иначе backend сам подставит дефолт.
  */
-export function wizardFormToL0Input(form: WizardFormValues): L0Input {
-  const out: L0Input = {
+export function wizardFormToSelectionRequest(form: WizardFormValues): SelectionRequest {
+  const L0: L0Input = {
     Q_m3h: toM3h(form.Q_value, form.Q_unit),
   };
-  if (form.dH_m !== undefined) out.dH_m = form.dH_m;
-  if (form.L_m !== undefined) out.L_m = form.L_m;
-  if (form.wastewater_type !== undefined) out.wastewater_type = form.wastewater_type;
+  if (form.dH_m !== undefined) L0.dH_m = form.dH_m;
+  if (form.L_m !== undefined) L0.L_m = form.L_m;
+  if (form.wastewater_type !== undefined) L0.wastewater_type = form.wastewater_type;
+
+  // L1 отправляем только если пользователь явно выбрал стеклопластик.
+  // По умолчанию (pe) — не отправляем, backend применит default.
+  const out: SelectionRequest = { L0 };
+  if (form.corpus_material === "glass") {
+    out.L1 = { corpus_material: "glass" };
+  }
   return out;
+}
+
+/** Старая обёртка для backward-compat в существующих местах кода. */
+export function wizardFormToL0Input(form: WizardFormValues): L0Input {
+  return wizardFormToSelectionRequest(form).L0;
 }

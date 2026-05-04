@@ -194,6 +194,7 @@ def make_pump_result(
     breakdown: dict,
     zone: str | None,
     Q_m3h: float = 0.0,
+    corpus_material: str = "pe",
 ) -> PumpResult:
     """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта."""
     e = pump["envelope"]
@@ -208,6 +209,7 @@ def make_pump_result(
         discharge_DN_mm=DN_mm,
         segment=segment,
         n_pumps=2,
+        corpus_material=corpus_material,  # type: ignore[arg-type]
     )
 
     return PumpResult(
@@ -233,7 +235,10 @@ def make_pump_result(
 
 
 def pick_top_per_segment(
-    pumps: list[dict[str, Any]], Q_m3h: float, H_full_m: float
+    pumps: list[dict[str, Any]],
+    Q_m3h: float,
+    H_full_m: float,
+    corpus_material: str = "pe",
 ) -> tuple[SelectionResultsBySegment, int, list[str]]:
     """Шаг 6: топ-1 в каждом из {budget, mid, premium}."""
     scored = []
@@ -249,7 +254,10 @@ def pick_top_per_segment(
             warnings.append(f"{segment}: нет кандидатов в этом ценовом сегменте")
             continue
         best = max(seg_candidates, key=lambda x: x[1])
-        pr = make_pump_result(best[0], best[1], best[2], best[3], Q_m3h=Q_m3h)
+        pr = make_pump_result(
+            best[0], best[1], best[2], best[3],
+            Q_m3h=Q_m3h, corpus_material=corpus_material,
+        )
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
         setattr(results, segment, pr)
@@ -328,8 +336,9 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     f3 = filter_by_aor(f2, L0_filled.Q_m3h)
 
     # Шаг 6
+    corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
     results, candidates_total, warnings = pick_top_per_segment(
-        f3, L0_filled.Q_m3h, computed.H_full_m
+        f3, L0_filled.Q_m3h, computed.H_full_m, corpus_material=corpus_material,
     )
 
     # Шаг 7

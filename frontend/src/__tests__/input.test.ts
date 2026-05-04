@@ -4,6 +4,7 @@ import {
   toM3h,
   wizardFormSchema,
   wizardFormToL0Input,
+  wizardFormToSelectionRequest,
 } from "@/schemas/input";
 
 describe("toM3h conversion", () => {
@@ -97,6 +98,7 @@ describe("wizardFormToL0Input", () => {
       dH_m: 10,
       L_m: 0,
       wastewater_type: "domestic",
+      corpus_material: "pe",
     });
     expect(result.Q_m3h).toBeCloseTo(21.24, 2);
     expect(result.wastewater_type).toBe("domestic");
@@ -116,6 +118,7 @@ describe("L0Input — опциональные поля (Phase 6+)", () => {
       dH_m: undefined,
       L_m: undefined,
       wastewater_type: undefined,
+      corpus_material: "pe",
     });
     expect(result.Q_m3h).toBe(21.2);
     expect("dH_m" in result).toBe(false);
@@ -136,6 +139,47 @@ describe("L0Input — опциональные поля (Phase 6+)", () => {
       expect(r.data.dH_m).toBeUndefined();
       expect(r.data.L_m).toBeUndefined();
       expect(r.data.wastewater_type).toBeUndefined();
+    }
+  });
+});
+
+describe("wizardFormToSelectionRequest — corpus_material flow", () => {
+  it("PE по умолчанию — L1 не отправляется (используется /select/quick)", () => {
+    const req = wizardFormToSelectionRequest({
+      Q_value: 21.2,
+      Q_unit: "m3h",
+      dH_m: 15,
+      L_m: 50,
+      wastewater_type: "domestic",
+      corpus_material: "pe",
+    });
+    expect(req.L0.Q_m3h).toBe(21.2);
+    expect(req.L1).toBeUndefined();
+  });
+
+  it("Glass — L1 отправляется с corpus_material=glass", () => {
+    const req = wizardFormToSelectionRequest({
+      Q_value: 21.2,
+      Q_unit: "m3h",
+      dH_m: 15,
+      L_m: 50,
+      wastewater_type: "domestic",
+      corpus_material: "glass",
+    });
+    expect(req.L1).toEqual({ corpus_material: "glass" });
+  });
+
+  it("wizardFormSchema присваивает corpus_material default 'pe' при отсутствии", () => {
+    const r = wizardFormSchema.safeParse({
+      Q_value: "21.2",
+      Q_unit: "m3h",
+      dH_m: "",
+      L_m: "",
+      wastewater_type: "",
+    });
+    expect(r.success).toBe(true);
+    if (r.success) {
+      expect(r.data.corpus_material).toBe("pe");
     }
   });
 });

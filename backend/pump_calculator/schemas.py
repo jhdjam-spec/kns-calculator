@@ -45,6 +45,10 @@ class L1Input(BaseModel):
     Ex_required: bool = False
     reliability_category: ReliabilityCategory | None = None
     liquid_temp_c: float | None = Field(None, ge=0, le=100)
+    corpus_material: Literal["pe", "glass"] | None = Field(
+        None,
+        description="Материал корпуса КНС: pe (ПЭ Серво-Юг, default) или glass (стеклопластик)",
+    )
 
 
 class SelectionRequest(BaseModel):

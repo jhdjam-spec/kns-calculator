@@ -97,3 +97,45 @@ class TestPricingIntegration:
         # Оба в реалистичном диапазоне (>100k и <2.5M)
         assert 100_000 <= pe <= 2_500_000
         assert 100_000 <= glass <= 2_500_000
+
+
+class TestL1CorpusMaterialFlow:
+    """Проверка проброса L1.corpus_material через select_pumps → pricing."""
+
+    def test_l1_corpus_material_glass_changes_price(self):
+        from pump_calculator import select_pumps
+        from pump_calculator.schemas import L0Input, L1Input
+
+        L0 = L0Input(Q_m3h=21.2, dH_m=15, L_m=50, wastewater_type="domestic")
+
+        res_pe = select_pumps(L0)  # default = PE
+        res_glass = select_pumps(L0, L1Input(corpus_material="glass"))
+
+        budget_pe = res_pe.results.budget
+        budget_glass = res_glass.results.budget
+        assert budget_pe is not None and budget_glass is not None
+
+        # Тот же насос (выбор не зависит от материала корпуса)
+        assert budget_pe.id == budget_glass.id
+        # Но цена корпуса разная
+        assert budget_pe.price_breakdown.corpus_rub != budget_glass.price_breakdown.corpus_rub
+        # Для маленькой КНС (Q=21) стеклопластик дешевле ПЭ
+        assert budget_glass.price_breakdown.corpus_rub < budget_pe.price_breakdown.corpus_rub
+
+    def test_l1_corpus_material_default_is_pe(self):
+        from pump_calculator import select_pumps
+        from pump_calculator.schemas import L0Input, L1Input
+
+        L0 = L0Input(Q_m3h=21.2, dH_m=15, L_m=50, wastewater_type="domestic")
+        # Без L1
+        res1 = select_pumps(L0)
+        # С L1 без указания corpus_material
+        res2 = select_pumps(L0, L1Input())
+        # С L1.corpus_material=pe явно
+        res3 = select_pumps(L0, L1Input(corpus_material="pe"))
+
+        # Все три должны дать одинаковую цену корпуса (PE по умолчанию)
+        c1 = res1.results.budget.price_breakdown.corpus_rub
+        c2 = res2.results.budget.price_breakdown.corpus_rub
+        c3 = res3.results.budget.price_breakdown.corpus_rub
+        assert c1 == c2 == c3

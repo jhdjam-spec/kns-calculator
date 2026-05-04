@@ -3,20 +3,23 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  corpusMaterialLabels,
   qUnitLabels,
   wastewaterTypeLabels,
   wizardFormSchema,
-  wizardFormToL0Input,
+  wizardFormToSelectionRequest,
+  type CorpusMaterial,
   type WastewaterType,
   type WizardFormValues,
 } from "@/schemas/input";
 
 export interface WizardL0Props {
-  onSubmit: (values: ReturnType<typeof wizardFormToL0Input>) => void;
+  onSubmit: (values: ReturnType<typeof wizardFormToSelectionRequest>) => void;
   isPending?: boolean;
 }
 
 const WASTEWATER_OPTIONS: WastewaterType[] = ["domestic", "drainage", "industrial"];
+const CORPUS_OPTIONS: CorpusMaterial[] = ["pe", "glass"];
 
 export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
   const {
@@ -29,13 +32,14 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
       Q_unit: "m3h",
       // Опциональные поля по умолчанию пусты — backend подставит дефолт
       wastewater_type: "" as unknown as WastewaterType,
+      corpus_material: "pe",
     },
     mode: "onSubmit",
   });
 
   return (
     <form
-      onSubmit={handleSubmit((values) => onSubmit(wizardFormToL0Input(values)))}
+      onSubmit={handleSubmit((values) => onSubmit(wizardFormToSelectionRequest(values)))}
       className="space-y-5 max-w-xl"
       aria-label="Форма подбора насоса L0"
       noValidate
@@ -176,6 +180,30 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
             {errors.wastewater_type.message}
           </p>
         )}
+      </fieldset>
+
+      {/* Материал корпуса (L1) */}
+      <fieldset>
+        <legend className="block text-sm font-medium mb-1">
+          Материал корпуса КНС{" "}
+          <span className="text-gray-400 text-xs font-normal">(влияет на цену)</span>
+        </legend>
+        <div className="flex flex-wrap gap-4">
+          {CORPUS_OPTIONS.map((opt) => (
+            <label key={opt} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                value={opt}
+                {...register("corpus_material")}
+              />
+              <span className="text-sm">{corpusMaterialLabels[opt]}</span>
+            </label>
+          ))}
+        </div>
+        <p className="mt-1 text-xs text-gray-500">
+          ПЭ — стандарт Серво-Юг (любой типоразмер под заказ).
+          Стеклопластик — точная формула из xlsx-калькулятора Серво-Юг (5 стандартных D).
+        </p>
       </fieldset>
 
       <button

@@ -1,4 +1,4 @@
-import type { L0Input } from "@/schemas/input";
+import type { L0Input, SelectionRequest } from "@/schemas/input";
 import { selectionResultSchema, type SelectionResult } from "@/schemas/result";
 
 /**
@@ -8,6 +8,7 @@ import { selectionResultSchema, type SelectionResult } from "@/schemas/result";
  */
 const API_PREFIX = "/api/backend";
 
+/** /select/quick — только L0, без L1. Backward-compat. */
 export async function selectPumpsQuick(input: L0Input): Promise<SelectionResult> {
   const res = await fetch(`${API_PREFIX}/select/quick`, {
     method: "POST",
@@ -21,7 +22,28 @@ export async function selectPumpsQuick(input: L0Input): Promise<SelectionResult>
   }
 
   const json = await res.json();
-  // Валидируем shape — это защита от рассинхрона backend/frontend
+  return selectionResultSchema.parse(json);
+}
+
+/** /select — полный запрос с L0 + опциональным L1 (corpus_material и др.). */
+export async function selectPumps(req: SelectionRequest): Promise<SelectionResult> {
+  // Если L1 пустой/отсутствует — используем quick endpoint (он быстрее и без обёртки L0/L1)
+  if (!req.L1 || Object.keys(req.L1).length === 0) {
+    return selectPumpsQuick(req.L0);
+  }
+
+  const res = await fetch(`${API_PREFIX}/select`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+
+  const json = await res.json();
   return selectionResultSchema.parse(json);
 }
 
