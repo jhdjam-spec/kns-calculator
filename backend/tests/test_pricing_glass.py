@@ -14,7 +14,6 @@ import pytest
 
 from pump_calculator.pricing import estimate_corpus_price_rub
 from pump_calculator.pricing_glass import (
-    GLASS_STANDARD_DIAMETERS_MM,
     calc_glass_corpus_cost,
     estimate_glass_corpus_price_rub,
     round_to_glass_standard_d,

@@ -10,7 +10,7 @@ heuristic-оценки для насосов и Серво-Юг корпусов
 
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Literal
 
 from pump_calculator import catalog
 from pump_calculator.pricing_glass import estimate_glass_corpus_price_rub
@@ -151,7 +151,8 @@ def estimate_kns_kit_price(
     """
     fittings = catalog._load_fittings()
     obvyazka = fittings.get("kns_obvyazka_template", {}).get("items", [])
-    common = fittings.get("kns_common_items", {}).get("items", [])
+    # common items (ШУ, поплавки, корпус) подбираются heuristic-функциями ниже,
+    # без обращения к точным ценам из fittings — поэтому common не используем.
 
     dn = round_to_dn(discharge_DN_mm)
     hits_from_db = 0

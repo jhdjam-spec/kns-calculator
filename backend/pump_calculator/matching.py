@@ -21,7 +21,6 @@ from pump_calculator.schemas import (
     SelectionResultsBySegment,
 )
 
-
 # ----------------------- Дефолты для неполного L0 -----------------------
 
 L0_DEFAULT_DH_M = 5.0
@@ -52,7 +51,7 @@ def apply_l0_defaults(L0: L0Input) -> tuple[L0Input, list[str]]:
     if ww is None:
         ww = L0_DEFAULT_WW_TYPE
         assumptions.append(
-            f"Тип стоков не указан — использован 'domestic' (хоз-бытовые, наиболее частый сценарий)"
+            "Тип стоков не указан — использован 'domestic' (хоз-бытовые, наиболее частый сценарий)"
         )
 
     # Если dH=0 и L=0 — сценарий «насос на месте» нереалистичен для подбора:

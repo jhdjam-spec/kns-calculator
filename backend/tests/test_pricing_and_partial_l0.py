@@ -8,8 +8,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from pump_calculator import select_pumps
 from pump_calculator.pricing import (
     estimate_corpus_price_rub,
@@ -18,7 +16,6 @@ from pump_calculator.pricing import (
     round_to_dn,
 )
 from pump_calculator.schemas import L0Input
-
 
 # ---------- pricing.py unit tests ----------
 
