@@ -82,14 +82,20 @@ def _build_segment_bom(
 
     dn = _round_dn(pump.discharge_DN_mm)
 
-    # 1. Насос
-    pump_price_estimate = {"budget": 80_000, "mid": 200_000, "premium": 500_000}[segment]
+    # 1. Насос — используем оценку из pricing.estimate_pump_price_rub (см. pump.price_breakdown)
+    # Берём цену 1 насоса (в pump_rub учтены 2 шт по схеме 1+1)
+    n_pumps_default = 2
+    pump_unit_price = (
+        pump.price_breakdown.pump_rub // n_pumps_default
+        if pump.price_breakdown.pump_rub
+        else {"budget": 80_000, "mid": 200_000, "premium": 500_000}[segment]
+    )
     rows.append([
         str(pos), "Насос погружной", pump.brand, pump.model,
-        "1", f"{pump_price_estimate:,}".replace(",", " "),
-        f"{pump_price_estimate:,}".replace(",", " "),
+        "1", f"{pump_unit_price:,}".replace(",", " "),
+        f"{pump_unit_price:,}".replace(",", " "),
     ])
-    total += pump_price_estimate
+    total += pump_unit_price
     pos += 1
 
     # 2-4. АТМ + задвижка + обратный клапан

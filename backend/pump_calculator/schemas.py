@@ -20,12 +20,18 @@ ReliabilityCategory = Literal["I", "II", "III"]
 # ----------------------- Inputs -----------------------
 
 class L0Input(BaseModel):
-    """4 поля для менеджера. Все обязательные."""
+    """L0-вход: только Q обязателен. Остальные поля опциональны — при отсутствии калькулятор подставит безопасные дефолты и вернёт их в `assumptions`.
 
-    Q_m3h: float = Field(..., gt=0, le=10000, description="Расход в м³/ч (внутреннее представление)")
-    dH_m: float = Field(..., ge=-50, le=200, description="Геометрический перепад точек, м")
-    L_m: float = Field(..., ge=0, le=5000, description="Длина напорной трассы, м (0 = только внутренняя обвязка)")
-    wastewater_type: WastewaterType = Field(..., description="Тип стоков")
+    Дефолты:
+      - dH_m: 5.0 м (типичный перепад внутри площадки малой КНС)
+      - L_m: 50.0 м (типичная длина внутриплощадочной напорной трассы)
+      - wastewater_type: "domestic" (наиболее частый сценарий менеджера ОП)
+    """
+
+    Q_m3h: float = Field(..., gt=0, le=10000, description="Расход в м³/ч (единственное обязательное)")
+    dH_m: float | None = Field(None, ge=-50, le=200, description="Геометрический перепад точек, м (default 5.0)")
+    L_m: float | None = Field(None, ge=0, le=5000, description="Длина напорной трассы, м (default 50.0; 0 = только внутри)")
+    wastewater_type: WastewaterType | None = Field(None, description="Тип стоков (default 'domestic')")
 
 
 class L1Input(BaseModel):
@@ -77,6 +83,21 @@ class PumpEnvelope(BaseModel):
     NPSHr_at_BEP_m: float | None = None
 
 
+class PriceBreakdown(BaseModel):
+    """Разбивка ориентировочной цены КНС-комплекта по позициям BOM, ₽."""
+
+    pump_rub: int = 0
+    atm_rub: int = 0
+    valve_rub: int = 0
+    check_valve_rub: int = 0
+    rails_rub: int = 0
+    cabinet_rub: int = 0
+    floats_rub: int = 0
+    chain_rub: int = 0
+    corpus_rub: int = 0
+    total_rub: int = 0
+
+
 class PumpResult(BaseModel):
     """Один кандидат в выдаче."""
 
@@ -97,6 +118,14 @@ class PumpResult(BaseModel):
     aor_zone: Literal["POR", "AOR", "outside"] | None = None
     notes: list[str] = Field(default_factory=list)
 
+    # Ориентировочная цена комплекта КНС (насос + обвязка + ШУ + корпус), ₽
+    price_estimate_rub: int = Field(0, description="Сумма по 9 позициям BOM. 0 = не удалось оценить.")
+    price_breakdown: PriceBreakdown = Field(default_factory=PriceBreakdown)
+    price_confidence: Literal["low", "medium", "high"] = Field(
+        "low",
+        description="low — если использованы heuristic-оценки; medium — большинство из БД 2026; high — все из БД",
+    )
+
 
 # ----------------------- Output -----------------------
 
@@ -109,7 +138,7 @@ class SelectionResultsBySegment(BaseModel):
 class SelectionResult(BaseModel):
     """Финальный ответ калькулятора."""
 
-    schema_version: str = "1.0"
+    schema_version: str = "1.1"
     input: SelectionRequest
     computed: ComputedHydraulics
     results: SelectionResultsBySegment
@@ -117,6 +146,10 @@ class SelectionResult(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     engineer_handoff_required: bool = False
     trigger_reasons: list[str] = Field(default_factory=list)
+    assumptions: list[str] = Field(
+        default_factory=list,
+        description="Дефолты, подставленные при отсутствии данных (например, 'dH_m не указан, использован 5.0 м')",
+    )
 
 
 # ----------------------- Unit conversion -----------------------

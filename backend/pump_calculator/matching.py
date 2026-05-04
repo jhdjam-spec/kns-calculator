@@ -9,6 +9,7 @@ from typing import Any
 
 from pump_calculator import catalog
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
+from pump_calculator.pricing import estimate_kns_kit_price
 from pump_calculator.schemas import (
     ComputedHydraulics,
     L0Input,
@@ -19,6 +20,53 @@ from pump_calculator.schemas import (
     SelectionResult,
     SelectionResultsBySegment,
 )
+
+
+# ----------------------- Дефолты для неполного L0 -----------------------
+
+L0_DEFAULT_DH_M = 5.0
+L0_DEFAULT_L_M = 50.0
+L0_DEFAULT_WW_TYPE = "domestic"
+
+
+def apply_l0_defaults(L0: L0Input) -> tuple[L0Input, list[str]]:
+    """Подставляем безопасные дефолты для пропущенных полей L0.
+
+    Возвращает (новый L0 с заполненными полями, список assumptions для UX).
+    """
+    assumptions: list[str] = []
+    dH = L0.dH_m
+    L_m = L0.L_m
+    ww = L0.wastewater_type
+
+    if dH is None:
+        dH = L0_DEFAULT_DH_M
+        assumptions.append(
+            f"dH не указан — использован {L0_DEFAULT_DH_M:g} м (типичный перепад внутри площадки)"
+        )
+    if L_m is None:
+        L_m = L0_DEFAULT_L_M
+        assumptions.append(
+            f"L не указана — использовано {L0_DEFAULT_L_M:g} м (типовая внутриплощадочная трасса)"
+        )
+    if ww is None:
+        ww = L0_DEFAULT_WW_TYPE
+        assumptions.append(
+            f"Тип стоков не указан — использован 'domestic' (хоз-бытовые, наиболее частый сценарий)"
+        )
+
+    # Если dH=0 и L=0 — сценарий «насос на месте» нереалистичен для подбора:
+    # подставим минимальный H_full=2 м путём задания dH=2
+    if dH == 0 and L_m == 0:
+        dH = 2.0
+        assumptions.append(
+            "dH и L оба 0 — установлен dH=2 м (минимум для подбора насоса)"
+        )
+
+    return (
+        L0Input(Q_m3h=L0.Q_m3h, dH_m=dH, L_m=L_m, wastewater_type=ww),
+        assumptions,
+    )
 
 # ----------------------- Шаг 3: жёсткий фильтр -----------------------
 
@@ -140,9 +188,28 @@ def filter_by_aor(pumps: list[dict[str, Any]], Q_m3h: float) -> list[dict[str, A
 
 # ----------------------- Шаг 6: топ-1 в каждом сегменте -----------------------
 
-def make_pump_result(pump: dict[str, Any], score: float, breakdown: dict, zone: str | None) -> PumpResult:
-    """Конвертация из raw JSON в типизированный PumpResult."""
+def make_pump_result(
+    pump: dict[str, Any],
+    score: float,
+    breakdown: dict,
+    zone: str | None,
+    Q_m3h: float = 0.0,
+) -> PumpResult:
+    """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта."""
     e = pump["envelope"]
+    P_kW = (pump.get("power") or {}).get("P_kW", 0)
+    DN_mm = (pump.get("discharge") or {}).get("DN_mm")
+    segment = pump["price_segment"]
+
+    # Первичная оценка цены КНС-комплекта (1 раб + 1 рез по умолчанию)
+    price_breakdown, confidence = estimate_kns_kit_price(
+        P_kW=P_kW,
+        Q_m3h=Q_m3h,
+        discharge_DN_mm=DN_mm,
+        segment=segment,
+        n_pumps=2,
+    )
+
     return PumpResult(
         id=pump["id"],
         brand=pump["brand"],
@@ -151,14 +218,17 @@ def make_pump_result(pump: dict[str, Any], score: float, breakdown: dict, zone: 
         impeller=pump.get("impeller"),
         free_passage_mm=pump.get("free_passage_mm", 0),
         envelope=PumpEnvelope(**{k: v for k, v in e.items() if k in PumpEnvelope.model_fields}),
-        P_kW=(pump.get("power") or {}).get("P_kW", 0),
-        discharge_DN_mm=(pump.get("discharge") or {}).get("DN_mm"),
-        price_segment=pump["price_segment"],
+        P_kW=P_kW,
+        discharge_DN_mm=DN_mm,
+        price_segment=segment,
         available_ru_status=(pump.get("available_ru") or {}).get("status", "unknown"),
         score=round(score, 4),
         score_breakdown=breakdown,
         aor_zone=zone,
         notes=([pump["_engineer_note"]] if pump.get("_engineer_note") else []),
+        price_estimate_rub=price_breakdown.total_rub,
+        price_breakdown=price_breakdown,
+        price_confidence=confidence,
     )
 
 
@@ -179,7 +249,7 @@ def pick_top_per_segment(
             warnings.append(f"{segment}: нет кандидатов в этом ценовом сегменте")
             continue
         best = max(seg_candidates, key=lambda x: x[1])
-        pr = make_pump_result(best[0], best[1], best[2], best[3])
+        pr = make_pump_result(best[0], best[1], best[2], best[3], Q_m3h=Q_m3h)
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
         setattr(results, segment, pr)
@@ -233,29 +303,37 @@ def evaluate_handoff_triggers(
 # ----------------------- Главная функция -----------------------
 
 def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
-    """Полный пайплайн: 7 шагов алгоритма.
+    """Полный пайплайн: 7 шагов алгоритма + первичная оценка цены.
 
     Возвращает SelectionResult с топ-1 в каждом ценовом сегменте +
-    флаги hand-off + полная гидравлика для трассируемости.
+    флаги hand-off + полная гидравлика + price_estimate_rub в каждом PumpResult +
+    assumptions со списком подставленных дефолтов.
+
+    Терпим к неполному L0: если dH/L/wastewater_type=None → подставляются дефолты.
     """
+    # Шаг 0: подставляем дефолты для пропущенных полей L0
+    L0_filled, assumptions = apply_l0_defaults(L0)
+
     # Шаги 1-2
-    computed = compute_hydraulics(L0, L1)
+    computed = compute_hydraulics(L0_filled, L1)
 
     # Шаг 3
     pumps_all = catalog.load_pumps()
-    f1 = filter_by_wastewater_type(pumps_all, L0.wastewater_type)
+    f1 = filter_by_wastewater_type(pumps_all, L0_filled.wastewater_type)
 
     # Шаг 4
-    f2 = filter_by_envelope(f1, L0.Q_m3h, computed.H_full_m)
+    f2 = filter_by_envelope(f1, L0_filled.Q_m3h, computed.H_full_m)
 
     # Шаг 5а: AOR
-    f3 = filter_by_aor(f2, L0.Q_m3h)
+    f3 = filter_by_aor(f2, L0_filled.Q_m3h)
 
     # Шаг 6
-    results, candidates_total, warnings = pick_top_per_segment(f3, L0.Q_m3h, computed.H_full_m)
+    results, candidates_total, warnings = pick_top_per_segment(
+        f3, L0_filled.Q_m3h, computed.H_full_m
+    )
 
     # Шаг 7
-    triggers = evaluate_handoff_triggers(L0, L1, computed, candidates_total)
+    triggers = evaluate_handoff_triggers(L0_filled, L1, computed, candidates_total)
 
     # Жёсткий триггер: если ни один сегмент не заполнен — handoff обязателен
     if results.budget is None and results.mid is None and results.premium is None:
@@ -263,11 +341,12 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             triggers.append("auto_no_match")
 
     return SelectionResult(
-        input=SelectionRequest(L0=L0, L1=L1),
+        input=SelectionRequest(L0=L0_filled, L1=L1),
         computed=computed,
         results=results,
         candidates_total=candidates_total,
         warnings=warnings,
         engineer_handoff_required=bool(triggers),
         trigger_reasons=triggers,
+        assumptions=assumptions,
     )
