@@ -5,13 +5,19 @@ import { z } from "zod";
  * При изменении backend — синхронизировать.
  */
 
-export const wastewaterTypeSchema = z.enum(["domestic", "drainage", "industrial"]);
+export const wastewaterTypeSchema = z.enum([
+  "domestic",
+  "drainage",
+  "industrial",
+  "clean_water",
+]);
 export type WastewaterType = z.infer<typeof wastewaterTypeSchema>;
 
 export const wastewaterTypeLabels: Record<WastewaterType, string> = {
   domestic: "Бытовая канализация",
   drainage: "Дождевая / дренаж",
   industrial: "Промышленные стоки",
+  clean_water: "Чистая вода (СПД)",
 };
 
 export const qUnitSchema = z.enum(["m3h", "ls", "m3sut"]);

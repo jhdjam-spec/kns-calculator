@@ -254,3 +254,150 @@ def estimate_kns_kit_price(
         total_rub=total,
     )
     return breakdown, confidence
+
+
+# ---------- Phase 8: Цена СПД-комплекта (booster station) ----------
+
+def estimate_spd_cabinet_price_rub(P_kW: float, segment: PriceSegment) -> int:
+    """ШУ для СПД — обычно с ЧРП и контроллером давления (Wilo CC-FC, ОНИКС-PLC).
+    Дороже КНС-шкафа на 30-50% за счёт ЧРП.
+    """
+    base = {"budget": 150_000, "mid": 320_000, "premium": 600_000}[segment]
+    extra_per_kw = {"budget": 10_000, "mid": 18_000, "premium": 28_000}[segment]
+    raw = base + max(P_kW - 2.2, 0) * extra_per_kw
+    return int(round(raw / 1000.0) * 1000)
+
+
+def estimate_hydroaccumulator_price_rub(Q_m3h: float, segment: PriceSegment) -> int:
+    """Мембранный бак / гидроаккумулятор для СПД.
+
+    Объём подбирается грубо по Q (по практике Wilo/Grundfos):
+      Q ≤ 5 м³/ч  → 8-24 л   (бытовая СПД)
+      Q ≤ 20 м³/ч → 50-100 л
+      Q ≤ 50 м³/ч → 200-300 л
+      Q > 50      → 500+ л
+    Цены примерные по сегментам.
+    """
+    if Q_m3h <= 5:
+        prices = {"budget": 5_000, "mid": 10_000, "premium": 18_000}
+    elif Q_m3h <= 20:
+        prices = {"budget": 12_000, "mid": 22_000, "premium": 38_000}
+    elif Q_m3h <= 50:
+        prices = {"budget": 25_000, "mid": 45_000, "premium": 75_000}
+    else:
+        prices = {"budget": 60_000, "mid": 100_000, "premium": 180_000}
+    return prices[segment]
+
+
+def estimate_spd_kit_price(
+    P_kW: float,
+    Q_m3h: float,
+    discharge_DN_mm: float | None,
+    segment: PriceSegment,
+    n_pumps: int = 2,  # 1 раб + 1 рез
+    explicit_pump_price_rub: int | None = None,
+) -> tuple[PriceBreakdown, str]:
+    """Оценка цены СПД-комплекта (booster station).
+
+    Состав отличается от КНС:
+      - Насосы (вертикальные многоступенчатые) + рама
+      - ШУ с ЧРП и контроллером давления
+      - Мембранный бак / гидроаккумулятор
+      - Датчики давления (4-20 мА), 2 шт
+      - Задвижки и обратные клапаны на каждом насосе (без АТМ — сухопостовленные)
+      - Без корпуса/направляющих/цепей/поплавков
+
+    **Особенность:** если в БД задан `price_rub_2026` — это цена **готового
+    блока «всё включено»** (насосы + ШУ + бак + рама + арматура), как в реальных
+    КП производителей (ANTARUS 3 MLV20-5/GPRS = 3 500 650 ₽ за всю станцию).
+    В этом случае только насос и не добавляем обвязку.
+
+    Иначе (heuristic) — собираем компоненты по отдельности.
+
+    Используем PriceBreakdown с уже существующими полями:
+      - cabinet_rub — ШУ с ЧРП
+      - atm_rub — гидроаккумулятор + рама + датчики (нет АТМ как у КНС)
+      - valve_rub, check_valve_rub — обвязка по DN
+      - corpus_rub = 0 (СПД — модуль, не корпус)
+      - rails_rub, chain_rub, floats_rub = 0 (не применяются)
+    """
+    has_explicit_pump = bool(explicit_pump_price_rub and explicit_pump_price_rub > 0)
+
+    # Если задана точная цена комплекта — это **всё включено**, обвязку не добавляем
+    if has_explicit_pump:
+        breakdown = PriceBreakdown(
+            pump_rub=int(explicit_pump_price_rub) * n_pumps,
+            atm_rub=0,
+            valve_rub=0,
+            check_valve_rub=0,
+            rails_rub=0,
+            cabinet_rub=0,
+            floats_rub=0,
+            chain_rub=0,
+            corpus_rub=0,
+            total_rub=int(explicit_pump_price_rub) * n_pumps,
+        )
+        return breakdown, "high"
+
+    # Без точной цены — собираем по компонентам
+    fittings = catalog._load_fittings()
+    obvyazka = fittings.get("kns_obvyazka_template", {}).get("items", [])
+
+    dn = round_to_dn(discharge_DN_mm)
+    hits_from_db = 0
+    total_db_lookups = 0
+
+    # Насос (heuristic)
+    pump_unit = estimate_pump_price_rub(P_kW, segment, explicit_price_rub=None)
+    pump_total = pump_unit * n_pumps
+
+    # Задвижки + обратные клапаны (на каждый насос — 2 единицы по DN)
+    valve_rub = 0
+    check_valve_rub = 0
+    for item in obvyazka:
+        pos = item.get("position")
+        if pos == 3:  # Задвижка
+            total_db_lookups += 1
+            price = _price_for_dn(item.get("price_examples_rub_2026", {}), dn)
+            if price:
+                hits_from_db += 1
+                # 2 задвижки на каждый насос (до и после)
+                valve_rub = price * n_pumps * 2
+        elif pos == 4:  # Обратный клапан
+            total_db_lookups += 1
+            price = _price_for_dn(item.get("price_examples_rub_2026", {}), dn)
+            if price:
+                hits_from_db += 1
+                check_valve_rub = price * n_pumps
+
+    # ШУ с ЧРП
+    cabinet_rub = estimate_spd_cabinet_price_rub(P_kW, segment)
+
+    # Гидроаккумулятор + рама — кладём в atm_rub (поле есть)
+    hydro_rub = estimate_hydroaccumulator_price_rub(Q_m3h, segment)
+    frame_rub = {"budget": 25_000, "mid": 45_000, "premium": 75_000}[segment]
+    pressure_sensors_rub = 8_000 * 2  # 2 датчика давления 4-20 мА
+    atm_rub = hydro_rub + frame_rub + pressure_sensors_rub
+
+    total = pump_total + atm_rub + valve_rub + check_valve_rub + cabinet_rub
+
+    # confidence: heuristic-ветка без explicit price → medium максимум
+    if total_db_lookups > 0:
+        ratio = hits_from_db / total_db_lookups
+        confidence = "medium" if ratio >= 0.66 else "low"
+    else:
+        confidence = "low"
+
+    breakdown = PriceBreakdown(
+        pump_rub=pump_total,
+        atm_rub=atm_rub,  # тут гидроаккумулятор+рама+датчики
+        valve_rub=valve_rub,
+        check_valve_rub=check_valve_rub,
+        rails_rub=0,
+        cabinet_rub=cabinet_rub,
+        floats_rub=0,
+        chain_rub=0,
+        corpus_rub=0,
+        total_rub=total,
+    )
+    return breakdown, confidence

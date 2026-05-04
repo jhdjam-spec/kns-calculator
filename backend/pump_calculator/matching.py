@@ -9,7 +9,7 @@ from typing import Any
 
 from pump_calculator import catalog
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
-from pump_calculator.pricing import estimate_kns_kit_price
+from pump_calculator.pricing import estimate_kns_kit_price, estimate_spd_kit_price
 from pump_calculator.schemas import (
     ComputedHydraulics,
     L0Input,
@@ -248,24 +248,40 @@ def make_pump_result(
     DN_mm = (pump.get("discharge") or {}).get("DN_mm")
     segment = pump["price_segment"]
     explicit_pump_price = pump.get("price_rub_2026")
+    pump_type = pump.get("type", "submersible_sewage")
 
-    # Очень малые бытовые насосы (Q < 5 м³/ч, DN ≤65) обычно ставят в
-    # готовый приямок без полноценного ПЭ-корпуса КНС — как в реальном
-    # КП Серво-Юг для KAIQUAN 65WQ/S223-2.2 (Q=0.5 м³/ч, частный коттедж).
-    # Для Q ≥ 5 (типовая КНС многоквартирной/гостиничной) корпус нужен.
-    is_small_kit = Q_m3h < 5.0 and (DN_mm or 0) <= 65
+    # Phase 8: для booster_station (СПД) — отдельный BOM-шаблон
+    # (без АТМ, без корпуса/направляющих, с гидроаккумулятором и ЧРП-шкафом).
+    # СПД-блок поставляется как **готовый комплект** — цена насоса в БД обычно
+    # включает все насосы блока (например, ANTARUS 3 MLV20-5 = 3.5M за всю
+    # станцию из 3 насосов). Поэтому n_pumps=1 (множитель уже учтён в цене).
+    if pump_type == "booster_station":
+        price_breakdown, confidence = estimate_spd_kit_price(
+            P_kW=P_kW,
+            Q_m3h=Q_m3h,
+            discharge_DN_mm=DN_mm,
+            segment=segment,
+            n_pumps=1,
+            explicit_pump_price_rub=explicit_pump_price,
+        )
+    else:
+        # Очень малые бытовые насосы (Q < 5 м³/ч, DN ≤65) обычно ставят в
+        # готовый приямок без полноценного ПЭ-корпуса КНС — как в реальном
+        # КП Серво-Юг для KAIQUAN 65WQ/S223-2.2 (Q=0.5 м³/ч, частный коттедж).
+        # Для Q ≥ 5 (типовая КНС многоквартирной/гостиничной) корпус нужен.
+        is_small_kit = Q_m3h < 5.0 and (DN_mm or 0) <= 65
 
-    price_breakdown, confidence = estimate_kns_kit_price(
-        P_kW=P_kW,
-        Q_m3h=Q_m3h,
-        discharge_DN_mm=DN_mm,
-        segment=segment,
-        n_pumps=2,
-        corpus_material=corpus_material,  # type: ignore[arg-type]
-        explicit_pump_price_rub=explicit_pump_price,
-        include_corpus=not is_small_kit,
-        include_rails=not is_small_kit,
-    )
+        price_breakdown, confidence = estimate_kns_kit_price(
+            P_kW=P_kW,
+            Q_m3h=Q_m3h,
+            discharge_DN_mm=DN_mm,
+            segment=segment,
+            n_pumps=2,
+            corpus_material=corpus_material,  # type: ignore[arg-type]
+            explicit_pump_price_rub=explicit_pump_price,
+            include_corpus=not is_small_kit,
+            include_rails=not is_small_kit,
+        )
 
     return PumpResult(
         id=pump["id"],

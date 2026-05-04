@@ -20,7 +20,7 @@ export interface WizardL0Props {
   isPending?: boolean;
 }
 
-const WASTEWATER_OPTIONS: WastewaterType[] = ["domestic", "drainage", "industrial"];
+const WASTEWATER_OPTIONS: WastewaterType[] = ["domestic", "drainage", "industrial", "clean_water"];
 const CORPUS_OPTIONS: CorpusMaterial[] = ["pe", "glass"];
 
 export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
@@ -190,6 +190,7 @@ export function WizardL0({ onSubmit, isPending = false }: WizardL0Props) {
                   {opt === "domestic" && "Дома, гостиницы, офисы, кафе, апартаменты"}
                   {opt === "drainage" && "Дождевая вода и дренаж (чистая вода без волокон)"}
                   {opt === "industrial" && "Промышленные стоки (с песком, химией, агрессивные)"}
+                  {opt === "clean_water" && "Станция повышения давления — водоснабжение"}
                 </span>
               </span>
             </label>

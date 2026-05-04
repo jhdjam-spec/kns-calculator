@@ -237,6 +237,45 @@
       "_source": "MATERIALS_INVENTORY.md + producers_dataset.json"
     },
     {
+      "id": "antarus-3mlv20-5",
+      "brand": "Antarus",
+      "model": "3 MLV20-5 (СПД с GPRS)",
+      "type": "booster_station",
+      "impeller": "multi-channel",
+      "free_passage_mm": 0,
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 80,
+        "H_min_m": 40,
+        "H_max_m": 100,
+        "Q_BEP_m3h": 38.43,
+        "H_BEP_m": 75,
+        "eta_BEP_pct": 50.0,
+        "NPSHr_at_BEP_m": 4.5
+      },
+      "power": {
+        "P_kW": 5.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
+      "price_segment": "premium",
+      "price_rub_2026": 3500650,
+      "available_ru": {
+        "status": "official",
+        "distributor": "Antarus"
+      },
+      "_engineer_flag": "ok",
+      "_engineer_note": "СПД 3-насосная с GPRS-диспетчеризацией. Q=38.43 м³/ч, H=75 м, P=10.6 кВт на валу, мотор 5.5 кВт. Подобрано через программу 'УМНАЯ ВОДА' Antarus. Цена 3 500 650 ₽ из КП Серво-Юг для Беловодск Крым 2026.",
+      "_source": "Паспорт ANTARUS 3 MLV20-5/GPRS (inbox 2026-05-04) + КП Беловодск 28012026_2"
+    },
+    {
       "id": "antarus-mlv3-6",
       "brand": "Antarus",
       "model": "2MLV 3-6 (СПД)",
