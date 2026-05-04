@@ -39,6 +39,16 @@ jobs:
         working-directory: backend
         run: ruff check pump_calculator tests
 
-      - name: Run pytest
+      - name: Run pytest (core, без ETL PDF — heavy deps)
         working-directory: backend
-        run: pytest -v
+        run: |
+          pytest -v \
+            --ignore=tests/test_etl_pdf_antarus.py \
+            --ignore=tests/test_etl_pdf_docling.py \
+            --ignore=tests/test_etl_pdf_ksb.py \
+            --ignore=tests/test_etl_pdf_pdfplumber.py \
+            --ignore=tests/test_etl_pdf_qh.py \
+            --ignore=tests/test_etl_pdf_splitter.py \
+            --ignore=tests/test_etl_pdf_table.py \
+            --ignore=tests/test_etl_pipeline.py \
+            --ignore=tests/test_etl_cli.py
