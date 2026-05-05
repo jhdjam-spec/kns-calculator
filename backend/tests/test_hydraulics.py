@@ -21,9 +21,14 @@ def test_round_up_to_standard():
 
 
 def test_auto_diameter_for_typical_kns():
-    """Для Q=21.2 м³/ч и v_target=1.2 м/с D ≈ 79 мм → округление до 90 мм."""
+    """Для Q=21.2 м³/ч с v_target=1.2 → расчётный D≈79 мм → округление до 90 мм.
+    Но §15.9 (СП 32 §5.4): на D=90 скорость v=0.93 м/с < v_min=1.0 для
+    бытовой канализации → опускаемся до 75 мм, где v=1.33 м/с (риск
+    заиливания убран).
+    """
     D = auto_select_diameter_mm(21.2)
-    assert D == 90
+    assert D == 75
+    assert calc_velocity_ms(21.2, D) >= 1.0
 
 
 def test_velocity_calculation():

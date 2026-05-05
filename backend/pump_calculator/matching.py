@@ -14,6 +14,10 @@ from pump_calculator.forecast import (
     fill_price_ranges,
 )
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
+from pump_calculator.phase15 import (
+    calc_specific_speed_ns,
+    score_ns_compatibility,
+)
 from pump_calculator.pricing import estimate_kns_kit_price, estimate_spd_kit_price
 from pump_calculator.schemas import (
     ComputedHydraulics,
@@ -165,6 +169,16 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
 
     base_score = 0.40 * bep_prox + 0.25 * eta + 0.20 * h_q + 0.10 * avail + 0.05 * warranty
 
+    # §15.6 — Specific Speed Ns multiplier.
+    # Если у насоса есть rpm + Q_BEP + H_BEP → считаем Ns и применяем
+    # множитель: 1.0 в рабочем диапазоне 15-80, 0.7 на границе, 0.4 за.
+    # Если данных нет (rpm=0) — множитель 1.0, не штрафуем.
+    rpm = (pump.get("power") or {}).get("rpm", 0)
+    H_BEP = e.get("H_BEP_m") or H_full_m
+    Ns_value = calc_specific_speed_ns(rpm, Q_m3h, H_BEP)
+    ns_factor = score_ns_compatibility(Ns_value)
+    base_score *= ns_factor
+
     # Pulsed-mode bonus: для малых Q бытовой канализации (< 5 м³/ч)
     # инженеры предпочитают **минимальный достаточный** насос — меньше Q_BEP,
     # ниже цена, реалистичнее циклы. Если Q_клиент < 5 м³/ч и это
@@ -198,6 +212,8 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
         "h_margin_quality": round(h_q, 3),
         "ru_availability": round(avail, 3),
         "warranty": round(warranty, 3),
+        "ns_value": Ns_value,
+        "ns_factor": round(ns_factor, 3),
         "base_score": round(base_score, 4),
         "final_score": round(score, 4),
     }

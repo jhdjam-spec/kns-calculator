@@ -25,15 +25,43 @@ def round_up_to_standard(value_mm: float, ladder: list[float]) -> float:
     return ladder[-1]  # всё что больше — берём максимальный
 
 
-def auto_select_diameter_mm(Q_m3h: float, v_target_ms: float = 1.2) -> float:
+def auto_select_diameter_mm(
+    Q_m3h: float,
+    v_target_ms: float = 1.2,
+    v_min_ms: float = 1.0,
+) -> float:
     """Шаг 1 алгоритма: подбор D напорного по целевой скорости.
 
     Default v_target = 1.2 м/с (СП 32, диапазон 1.0–1.5).
+
+    §15.9 — фильтр v_min: после round_up_to_standard выбранный D может
+    давать v < v_min (если шаг лестницы крупный). Тогда выбираем
+    **наибольший D**, при котором v ≥ v_min — это защита от заиливания
+    напорной канализации (СП 32 §5.4: для бытовых стоков 1.0 м/с —
+    жёсткий минимум).
     """
     Q_si = Q_m3h / 3600.0  # м³/с
     D_calc = math.sqrt(4 * Q_si / (math.pi * v_target_ms))  # м
     D_mm_calc = D_calc * 1000.0
-    return round_up_to_standard(D_mm_calc, catalog.get_standard_diameters_mm())
+    ladder = catalog.get_standard_diameters_mm()
+    D_initial = round_up_to_standard(D_mm_calc, ladder)
+
+    # §15.9 — проверка v_min на выбранном D
+    v_at_D = calc_velocity_ms(Q_m3h, D_initial)
+    if v_at_D >= v_min_ms:
+        return D_initial
+
+    # v < v_min → надо уменьшать D, пока скорость не вырастет до v_min.
+    # Идём по лестнице вниз от D_initial.
+    for d in reversed(ladder):
+        if d > D_initial:
+            continue
+        if calc_velocity_ms(Q_m3h, d) >= v_min_ms:
+            return d
+    # Если даже минимальный D не даёт v_min — возвращаем минимальный
+    # (Q настолько мал, что любой стандарт даст v < 1 м/с — это сигнал
+    # пересмотреть L0 / выбрать pulsed mode).
+    return ladder[0]
 
 
 def calc_velocity_ms(Q_m3h: float, D_mm: float) -> float:
