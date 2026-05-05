@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -18,12 +19,16 @@ FIXTURE_PDF = Path(__file__).parent / "fixtures" / "pedrollo_vx_50hz.pdf"
 
 def _run_cli(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess:
     """Запустить `python -m pump_calculator.etl.cli ...` и вернуть результат."""
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
     return subprocess.run(
         [sys.executable, "-m", "pump_calculator.etl.cli", *args],
         capture_output=True,
         text=True,
         encoding="utf-8",
+        errors="replace",
         cwd=cwd,
+        env=env,
     )
 
 

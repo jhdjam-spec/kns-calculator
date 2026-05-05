@@ -63,6 +63,15 @@ def _default_runs_root() -> Path:
 
 
 def main() -> int:
+    # На Windows консоль по умолчанию cp1251 — '→', '—', '₽' и др. падают
+    # с UnicodeEncodeError. Принудительно ставим UTF-8 для stdout/stderr.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8")
+            except (OSError, ValueError):
+                pass
+
     parser = argparse.ArgumentParser(
         prog="pump_calculator.etl.cli",
         description="ETL для импорта raw-записей насосов в pumps.json",
