@@ -93,23 +93,30 @@
       "free_passage_mm": 65,
       "envelope": {
         "Q_min_m3h": 20,
-        "Q_max_m3h": 110,
-        "H_min_m": 25,
+        "Q_max_m3h": 60,
+        "H_min_m": 40.5,
         "H_max_m": 56.12,
         "Q_BEP_m3h": 53.7,
         "H_BEP_m": 46,
         "eta_BEP_pct": 41.8,
-        "NPSHr_at_BEP_m": 0.74
+        "NPSHr_at_BEP_m": null
       },
       "power": {
         "P_kW": 18.5,
+        "P_shaft_kW": 15.3,
+        "motor_model": "WQ/SE18.5-2P-00",
         "voltage_v": 380,
         "phase": 3,
+        "current_A": 35,
+        "cos_phi": 0.91,
         "ip_rating": "IP68"
       },
       "discharge": {
-        "DN_mm": 65
+        "DN_mm": 65,
+        "PN": 6,
+        "standard": "GB/T17241.1"
       },
+      "weight_kg": 200,
       "wastewater_compat": [
         "domestic",
         "industrial"
@@ -120,7 +127,7 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Cutter с режущими лопастями для длинноволокнистых стоков. Q_BEP=53.7 м³/ч, КПД 41.8%. Q_min постоянный = 20 м³/ч (паспорт).",
+      "_engineer_note": "Cutter с режущими лопастями и клыками для длинноволокнистых стоков. Q_BEP=53.7 м³/ч @ H=46 м, КПД 41.8%. Q_min постоянный 20 м³/ч. Электродвигатель 18.5 кВт (модель WQ/SE18.5-2P-00, 35 А, cosφ=0.91), мощность на валу 15.3 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен кривой производительности (60 м³/ч).",
       "_source": "Паспорт 65WQS215-18.5.pdf от 2026.02.25 (inbox 2026-05-04)"
     },
     {
@@ -132,23 +139,30 @@
       "free_passage_mm": 80,
       "envelope": {
         "Q_min_m3h": 24,
-        "Q_max_m3h": 180,
-        "H_min_m": 35,
+        "Q_max_m3h": 120,
+        "H_min_m": 30,
         "H_max_m": 76.84,
         "Q_BEP_m3h": 110,
         "H_BEP_m": 68.7,
         "eta_BEP_pct": 57.2,
-        "NPSHr_at_BEP_m": 0.73
+        "NPSHr_at_BEP_m": null
       },
       "power": {
-        "P_kW": 27.5,
+        "P_kW": 37,
+        "P_shaft_kW": 27.5,
+        "motor_model": "WQ/Z37-2P-00",
         "voltage_v": 380,
         "phase": 3,
+        "current_A": 68,
+        "cos_phi": 0.89,
         "ip_rating": "IP68"
       },
       "discharge": {
-        "DN_mm": 80
+        "DN_mm": 80,
+        "PN": 10,
+        "standard": "GB/T17241.6"
       },
+      "weight_kg": 410,
       "wastewater_compat": [
         "domestic",
         "industrial"
@@ -159,7 +173,7 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7м, КПД 57.2%. Q_min постоянный 24 м³/ч. Двигатель 80 кВт, мощность на валу 27.5 кВт (по паспорту в номинале 51 м³/ч × 18.5кВт двигатель — но это другая модель). Уточнить мощность электродвигателя при заказе.",
+      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7 м, КПД 57.2%. Q_min постоянный 24 м³/ч. Электродвигатель 37 кВт (модель WQ/Z37-2P-00, 68 А, cosφ=0.89), мощность на валу 27.5 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен графиком производительности (~120 м³/ч).",
       "_source": "Паспорт WQ2290-2136-80.pdf от 2026.02.25 (inbox 2026-05-04)"
     },
     {
