@@ -112,3 +112,67 @@ export function triggerDownload(blob: Blob, filename: string): void {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+// ----------- Phase 12: DOCX опросник + парсинг -----------
+
+/**
+ * Скачать DOCX опросный лист с предзаполнением из текущего подбора.
+ * В отличие от PDF — DOCX можно редактировать в Word, а потом загрузить
+ * обратно через /select/from-file (парсер извлечёт значения).
+ */
+export async function fetchQuestionnaireDocx(
+  selection: SelectionResult,
+  meta: QuestionnaireMeta = {}
+): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/handoff/questionnaire-docx`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ selection, ...meta }),
+  });
+  if (!res.ok) {
+    throw new Error(`Questionnaire DOCX failed: ${res.status}`);
+  }
+  return res.blob();
+}
+
+/** Скачать пустой DOCX опросник (для клиентов, заполняющих с нуля). */
+export async function fetchEmptyQuestionnaireDocx(): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/handoff/empty-questionnaire-docx`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    throw new Error(`Empty questionnaire DOCX failed: ${res.status}`);
+  }
+  return res.blob();
+}
+
+export interface SelectFromFileResult {
+  extracted_codes: Record<string, string>;
+  L0: L0Input | null;
+  L1_provided: boolean;
+  metadata: Record<string, string>;
+  missing_fields: string[];
+  warnings: string[];
+  selection: SelectionResult | null;
+}
+
+/**
+ * Загрузить заполненный клиентом DOCX и получить распарсенный L0 + результат подбора.
+ *
+ * Если Q не извлечён — selection=null, missing_fields=["Q_M3H", ...] —
+ * UI должен показать форму для ручного дозаполнения.
+ */
+export async function selectFromFile(file: File): Promise<SelectFromFileResult> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${API_PREFIX}/select/from-file`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Select from file failed: ${res.status}: ${text}`);
+  }
+  return (await res.json()) as SelectFromFileResult;
+}

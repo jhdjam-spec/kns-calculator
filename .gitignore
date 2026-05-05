@@ -29,6 +29,7 @@ htmlcov/
 private/
 secret/
 *-private.*
+01_research/
 
 # Logs
 *.log

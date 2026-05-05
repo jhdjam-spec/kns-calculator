@@ -2,13 +2,18 @@
 
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from pump_calculator import __version__, catalog
-from pump_calculator.handoff import generate_bom_pdf, generate_questionnaire_pdf
+from pump_calculator.handoff import (
+    generate_bom_pdf,
+    generate_questionnaire_docx,
+    generate_questionnaire_pdf,
+    parse_questionnaire_docx,
+)
 from pump_calculator.matching import select_pumps as run_selection
 from pump_calculator.schemas import L0Input, SelectionRequest, SelectionResult
 
@@ -149,4 +154,116 @@ def handoff_bom(selection: SelectionResult) -> Response:
         content=pdf_bytes,
         media_type="application/pdf",
         headers={"Content-Disposition": 'attachment; filename="kns_bom_draft.pdf"'},
+    )
+
+
+# ---------------------- Phase 12: DOCX опросник + парсер ----------------------
+
+
+@app.post("/handoff/questionnaire-docx", tags=["handoff"], response_class=Response)
+def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
+    """Генерация DOCX опросного листа клиенту (для редактирования и парсинга обратно).
+
+    DOCX формат предпочтительнее PDF для случаев, когда клиент будет заполнять
+    форму на компьютере и возвращать заполненный файл — мы автоматически
+    извлечём параметры через POST /select/from-file.
+    """
+    try:
+        docx_bytes = generate_questionnaire_docx(
+            req.selection,
+            object_name=req.object_name,
+            client_company=req.client_company,
+            client_contact=req.client_contact,
+            city=req.city,
+            kp_number=req.kp_number,
+        )
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(status_code=500, detail=f"DOCX generation failed: {e}") from e
+
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": 'attachment; filename="kns_questionnaire.docx"'},
+    )
+
+
+@app.post("/handoff/empty-questionnaire-docx", tags=["handoff"], response_class=Response)
+def handoff_empty_questionnaire_docx() -> Response:
+    """Пустой DOCX опросник — для клиента, который заполняет с нуля без предзаполнения."""
+    try:
+        docx_bytes = generate_questionnaire_docx()
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(status_code=500, detail=f"DOCX generation failed: {e}") from e
+
+    return Response(
+        content=docx_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": 'attachment; filename="kns_questionnaire_empty.docx"'},
+    )
+
+
+class FromFileResponse(BaseModel):
+    """Ответ /select/from-file: что извлекли + результат подбора (если хватило данных)."""
+
+    extracted_codes: dict[str, str] = Field(
+        default_factory=dict,
+        description="Все извлечённые из опросника коды и значения (для отладки)",
+    )
+    L0: L0Input | None = None
+    L1_provided: bool = Field(False, description="Извлечены ли опциональные L1-поля")
+    metadata: dict[str, str] = Field(default_factory=dict)
+    missing_fields: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    selection: SelectionResult | None = Field(
+        None,
+        description="Результат подбора. None если Q не извлечён (требуется ручной ввод).",
+    )
+
+
+@app.post("/select/from-file", response_model=FromFileResponse, tags=["selection"])
+async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  # noqa: B008  (идиома FastAPI)
+    """Принять заполненный DOCX-опросник, извлечь параметры и сделать подбор.
+
+    Поддерживаемые форматы:
+    - DOCX (нашего шаблона, сгенерированного через /handoff/questionnaire-docx)
+
+    Возвращает ExtractedQuiz + SelectionResult в одном payload. Если Q не
+    извлечён, вернётся `selection=null` и `missing_fields=["Q_M3H"]` —
+    фронт должен показать форму для ручного ввода недостающих полей.
+    """
+    if not file.filename or not file.filename.lower().endswith(".docx"):
+        raise HTTPException(
+            status_code=400,
+            detail="Поддерживается только DOCX. Для PDF/XLSX/scan см. roadmap Phase 12.2-12.3.",
+        )
+
+    file_bytes = await file.read()
+    if not file_bytes:
+        raise HTTPException(status_code=400, detail="Файл пустой")
+
+    try:
+        parsed = parse_questionnaire_docx(file_bytes)
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Не удалось распарсить DOCX: {e}",
+        ) from e
+
+    selection: SelectionResult | None = None
+    if parsed.L0 is not None:
+        try:
+            selection = run_selection(parsed.L0, parsed.L1)
+        except Exception as e:  # pragma: no cover
+            raise HTTPException(
+                status_code=500, detail=f"Selection failed: {e}",
+            ) from e
+
+    return FromFileResponse(
+        extracted_codes=parsed.raw_codes,
+        L0=parsed.L0,
+        L1_provided=parsed.L1 is not None,
+        metadata=parsed.metadata,
+        missing_fields=parsed.missing_fields,
+        warnings=parsed.warnings,
+        selection=selection,
     )

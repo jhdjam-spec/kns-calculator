@@ -1,13 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { WizardL0 } from "@/components/WizardL0";
 import { ResultsCards } from "@/components/ResultsCards";
 import { HandoffPanel } from "@/components/HandoffPanel";
+import { QuizUploader } from "@/components/QuizUploader";
 import { usePumpSelection } from "@/hooks/usePumpSelection";
+import type { SelectionResult } from "@/schemas/result";
 
 export default function HomePage() {
   const mutation = usePumpSelection();
+  // Результат может прийти из 2 источников: WizardL0 (mutation) или QuizUploader (file).
+  // Держим единое состояние, чтобы ResultsCards/HandoffPanel показывали последний.
+  const [latest, setLatest] = useState<SelectionResult | null>(null);
+  useEffect(() => {
+    if (mutation.data) setLatest(mutation.data);
+  }, [mutation.data]);
 
   return (
     <main className="container mx-auto px-4 py-6 md:py-8 max-w-5xl space-y-6 md:space-y-8">
@@ -57,6 +66,10 @@ export default function HomePage() {
         />
       </section>
 
+      <section>
+        <QuizUploader onResult={(r) => setLatest(r)} />
+      </section>
+
       {mutation.isError && (
         <div
           role="alert"
@@ -70,10 +83,10 @@ export default function HomePage() {
         </div>
       )}
 
-      {mutation.data && (
+      {latest && (
         <>
-          <ResultsCards result={mutation.data} />
-          <HandoffPanel result={mutation.data} />
+          <ResultsCards result={latest} />
+          <HandoffPanel result={latest} />
         </>
       )}
     </main>

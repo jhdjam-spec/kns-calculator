@@ -3,7 +3,12 @@
 import { useState } from "react";
 import type { SelectionResult } from "@/schemas/result";
 import { triggerReasonLabels } from "@/schemas/result";
-import { fetchQuestionnairePdf, fetchBomPdf, triggerDownload } from "@/lib/api";
+import {
+  fetchQuestionnairePdf,
+  fetchQuestionnaireDocx,
+  fetchBomPdf,
+  triggerDownload,
+} from "@/lib/api";
 
 export interface HandoffPanelProps {
   result: SelectionResult;
@@ -13,6 +18,7 @@ type DownloadState = "idle" | "loading" | "error";
 
 export function HandoffPanel({ result }: HandoffPanelProps) {
   const [qState, setQState] = useState<DownloadState>("idle");
+  const [qDocxState, setQDocxState] = useState<DownloadState>("idle");
   const [bomState, setBomState] = useState<DownloadState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -25,6 +31,19 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
       setQState("idle");
     } catch (e) {
       setQState("error");
+      setErrorMsg(e instanceof Error ? e.message : "ошибка скачивания");
+    }
+  }
+
+  async function downloadQuestionnaireDocx() {
+    setQDocxState("loading");
+    setErrorMsg(null);
+    try {
+      const blob = await fetchQuestionnaireDocx(result);
+      triggerDownload(blob, "Опросный_лист_КНС.docx");
+      setQDocxState("idle");
+    } catch (e) {
+      setQDocxState("error");
       setErrorMsg(e instanceof Error ? e.message : "ошибка скачивания");
     }
   }
@@ -99,7 +118,18 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
         >
           {qState === "loading"
             ? "Готовим PDF..."
-            : "Опросный лист клиенту"}
+            : "Опросный лист (PDF)"}
+        </button>
+
+        <button
+          type="button"
+          onClick={downloadQuestionnaireDocx}
+          disabled={qDocxState === "loading"}
+          className="rounded-md bg-white border border-blue-600 text-blue-700 hover:bg-blue-50 disabled:opacity-50 font-medium px-4 py-2.5 text-sm transition flex-1 sm:flex-initial"
+        >
+          {qDocxState === "loading"
+            ? "Готовим DOCX..."
+            : "Опросный лист (DOCX, для возврата)"}
         </button>
       </div>
 
@@ -110,8 +140,10 @@ export function HandoffPanel({ result }: HandoffPanelProps) {
       )}
 
       <p className="text-xs text-gray-600 pt-1">
-        <strong>Спецификация (КП)</strong> — таблица оборудования с ценами по 3 сегментам.{" "}
-        <strong>Опросный лист</strong> — анкета на 10 разделов для согласования с клиентом.
+        <strong>Спецификация (КП)</strong> — таблица оборудования с ценами.{" "}
+        <strong>Опросный лист (PDF)</strong> — для печати и подписи.{" "}
+        <strong>Опросный лист (DOCX)</strong> — клиент заполняет в Word и возвращает,
+        мы автоматически распознаем и сделаем уточнённый подбор.
       </p>
     </aside>
   );
