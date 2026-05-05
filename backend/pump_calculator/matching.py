@@ -18,7 +18,11 @@ from pump_calculator.phase15 import (
     calc_specific_speed_ns,
     score_ns_compatibility,
 )
-from pump_calculator.pricing import estimate_kns_kit_price, estimate_spd_kit_price
+from pump_calculator.pricing import (
+    estimate_fire_kit_price,
+    estimate_kns_kit_price,
+    estimate_spd_kit_price,
+)
 from pump_calculator.schemas import (
     ComputedHydraulics,
     L0Input,
@@ -262,6 +266,8 @@ def make_pump_result(
     zone: str | None,
     Q_m3h: float = 0.0,
     corpus_material: str = "pe",
+    wastewater_type: str = "domestic",
+    ex_required: bool = False,
 ) -> PumpResult:
     """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта."""
     e = pump["envelope"]
@@ -271,12 +277,25 @@ def make_pump_result(
     explicit_pump_price = pump.get("price_rub_2026")
     pump_type = pump.get("type", "submersible_sewage")
 
+    # Phase 11: пожарная установка — отдельный BOM-шаблон (СП 10.13130).
+    # Всегда 1 раб + 1 рез + жокей-насос + пожарный ШУ Sf + PN16 арматура.
+    # confidence ВСЕГДА low — индивидуальная калибровка под объект.
+    if wastewater_type == "fire_protection":
+        price_breakdown, confidence = estimate_fire_kit_price(
+            P_kW=P_kW,
+            Q_m3h=Q_m3h,
+            discharge_DN_mm=DN_mm,
+            segment=segment,
+            n_pumps=2,
+            explicit_pump_price_rub=explicit_pump_price,
+            ex_required=ex_required,
+        )
     # Phase 8: для booster_station (СПД) — отдельный BOM-шаблон
     # (без АТМ, без корпуса/направляющих, с гидроаккумулятором и ЧРП-шкафом).
     # СПД-блок поставляется как **готовый комплект** — цена насоса в БД обычно
     # включает все насосы блока (например, ANTARUS 3 MLV20-5 = 3.5M за всю
     # станцию из 3 насосов). Поэтому n_pumps=1 (множитель уже учтён в цене).
-    if pump_type == "booster_station":
+    elif pump_type == "booster_station":
         price_breakdown, confidence = estimate_spd_kit_price(
             P_kW=P_kW,
             Q_m3h=Q_m3h,
@@ -331,6 +350,8 @@ def pick_top_per_segment(
     Q_m3h: float,
     H_full_m: float,
     corpus_material: str = "pe",
+    wastewater_type: str = "domestic",
+    ex_required: bool = False,
 ) -> tuple[SelectionResultsBySegment, int, list[str]]:
     """Шаг 6: топ-1 в каждом из {budget, mid, premium}."""
     scored = []
@@ -349,6 +370,7 @@ def pick_top_per_segment(
         pr = make_pump_result(
             best[0], best[1], best[2], best[3],
             Q_m3h=Q_m3h, corpus_material=corpus_material,
+            wastewater_type=wastewater_type, ex_required=ex_required,
         )
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
@@ -374,6 +396,13 @@ def evaluate_handoff_triggers(
     # TRIG-2: промстоки
     if L0.wastewater_type == "industrial":
         triggers.append("auto_industrial")
+
+    # TRIG-2b (Phase 11): пожарная установка — handoff обязателен.
+    # Параметры пожарной СПД зависят от категории помещения, типа спринклеров,
+    # нормативного Q пожара (СП 10.13130) — нельзя обобщать одну сделку,
+    # требуется индивидуальное проектирование инженером.
+    if L0.wastewater_type == "fire_protection":
+        triggers.append("auto_fire_protection")
 
     # TRIG-3: длинная трасса — гидроудар
     if L0.L_m > 500:
@@ -429,8 +458,11 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
 
     # Шаг 6
     corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
+    ex_required = bool(L1 and L1.Ex_required)
     results, candidates_total, warnings = pick_top_per_segment(
         f3, L0_filled.Q_m3h, computed.H_full_m, corpus_material=corpus_material,
+        wastewater_type=L0_filled.wastewater_type,
+        ex_required=ex_required,
     )
 
     # Шаг 7

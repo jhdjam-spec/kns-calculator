@@ -1,4 +1,4 @@
-"""Парсер заполненного DOCX-опросника обратно в L0Input + L1Input + metadata.
+"""Парсер заполненного опросника (DOCX/PDF/XLSX) обратно в L0Input + L1Input + metadata.
 
 Пара к `questionnaire_docx.py`. Полагается на стабильные machine-readable коды
 в первой колонке таблиц (например `Q_M3H`, `WASTEWATER_TYPE`).
@@ -8,6 +8,11 @@
 - metadata: object_name, client_company, city и т.д. — для сохранения в КП/PDF BOM
 - missing_fields: коды полей, которых не нашли (для UI «уточните вручную»)
 - raw_codes: полный dict {code → str} для отладки
+
+Phase 12.2-12.3: PDF (через pdfplumber) и XLSX (через openpyxl). Оба формата
+могут быть получены, если клиент:
+  - сохранил DOCX как PDF (типичный сценарий — печать/скан-обрабатываются ниже)
+  - перенёс данные в XLSX (часто используют менеджеры закупок)
 """
 
 from __future__ import annotations

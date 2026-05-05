@@ -7,7 +7,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-WastewaterType = Literal["domestic", "drainage", "industrial", "clean_water"]
+WastewaterType = Literal["domestic", "drainage", "industrial", "clean_water", "fire_protection"]
 QUnit = Literal["m3h", "ls", "m3sut"]
 PriceSegment = Literal["budget", "mid", "premium"]
 PipeMaterial = Literal[

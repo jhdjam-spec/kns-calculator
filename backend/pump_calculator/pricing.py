@@ -401,3 +401,148 @@ def estimate_spd_kit_price(
         total_rub=total,
     )
     return breakdown, confidence
+
+
+# ---------- Phase 11: Цена пожарной СПД (fire_protection) ----------
+#
+# Особенности по сравнению с обычной СПД:
+#   - PN16 арматура (vs PN10 у бытовых СПД) → +30-40% к стоимости задвижек/ОК
+#   - ШУ с режимом Sf (Safety/пожарный): ручное включение, без автоотключения,
+#     дублирование контактора, аварийный ввод от ДГУ, реле давления —
+#     стоимость 2-3× обычного ЧРП-шкафа
+#   - 1 рабочий + 1 резервный ОБЯЗАТЕЛЬНО (СП 10.13130 п.6.2)
+#   - Жокей-насос с гидробаком 100-500 л для поддержания давления
+#   - При категории помещения А/Б/Ex-зоне — ATEX исполнение (+40% к насосу)
+#
+# **Важно:** цены в этой функции — **только инженерный ориентир**.
+# Параметры пожарной СПД сильно зависят от категории помещения, типа спринклеров,
+# нормативного расхода — поэтому всегда возвращаем confidence=low и
+# triggers=auto_fire_protection (handoff обязателен).
+
+# Множители PN16 vs стандартного PN10 на арматуре — берём верхнюю границу диапазона
+PN16_MULTIPLIER = 1.4
+
+# ШУ пожарный (Wilo CC-FC SF, с резервированием) — кратно дороже обычного ЧРП
+FIRE_CABINET_BASE_RUB: dict[str, int] = {
+    "budget": 350_000,
+    "mid": 700_000,
+    "premium": 1_400_000,
+}
+FIRE_CABINET_PER_KW_RUB: dict[str, int] = {
+    "budget": 18_000,
+    "mid": 30_000,
+    "premium": 45_000,
+}
+
+
+def estimate_fire_cabinet_price_rub(P_kW: float, segment: PriceSegment) -> int:
+    """ШУ Sf (пожарный) — резервирование по СП 10.13130, ручное включение.
+
+    Базис: типовые прайсы Wilo SCe-FC, ОНИКС-СПДТ, ИНТЕРПОЛ-ПЦН (2026).
+    """
+    base = FIRE_CABINET_BASE_RUB[segment]
+    extra_per_kw = FIRE_CABINET_PER_KW_RUB[segment]
+    raw = base + max(P_kW - 5.5, 0) * extra_per_kw
+    return int(round(raw / 1000.0) * 1000)
+
+
+def estimate_jockey_pump_price_rub(segment: PriceSegment) -> int:
+    """Жокей-насос (Wilo MHIE 203 / Grundfos CRE 3) для поддержания давления.
+
+    Малый, многоступенчатый, ~1.1 кВт.
+    """
+    return {"budget": 80_000, "mid": 160_000, "premium": 320_000}[segment]
+
+
+def estimate_fire_kit_price(
+    P_kW: float,
+    Q_m3h: float,
+    discharge_DN_mm: float | None,
+    segment: PriceSegment,
+    n_pumps: int = 2,  # 1 раб + 1 рез ОБЯЗАТЕЛЬНО (СП 10.13130 п.6.2)
+    explicit_pump_price_rub: int | None = None,
+    ex_required: bool = False,
+) -> tuple[PriceBreakdown, str]:
+    """Оценка цены пожарной насосной (СП 10.13130).
+
+    Возвращает PriceBreakdown с **широким диапазоном** через total_low/high
+    (±35% от total_rub) — точные параметры зависят от категории помещения,
+    типа спринклеров, нормативного Q пожара (одну сделку нельзя обобщать).
+
+    confidence ВСЕГДА low — пожарная требует индивидуального проектирования.
+
+    Состав:
+      - 2 насоса горизонтальные (Wilo BL, КМ, КАМА) — pump_rub
+      - Жокей-насос + мини-гидробак — atm_rub (часть)
+      - Пожарный гидробак 100-500 л + рама + датчики — atm_rub
+      - PN16 задвижки + обратные клапаны — valve_rub, check_valve_rub
+      - ШУ Sf с резервированием — cabinet_rub
+      - Без корпуса/направляющих/цепей/поплавков (это сухоустановленные)
+    """
+    has_explicit_pump = bool(explicit_pump_price_rub and explicit_pump_price_rub > 0)
+
+    # Цена насоса. ATEX-наценка +40% если ex_required
+    pump_unit = estimate_pump_price_rub(P_kW, segment, explicit_price_rub=explicit_pump_price_rub)
+    if ex_required and not has_explicit_pump:
+        pump_unit = int(pump_unit * 1.4)
+    pump_total = pump_unit * n_pumps
+
+    # PN16 арматура
+    fittings = catalog._load_fittings()
+    obvyazka = fittings.get("kns_obvyazka_template", {}).get("items", [])
+    dn = round_to_dn(discharge_DN_mm)
+
+    valve_rub = 0
+    check_valve_rub = 0
+    hits_from_db = 0
+    total_db_lookups = 0
+    for item in obvyazka:
+        pos = item.get("position")
+        if pos == 3:  # Задвижка
+            total_db_lookups += 1
+            price = _price_for_dn(item.get("price_examples_rub_2026", {}), dn)
+            if price:
+                hits_from_db += 1
+                # 2 задвижки на каждый насос × PN16
+                valve_rub = int(price * n_pumps * 2 * PN16_MULTIPLIER)
+        elif pos == 4:  # Обратный клапан
+            total_db_lookups += 1
+            price = _price_for_dn(item.get("price_examples_rub_2026", {}), dn)
+            if price:
+                hits_from_db += 1
+                check_valve_rub = int(price * n_pumps * PN16_MULTIPLIER)
+
+    # ШУ пожарный
+    cabinet_rub = estimate_fire_cabinet_price_rub(P_kW, segment)
+
+    # Жокей + гидробак + рама + 2 датчика давления
+    jockey_rub = estimate_jockey_pump_price_rub(segment)
+    fire_tank_rub = {"budget": 35_000, "mid": 65_000, "premium": 120_000}[segment]
+    frame_rub = {"budget": 40_000, "mid": 70_000, "premium": 110_000}[segment]
+    pressure_sensors_rub = 12_000 * 2  # промышленные датчики 4-20 мА с поверкой
+    atm_rub = jockey_rub + fire_tank_rub + frame_rub + pressure_sensors_rub
+
+    total = pump_total + atm_rub + valve_rub + check_valve_rub + cabinet_rub
+
+    # Пожарка — confidence ВСЕГДА low (нельзя обобщать одну сделку)
+    confidence = "low"
+    if has_explicit_pump and total_db_lookups > 0 and hits_from_db / total_db_lookups >= 0.66:
+        # Даже с explicit ценой и БД-арматурой — максимум medium
+        confidence = "medium"
+
+    breakdown = PriceBreakdown(
+        pump_rub=pump_total,
+        atm_rub=atm_rub,  # жокей+бак+рама+датчики
+        valve_rub=valve_rub,
+        check_valve_rub=check_valve_rub,
+        rails_rub=0,
+        cabinet_rub=cabinet_rub,
+        floats_rub=0,
+        chain_rub=0,
+        corpus_rub=0,
+        total_rub=total,
+        # Phase 11: широкий диапазон ±35% (пожарная СПД индивидуальна)
+        total_low_rub=int(total * 0.65),
+        total_high_rub=int(total * 1.35),
+    )
+    return breakdown, confidence

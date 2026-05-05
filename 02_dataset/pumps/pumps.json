@@ -13232,6 +13232,122 @@
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03"
+    },
+    {
+      "id": "wilo-sife-1605",
+      "brand": "Wilo",
+      "model": "SiFire EN 50/200-160-5.5/EJ",
+      "type": "booster_station",
+      "impeller": "single-channel",
+      "free_passage_mm": 0,
+      "envelope": {
+        "Q_min_m3h": 5,
+        "Q_max_m3h": 60,
+        "H_min_m": 20,
+        "H_max_m": 70,
+        "Q_BEP_m3h": 30,
+        "H_BEP_m": 50,
+        "eta_BEP_pct": 60.0,
+        "NPSHr_at_BEP_m": 3.0
+      },
+      "power": {
+        "P_kW": 5.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP55"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "fire_protection"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС"
+      },
+      "_engineer_flag": "ok",
+      "_engineer_note": "Пожарная установка по EN 12845/СП 10.13130 (1 раб + 1 рез + жокей). С шкафом Sf. Цены индивидуально под объект — зависит от категории помещения и нормативного Q пожара.",
+      "_source": "wilo.com SiFire EN datasheet (placeholder, без калибровки КП)"
+    },
+    {
+      "id": "wilo-bl-50-160",
+      "brand": "Wilo",
+      "model": "Wilo-BL 50/160-7.5/2",
+      "type": "booster_station",
+      "impeller": "single-channel",
+      "free_passage_mm": 0,
+      "envelope": {
+        "Q_min_m3h": 10,
+        "Q_max_m3h": 90,
+        "H_min_m": 25,
+        "H_max_m": 60,
+        "Q_BEP_m3h": 50,
+        "H_BEP_m": 45,
+        "eta_BEP_pct": 65.0,
+        "NPSHr_at_BEP_m": 3.5
+      },
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP55"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "fire_protection",
+        "clean_water"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ВИЛО РУС"
+      },
+      "_engineer_flag": "ok",
+      "_engineer_note": "Стандартный одноступенчатый Wilo BL с возможностью использования в пожарной установке (с пожарным ШУ). Цены — индивидуально.",
+      "_source": "wilo.com BL datasheet (placeholder)"
+    },
+    {
+      "id": "km-100-65-200a",
+      "brand": "ГМС",
+      "model": "КМ 100-65-200а",
+      "type": "booster_station",
+      "impeller": "single-channel",
+      "free_passage_mm": 0,
+      "envelope": {
+        "Q_min_m3h": 30,
+        "Q_max_m3h": 110,
+        "H_min_m": 30,
+        "H_max_m": 55,
+        "Q_BEP_m3h": 70,
+        "H_BEP_m": 45,
+        "eta_BEP_pct": 64.0,
+        "NPSHr_at_BEP_m": 4.0
+      },
+      "power": {
+        "P_kW": 11.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "fire_protection",
+        "clean_water"
+      ],
+      "price_segment": "mid",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ГМС-Ливенские насосы"
+      },
+      "_engineer_flag": "ok",
+      "_engineer_note": "Российский эконом-вариант для пожарных СПД (СП 10.13130). Применяется с пожарным ШУ. Цены — индивидуально под объект.",
+      "_source": "hms-livny.ru (placeholder)"
     }
   ],
   "_NOT_RECOMMENDED": [
