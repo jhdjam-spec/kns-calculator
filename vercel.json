@@ -1,9 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "installCommand": "echo 'install handled per-target'",
-  "outputDirectory": "frontend/.next",
   "framework": "nextjs",
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/.next",
+  "installCommand": "echo 'Install handled in buildCommand'",
   "functions": {
     "api/index.py": {
       "runtime": "@vercel/python@4.3.1",
