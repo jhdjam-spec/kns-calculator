@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { manrope, inter, jetbrainsMono } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "kns-calculator — подбор насоса для КНС/НС/СПД",
+  title: "ИНСЕРВО · Серво-Юг — подбор насоса для КНС, ЛОС и СПД",
   description:
-    "Открытый калькулятор первичного подбора насоса. Введите 4 поля — получите топ-3 насоса в трёх ценовых сегментах.",
+    "Подбор насосного оборудования для канализационных, ливневых, пожарных и водоподающих станций. От ТЗ до спецификации с гидравликой за 60 секунд. Производитель оборудования с 2009 года.",
 };
 
 export default function RootLayout({
@@ -14,7 +15,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
+    <html
+      lang="ru"
+      className={`${manrope.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
       <body>
         <Providers>{children}</Providers>
       </body>

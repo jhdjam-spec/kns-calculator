@@ -6,6 +6,9 @@ import { selectionResultSchema, type SelectionResult } from "@/schemas/result";
  * - В dev режиме next.config.mjs делает rewrite /api/backend/* → http://localhost:8000/*
  * - В production — задаётся через NEXT_PUBLIC_API_BASE
  */
+// Same-origin path: `/api/backend/*` → backend.
+// На Vercel: api/index.py обрабатывает all /api/* через FastAPI mount (см. api/index.py).
+// В dev: next.config.mjs переписывает /api/backend/* → http://localhost:8000/*.
 const API_PREFIX = "/api/backend";
 
 /** /select/quick — только L0, без L1. Backward-compat. */

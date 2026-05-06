@@ -1,14 +1,23 @@
-"""Загрузка JSON-датасета из ../02_dataset/."""
+"""Загрузка JSON-датасета из ../02_dataset/.
+
+Override через env var `KNS_DATASET_ROOT` — нужен для serverless-окружений
+(Vercel, Render и др.), где cwd может отличаться от dev-окружения.
+"""
 
 from __future__ import annotations
 
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-# 02_dataset/ лежит на 2 уровня выше: backend/pump_calculator/catalog.py → ../../02_dataset/
-DATASET_ROOT = Path(__file__).resolve().parents[2] / "02_dataset"
+_env_root = os.environ.get("KNS_DATASET_ROOT")
+if _env_root:
+    DATASET_ROOT = Path(_env_root).resolve()
+else:
+    # 02_dataset/ лежит на 2 уровня выше: backend/pump_calculator/catalog.py → ../../02_dataset/
+    DATASET_ROOT = Path(__file__).resolve().parents[2] / "02_dataset"
 
 
 @lru_cache(maxsize=1)
