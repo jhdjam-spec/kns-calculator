@@ -6,7 +6,7 @@
 КПД вокруг BEP обычно тоже парабола:
     η(Q) = A·Q² + B·Q + C   (с максимумом в Q_BEP = -B/(2A))
 
-Используем numpy.polyfit (scipy уже подтянут как зависимость).
+Используем numpy.polyfit — этого достаточно, scipy не нужен.
 """
 
 from __future__ import annotations

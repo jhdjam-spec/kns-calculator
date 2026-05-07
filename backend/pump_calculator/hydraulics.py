@@ -1,14 +1,13 @@
 """Гидравлические расчёты: Дарси-Альтшуль, Σζ Идельчика, Жуковский, AOR/POR.
 
-Использует CalebBell/fluids (MIT) для friction_factor.
+Friction factor по явной аппроксимации Swamee-Jain (1976) — без итераций
+Colebrook-White, точность ~1% в диапазоне 5e3 ≤ Re ≤ 1e8 и 1e-6 ≤ eD ≤ 1e-2.
 Соответствует formulas.md v0.2 и dependencies_map.md v0.2.
 """
 
 from __future__ import annotations
 
 import math
-
-import fluids
 
 from pump_calculator import catalog
 from pump_calculator.schemas import ComputedHydraulics, L0Input, L1Input
@@ -71,20 +70,26 @@ def calc_velocity_ms(Q_m3h: float, D_mm: float) -> float:
     return 4 * Q_si / (math.pi * D_si**2)
 
 
-def calc_friction_factor(Re: float, eD: float) -> float:
-    """λ через CalebBell/fluids.friction_factor (Colebrook-White).
+def _swamee_jain(Re: float, eD: float) -> float:
+    # f = 0.25 / (log10(eD/3.7 + 5.74/Re^0.9))²
+    arg = eD / 3.7 + 5.74 / (Re**0.9)
+    return 0.25 / (math.log10(arg) ** 2)
 
-    Для Re < 2300 — ламинар (64/Re).
-    Для Re ≥ 4000 — Colebrook через fluids (универсально).
-    Между ними — линейная интерполяция (хотя это редкий случай для напорной канализации).
+
+def calc_friction_factor(Re: float, eD: float) -> float:
+    """λ для напорного трубопровода.
+
+    Re < 2300 — ламинар (64/Re).
+    Re ≥ 4000 — Swamee-Jain (1976), явная аппроксимация Colebrook-White
+    с погрешностью ≤1% в диапазоне 5·10³ ≤ Re ≤ 10⁸ и 10⁻⁶ ≤ eD ≤ 10⁻².
+    Переход 2300–4000 — линейная интерполяция.
     """
     if Re < 2300:
         return 64.0 / Re
     if Re >= 4000:
-        return fluids.friction_factor(Re=Re, eD=eD)
-    # переходная зона — линейная интерполяция
+        return _swamee_jain(Re, eD)
     f_lam = 64.0 / 2300
-    f_turb = fluids.friction_factor(Re=4000, eD=eD)
+    f_turb = _swamee_jain(4000, eD)
     return f_lam + (f_turb - f_lam) * (Re - 2300) / (4000 - 2300)
 
 
