@@ -1,0 +1,23 @@
+# Vercel ignore — что не грузить в build context.
+# Frontend бандлится отдельно из frontend/, Python lambda — из api/.
+
+# Backend developer artefacts (тесты, ETL, .venv не нужны runtime'у)
+backend/.venv/
+backend/tests/
+backend/pump_calculator/etl/
+backend/.ruff_cache/
+backend/.pytest_cache/
+
+# Документация и research
+01_research/
+01_local_audit/
+01_spec/
+00_research/
+*.md
+
+# Inbox / клиентские КП (уже в .gitignore, дублируем для подстраховки)
+02_dataset/_inbox/
+
+# Артефакты ETL
+backend/etl_output/
+backend/etl_cache/
