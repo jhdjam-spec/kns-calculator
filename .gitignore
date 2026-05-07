@@ -29,7 +29,9 @@ htmlcov/
 private/
 secret/
 *-private.*
+00_research/
 01_research/
+02_dataset/_inbox/
 
 # Logs
 *.log
@@ -47,3 +49,5 @@ backend/.ruff_cache/
 
 # Phase 6 ETL: артефакты прогонов (только финальный validated JSON попадает в 02_dataset/etl_seed/)
 backend/runs/
+
+.vercel
