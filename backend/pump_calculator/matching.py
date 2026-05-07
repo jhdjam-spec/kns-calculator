@@ -25,6 +25,7 @@ from pump_calculator.pricing import (
 )
 from pump_calculator.schemas import (
     ComputedHydraulics,
+    CorpusSize,
     L0Input,
     L1Input,
     PumpEnvelope,
@@ -500,6 +501,10 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         handoff_required=handoff_required,
     )
 
+    # Phase 13: размеры корпуса КНС (если нужны — для всех КНС бытовых, дренаж,
+    # индустриальных, кроме малых Q<5 + DN<=65 в готовом приямке).
+    corpus_size = _compute_corpus_size(L0_filled, L1, results, computed)
+
     return SelectionResult(
         input=SelectionRequest(L0=L0_filled, L1=L1),
         computed=computed,
@@ -511,4 +516,55 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         assumptions=assumptions,
         completeness_pct=completeness_pct,
         summary_text=summary_text,
+        corpus_size=corpus_size,
+    )
+
+
+def _compute_corpus_size(
+    L0_filled: L0Input,
+    L1: L1Input | None,
+    results: SelectionResultsBySegment,
+    computed: ComputedHydraulics,
+) -> CorpusSize | None:
+    """Рассчитать размеры корпуса КНС если он нужен.
+
+    Корпус не нужен:
+    - clean_water (booster_station — приходит как готовый блок)
+    - fire_protection (отдельная ёмкость пожарного запаса)
+    - очень малые Q<5 + DN<=65 (готовый приямок)
+    """
+    from pump_calculator.corpus_sizing import compute_corpus_size as _cs
+
+    wt = L0_filled.wastewater_type
+    if wt in ("clean_water", "fire_protection"):
+        return None
+
+    # P_kW для footprint берём из mid-сегмента (если есть), иначе budget/premium
+    sample_pump = results.mid or results.budget or results.premium
+    if sample_pump is None:
+        return None
+
+    # Малая бытовая в готовом приямке — корпус не нужен
+    DN = sample_pump.discharge_DN_mm or 65.0
+    if L0_filled.Q_m3h < 5.0 and DN <= 65:
+        return None
+
+    n_pumps = computed.n_pumps_total
+    corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
+
+    cs = _cs(
+        Q_m3h=L0_filled.Q_m3h,
+        P_kW=sample_pump.P_kW,
+        depth_inlet_mm=None,  # default 2000 мм; в будущем можно из L1
+        n_pumps=n_pumps,
+        corpus_type=corpus_material,  # type: ignore[arg-type]
+    )
+
+    return CorpusSize(
+        diameter_mm=cs.diameter_mm,
+        height_mm=cs.height_mm,
+        inlet_DN_mm=cs.inlet_DN_mm,
+        outlet_DN_mm=cs.outlet_DN_mm,
+        weight_estimate_kg=cs.weight_estimate_kg,
+        notes=cs.notes,
     )

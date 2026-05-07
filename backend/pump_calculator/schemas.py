@@ -225,6 +225,32 @@ class SelectionResult(BaseModel):
         "",
         description="Человекочитаемая сводка: 'Для гостиницы 50 номеров — ориентир 800k-1.2M ₽ в эконом-сегменте...'",
     )
+    # Phase 13: размеры корпуса КНС (опционально, если нужен корпус)
+    corpus_size: "CorpusSize | None" = Field(
+        None,
+        description=(
+            "Минимальные размеры стеклопластикового корпуса КНС: "
+            "diameter_mm × height_mm + DN входа/выхода. None если корпус не нужен "
+            "(малые бытовые с готовым приямком, СПД-блоки)"
+        ),
+    )
+
+
+# ----------------------- Corpus (Phase 13) -----------------------
+
+class CorpusSize(BaseModel):
+    """Размеры стеклопластикового / ПЭ корпуса КНС."""
+
+    diameter_mm: float = Field(..., description="Внутренний диаметр корпуса, мм")
+    height_mm: float = Field(..., description="Полная высота корпуса от дна до крышки, мм")
+    inlet_DN_mm: float = Field(..., description="DN подводящего самотёчного трубопровода")
+    outlet_DN_mm: float = Field(..., description="DN напорного выходного трубопровода")
+    weight_estimate_kg: int = Field(..., description="Ориентировочный вес корпуса (без насосов)")
+    notes: list[str] = Field(default_factory=list)
+
+
+# Forward-ref резолв для SelectionResult.corpus_size
+SelectionResult.model_rebuild()
 
 
 # ----------------------- Unit conversion -----------------------
