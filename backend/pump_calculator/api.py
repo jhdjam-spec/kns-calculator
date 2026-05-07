@@ -8,14 +8,11 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from pump_calculator import __version__, catalog
-from pump_calculator.handoff import (
-    generate_bom_pdf,
-    generate_questionnaire_docx,
-    generate_questionnaire_pdf,
-    parse_questionnaire_docx,
-)
 from pump_calculator.matching import select_pumps as run_selection
 from pump_calculator.schemas import L0Input, SelectionRequest, SelectionResult
+
+# pump_calculator.handoff (reportlab + python-docx + lxml) импортируется лениво
+# внутри handoff-эндпоинтов — это уменьшает cold-start lambda на ~50 МБ.
 
 app = FastAPI(
     title="kns-calculator API",
@@ -123,6 +120,8 @@ class QuestionnaireRequest(BaseModel):
 @app.post("/handoff/questionnaire", tags=["handoff"], response_class=Response)
 def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
     """Генерация PDF опросного листа клиенту (Артефакт 1)."""
+    from pump_calculator.handoff import generate_questionnaire_pdf
+
     try:
         pdf_bytes = generate_questionnaire_pdf(
             req.selection,
@@ -145,6 +144,8 @@ def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
 @app.post("/handoff/bom", tags=["handoff"], response_class=Response)
 def handoff_bom(selection: SelectionResult) -> Response:
     """Генерация PDF BOM-черновика (Артефакт 2). 3 ценовых сегмента."""
+    from pump_calculator.handoff import generate_bom_pdf
+
     try:
         pdf_bytes = generate_bom_pdf(selection)
     except Exception as e:  # pragma: no cover
@@ -168,6 +169,8 @@ def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
     форму на компьютере и возвращать заполненный файл — мы автоматически
     извлечём параметры через POST /select/from-file.
     """
+    from pump_calculator.handoff import generate_questionnaire_docx
+
     try:
         docx_bytes = generate_questionnaire_docx(
             req.selection,
@@ -190,6 +193,8 @@ def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
 @app.post("/handoff/empty-questionnaire-docx", tags=["handoff"], response_class=Response)
 def handoff_empty_questionnaire_docx() -> Response:
     """Пустой DOCX опросник — для клиента, который заполняет с нуля без предзаполнения."""
+    from pump_calculator.handoff import generate_questionnaire_docx
+
     try:
         docx_bytes = generate_questionnaire_docx()
     except Exception as e:  # pragma: no cover
@@ -240,6 +245,8 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
     file_bytes = await file.read()
     if not file_bytes:
         raise HTTPException(status_code=400, detail="Файл пустой")
+
+    from pump_calculator.handoff import parse_questionnaire_docx
 
     try:
         parsed = parse_questionnaire_docx(file_bytes)

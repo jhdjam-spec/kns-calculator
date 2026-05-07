@@ -7,7 +7,9 @@
   "functions": {
     "api/index.py": {
       "runtime": "@vercel/python@4.3.1",
-      "maxDuration": 30
+      "maxDuration": 30,
+      "includeFiles": "{backend/pump_calculator/**,02_dataset/**}",
+      "excludeFiles": "{backend/.venv/**,backend/tests/**,backend/pump_calculator/etl/**,backend/.ruff_cache/**,backend/.pytest_cache/**,**/__pycache__/**,**/*.pyc}"
     }
   },
   "rewrites": [
