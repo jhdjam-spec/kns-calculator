@@ -1,23 +1,22 @@
-# Vercel ignore — что не грузить в build context.
-# Frontend бандлится отдельно из frontend/, Python lambda — из api/.
+# Vercel ignore — frontend-only deploy (Python backend убран, см. vercel.json).
+# Backend живёт отдельно (Yandex Cloud Functions, см. project_kns_deploy_vercel.md в memory).
 
-# Backend developer artefacts (тесты, ETL, .venv не нужны runtime'у)
-backend/.venv/
-backend/tests/
-backend/pump_calculator/etl/
-backend/.ruff_cache/
-backend/.pytest_cache/
+# Python backend полностью отрезаем (он деплоится в другом месте)
+api/
+backend/
 
-# Документация и research
+# Dataset, research — бэкенд отвечает за это
+02_dataset/
+00_research/
 01_research/
 01_local_audit/
 01_spec/
-00_research/
+
+# Документация
 *.md
 
-# Inbox / клиентские КП (уже в .gitignore, дублируем для подстраховки)
-02_dataset/_inbox/
-
-# Артефакты ETL
-backend/etl_output/
-backend/etl_cache/
+# Кэш / артефакты
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+**/.ruff_cache/

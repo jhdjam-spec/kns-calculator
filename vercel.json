@@ -1,18 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "installCommand": "npm install && npm install --prefix frontend",
+  "installCommand": "npm install --prefix frontend",
   "buildCommand": "npm run build --prefix frontend",
-  "outputDirectory": "frontend/.next",
-  "functions": {
-    "api/index.py": {
-      "runtime": "@vercel/python@4.3.1",
-      "maxDuration": 30,
-      "includeFiles": "{backend/pump_calculator/**,02_dataset/**}",
-      "excludeFiles": "{backend/.venv/**,backend/tests/**,backend/pump_calculator/etl/**,backend/.ruff_cache/**,backend/.pytest_cache/**,**/__pycache__/**,**/*.pyc}"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/backend/:path*", "destination": "/api/index/:path*" }
-  ]
+  "outputDirectory": "frontend/.next"
 }
