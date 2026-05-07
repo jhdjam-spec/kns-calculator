@@ -1,0 +1,93 @@
+#cloud-config
+# cloud-init для Yandex Cloud VM
+# Развёртывает kns-calculator backend как systemd service uvicorn:8000
+# Логин ssh: ubuntu@<external_ip> -i ~/.ssh/inservo_prod
+
+users:
+  - name: ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPFllOOEWfKsRLELfAiaQsAuJGBJv/fAKSyUw3i5rXJF inservo-prod-20260501
+
+package_update: true
+package_upgrade: false
+
+packages:
+  - python3.11
+  - python3.11-venv
+  - python3.11-dev
+  - python3-pip
+  - git
+  - nginx
+  - certbot
+  - python3-certbot-nginx
+  - build-essential
+
+write_files:
+  - path: /etc/systemd/system/kns-calculator.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=KNS Calculator FastAPI backend
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=ubuntu
+      WorkingDirectory=/opt/kns-calculator/backend
+      Environment="KNS_DATASET_ROOT=/opt/kns-calculator/02_dataset"
+      ExecStart=/opt/kns-calculator/.venv/bin/uvicorn pump_calculator.api:app --host 0.0.0.0 --port 8000 --workers 2
+      Restart=on-failure
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+
+  - path: /etc/nginx/sites-available/kns-calculator
+    permissions: '0644'
+    content: |
+      server {
+          listen 80 default_server;
+          server_name _;
+
+          # CORS для https://kns-calc-test.vercel.app
+          add_header 'Access-Control-Allow-Origin' '*' always;
+          add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+          add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+
+          if ($request_method = 'OPTIONS') {
+              return 204;
+          }
+
+          location / {
+              proxy_pass http://127.0.0.1:8000;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_read_timeout 30s;
+          }
+      }
+
+  - path: /opt/setup.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      set -e
+      cd /opt
+      git clone --depth 1 https://github.com/jhdjam-spec/kns-calculator.git kns-calculator
+      cd kns-calculator
+      python3.11 -m venv .venv
+      .venv/bin/pip install --upgrade pip
+      .venv/bin/pip install -r api/requirements.txt
+      .venv/bin/pip install uvicorn[standard]
+      # backend пакет добавляется в sys.path через PYTHONPATH в systemd unit
+      chown -R ubuntu:ubuntu /opt/kns-calculator
+      systemctl daemon-reload
+      systemctl enable --now kns-calculator
+      ln -sf /etc/nginx/sites-available/kns-calculator /etc/nginx/sites-enabled/default
+      nginx -t && systemctl reload nginx
+
+runcmd:
+  - bash /opt/setup.sh 2>&1 | tee /var/log/kns-setup.log

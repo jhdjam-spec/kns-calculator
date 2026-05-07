@@ -268,6 +268,7 @@ def make_pump_result(
     corpus_material: str = "pe",
     wastewater_type: str = "domestic",
     ex_required: bool = False,
+    n_pumps_override: int | None = None,
 ) -> PumpResult:
     """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта."""
     e = pump["envelope"]
@@ -281,12 +282,14 @@ def make_pump_result(
     # Всегда 1 раб + 1 рез + жокей-насос + пожарный ШУ Sf + PN16 арматура.
     # confidence ВСЕГДА low — индивидуальная калибровка под объект.
     if wastewater_type == "fire_protection":
+        # Пожарная: минимум 1 раб + 1 рез по СП 10.13130 п.6.2; override опц.
+        n_fire = max(2, n_pumps_override) if n_pumps_override else 2
         price_breakdown, confidence = estimate_fire_kit_price(
             P_kW=P_kW,
             Q_m3h=Q_m3h,
             discharge_DN_mm=DN_mm,
             segment=segment,
-            n_pumps=2,
+            n_pumps=n_fire,
             explicit_pump_price_rub=explicit_pump_price,
             ex_required=ex_required,
         )
@@ -296,12 +299,15 @@ def make_pump_result(
     # включает все насосы блока (например, ANTARUS 3 MLV20-5 = 3.5M за всю
     # станцию из 3 насосов). Поэтому n_pumps=1 (множитель уже учтён в цене).
     elif pump_type == "booster_station":
+        # Booster — обычно блок целиком, n_pumps=1; override игнорируем
+        # (множитель сделан в цене блока), кроме случаев нескольких блоков подряд.
+        n_spd = n_pumps_override if n_pumps_override else 1
         price_breakdown, confidence = estimate_spd_kit_price(
             P_kW=P_kW,
             Q_m3h=Q_m3h,
             discharge_DN_mm=DN_mm,
             segment=segment,
-            n_pumps=1,
+            n_pumps=n_spd,
             explicit_pump_price_rub=explicit_pump_price,
         )
     else:
@@ -311,12 +317,14 @@ def make_pump_result(
         # Для Q ≥ 5 (типовая КНС многоквартирной/гостиничной) корпус нужен.
         is_small_kit = Q_m3h < 5.0 and (DN_mm or 0) <= 65
 
+        # КНС бытовая/дренаж/индустрия: дефолт 1+1=2; клиент может задать override.
+        n_kns = max(2, n_pumps_override) if n_pumps_override else 2
         price_breakdown, confidence = estimate_kns_kit_price(
             P_kW=P_kW,
             Q_m3h=Q_m3h,
             discharge_DN_mm=DN_mm,
             segment=segment,
-            n_pumps=2,
+            n_pumps=n_kns,
             corpus_material=corpus_material,  # type: ignore[arg-type]
             explicit_pump_price_rub=explicit_pump_price,
             include_corpus=not is_small_kit,
@@ -352,6 +360,7 @@ def pick_top_per_segment(
     corpus_material: str = "pe",
     wastewater_type: str = "domestic",
     ex_required: bool = False,
+    n_pumps_override: int | None = None,
 ) -> tuple[SelectionResultsBySegment, int, list[str]]:
     """Шаг 6: топ-1 в каждом из {budget, mid, premium}."""
     scored = []
@@ -371,6 +380,7 @@ def pick_top_per_segment(
             best[0], best[1], best[2], best[3],
             Q_m3h=Q_m3h, corpus_material=corpus_material,
             wastewater_type=wastewater_type, ex_required=ex_required,
+            n_pumps_override=n_pumps_override,
         )
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
@@ -459,10 +469,12 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     # Шаг 6
     corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
     ex_required = bool(L1 and L1.Ex_required)
+    n_pumps_override = L1.pumps_total_override if L1 and L1.pumps_total_override else None
     results, candidates_total, warnings = pick_top_per_segment(
         f3, L0_filled.Q_m3h, computed.H_full_m, corpus_material=corpus_material,
         wastewater_type=L0_filled.wastewater_type,
         ex_required=ex_required,
+        n_pumps_override=n_pumps_override,
     )
 
     # Шаг 7

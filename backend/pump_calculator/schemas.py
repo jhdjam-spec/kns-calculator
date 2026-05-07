@@ -15,6 +15,7 @@ PipeMaterial = Literal[
     "cast_iron_new", "pvc", "pp", "concrete", "korsis_pe_corrugated",
 ]
 ReliabilityCategory = Literal["I", "II", "III"]
+OperatingMode = Literal["continuous", "periodic", "level_based"]
 
 
 # ----------------------- Inputs -----------------------
@@ -50,6 +51,36 @@ class L1Input(BaseModel):
         description="Материал корпуса КНС: pe (ПЭ Серво-Юг, default) или glass (стеклопластик)",
     )
 
+    # Режим работы и приток — влияют на расчёт sump_volume, cycles_per_hour
+    operating_mode: OperatingMode | None = Field(
+        None,
+        description=(
+            "Алгоритм работы: continuous (24/7 равномерный приток), "
+            "periodic (циклы вкл/выкл по таймеру), level_based (по поплавкам, default)"
+        ),
+    )
+    inflow_per_hour_m3: float | None = Field(
+        None,
+        ge=0,
+        le=10000,
+        description=(
+            "Фактический приток стоков в час, м³/ч. Если задан и меньше Q насоса — "
+            "запускаем расчёт цикла вкл/выкл (sump_volume по СП 32 §6.2 — V_min = Q_p · 5 мин)"
+        ),
+    )
+
+    # Кол-во насосов — переопределяет дефолт redundancy
+    pumps_total_override: int | None = Field(
+        None,
+        ge=1,
+        le=10,
+        description=(
+            "Точное количество насосов в станции (рабочие + резерв). "
+            "Если задано — переопределяет redundancy. По СП 32.13330 п.6.2 "
+            "минимум 1 раб + 1 рез (=2)"
+        ),
+    )
+
 
 class SelectionRequest(BaseModel):
     """Полный запрос на подбор: L0 обязательный, L1 опциональный."""
@@ -72,6 +103,31 @@ class ComputedHydraulics(BaseModel):
     H_m_m: float = Field(..., description="Потери на местных сопротивлениях")
     H_full_m: float = Field(..., description="Полный напор насоса (с safety factor)")
     safety_factor: float = Field(..., description="Применённый запас")
+
+    # Sump / cycles — рассчитываются если задан inflow_per_hour_m3 (СП 32 §6.2)
+    sump_volume_min_m3: float | None = Field(
+        None,
+        description=(
+            "Минимальный полезный объём приёмной камеры КНС, м³. "
+            "По СП 32.13330 §6.2: V_min = Q_pump · 5 мин, "
+            "чтобы цикл вкл/выкл был не чаще 6 раз в час (защита двигателя)"
+        ),
+    )
+    cycles_per_hour_estimate: float | None = Field(
+        None,
+        description=(
+            "Циклы вкл/выкл за час при заданном inflow и V_min. "
+            "При inflow ≥ Q_pump → 0 (continuous duty, насос не выключается)"
+        ),
+    )
+    operating_mode_effective: str | None = Field(
+        None,
+        description="Фактический режим: continuous / periodic / level_based — определяется из inflow vs Q_pump",
+    )
+    n_pumps_total: int = Field(
+        2,
+        description="Итоговое количество насосов в станции (рабочие + резерв). По умолчанию 2 (1+1) по СП 32 §6.2",
+    )
 
 
 # ----------------------- Pump record (subset для выдачи) -----------------------

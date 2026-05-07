@@ -125,6 +125,16 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
     safety = 0.05 if L0.L_m == 0 else (0.15 if L0.L_m > 1000 else 0.10)
     H_full = (L0.dH_m + H_tr + H_m) * (1 + safety)
 
+    # 6. Sump-объём и режим работы (СП 32.13330 §6.2)
+    sump_min, cycles, mode_eff = _compute_sump_and_cycles(
+        Q_pump_m3h=L0.Q_m3h,
+        inflow_m3h=(L1.inflow_per_hour_m3 if L1 and L1.inflow_per_hour_m3 is not None else None),
+        operating_mode=(L1.operating_mode if L1 and L1.operating_mode else None),
+    )
+
+    # 7. Количество насосов (1+1 по СП 32 §6.2 если override не задан)
+    n_pumps = (L1.pumps_total_override if L1 and L1.pumps_total_override else 2)
+
     return ComputedHydraulics(
         D_mm=D_mm,
         v_ms=round(v_ms, 4),
@@ -135,7 +145,54 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
         H_m_m=round(H_m, 3),
         H_full_m=round(H_full, 3),
         safety_factor=safety,
+        sump_volume_min_m3=sump_min,
+        cycles_per_hour_estimate=cycles,
+        operating_mode_effective=mode_eff,
+        n_pumps_total=n_pumps,
     )
+
+
+def _compute_sump_and_cycles(
+    Q_pump_m3h: float,
+    inflow_m3h: float | None,
+    operating_mode: str | None,
+) -> tuple[float | None, float | None, str | None]:
+    """Рассчитать минимальный объём приёмной камеры и циклы вкл/выкл.
+
+    По СП 32.13330 §6.2: V_min = Q_pump · 5 мин (защита двигателя — не более
+    6 циклов в час). Если inflow задан и < Q_pump — рассчитываем фактические
+    циклы; если inflow ≥ Q_pump — насос работает непрерывно.
+    """
+    if inflow_m3h is None and operating_mode is None:
+        return None, None, None
+
+    # V_min = Q_pump · 5 мин (= Q_pump_m3h × 5/60)
+    sump_min = round(Q_pump_m3h * 5.0 / 60.0, 3)
+
+    # Эффективный режим
+    if operating_mode == "continuous":
+        return sump_min, 0.0, "continuous"
+    if inflow_m3h is None:
+        # Только режим задан, без inflow — возвращаем sump и режим
+        return sump_min, None, operating_mode
+
+    # inflow задан → проверяем continuity
+    if inflow_m3h >= Q_pump_m3h:
+        # Приток равен/больше производительности — насос не выключается
+        return sump_min, 0.0, "continuous"
+
+    # Цикл вкл/выкл по принципу "рабочий объём заполняется/откачивается":
+    # t_fill_min = V_min × 60 / inflow_m3h (приток заполняет камеру)
+    # t_pump_min = V_min × 60 / (Q_pump - inflow) (нетто откачка)
+    # cycles_per_hour = 60 / (t_fill + t_pump)
+    if inflow_m3h <= 0:
+        return sump_min, 0.0, "level_based"
+    t_fill = sump_min * 60.0 / inflow_m3h
+    t_pump = sump_min * 60.0 / (Q_pump_m3h - inflow_m3h)
+    cycle_min = t_fill + t_pump
+    cycles_per_h = round(60.0 / cycle_min, 2) if cycle_min > 0 else 0.0
+    mode_eff = operating_mode or "level_based"
+    return sump_min, cycles_per_h, mode_eff
 
 
 def aor_zone(Q_m3h: float, Q_BEP_m3h: float | None) -> str | None:
