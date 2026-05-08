@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin } from "lucide-react";
+import { InservoSignature } from "@/components/InservoSignature";
 
 export function SiteFooter() {
   return (
@@ -114,8 +115,13 @@ export function SiteFooter() {
           </div>
         </div>
 
+        {/* Authorship signature — INSERVO Studio (см. ADR-002) */}
+        <div className="pt-8 border-t border-white/[0.06] mb-6">
+          <InservoSignature />
+        </div>
+
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs font-mono text-ink-500 tabular-nums">
+        <div className="pt-6 border-t border-white/[0.06] flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs font-mono text-ink-500 tabular-nums">
           <div>© 2009–2026 · ИНСЕРВО · Серво-Юг</div>
           <div className="italic">Сделано в Краснодарском крае</div>
         </div>
