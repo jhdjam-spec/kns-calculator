@@ -274,3 +274,70 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
         warnings=parsed.warnings,
         selection=selection,
     )
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 19: Storm calculator endpoints
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.post("/storm/calc", tags=["storm"])
+def calculate_storm(payload: dict) -> dict:
+    """Полный расчёт ливневой канализации по СП 32.
+
+    Принимает StormInput (см. pump_calculator.storm.models) и возвращает
+    StormResult с пиковым расходом, годовыми объёмами, рекомендациями по ЛОС.
+
+    Используется как Минимальным режимом (frontend/storm/minimal), так и
+    Классическим (Phase 20).
+    """
+    from pump_calculator.storm import calculate_full_storm
+    from pump_calculator.storm.models import StormInput
+
+    try:
+        inputs = StormInput(**payload)
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Некорректный input: {e}",
+        ) from e
+
+    try:
+        result = calculate_full_storm(inputs)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(
+            status_code=500, detail=f"Storm calculation failed: {e}",
+        ) from e
+
+    # Подпись авторства INSERVO в каждом ответе (Слой 2 ADR-002)
+    response = result.model_dump()
+    response["_signature"] = {
+        "studio": "INSERVO Studio · Студия интеграции умных решений Константина Морозова",
+        "author": "Konstantin Morozov",
+        "url": "https://inservo.ru",
+        "license": "MIT",
+        "watermark": "K.M. © 2026",
+    }
+    return response
+
+
+@app.get("/storm/cities", tags=["storm"])
+def list_storm_cities() -> dict:
+    """Список 36 городов из climate БД для UI-автокомплита."""
+    from pump_calculator.storm.regions import list_cities
+
+    return {"cities": list_cities()}
+
+
+@app.get("/storm/presets", tags=["storm"])
+def list_storm_presets() -> dict:
+    """Не реализовано — пресеты типов объектов хранятся на frontend
+    (frontend/src/data/objectTypePresets.json). Этот эндпоинт зарезервирован
+    под backend-валидацию пресетов в Phase 20.
+    """
+    return {
+        "note": "Presets are stored on frontend. See frontend/src/data/objectTypePresets.json",
+        "phase": "Phase 19 MVP",
+    }
