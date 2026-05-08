@@ -1,5 +1,5 @@
 {
-  "_version": "0.1",
+  "_version": "0.2",
   "_updated": "2026-05-08",
   "_description": "Расширенная схема L1+L2 полей опросника КНС/ЛОС. Извлечена из 50+ реальных опросных листов 2024-2026 (Терра-Н, ППД ОМОН, Промливневка ATEX, M70098 морской, СТО Газпром SAP/R3, ОАО ПК Новые Решения и др).",
   "_engineer_note": "3 уровня детализации: L0 (минимум, текущий wizard), L1 (типовой промышленный), L2 (премиум-корпоративный — Газпром/Роснефть). Для каждого поля указан default и источник.",
@@ -23,7 +23,10 @@
       "pipe_existing": {"L1": true, "type": "bool", "default": false, "note": "Труба уже смонтирована? Если да — не оптимизировать D. Источник: Терра-Н КНС-3 (вопрос инженера)."},
       "D_pressure_user_mm": {"L1": true, "type": "float", "unit": "мм", "default": null, "note": "Заказчик указал диаметр напорной трубы"},
       "pipe_material": {"L1": true, "type": "enum", "values": ["ПЭ100_SDR17", "Polycorr", "КОРСИС", "HOBAS", "ВЧШГ_PN16", "сталь", "AISI304", "ПВХ"], "default": "ПЭ100_SDR17"},
-      "regime": {"L1": true, "type": "enum", "values": ["continuous_24_7", "shift", "impulse", "seasonal"], "default": "continuous_24_7", "note": "Источник: ЮМИ Групп бриф, Симферополь склад 'порционный сброс'."}
+      "regime": {"L1": true, "type": "enum", "values": ["continuous_24_7", "shift", "impulse", "seasonal"], "default": "continuous_24_7", "note": "Источник: ЮМИ Групп бриф, Симферополь склад 'порционный сброс'."},
+      "pipe_bends_count": {"L1": true, "type": "int", "default": 0, "note": "Количество поворотов 90° на напорной трассе. Для расчёта местных потерь (Δh_местн = ζ·v²/2g, ζ=0.5..0.7 на 90°). Источник: КС-14 КазТрансГаз ОЛ."},
+      "supply_pipe_spec_gost": {"L2": true, "type": "string", "default": null, "note": "Спецификация подводящей по ГОСТ. Пример: 'ГОСТ Р 54475-2011 PE SN8 DN160'. Источник: КС-14 ОЛ."},
+      "discharge_pipe_spec_gost": {"L2": true, "type": "string", "default": null, "note": "Спецификация напорной по ГОСТ/СТ РК. Пример: 'PE100 SDR17 СТ РК ISO 4427-2014 DN90 PN16'. Источник: КС-14."}
     },
     "_section_wastewater": {
       "_label": "2. Стоки",
@@ -48,7 +51,13 @@
       "motor_protection_internal": {"L1": true, "type": "bool", "default": true, "note": "Встроенный датчик перегрева (PTC). Источник: М70098."},
       "leak_protection_signal": {"L1": true, "type": "bool", "default": true, "note": "Сигнализация внутренних протечек."},
       "cable_length_pump_to_cabinet_min_m": {"L1": true, "type": "int", "default": 10, "note": "≥20 м для М70098."},
-      "max_starts_per_hour": {"L1": true, "type": "int", "default": 10, "note": "Допустимое число пусков в час (зависит от мощности). СП 32 §6.5."}
+      "max_starts_per_hour": {"L1": true, "type": "int", "default": 10, "note": "Допустимое число пусков в час (зависит от мощности). СП 32 §6.5."},
+      "pump_logic": {"L1": true, "type": "enum", "values": ["alternation", "separate_start_common_stop", "synchronous_redundant", "load_share_VFD"], "default": "alternation", "note": "Логика работы насосов. Источник: КС-14 ОЛ типовая фраза 'Раздельный пуск, общая остановка'."},
+      "service_life_years": {"L1": true, "type": "int", "values": [10, 15, 20, 25, 30, 40, 50], "default": 25, "note": "Заявленный срок службы. Газпром/газотранспорт = 30 лет (КС-14, СТО Газпром); морские = 50 лет (M70098); типовые = 25 лет."},
+      "guide_rails_material": {"L1": true, "type": "enum", "values": ["StZn", "AISI304", "AISI316", "duplex"], "default": "StZn", "note": "Материал направляющих под автомуфту. Газпром/нефтехимия = AISI316. Источник: КС-14 ОЛ."},
+      "lifting_chain_material": {"L1": true, "type": "enum", "values": ["StZn", "AISI304", "AISI316"], "default": "StZn", "note": "Материал цепи подъёма. Источник: КС-14 ОЛ."},
+      "float_switches_qty": {"L1": true, "type": "int", "values": [0, 1, 2, 3, 4, 5], "default": 4, "note": "Количество поплавковых выключателей: 4 = типовое (нижний-стоп / нижний-старт / верхний-старт / верхний-аварийный). Источник: КС-14 ОЛ."},
+      "cim200_modbus_module": {"L1": true, "type": "bool", "default": false, "note": "Модуль Grundfos CIM 200 для Modbus RTU интеграции в АСУТП. 6 ОЛ из 43 в КС-14 указали обязательным."}
     },
     "_section_corpus": {
       "_label": "4. Корпус КНС",
@@ -95,7 +104,8 @@
       "seismic_magnitude": {"L1": true, "type": "int", "min": 0, "max": 9, "default": 5, "note": "ОСР-2015 СП 14.13330"},
       "soil_type": {"L1": true, "type": "enum", "values": ["sand", "sandy_loam", "clay_loam", "clay_heavy", "rock", "permafrost"], "default": "sandy_loam"},
       "freezing_depth_m": {"L1": true, "type": "float", "default": null, "note": "Для глубины заложения труб."},
-      "freezing_water_table_m": {"L1": true, "type": "float", "default": null}
+      "freezing_water_table_m": {"L1": true, "type": "float", "default": null},
+      "coldest_5day_temp_c": {"L2": true, "type": "float", "default": null, "note": "Температура наиболее холодной пятидневки 0.92 обеспеченности по СП 131.13330. Используется для расчёта тепловой защиты, утепления корпуса/трасс. Для Казахстана/Якутии до -47°C."}
     },
     "_section_installation": {
       "_label": "7. Монтаж и площадка",
@@ -104,7 +114,12 @@
       "pavilion_required": {"L1": true, "type": "bool", "default": false},
       "crane_type": {"L1": true, "type": "enum", "values": ["none", "manual_tally", "electric_hoist"], "default": "manual_tally"},
       "available_power_kw": {"L1": true, "type": "float", "default": null, "note": "Доступная мощность сети. Источник: ЮМИ Групп бриф."},
-      "installed_power_limit_kw": {"L1": true, "type": "float", "default": null, "note": "Лимит установленной мощности от ТУ. Источник: Экотехнопарк Крым (КНС фильтрат лимит 5 кВт)."}
+      "installed_power_limit_kw": {"L1": true, "type": "float", "default": null, "note": "Лимит установленной мощности от ТУ. Источник: Экотехнопарк Крым (КНС фильтрат лимит 5 кВт)."},
+      "above_ground_pavilion": {"L1": true, "type": "bool", "default": false, "note": "Наземный павильон над КНС (с отоплением, освещением, вентиляцией). Для Сибири/Казахстана. Источник: КС-14 ОЛ — 5/43 файлов."},
+      "hoist_required": {"L1": true, "type": "bool", "default": false, "note": "Требуется грузоподъёмное устройство (таль)."},
+      "hoist_capacity_t": {"L1": true, "type": "float", "values": [0.5, 1.0, 2.0, 3.2, 5.0], "default": 1.0, "note": "Грузоподъёмность тали в тоннах. 1.0 — типовое для КНС, 2-5 — для крупных СПД и пожарных НС. Источник: КС-14 8/43 ОЛ."},
+      "flowmeter_required": {"L1": true, "type": "bool", "default": false, "note": "Требуется расходомер на трассе."},
+      "flowmeter_location": {"L1": true, "type": "enum", "values": ["pressure_pipe", "gravity_pipe", "after_pumps_combined", "per_pump"], "default": "pressure_pipe", "note": "Где устанавливается расходомер. Источник: КС-14 ОЛ."}
     },
     "_section_documentation": {
       "_label": "8. Документация и поставка",
@@ -121,6 +136,15 @@
       "period_P_year": {"L1": true, "type": "int", "values": [1, 2, 3, 5, 10], "default": 1, "note": "Период повторяемости — СП 32 табл.9"},
       "snow_clearance_pct": {"L1": true, "type": "float", "default": 5, "note": "F_y/F для талых вод"},
       "selective_treatment": {"L1": true, "type": "bool", "default": true, "note": "Селективная очистка только 70% годового стока (СП 32 §7.5)"}
+    },
+    "_section_water_treatment": {
+      "_label": "10. Резервуары и доочистка (КС-14)",
+      "uv_disinfection_required": {"L1": true, "type": "bool", "default": false, "note": "Блок УФ-обеззараживания. Источник: КС-14 ОЛ — 5/43 объектов."},
+      "uv_dose_mj_cm2": {"L2": true, "type": "float", "default": 25, "note": "Доза УФ облучения, мДж/см². Минимум 25 для питьевой по СанПиН 2.1.4.1074-01."},
+      "uv_throughput_m3h": {"L1": true, "type": "float", "default": null, "note": "Производительность УФ-блока."},
+      "tank_capacity_m3": {"L1": true, "type": "float", "default": null, "note": "Объём резервуара питьевой/технической воды."},
+      "tank_steel_grade": {"L1": true, "type": "enum", "values": ["08X18N10", "AISI304", "AISI316", "AISI316L", "08X18N10T", "12X18N10T"], "default": "08X18N10", "note": "Марка нержавейки для резервуара. Источник: КС-14 (нерж 304/08Х18Н10) — 8 резервуаров."},
+      "tank_thermal_insulation": {"L1": true, "type": "bool", "default": false, "note": "Утепление резервуара. Для холодных регионов."}
     }
   },
   "validations": [
