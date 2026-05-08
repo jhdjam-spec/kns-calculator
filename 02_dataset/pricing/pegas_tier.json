@@ -6,19 +6,6 @@
   "_description": "Референсные ценовые коридоры от крупного российского конкурента (PEGAS Engineering, 12 линеек, 2023 prices × inflation). Используется для калибровки price_segment в калькуляторе.",
   "_engineer_note": "ВАЖНО: PEGAS — конкурент, наши цены могут быть на 5-15% выше (брендовая премия Серво-Юг как инжиниринг + фирменное обслуживание). Используйте median+15% как ориентир для standard, q75+10% для premium.",
   "tiers_by_line": {
-    "pegas_pro": {
-      "category": "industrial_los_with_pumps",
-      "segment": "premium",
-      "models_count": 14,
-      "priced_count": 14,
-      "min_rub_2026": 402000,
-      "q25_rub_2026": 500700,
-      "median_rub_2026": 648600,
-      "q75_rub_2026": 877800,
-      "max_rub_2026": 2250000,
-      "mean_rub_2026": 841714,
-      "stdev_rub_2026": 545584
-    },
     "pegas_kns": {
       "category": "kns_corpus",
       "segment": "standard",
@@ -31,31 +18,9 @@
       "max_rub_2026": 470400,
       "mean_rub_2026": 272300,
       "stdev_rub_2026": 112630
-    },
-    "pegas_tanks_accumulator": {
-      "category": "accumulator_tank",
-      "segment": "budget",
-      "models_count": 12,
-      "priced_count": 12,
-      "min_rub_2026": 86400,
-      "q25_rub_2026": 164550,
-      "median_rub_2026": 213900,
-      "q75_rub_2026": 656850,
-      "max_rub_2026": 1184400,
-      "mean_rub_2026": 414300,
-      "stdev_rub_2026": 379604
     }
   },
   "tiers_by_segment": {
-    "budget": {
-      "samples_count": 12,
-      "min_rub_2026": 86400,
-      "q25_rub_2026": 164550,
-      "median_rub_2026": 213900,
-      "q75_rub_2026": 656850,
-      "max_rub_2026": 1184400,
-      "mean_rub_2026": 414300
-    },
     "standard": {
       "samples_count": 12,
       "min_rub_2026": 120000,
@@ -64,20 +29,9 @@
       "q75_rub_2026": 337800,
       "max_rub_2026": 470400,
       "mean_rub_2026": 272300
-    },
-    "premium": {
-      "samples_count": 14,
-      "min_rub_2026": 402000,
-      "q25_rub_2026": 500700,
-      "median_rub_2026": 648600,
-      "q75_rub_2026": 877800,
-      "max_rub_2026": 2250000,
-      "mean_rub_2026": 841714
     }
   },
   "categories_used": [
-    "accumulator_tank",
-    "industrial_los_with_pumps",
     "kns_corpus"
   ]
 }

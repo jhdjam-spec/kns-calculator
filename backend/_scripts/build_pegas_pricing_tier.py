@@ -23,25 +23,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DS = ROOT / "02_dataset"
 
-# ВКЛЮЧАЕМ только линейки, имеющие отношение к КНС/насосам.
-# Септики, жироуловители, кессоны, погреба, бассейны — НЕ берём в расчёт
-# (по требованию: только КНС и всё что касается насосов).
+# Включаем ТОЛЬКО pegas_kns — корпуса КНС.
+# По требованию пользователя: септики (lite/ekonom/base/premium/s_65),
+# станции биологической очистки (pegas_pro), накопительные ёмкости и
+# всё прочее (жироуловители/кессоны/погреба/бассейны) НЕ нужны в калькуляторе.
 LINE_TO_SEGMENT: dict[str, str] = {
-    "pegas_kns": "standard",            # КНС стеклопластиковые корпуса
-    "pegas_pro": "premium",             # промышленные ЛОС с насосной частью 20+ м³/сут
-    "pegas_tanks_accumulator": "budget",  # накопительные ёмкости (часто нужны как буфер для КНС)
+    "pegas_kns": "standard",  # КНС стеклопластиковые корпуса (Ø1000-1900мм, H3-4м)
 }
 
-# Категория продукта (для навигации в калькуляторе)
 LINE_TO_CATEGORY: dict[str, str] = {
     "pegas_kns": "kns_corpus",
-    "pegas_pro": "industrial_los_with_pumps",
-    "pegas_tanks_accumulator": "accumulator_tank",
 }
 
-# Линейки, ИСКЛЮЧЁННЫЕ из расчёта (септики/жироуловители/прочее без насосов):
-# pegas_lite, pegas_ekonom, pegas_base, pegas_premium, pegas_s_65,
-# pegas_grease_traps, pegas_caissons, pegas_pogreba, pegas_pools.
+# Линейки, ИСКЛЮЧЁННЫЕ из расчёта (не относятся к КНС):
+# pegas_lite, pegas_ekonom, pegas_base — септики
+# pegas_premium, pegas_s_65 — септики с принудительной аэрацией
+# pegas_pro — промышленные ЛОС / станции биологической очистки
+# pegas_grease_traps — жироуловители
+# pegas_tanks_accumulator — накопительные ёмкости
+# pegas_caissons, pegas_pogreba, pegas_pools — кессоны/погреба/бассейны
 
 
 def percentile(sorted_values: list[float], pct: float) -> float:
