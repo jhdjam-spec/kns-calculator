@@ -233,6 +233,77 @@ export const losApi = {
   catalog: () => getJSON<Record<string, unknown>>("/los/catalog"),
 };
 
+// ─── Reports (Phase 28) — PDF расчётной записки ─────────────────────
+
+export interface CalculationReportInput {
+  project_name: string;
+  project_code?: string;
+  customer?: string;
+  object_address?: string;
+  inputs_summary?: Record<string, unknown>;
+  hydraulics?: Record<string, unknown>;
+  electrical?: Record<string, unknown>;
+  fire_water?: Record<string, unknown>;
+  water_supply?: Record<string, unknown>;
+  climate?: Record<string, unknown>;
+  structural?: Record<string, unknown>;
+  los?: Record<string, unknown>;
+  bom?: Array<Record<string, unknown>>;
+  references?: Array<Record<string, string>>;
+}
+
+/** Скачивание PDF файла напрямую (без JSON parsing). */
+export async function downloadCalculationPdf(
+  input: CalculationReportInput,
+): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/reports/calculation-pdf`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+  return res.blob();
+}
+
+// ─── BOM (Phase 30) — экспорт в CSV ─────────────────────────────────
+
+export interface BOMItem {
+  section: string;
+  position_no?: number;
+  name: string;
+  article?: string;
+  manufacturer?: string;
+  quantity?: number;
+  units?: string;
+  price_rub_2026?: number;
+  lead_time_days?: number;
+  supplier?: string;
+  source_url?: string;
+  note?: string;
+}
+
+export interface BOMSpecification {
+  project_code?: string;
+  project_name?: string;
+  items: BOMItem[];
+}
+
+export async function downloadBomCsv(spec: BOMSpecification): Promise<Blob> {
+  const res = await fetch(`${API_PREFIX}/bom/export-csv`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(spec),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+  return res.blob();
+}
+
 // ─── Regulations (Phase 22) ─────────────────────────────────────────
 
 export interface Regulation {

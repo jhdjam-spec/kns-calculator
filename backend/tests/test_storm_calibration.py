@@ -288,6 +288,74 @@ class TestSurfaceCoeffs:
         assert F == 10.0
 
     def test_invalid_revision_raises(self):
+        from pump_calculator.storm.surfaces import calc_z_mid
+        with pytest.raises(ValueError):
+            calc_z_mid({"asphalt": 5.0}, "SP_32_INVALID")  # type: ignore
+
+
+class TestStormCalibrationAggregate:
+    """Сводная калибровка: max погрешность по эталонам ≤ 15%.
+
+    Подтверждение цели Phase 18.1 (2026-05-08).
+    """
+
+    def test_max_error_below_15pct(self):
+        """По 3 рабочим эталонам — ВБД Екб, Уташ, РВБ Кубань — max погрешность ≤15%."""
+        # Параметры взяты из индивидуальных тестов (TestVbdEkaterinburg и др.).
+        # ВАЖНО: для Краснодарских объектов эталон считался с P=2 (промтерритория
+        # СП 32 §6.6), для ВБД Екб (склад) — P=1.
+        etalons = [
+            {
+                "name": "ВБД Екатеринбург",
+                "city": "Екатеринбург",
+                "surfaces": SurfaceBreakdown(asphalt_ha=5.4, lawn_ha=2.3),
+                "expected_q_r_lps": 540,
+                "t_concentration_min": 10.0,
+                "period_P_year": 1,
+                "pipe_total_length_m": 500,
+            },
+            {
+                "name": "Уташ ИБИОКС",
+                "city": "Анапа",
+                "surfaces": SurfaceBreakdown(asphalt_ha=5.0),
+                "expected_q_r_lps": 974,
+                "t_concentration_min": 10.0,
+                "period_P_year": 2,
+                "pipe_total_length_m": 300,
+            },
+            {
+                "name": "РВБ Кубань",
+                "city": "Краснодар",
+                "surfaces": SurfaceBreakdown(roof_ha=2.8, asphalt_ha=3.96, lawn_ha=0.81),
+                "expected_q_r_lps": 1168,
+                "t_concentration_min": 10.0,
+                "period_P_year": 2,
+                "pipe_total_length_m": 500,
+            },
+        ]
+
+        errors = []
+        for et in etalons:
+            inputs = StormInput(
+                sp_revision="SP_32_2012",
+                region_city=et["city"],
+                surfaces=et["surfaces"],
+                period_P_year=et["period_P_year"],
+                pipe_total_length_m=et["pipe_total_length_m"],
+                pipe_velocity_mps=3.0,
+                t_concentration_min=et["t_concentration_min"],
+            )
+            peak, _ = calculate_peak_flow(inputs)
+            err_pct = (peak.Q_r_l_s - et["expected_q_r_lps"]) / et["expected_q_r_lps"] * 100
+            errors.append((et["name"], peak.Q_r_l_s, et["expected_q_r_lps"], err_pct))
+
+        max_abs_err = max(abs(e[3]) for e in errors)
+
+        assert max_abs_err <= 15.0, (
+            f"Max погрешность {max_abs_err:.1f}% > 15%. Детали: {errors}"
+        )
+
+    def test_invalid_revision_raises(self):
         from pump_calculator.storm.surfaces import get_coeffs_table
 
         with pytest.raises(ValueError, match="Unknown sp_revision"):

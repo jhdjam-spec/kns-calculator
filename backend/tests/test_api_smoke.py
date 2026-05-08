@@ -24,6 +24,12 @@ def test_health():
 
 
 def test_select_quick_myshako():
+    """Эталонный Мысхако-кейс: Q=21.2, H=10. Должен подобрать насос в budget-сегменте.
+
+    Не закрепляем конкретный бренд (после расширения БД до 284 насосов
+    могут конкурировать LEO/Fancy/KAIQUAN/Pedrollo). Главное —
+    алгоритм находит подходящий вариант с разумной ценой.
+    """
     r = client.post(
         "/select/quick",
         json={"Q_m3h": 21.2, "dH_m": 10.0, "L_m": 0.0, "wastewater_type": "domestic"},
@@ -31,7 +37,10 @@ def test_select_quick_myshako():
     assert r.status_code == 200
     body = r.json()
     assert body["results"]["budget"] is not None
-    assert body["results"]["budget"]["brand"] == "KAIQUAN"
+    # Бренд может быть из топ-конкурентов в budget сегменте
+    brand = body["results"]["budget"]["brand"]
+    assert brand in ("KAIQUAN", "LEO Group", "Fancy", "Pedrollo", "ANTARUS"), \
+        f"Неожиданный бренд в budget: {brand}"
 
 
 def test_select_full():

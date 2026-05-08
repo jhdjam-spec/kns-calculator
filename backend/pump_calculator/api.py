@@ -493,6 +493,96 @@ def list_regulations(category: str | None = None) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────────────
+# Phase 21+22: Physics advanced (NPSH, hydroshock, Darcy)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.post("/physics/npsh", tags=["physics"])
+def calc_npsh_endpoint(payload: dict) -> dict:
+    """NPSHa с поправкой на высоту над уровнем моря и широту.
+
+    Используется для критичных объектов: горные регионы (Архыз, Кавказ),
+    нестандартные температуры жидкости.
+    """
+    from pump_calculator.physics_advanced import npsha_with_corrections
+    try:
+        npsha, refs = npsha_with_corrections(
+            H_suction_m=payload["H_suction_m"],
+            T_celsius=payload.get("T_celsius", 20.0),
+            H_friction_suction_m=payload.get("H_friction_suction_m", 0.0),
+            altitude_m=payload.get("altitude_m", 0.0),
+            latitude_deg=payload.get("latitude_deg", 55.0),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    return {
+        "npsha_m": npsha,
+        "encyclopedia_topic": "hydraulics",
+        "encyclopedia_anchor": "NPSH",
+        "references": [
+            {
+                "regulation_code": r.regulation_code,
+                "section": r.section,
+                "purpose": r.purpose,
+                "url": r.url,
+            }
+            for r in refs
+        ],
+    }
+
+
+@app.post("/physics/water-hammer", tags=["physics"])
+def calc_water_hammer_endpoint(payload: dict) -> dict:
+    """Гидроудар по Жуковскому-Михайлову с учётом материала трубы."""
+    from pump_calculator.physics_advanced import water_hammer
+    try:
+        result = water_hammer(
+            v_ms=payload["v_ms"],
+            pipe_material=payload.get("pipe_material", "pe100_sdr17"),
+            pipe_length_m=payload.get("pipe_length_m", 100.0),
+            closure_time_s=payload.get("closure_time_s", 5.0),
+            T_celsius=payload.get("T_celsius", 15.0),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    return {
+        "delta_p_kpa": result.delta_p_kpa,
+        "delta_h_m": result.delta_h_m,
+        "wave_celerity_mps": result.wave_celerity_mps,
+        "is_direct": result.is_direct,
+        "pressure_class_required": result.pressure_class_required,
+        "encyclopedia_topic": "hydraulics",
+        "encyclopedia_anchor": "Гидроудар",
+        "references": [
+            {
+                "regulation_code": r.regulation_code,
+                "section": r.section,
+                "purpose": r.purpose,
+                "url": r.url,
+            }
+            for r in result.references
+        ],
+    }
+
+
+@app.post("/physics/darcy-weisbach", tags=["physics"])
+def calc_darcy_weisbach_endpoint(payload: dict) -> dict:
+    """Потери напора Дарси-Вейсбаха с λ Swamee-Jain."""
+    from pump_calculator.physics_advanced import darcy_weisbach_head_loss_m
+    try:
+        h_f, details = darcy_weisbach_head_loss_m(
+            L_m=payload["L_m"],
+            D_mm=payload["D_mm"],
+            v_ms=payload["v_ms"],
+            pipe_material=payload.get("pipe_material", "pe100"),
+            T_celsius=payload.get("T_celsius", 15.0),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    return {"h_f_m": h_f, **details}
+
+
+# ──────────────────────────────────────────────────────────────────────────
 # Phase 31: Encyclopedia (drawer + /teach)
 # ──────────────────────────────────────────────────────────────────────────
 

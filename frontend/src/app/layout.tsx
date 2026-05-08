@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { manrope, inter, jetbrainsMono } from "./fonts";
 import { BetaBanner } from "@/components/BetaBanner";
+import { EncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,7 +26,10 @@ export default function RootLayout({
     >
       <body>
         <BetaBanner />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <EncyclopediaDrawer />
+        </Providers>
       </body>
     </html>
   );

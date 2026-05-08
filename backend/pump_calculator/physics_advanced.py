@@ -265,7 +265,7 @@ def darcy_weisbach_head_loss_m(
 ) -> tuple[float, dict]:
     """Потери напора Дарси-Вейсбаха: h_f = λ·(L/D)·v²/(2g).
 
-    Возвращает (h_f_м, дет.: λ, Re, ε/D, режим).
+    Возвращает (h_f_м, дет.: λ, Re, ε/D, режим, references, encyclopedia_anchor).
     """
     if pipe_material not in PIPE_ROUGHNESS_MM:
         raise ValueError(f"Unknown pipe material: {pipe_material}")
@@ -274,6 +274,11 @@ def darcy_weisbach_head_loss_m(
     Re = reynolds_number(v_ms, D_mm, T_celsius)
     lam = darcy_friction_factor(Re, eps_over_D)
     h_f = lam * (L_m / (D_mm / 1000.0)) * (v_ms ** 2) / (2 * G_STANDARD)
+    refs = [
+        ref("SP_32", "§6.5 табл. шероховатости",
+            "Эквивалентная шероховатость k_s по материалам труб"),
+        ref("SP_31", "§11", "Гидравлический расчёт водоводов"),
+    ]
     return round(h_f, 3), {
         "lambda": round(lam, 5),
         "Re": round(Re, 0),
@@ -281,6 +286,17 @@ def darcy_weisbach_head_loss_m(
         "regime": "laminar" if Re < 2300 else ("transitional" if Re < 4000 else "turbulent"),
         "pipe_material": pipe_material,
         "roughness_mm": eps_mm,
+        "references": [
+            {
+                "regulation_code": r.regulation_code,
+                "section": r.section,
+                "purpose": r.purpose,
+                "url": r.url,
+            }
+            for r in refs
+        ],
+        "encyclopedia_anchor": "Дарси",
+        "encyclopedia_topic": "hydraulics",
     }
 
 
