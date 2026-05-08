@@ -1,0 +1,705 @@
+{
+  "_version": "1.0",
+  "_updated": "2026-05-08",
+  "_description": "Матрица замен для премиум-сегмента БД калькулятора КНС. Для каждой серии указаны: РФ-аналог (приоритет 1), Pan-китайский аналог (приоритет 2 / бюджет), европейский альтернатив (приоритет 3 / параллельный импорт через дружественные страны).",
+  "_engineer_note": "Использовать в frontend для выдачи карточки 'Альтернативная российская замена' и 'Бюджетный аналог'. При статусе available_ru.status = 'parallel_import' или 'unavailable' — рекомендация замены показывается принудительно.",
+  "_currency": "RUB",
+  "_methodology": "Замена считается эквивалентной если: (a) Q-окно охватывает ±15% от целевого, (b) H-окно ±10%, (c) DN совпадает или адаптируется фланцевым переходом, (d) свободный проход >= оригинал, (e) IP-класс >= оригинал.",
+
+  "replacements": [
+    {
+      "original_brand": "KSB",
+      "original_series": "Amarex N S 50-220",
+      "use_case": "малая КНС, бытовые стоки 5-50 м³/ч до H=15 м",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НК1 / НК2",
+        "match_quality": "high",
+        "price_ratio": 0.55,
+        "notes": "одноканальное/двухканальное закрытое РК; склад РФ; реестр Минпромторга (заявлено)",
+        "model_examples": ["antarus-nk1-50-10-10", "antarus-nk2-50-10-15"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ/E",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "погружной фекальный 0.75-7.5 кВт; типоразмеры под Grundfos/Wilo",
+        "model_examples": ["kaiquan-50WQS202-3"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Rexa PRO V05DA",
+        "match_quality": "high",
+        "price_ratio": 0.85,
+        "notes": "официальная поставка ВИЛО РУС, цена 172-200 тыс. ₽",
+        "model_examples": ["wilo-rexa-pro-v05"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Amarex KRT (DN50-150, 30-150 кВт)",
+      "use_case": "средняя/крупная промышленная КНС, фекальная, 100-1500 м³/ч до H=80 м",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НК2 (большие типоразмеры до 90 кВт)",
+        "match_quality": "medium",
+        "price_ratio": 0.50,
+        "notes": "двухканальное РК; до 90 кВт; не закрывает 100+ кВт",
+        "model_examples": ["antarus-nk2-100-50-90"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ_large (30-200 кВт)",
+        "match_quality": "high",
+        "price_ratio": 0.25,
+        "notes": "Smart версия с big motor; покрывает Q=100-4000 м³/ч H=10-80 м",
+        "model_examples": ["kaiquan-WQ-100-150-200"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "EMU FA (рос. сборка Ногинск)",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "Q до 5000 м³/ч; сборка в РФ; 213-997 тыс. ₽; СПИК (часть в реестре Минпромторг)",
+        "model_examples": ["wilo-emu-fa"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Amarex KRT (DN200-300, >150 кВт)",
+      "use_case": "крупная промышленная КНС, очистные >2000 м³/ч",
+      "ru_replacement": {
+        "brand": "ГМС / Liscom",
+        "series": "СД, СДВ серии (>200 кВт)",
+        "match_quality": "medium",
+        "price_ratio": 0.55,
+        "notes": "массивные канализационные центробежные; сухая установка; реестр Минпромторг",
+        "model_examples": ["gms-sd-200-90"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ_large 150-200 кВт + KQSS/KQSW",
+        "match_quality": "high",
+        "price_ratio": 0.25,
+        "notes": "масштаб промышленных КНС; ATEX по запросу",
+        "model_examples": ["kaiquan-WQ-300-200"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "EMU FA до 250 кВт",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "ВИЛО РУС тестовый стенд до 80 кВт, выше — импорт + сборка",
+        "model_examples": ["wilo-emu-fa-large"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Sewatec (сухая установка)",
+      "use_case": "сухая установка для канализации, спирально-корпусные 50-4000 м³/ч до H=80",
+      "ru_replacement": {
+        "brand": "ГМС / Гидромашсервис",
+        "series": "СД (сухая установка для канализации)",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "одно/многоканальные РК; ANSI/DIN фланцы; ремонтопригодность отличная; реестр Минпромторг",
+        "model_examples": ["gms-sd-150-50"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "WQK / WQS dry-pit version",
+        "match_quality": "medium",
+        "price_ratio": 0.35,
+        "notes": "сухая установка; китайский эквивалент Sewatec",
+        "model_examples": ["cnp-wqk-150"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "EMU FA для dry pit configuration",
+        "match_quality": "medium",
+        "price_ratio": 0.90,
+        "notes": "часть моделей FA адаптируется под dry pit с охлаждением",
+        "model_examples": ["wilo-emu-fa-dry"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Movitec V/VF/VS (вертикальный многоступенчатый)",
+      "use_case": "СПД, водоподготовка, конденсат, 1-200 м³/ч до H=250",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "BMN (вертикальный многоступ.)",
+        "match_quality": "high",
+        "price_ratio": 0.45,
+        "notes": "бывшая Grundfos Истра; реестр Минпромторг ПП 719; преференция 30% на 44-ФЗ; те же типоразмеры что Grundfos CR/CRN",
+        "model_examples": ["istratex-bmn-15-7"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "CDLF / CDM",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "вертикальные многоступ.; нерж AISI 304/316; цена 30-40% от Movitec",
+        "model_examples": ["cnp-cdlf-15-7"]
+      },
+      "eu_alternative": {
+        "brand": "Grundfos",
+        "series": "CR/CRN (через параллельный импорт)",
+        "match_quality": "high",
+        "price_ratio": 0.85,
+        "notes": "Movitec и CR — почти зеркальная типоразмерность; срок 6-14 нед",
+        "model_examples": ["grundfos-cr-15-7"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Multitec (высоконапорный многоступенчатый)",
+      "use_case": "высокое давление >250 м, водоподготовка, котельные, бойлерные питательные",
+      "ru_replacement": {
+        "brand": "ГМС",
+        "series": "ЦНС (центробежный насос секционный)",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "массивные секционные; до H=600 м; стандартная серия для котельных и нефтегаза",
+        "model_examples": ["gms-cns-60-330"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "MS (multistage segmental)",
+        "match_quality": "medium",
+        "price_ratio": 0.35,
+        "notes": "не охватывает все размеры; до H=400 м",
+        "model_examples": ["cnp-ms-50-200"]
+      },
+      "eu_alternative": {
+        "brand": "Grundfos",
+        "series": "MTR / CR-HS",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "пар. импорт; самый узкий рынок; преимущество только для специализированных объектов",
+        "model_examples": ["grundfos-mtr-15-50"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Etabloc/Etaline/Etanorm (горизонтальный одноступенчатый)",
+      "use_case": "СПД, циркуляция, городское водоснабжение, 5-1500 м³/ч до H=100",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НП (одноступ. горизонтальный)",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "DIN EN 733; российская разработка; реестр Минпромторг",
+        "model_examples": ["antarus-np-65-160"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "TD / NIS",
+        "match_quality": "high",
+        "price_ratio": 0.35,
+        "notes": "DIN EN 733; китайский эквивалент Etanorm; склад РФ",
+        "model_examples": ["cnp-tdg-150"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "BL / IL (in-line)",
+        "match_quality": "high",
+        "price_ratio": 0.90,
+        "notes": "официальная поставка ВИЛО РУС; цены подтверждены",
+        "model_examples": ["wilo-bl-50-160"]
+      }
+    },
+    {
+      "original_brand": "KSB",
+      "original_series": "Hyamat (станция повышения давления)",
+      "use_case": "СПД с регулированием частотника, 5-500 м³/ч до H=200",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "Гидромодули BMN",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "бывший Grundfos Hydro MPC рос. сборка",
+        "model_examples": ["istratex-hydro-bmn"]
+      },
+      "budget_replacement": {
+        "brand": "ANTARUS",
+        "series": "MLV-блочная станция",
+        "match_quality": "medium",
+        "price_ratio": 0.45,
+        "notes": "блок-модули с MLV-насосами + ШУ + частотник",
+        "model_examples": ["antarus-mlv-station"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "COR-MVIE / COMFORT",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "склад РФ; от 1.5 млн ₽ типовая",
+        "model_examples": ["wilo-cor-mvie"]
+      }
+    },
+    {
+      "original_brand": "Wilo",
+      "original_series": "Wilo-Rexa CUT (с измельчителем)",
+      "use_case": "канализация с волокнами/тряпками, бытовые насосные, малые промышленные 5-80 м³/ч до H=50",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НК1-RM (с измельчителем)",
+        "match_quality": "high",
+        "price_ratio": 0.65,
+        "notes": "режущий механизм; реестр Минпромторг",
+        "model_examples": ["antarus-nk1-rm-50-15"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ Cutter",
+        "match_quality": "high",
+        "price_ratio": 0.40,
+        "notes": "погружной фекальный с измельчителем 0.75-15 кВт",
+        "model_examples": ["kaiquan-wqd-15"]
+      },
+      "eu_alternative": {
+        "brand": "Grundfos",
+        "series": "SEG (через пар. импорт)",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "пар. импорт 6-12 нед; цена 200-400 тыс. ₽",
+        "model_examples": ["grundfos-seg-40-12"]
+      }
+    },
+    {
+      "original_brand": "Wilo",
+      "original_series": "Wilo-EMU FA (большая КНС)",
+      "use_case": "промышленная КНС 100-5000 м³/ч до H=80, рос. сборка",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НК2 (большие типоразмеры)",
+        "match_quality": "medium",
+        "price_ratio": 0.55,
+        "notes": "до 90 кВт; не закрывает 100+ кВт; реестр Минпромторг",
+        "model_examples": ["antarus-nk2-150-50"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ_large",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "Smart версия 30-200 кВт",
+        "model_examples": ["kaiquan-WQ-150-200"]
+      },
+      "eu_alternative": {
+        "brand": "KSB",
+        "series": "Amarex KRT (через пар. импорт)",
+        "match_quality": "high",
+        "price_ratio": 1.05,
+        "notes": "пар. импорт; срок 6-14 нед; цена выше Wilo на 5-10%",
+        "model_examples": ["ksb-amarex-krt-150-50"]
+      }
+    },
+    {
+      "original_brand": "Wilo",
+      "original_series": "Wilo-SiFire (пожарные станции)",
+      "use_case": "противопожарные системы, СНиП-сертификация",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "ПС (пожарная станция)",
+        "match_quality": "medium",
+        "price_ratio": 0.65,
+        "notes": "сертифицировано по ТР ЕАЭС; не везде проходит требования EN 12845",
+        "model_examples": ["antarus-fire-station"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "Fire fighting set XBC",
+        "match_quality": "medium",
+        "price_ratio": 0.45,
+        "notes": "пожарный комплекс с дизелем + электронасос; не сертифицирован по EN 12845, только по ТР ЕАЭС",
+        "model_examples": ["cnp-xbc-fire"]
+      },
+      "eu_alternative": {
+        "brand": "KSB",
+        "series": "Hyatronic / Etabloc-fire",
+        "match_quality": "medium",
+        "price_ratio": 1.10,
+        "notes": "пар. импорт; цена 110% от Wilo",
+        "model_examples": ["ksb-fire-set"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "SL/SE 9-30 кВт (с S-tube/SuperVortex)",
+      "use_case": "промышленная КНС средняя 30-300 м³/ч до H=60, на пар. импорте",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "S/SLV (бывшая Grundfos Истра)",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "те же сборочные линии что Grundfos; реестр Минпромторг ПП 719; преференция 30%",
+        "model_examples": ["istratex-sl-9-30"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ (11-22 кВт)",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "погружной фекальный закрытое РК",
+        "model_examples": ["kaiquan-WQ-100-50-15"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Rexa PRO + EMU FA",
+        "match_quality": "high",
+        "price_ratio": 0.85,
+        "notes": "официальная поставка; цена ниже Grundfos на 15%; рос. сборка частично",
+        "model_examples": ["wilo-rexa-pro-v08da", "wilo-emu-fa"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "SL/SE >30 кВт (большие промышленные)",
+      "use_case": "крупные КНС/очистные 100-5000 м³/ч до H=100",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "SL_large",
+        "match_quality": "medium",
+        "price_ratio": 0.55,
+        "notes": "ассортимент >30 кВт у ИСТРАТЕХ ограничен; уточнять",
+        "model_examples": ["istratex-sl-50"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ_large 30-200 кВт",
+        "match_quality": "high",
+        "price_ratio": 0.25,
+        "notes": "Smart с переключением частоты",
+        "model_examples": ["kaiquan-WQ-200-200"]
+      },
+      "eu_alternative": {
+        "brand": "KSB",
+        "series": "Amarex KRT >150 кВт",
+        "match_quality": "high",
+        "price_ratio": 1.10,
+        "notes": "пар. импорт; срок 8-14 нед",
+        "model_examples": ["ksb-amarex-krt-large"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "SEG (с измельчителем cutter)",
+      "use_case": "канализация с волокнистыми включениями, малые-средние стоки 5-50 м³/ч до H=40",
+      "ru_replacement": {
+        "brand": "ANTARUS",
+        "series": "НК1-RM (с измельчителем)",
+        "match_quality": "high",
+        "price_ratio": 0.60,
+        "notes": "режущий механизм; российская разработка",
+        "model_examples": ["antarus-nk1-rm-40-15"]
+      },
+      "budget_replacement": {
+        "brand": "KAIQUAN",
+        "series": "WQ Cutter",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "цена 25-30% от Grundfos SEG",
+        "model_examples": ["kaiquan-wqd"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Rexa CUT",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "100-250 тыс. ₽; официальная поставка; склад",
+        "model_examples": ["wilo-rexa-cut-ge0320"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "DP/EF/KP (малые дренажные)",
+      "use_case": "малый дренаж, ливнёвые приямки 1-50 м³/ч до H=25",
+      "ru_replacement": {
+        "brand": "ГНОМ",
+        "series": "ГНОМ дренажные",
+        "match_quality": "high",
+        "price_ratio": 0.45,
+        "notes": "стандартный российский дренажник; реестр Минпромторг",
+        "model_examples": ["gnom-10-10"]
+      },
+      "budget_replacement": {
+        "brand": "LEO",
+        "series": "EKS / AKS / LSW",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "малый дренаж бюджет; поставка через NT-RT",
+        "model_examples": ["leo-eks-1"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Drain TM / KS",
+        "match_quality": "high",
+        "price_ratio": 0.90,
+        "notes": "малые дренажники Wilo; склад РФ; 30-80 тыс. ₽",
+        "model_examples": ["wilo-drain-tm"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "CR/CRE/CRN/CRI (вертикальные многоступенчатые)",
+      "use_case": "СПД, водоподготовка, котельные, 1-240 м³/ч до H=360",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "BMN",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "те же сборочные линии что Grundfos; реестр Минпромторг ПП 719; преференция 30%",
+        "model_examples": ["istratex-bmn-15"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "CDLF / CDM",
+        "match_quality": "high",
+        "price_ratio": 0.30,
+        "notes": "вертикальные многоступ.; нерж AISI 304/316",
+        "model_examples": ["cnp-cdlf-15-12"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Helix / MVI",
+        "match_quality": "high",
+        "price_ratio": 0.95,
+        "notes": "официальная поставка; цена сравнима с Grundfos",
+        "model_examples": ["wilo-helix-1505"]
+      }
+    },
+    {
+      "original_brand": "Grundfos",
+      "original_series": "Hydro MPC (СПД с регулированием)",
+      "use_case": "СПД 5-500 м³/ч до H=200 с частотным регулированием",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "Hydro BMN MPC-equivalent",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "та же платформа что Hydro MPC; рос. сборка",
+        "model_examples": ["istratex-hydro-mpc"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "Hydro Booster CDM-K",
+        "match_quality": "medium",
+        "price_ratio": 0.40,
+        "notes": "сборная станция с частотником и шкафом",
+        "model_examples": ["cnp-hydro-booster"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "COR-MVIE",
+        "match_quality": "high",
+        "price_ratio": 1.00,
+        "notes": "официальная поставка; от 1.5 млн ₽",
+        "model_examples": ["wilo-cor-mvie"]
+      }
+    },
+    {
+      "original_brand": "Pedrollo",
+      "original_series": "VX/VXm (малая КНС с открытым РК)",
+      "use_case": "бытовая малая КНС, коттедж, частный сектор 5-50 м³/ч до H=20",
+      "ru_replacement": {
+        "brand": "Aquario / Belamos / Unipump",
+        "series": "малые фекальные/дренажные",
+        "match_quality": "medium",
+        "price_ratio": 0.60,
+        "notes": "только для бытовых; не для коммерческих КНС",
+        "model_examples": ["belamos-omega"]
+      },
+      "budget_replacement": {
+        "brand": "LEO",
+        "series": "XKS / LKS-P",
+        "match_quality": "high",
+        "price_ratio": 0.55,
+        "notes": "погружные канализационные малые; цена 25-35 тыс. ₽",
+        "model_examples": ["leo-xks-1.0"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Rexa UNI / FIT (малые)",
+        "match_quality": "high",
+        "price_ratio": 1.20,
+        "notes": "Rexa UNI композитный корпус; сравнимая ниша; цена выше",
+        "model_examples": ["wilo-rexa-uni-v06"]
+      }
+    },
+    {
+      "original_brand": "Pedrollo",
+      "original_series": "MC/MCm (многоступенчатые СПД)",
+      "use_case": "СПД 1-30 м³/ч до H=100",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "BMN малая",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "малые BMN-серии; реестр Минпромторг",
+        "model_examples": ["istratex-bmn-3"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "CDM-light",
+        "match_quality": "high",
+        "price_ratio": 0.40,
+        "notes": "малые многоступенчатые",
+        "model_examples": ["cnp-cdm-3"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Multivert MVI",
+        "match_quality": "high",
+        "price_ratio": 1.10,
+        "notes": "малые МВИ; склад РФ",
+        "model_examples": ["wilo-mvi-1"]
+      }
+    },
+    {
+      "original_brand": "Pedrollo",
+      "original_series": "PVm/PV (вертикальные многоступенчатые)",
+      "use_case": "СПД с напором >100, 1-30 м³/ч до H=150",
+      "ru_replacement": {
+        "brand": "ИСТРАТЕХ",
+        "series": "BMN высоконапорная",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "до H=200 м",
+        "model_examples": ["istratex-bmn-3-15"]
+      },
+      "budget_replacement": {
+        "brand": "CNP",
+        "series": "CDLF",
+        "match_quality": "high",
+        "price_ratio": 0.40,
+        "notes": "стандартная замена",
+        "model_examples": ["cnp-cdlf-3-15"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Helix V",
+        "match_quality": "high",
+        "price_ratio": 1.05,
+        "notes": "вертикальные с нерж колесами",
+        "model_examples": ["wilo-helix-v-1505"]
+      }
+    },
+    {
+      "original_brand": "Pedrollo",
+      "original_series": "TOP/TR/RX (дренажные)",
+      "use_case": "дренаж приямки 3-40 м³/ч до H=15",
+      "ru_replacement": {
+        "brand": "ГНОМ",
+        "series": "ГНОМ малые",
+        "match_quality": "high",
+        "price_ratio": 0.50,
+        "notes": "стандартный российский дренажник",
+        "model_examples": ["gnom-10-10"]
+      },
+      "budget_replacement": {
+        "brand": "LEO",
+        "series": "EKS / AKS / LSW",
+        "match_quality": "high",
+        "price_ratio": 0.40,
+        "notes": "цена 5-15 тыс. ₽ за малый",
+        "model_examples": ["leo-aks-1"]
+      },
+      "eu_alternative": {
+        "brand": "Wilo",
+        "series": "Drain TM",
+        "match_quality": "high",
+        "price_ratio": 1.10,
+        "notes": "малые дренажники Wilo",
+        "model_examples": ["wilo-drain-tm32"]
+      }
+    },
+    {
+      "original_brand": "Pedrollo",
+      "original_series": "4SR/6SR (скважинные)",
+      "use_case": "скважинные многоступенчатые 1-50 м³/ч до H=250",
+      "ru_replacement": {
+        "brand": "ЭЦВ (НПО Водомаш и др.)",
+        "series": "ЭЦВ скважинные",
+        "match_quality": "medium",
+        "price_ratio": 0.60,
+        "notes": "стандартные советские/российские скважинные; реестр Минпромторг",
+        "model_examples": ["ecv-6-10-50"]
+      },
+      "budget_replacement": {
+        "brand": "LEO / Belamos",
+        "series": "4ST / 4XR-bytovye",
+        "match_quality": "medium",
+        "price_ratio": 0.50,
+        "notes": "бытовые/полупромышленные",
+        "model_examples": ["belamos-4tf"]
+      },
+      "eu_alternative": {
+        "brand": "Grundfos",
+        "series": "SQ / SP (через пар. импорт)",
+        "match_quality": "high",
+        "price_ratio": 1.20,
+        "notes": "пар. импорт; цена выше Pedrollo",
+        "model_examples": ["grundfos-sp-5a"]
+      }
+    }
+  ],
+
+  "ru_replacement_brands_summary": [
+    {
+      "brand": "ИСТРАТЕХ",
+      "code": "istratex",
+      "country": "Russia",
+      "ex_owner": "Grundfos Holding A/S (продано Феб 2024)",
+      "registry_minpromtorg": true,
+      "preference_44fz": 30,
+      "specialization": ["СПД CR/CRN-эквивалент", "MGE-двигатели", "малые промышленные", "Hydro MPC"],
+      "website": "istratex.ru",
+      "online_selector": "istratex.ru/selection"
+    },
+    {
+      "brand": "ГМС",
+      "code": "gms",
+      "country": "Russia",
+      "registry_minpromtorg": true,
+      "preference_44fz": 30,
+      "specialization": ["ЦНС", "СД", "сухая установка", "большие промышленные >150 кВт"],
+      "website": "gms-group.ru"
+    },
+    {
+      "brand": "ГНОМ",
+      "code": "gnom",
+      "country": "Russia",
+      "registry_minpromtorg": true,
+      "preference_44fz": 30,
+      "specialization": ["дренаж", "малые ливневые", "стройка"],
+      "website": "moselectronasos.ru"
+    },
+    {
+      "brand": "ANTARUS",
+      "code": "antarus",
+      "country": "Russia",
+      "registry_minpromtorg": "partial",
+      "preference_44fz": "conditional",
+      "specialization": ["НК канализация", "MLV многоступенчатые", "циркуляция"],
+      "website": "antarus.su"
+    }
+  ],
+
+  "exchange_rates_2026-05-08": {
+    "EUR_RUB": 99.5,
+    "USD_RUB": 85.0,
+    "CNY_RUB": 11.7,
+    "TRY_RUB": 2.4
+  },
+
+  "parallel_import_markups": {
+    "turkey_route_pct": 40,
+    "armenia_route_pct": 35,
+    "kazakhstan_route_pct": 35,
+    "uae_route_pct": 65,
+    "average_total_markup_pct": 50
+  }
+}

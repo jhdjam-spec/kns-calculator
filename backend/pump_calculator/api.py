@@ -341,3 +341,172 @@ def list_storm_presets() -> dict:
         "note": "Presets are stored on frontend. See frontend/src/data/objectTypePresets.json",
         "phase": "Phase 19 MVP",
     }
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 22: Fire water (СП 8.13130 / СП 10.13130)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.post("/fire-water/calc", tags=["fire_water"])
+def calculate_fire_water(payload: dict) -> dict:
+    """Расчёт противопожарного водоснабжения по СП 8.13130 + СП 10.13130.
+
+    Принимает FireScenarioInput (см. pump_calculator.fire_water.models),
+    возвращает FireResult с расходами, резервуаром, насосной и ссылками
+    на нормативы.
+    """
+    from pump_calculator.fire_water import (
+        FireScenarioInput,
+        calculate_fire_scenario,
+    )
+
+    try:
+        inputs = FireScenarioInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+
+    H_design = float(payload.get("H_design_m", 60.0))
+
+    try:
+        result = calculate_fire_scenario(inputs, H_design_m=H_design)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(
+            status_code=500, detail=f"Fire water calculation failed: {e}",
+        ) from e
+
+    response = result.model_dump()
+    # Конвертируем dataclass-ссылки в dict
+    response["references"] = [
+        {
+            "code": r.regulation_code,
+            "section": r.section,
+            "purpose": r.purpose,
+            "url": r.url,
+        }
+        for r in result.references
+    ]
+    response["_signature"] = {
+        "studio": "INSERVO Studio · Студия интеграции умных решений Константина Морозова",
+        "watermark": "K.M. © 2026",
+    }
+    return response
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 23: Water supply (СП 30 / СП 31)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.post("/water/demand", tags=["water_supply"])
+def calculate_water_demand_endpoint(payload: dict) -> dict:
+    """Расчёт водопотребления по СП 30.13330.2020 + СП 31.13330.2021.
+
+    Принимает WaterScenarioInput, возвращает WaterDemandResult с раздельными
+    расходами ХВС/ГВС/полива и суммарными показателями.
+    """
+    from pump_calculator.water_supply import (
+        WaterScenarioInput,
+        calc_water_demand,
+        sizing_water_station,
+    )
+
+    try:
+        inputs = WaterScenarioInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+
+    try:
+        demand = calc_water_demand(inputs)
+        station = sizing_water_station(inputs, demand)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
+        raise HTTPException(
+            status_code=500, detail=f"Water calculation failed: {e}",
+        ) from e
+
+    response = {
+        "demand": demand.model_dump(),
+        "station": station.model_dump(),
+        "_signature": {
+            "studio": "INSERVO Studio",
+            "watermark": "K.M. © 2026",
+        },
+    }
+    return response
+
+
+@app.get("/water/norms", tags=["water_supply"])
+def list_water_norms() -> dict:
+    """Список норм потребления по типам зданий (СП 30 прил. А)."""
+    from pump_calculator.water_supply.demand import NORMS_LITERS_PER_DAY
+
+    return {
+        "count": len(NORMS_LITERS_PER_DAY),
+        "norms": NORMS_LITERS_PER_DAY,
+        "source": "СП 30.13330.2020 прил. А.2 + прил. Б",
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Регистр нормативов (для UI-энциклопедии)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.get("/regulations", tags=["regulations"])
+def list_regulations(category: str | None = None) -> dict:
+    """Список действующих нормативов (СП/ГОСТ/ТР ТС/ФЗ), на которых
+    базируется калькулятор.
+
+    Используется UI-энциклопедией для отображения «нормативной карты».
+    """
+    from pump_calculator.regulations import (
+        ALL_REGULATIONS,
+        list_regulations_by_category,
+    )
+
+    if category:
+        regs = list_regulations_by_category(category)
+    else:
+        regs = list(ALL_REGULATIONS.values())
+
+    return {
+        "count": len(regs),
+        "category_filter": category,
+        "regulations": [
+            {
+                "code": r.code,
+                "title": r.title,
+                "edition": r.edition,
+                "in_force_from": r.in_force_from,
+                "superseded_by": r.superseded_by,
+                "url_official": r.url_official,
+                "scope": r.scope,
+                "category": r.category,
+            }
+            for r in regs
+        ],
+    }
+
+
+@app.get("/regulations/{code}", tags=["regulations"])
+def get_regulation_by_code(code: str) -> dict:
+    """Получить норматив по коду (например 'SP_32' или 'СП 32.13330.2018')."""
+    from pump_calculator.regulations import get_regulation
+
+    reg = get_regulation(code)
+    if reg is None:
+        raise HTTPException(status_code=404, detail=f"Regulation not found: {code}")
+    return {
+        "code": reg.code,
+        "title": reg.title,
+        "edition": reg.edition,
+        "in_force_from": reg.in_force_from,
+        "superseded_by": reg.superseded_by,
+        "url_official": reg.url_official,
+        "scope": reg.scope,
+        "category": reg.category,
+    }
