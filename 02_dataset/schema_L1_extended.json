@@ -1,0 +1,187 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_description": "Расширенная схема L1+L2 полей опросника КНС/ЛОС. Извлечена из 50+ реальных опросных листов 2024-2026 (Терра-Н, ППД ОМОН, Промливневка ATEX, M70098 морской, СТО Газпром SAP/R3, ОАО ПК Новые Решения и др).",
+  "_engineer_note": "3 уровня детализации: L0 (минимум, текущий wizard), L1 (типовой промышленный), L2 (премиум-корпоративный — Газпром/Роснефть). Для каждого поля указан default и источник.",
+  "levels": {
+    "L0": "Минимум — Q, dH, L, wastewater_type. Уже работает.",
+    "L1": "Типовой промышленный (60+ полей) — уровень опросника М70098, ОАО ПК Новые Решения.",
+    "L2": "Премиум-корпоративный (150+ полей) — уровень СТО Газпром SAP/R3 (PLC ABB AC500, HART 4-20мА, климат -47°C)."
+  },
+  "fields": {
+    "_section_hydraulics": {
+      "_label": "1. Гидравлика и трасса",
+      "Q_m3h": {"L0": true, "type": "float", "unit": "м³/ч", "required": true},
+      "Q_peak_m3h": {"L1": true, "type": "float", "unit": "м³/ч", "default": null, "note": "Пиковый Q (отдельно от среднего). Источник: РВБ Кубань КНС-10.1 (Q=62/3045 — двухрежимная)."},
+      "Q_peak_duration_min": {"L1": true, "type": "int", "unit": "мин", "default": null},
+      "Q_lpm": {"L0": true, "type": "float", "unit": "л/мин", "alt_unit_for": "Q_m3h", "note": "Альтернативный ввод. См. кейс 4 КНС с измельчителем — клиент написал 'л/м'."},
+      "Q_avg_l_s": {"L1": true, "type": "float", "unit": "л/с", "default": null, "note": "Средний расход (для расчётов годового объёма)."},
+      "dH_m": {"L0": true, "type": "float", "unit": "м", "default": 5, "note": "Полный требуемый напор насоса"},
+      "dz_geodetic_m": {"L1": true, "type": "float", "unit": "м", "default": null, "note": "Только геодезическая разница высот, без потерь. Источник: Терра-Н КНС-3 (Δz=5,6 м, H=5 м — энергопарадокс)."},
+      "L_m": {"L0": true, "type": "float", "unit": "м", "default": 50},
+      "H_residual_min_m": {"L1": true, "type": "float", "unit": "м", "default": 2.0, "note": "Минимальное остаточное давление в точке выпуска"},
+      "pipe_existing": {"L1": true, "type": "bool", "default": false, "note": "Труба уже смонтирована? Если да — не оптимизировать D. Источник: Терра-Н КНС-3 (вопрос инженера)."},
+      "D_pressure_user_mm": {"L1": true, "type": "float", "unit": "мм", "default": null, "note": "Заказчик указал диаметр напорной трубы"},
+      "pipe_material": {"L1": true, "type": "enum", "values": ["ПЭ100_SDR17", "Polycorr", "КОРСИС", "HOBAS", "ВЧШГ_PN16", "сталь", "AISI304", "ПВХ"], "default": "ПЭ100_SDR17"},
+      "regime": {"L1": true, "type": "enum", "values": ["continuous_24_7", "shift", "impulse", "seasonal"], "default": "continuous_24_7", "note": "Источник: ЮМИ Групп бриф, Симферополь склад 'порционный сброс'."}
+    },
+    "_section_wastewater": {
+      "_label": "2. Стоки",
+      "wastewater_type": {"L0": true, "type": "enum", "values": ["domestic", "drainage", "industrial", "clean_water", "fire_protection", "landfill_leachate", "industrial_oily", "combined_after_treatment"], "default": "domestic", "note": "Расширенный список с фильтратом ТКО (Терра-Н), промливнёвкой с нефтью (Q=132 ATEX) и смешанными после очистки (РВБ Кубань)."},
+      "lab_analysis_available": {"L1": true, "type": "bool", "default": false, "note": "Источник: ЮМИ Групп бриф."},
+      "ph_value": {"L1": true, "type": "float", "default": null, "note": "Для агрессивной среды (фильтрат, промстоки)"},
+      "suspended_solids_mg_l": {"L1": true, "type": "float", "default": null},
+      "oil_products_mg_l": {"L1": true, "type": "float", "default": null},
+      "bod5_mg_l": {"L1": true, "type": "float", "default": null},
+      "cod_mg_l": {"L1": true, "type": "float", "default": null},
+      "discharge_type": {"L1": true, "type": "enum", "values": ["city_sewer", "fishery_water", "natural_water", "evaporation_pond", "reuse", "rejief"], "default": "city_sewer", "note": "Точка сброса — определяет требуемые ПДК. Источник: Приказ МСХ №552, ПП №728, ЮМИ Групп бриф."}
+    },
+    "_section_pumps_motor": {
+      "_label": "3. Насосы и двигатель",
+      "n_pumps_total_override": {"L1": true, "type": "int", "default": null, "note": "Перебить дефолтное 1+1/2+1"},
+      "reserve_offsite": {"L1": true, "type": "bool", "default": false, "note": "Резерв на складе, не в КНС. Источник: Промливневка Q=132 ATEX (3 насоса: 2+1, причём 1 на складе)."},
+      "atex_required": {"L1": true, "type": "bool", "default": false, "note": "Требуется взрывозащита по ПУЭ. Источник: Промливневка Q=132 (B-1а / IIB-T3)."},
+      "atex_zone": {"L1": true, "type": "enum", "values": ["B-1a", "B-1g", "B-1b", "Z1", "Z2"], "default": null},
+      "atex_temperature_class": {"L2": true, "type": "enum", "values": ["T1","T2","T3","T4","T5","T6"], "default": "T3"},
+      "voltage_v": {"L1": true, "type": "int", "values": [220, 380, 400, 500, 660], "default": 380},
+      "ip_class_required": {"L1": true, "type": "enum", "values": ["IP54", "IP55", "IP65", "IP66", "IP68"], "default": "IP68"},
+      "motor_protection_internal": {"L1": true, "type": "bool", "default": true, "note": "Встроенный датчик перегрева (PTC). Источник: М70098."},
+      "leak_protection_signal": {"L1": true, "type": "bool", "default": true, "note": "Сигнализация внутренних протечек."},
+      "cable_length_pump_to_cabinet_min_m": {"L1": true, "type": "int", "default": 10, "note": "≥20 м для М70098."},
+      "max_starts_per_hour": {"L1": true, "type": "int", "default": 10, "note": "Допустимое число пусков в час (зависит от мощности). СП 32 §6.5."}
+    },
+    "_section_corpus": {
+      "_label": "4. Корпус КНС",
+      "corpus_material": {"L1": true, "type": "enum", "values": ["pe", "pp", "glass", "steel_aisi304", "steel_aisi316", "concrete"], "default": "pe"},
+      "corpus_wall_thickness_min_mm": {"L1": true, "type": "float", "default": 12, "note": "Для крупных промышленных ≥20 мм. Источник: М70098."},
+      "D_corpus_override_mm": {"L1": true, "type": "float", "default": null, "note": "Заказчик задал диаметр. Источник: Промливневка Q=132 (Ø3000 заказчиком)."},
+      "ballast_concrete_required": {"L1": true, "type": "bool", "default": false, "note": "Пригруз бетоном при высоком УГВ. Источник: М70098 (УГВ=уровень моря)."},
+      "ugv_below_bottom_m": {"L1": true, "type": "float", "default": null, "note": "Расстояние от дна корпуса до УГВ. Если <1 м — нужен пригруз."},
+      "thermal_insulation": {"L1": true, "type": "bool", "default": false, "note": "Утепление корпуса (для Сибири/Севера)."},
+      "insulated_top_lid": {"L1": true, "type": "bool", "default": false},
+      "ladder_material": {"L1": true, "type": "enum", "values": ["StZn", "AISI304", "AISI316", "стеклопластик"], "default": "StZn"},
+      "ladder_platform_required": {"L1": true, "type": "bool", "default": false, "note": "Промежуточная площадка через 6 м (СП 12-04-2002). Если корпус >9 м."},
+      "anchor_points_for_height_work": {"L1": true, "type": "bool", "default": false},
+      "trash_basket_material": {"L1": true, "type": "enum", "values": ["AISI304", "AISI316", "Ст3", "ПП"], "default": "AISI304"}
+    },
+    "_section_cabinet_plc": {
+      "_label": "5. Шкаф управления и автоматика",
+      "cabinet_climate": {"L1": true, "type": "enum", "values": ["U1", "UHL1", "M1", "UHL_M1"], "default": "UHL1", "note": "M1 для морских объектов."},
+      "cabinet_material": {"L1": true, "type": "enum", "values": ["painted_steel", "stainless_steel"], "default": "painted_steel"},
+      "anti_vandal_cabinet": {"L1": true, "type": "bool", "default": false},
+      "ip_cabinet": {"L1": true, "type": "enum", "values": ["IP44", "IP54", "IP55", "IP65", "IP66"], "default": "IP54"},
+      "power_inputs": {"L1": true, "type": "enum", "values": ["single", "dual_with_AVR"], "default": "single", "note": "Двойной с АВР для I-категории. Источник: РВБ Кубань КНС-9, СТО Газпром."},
+      "reliability_category": {"L1": true, "type": "enum", "values": ["I", "II", "III"], "default": "II"},
+      "grounding_system": {"L1": true, "type": "enum", "values": ["TN-C", "TN-S", "TN-C-S", "TT", "IT"], "default": "TN-C-S"},
+      "start_method": {"L1": true, "type": "enum", "values": ["direct", "star_delta", "soft_start", "VFD"], "default": "soft_start", "note": "Direct для ≤5,5 кВт; VFD для регулирования."},
+      "frequency_drive": {"L1": true, "type": "enum", "values": ["per_pump", "common", "none"], "default": "none"},
+      "plc_required": {"L1": true, "type": "bool", "default": false},
+      "plc_brand_required": {"L2": true, "type": "enum", "values": ["any", "ABB_AC500", "Siemens_S7", "Schneider_M580", "Овен"], "default": "any", "note": "Газпром требует ABB AC500."},
+      "ups_required": {"L1": true, "type": "bool", "default": false},
+      "rain_canopy": {"L1": true, "type": "bool", "default": false},
+      "dispatching_protocol": {"L1": true, "type": "enum", "values": ["none", "GSM", "GPRS", "Modbus_RTU", "Modbus_TCP", "Ethernet_TCPIP", "OPC_UA", "Орс2710"], "default": "none"},
+      "code_ownership": {"L2": true, "type": "enum", "values": ["closed", "open_source_with_comments"], "default": "closed", "note": "Газпром требует исходный код ПЛК с комментариями."},
+      "signal_protocol_kip": {"L2": true, "type": "enum", "values": ["digital_only", "4-20mA", "4-20mA_HART", "Profibus", "Profinet"], "default": "4-20mA"}
+    },
+    "_section_environment": {
+      "_label": "6. Окружающая среда",
+      "region_city": {"L1": true, "type": "string", "default": null, "note": "Из БД 36 городов (см. storm_research_raw/02_climate_db_36_cities.json)"},
+      "temperature_min_c": {"L1": true, "type": "float", "default": -10},
+      "temperature_max_c": {"L1": true, "type": "float", "default": 35},
+      "temperature_extreme_min_c": {"L2": true, "type": "float", "default": -40, "note": "Для северных объектов до -47°C (СТО Газпром Ямал)."},
+      "temperature_extreme_max_c": {"L2": true, "type": "float", "default": 48},
+      "snow_load_zone": {"L2": true, "type": "enum", "values": ["I", "II", "III", "IV", "V", "VI", "VII"], "default": "III"},
+      "wind_zone": {"L2": true, "type": "enum", "values": ["I", "II", "III", "IV", "V"], "default": "II"},
+      "seismic_magnitude": {"L1": true, "type": "int", "min": 0, "max": 9, "default": 5, "note": "ОСР-2015 СП 14.13330"},
+      "soil_type": {"L1": true, "type": "enum", "values": ["sand", "sandy_loam", "clay_loam", "clay_heavy", "rock", "permafrost"], "default": "sandy_loam"},
+      "freezing_depth_m": {"L1": true, "type": "float", "default": null, "note": "Для глубины заложения труб."},
+      "freezing_water_table_m": {"L1": true, "type": "float", "default": null}
+    },
+    "_section_installation": {
+      "_label": "7. Монтаж и площадка",
+      "installation_environment": {"L1": true, "type": "enum", "values": ["lawn", "road", "parking", "indoor", "underwater"], "default": "lawn"},
+      "underground_or_skid": {"L1": true, "type": "enum", "values": ["underground", "aboveground_skid", "pavilion"], "default": "underground"},
+      "pavilion_required": {"L1": true, "type": "bool", "default": false},
+      "crane_type": {"L1": true, "type": "enum", "values": ["none", "manual_tally", "electric_hoist"], "default": "manual_tally"},
+      "available_power_kw": {"L1": true, "type": "float", "default": null, "note": "Доступная мощность сети. Источник: ЮМИ Групп бриф."},
+      "installed_power_limit_kw": {"L1": true, "type": "float", "default": null, "note": "Лимит установленной мощности от ТУ. Источник: Экотехнопарк Крым (КНС фильтрат лимит 5 кВт)."}
+    },
+    "_section_documentation": {
+      "_label": "8. Документация и поставка",
+      "documentation_set": {"L1": true, "type": "enum", "values": ["standard", "premium", "gazprom_corporate"], "default": "standard"},
+      "delivery_format_3d": {"L2": true, "type": "array", "values": ["dwg", "ifc", "sat", "stp"], "default": []},
+      "warranty_months": {"L1": true, "type": "int", "default": 12, "note": "12 для стандарта, 24 для МО, 60 для Газпром."},
+      "certificates_required": {"L1": true, "type": "array", "values": ["TR_TS_010", "ISO_9001", "ISO_14001", "ISO_45001", "EAC", "RU_REGISTRY"], "default": ["TR_TS_010", "EAC"]},
+      "ru_registry_only": {"L1": true, "type": "bool", "default": false, "note": "Только из реестра Минпромторг РФ (gisp.gov.ru). Для 44/223-ФЗ."}
+    },
+    "_section_storm_specific": {
+      "_label": "9. Ливневая специфика (для Phase 18)",
+      "area_total_ha": {"L1": true, "type": "float", "default": null, "note": "Площадь водосбора"},
+      "surface_breakdown": {"L1": true, "type": "object", "schema": {"roof_ha": "float", "asphalt_ha": "float", "concrete_ha": "float", "lawn_ha": "float", "gravel_ha": "float"}},
+      "period_P_year": {"L1": true, "type": "int", "values": [1, 2, 3, 5, 10], "default": 1, "note": "Период повторяемости — СП 32 табл.9"},
+      "snow_clearance_pct": {"L1": true, "type": "float", "default": 5, "note": "F_y/F для талых вод"},
+      "selective_treatment": {"L1": true, "type": "bool", "default": true, "note": "Селективная очистка только 70% годового стока (СП 32 §7.5)"}
+    }
+  },
+  "validations": [
+    {
+      "id": "V1_velocity",
+      "rule": "Q / A_pipe_internal >= 1.0 m/s",
+      "severity": "warning_critical",
+      "message": "Скорость в напорной трубе ниже самоочищающейся. Труба заилится за 6-12 месяцев.",
+      "action_options": [
+        "Увеличить Q до Q_min(D) = 12.6 м³/ч для текущего D",
+        "Уменьшить D до D_max(Q) = 50 мм"
+      ],
+      "source": "СП 32.13330 §5.4 + Терра-Н КНС-2/3 (письмо инженера)"
+    },
+    {
+      "id": "V2_energy_paradox",
+      "rule": "dH_m > dz_geodetic_m",
+      "severity": "error_block_calculation",
+      "message": "Энергетический парадокс — H насоса (X м) меньше геодезической разницы высот (Y м). Вода не дойдёт до конца трубы.",
+      "source": "Терра-Н КНС-3 (H=5 < Δz=5,6)"
+    },
+    {
+      "id": "V3_head_deficit",
+      "rule": "dH_m >= dz_geodetic_m + safe_friction(L,D,Q) + H_residual_min",
+      "severity": "warning",
+      "message": "Дефицит напора N м, расчётный минимум M м.",
+      "source": "Bernoulli equation"
+    },
+    {
+      "id": "V4_BEP_proximity",
+      "rule": "0.5 <= Q_design / Q_BEP <= 1.2",
+      "severity": "warning",
+      "message": "Q вне зоны эффективности (за пределами 50%-120% Q_BEP). Рециркуляция/износ.",
+      "source": "ISO9906 + Phase 8.5 §15"
+    },
+    {
+      "id": "V5_wastewater_material",
+      "rule": "Если wastewater_type=landfill_leachate или industrial_oily — фильтровать насосы по material_compat: SiC/SiC уплотнение, нерж 316L или дуплекс",
+      "severity": "filter",
+      "message": "Для агрессивных стоков (фильтрат ТКО/нефтесодержащие) обычные чугунные не подходят.",
+      "source": "Терра-Н фильтрат + Промливневка ATEX"
+    },
+    {
+      "id": "V6_atex_filter",
+      "rule": "Если atex_required=true — оставлять только насосы с available_ru.atex_class != null",
+      "severity": "filter",
+      "source": "Промливневка Q=132 ATEX"
+    },
+    {
+      "id": "V7_power_limit",
+      "rule": "Если installed_power_limit_kw указан — фильтровать насосы по P_kW × n_рабочих <= лимит",
+      "severity": "filter",
+      "message": "Превышен лимит установленной мощности от ТУ.",
+      "source": "Экотехнопарк Крым (КНС фильтрат лимит 5 кВт)"
+    },
+    {
+      "id": "V8_ladder_safety",
+      "rule": "Если corpus_height_m > 6 — требуется промежуточная площадка",
+      "severity": "advisory",
+      "message": "СП 12-04-2002 требует промежуточную площадку лестницы через 6 м.",
+      "source": "Терра-Н КНС-2 (L=11 м без площадки)"
+    }
+  ]
+}
