@@ -62,3 +62,15 @@ def get_mr(city: str) -> int | None:
 def get_climate_params(city: str) -> dict | None:
     """Все параметры одной выборкой."""
     return get_city(city)
+
+
+def get_gamma(city: str, default: float = 1.54) -> float:
+    """γ показатель степени по табл. Б.4 СП 32 §6.2.4 (Phase 18.2).
+
+    Юг ЕТР, Кавказ, Крым, Дальний Восток (приморский климат): γ=1.82
+    Центр ЕТР, Поволжье, Урал, Сибирь, Северо-Запад: γ=1.54
+    """
+    c = get_city(city)
+    if c is None:
+        return default
+    return c.get("gamma", default)

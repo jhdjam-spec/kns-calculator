@@ -54,18 +54,13 @@ class TestVbdEkaterinburg:
         assert "2012" in result.formula_ref
 
 
-@pytest.mark.skip(
-    reason=(
-        "Phase 18.2: требуется региональная γ_южный=1.82 для Краснодара/Анапы. "
-        "Сейчас расчёт занижен на ~30% (γ=1.54 вместо 1.82 даёт меньшее A). "
-        "Добавить gamma в climate_db_36_cities.json по СП 32 §6.2.4."
-    )
-)
 class TestUtashAsfaltMonopaved:
     """Уташ ИБИОКС — F=5 га моно-асфальт, Q_r ≈ 974 л/с.
 
     Источник: reference_kns_promlivnevka_q132_atex.md.
-    Анапа: q20=110 л/с·га (юг РФ).
+    Анапа: q20=95, n=0.72, mr=75, γ=1.82 (юг ЕТР).
+    Промышленный объект → P=2 (СП 32 §6.6).
+    Phase 18.2: проходит ±15% после добавления γ в БД и P=2.
     """
 
     @pytest.fixture
@@ -74,7 +69,7 @@ class TestUtashAsfaltMonopaved:
             sp_revision="SP_32_2012",
             region_city="Анапа",
             surfaces=SurfaceBreakdown(asphalt_ha=5.0),
-            period_P_year=1,
+            period_P_year=2,
             pipe_total_length_m=300,
             pipe_velocity_mps=3.0,
             t_concentration_min=10.0,
@@ -128,18 +123,13 @@ class TestEkotechnoparkBelogorsky:
         )
 
 
-@pytest.mark.skip(
-    reason=(
-        "Phase 18.2: требуется региональная γ_южный=1.82 для Краснодара. "
-        "Сейчас расчёт занижен на ~22% (γ=1.54 даёт меньшее A). "
-        "Добавить gamma в climate_db_36_cities.json по СП 32 §6.2.4."
-    )
-)
 class TestRvbKubanKrasnodar:
     """РВБ Кубань Краснодар — F=7.58 га, эталон Q_r ≈ 1168 л/с.
 
     Источник: reference_rvb_kuban_industrial_park.md.
-    Краснодар: q20=100 л/с·га, n=0.71, mr=70.
+    Краснодар: q20=100 л/с·га, n=0.71, mr=70, γ=1.82 (юг ЕТР).
+    Индустриальный парк → P=2 (СП 32 §6.6).
+    Phase 18.2: проходит ±15% после добавления γ в БД и P=2.
     """
 
     @pytest.fixture
@@ -152,7 +142,7 @@ class TestRvbKubanKrasnodar:
                 asphalt_ha=3.96,
                 lawn_ha=0.81,
             ),
-            period_P_year=1,
+            period_P_year=2,
             pipe_total_length_m=500,
             pipe_velocity_mps=3.0,
             t_concentration_min=10.0,

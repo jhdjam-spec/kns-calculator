@@ -23,8 +23,11 @@ from .models import (
 from .regions import get_climate_params
 from .surfaces import calc_z_mid, surfaces_from_breakdown
 
-# γ показатель степени по табл. Б.4 СП 32. Дефолт для центральной части РФ.
-# Для южной — 1.54, для дальневосточной — 1.82. Уточнить по региону.
+# γ показатель степени по табл. Б.4 СП 32 §6.2.4.
+# Phase 18.2 (2026-05-08): γ берётся из climate_db_36_cities.json (поле "gamma"),
+# для городов без поля используется этот fallback (центральная часть РФ).
+# - Юг ЕТР, Кавказ, Крым, Дальний Восток (приморский климат): γ=1.82
+# - Центр ЕТР, Поволжье, Урал, Сибирь, Северо-Запад: γ=1.54
 _GAMMA_DEFAULT = 1.54
 
 
@@ -64,9 +67,11 @@ def calculate_peak_flow(inputs: StormInput) -> tuple[PeakFlow, dict]:
     q20 = region["q20_l_s_ha"]
     n = region["n"]
     mr = region["mr"]
+    # Phase 18.2: γ читается из БД, fallback на 1.54 (центральная РФ).
+    gamma = region.get("gamma", _GAMMA_DEFAULT)
 
     # Параметры
-    A = calc_A(q20, n, inputs.period_P_year, mr)
+    A = calc_A(q20, n, inputs.period_P_year, mr, gamma=gamma)
     surfaces = surfaces_from_breakdown(inputs.surfaces)
     Z_mid, F_total_ha = calc_z_mid(surfaces, inputs.sp_revision)
 
