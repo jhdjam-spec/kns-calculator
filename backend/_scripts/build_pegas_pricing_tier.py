@@ -23,37 +23,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 DS = ROOT / "02_dataset"
 
-# Сегмент по линейке PEGAS (из их официального позиционирования + по уровню цен)
+# ВКЛЮЧАЕМ только линейки, имеющие отношение к КНС/насосам.
+# Септики, жироуловители, кессоны, погреба, бассейны — НЕ берём в расчёт
+# (по требованию: только КНС и всё что касается насосов).
 LINE_TO_SEGMENT: dict[str, str] = {
-    "pegas_lite": "budget",            # минимум, для дачи
-    "pegas_ekonom": "budget",
-    "pegas_base": "standard",
-    "pegas_premium": "premium",        # с принудительной аэрацией
-    "pegas_s_65": "premium",           # 65% производительность по нагрузке
-    "pegas_pro": "premium",            # промышленные большие 20+ м³/сут
-    "pegas_kns": "standard",           # КНС
-    "pegas_grease_traps": "standard",  # жироуловители
-    "pegas_tanks_accumulator": "budget",
-    "pegas_caissons": "standard",
-    "pegas_pogreba": "standard",
-    "pegas_pools": "premium",          # бассейны
+    "pegas_kns": "standard",            # КНС стеклопластиковые корпуса
+    "pegas_pro": "premium",             # промышленные ЛОС с насосной частью 20+ м³/сут
+    "pegas_tanks_accumulator": "budget",  # накопительные ёмкости (часто нужны как буфер для КНС)
 }
 
 # Категория продукта (для навигации в калькуляторе)
 LINE_TO_CATEGORY: dict[str, str] = {
-    "pegas_lite": "septic_los",
-    "pegas_ekonom": "septic_los",
-    "pegas_base": "septic_los",
-    "pegas_premium": "septic_los_aerated",
-    "pegas_s_65": "septic_los_aerated",
-    "pegas_pro": "industrial_los",
     "pegas_kns": "kns_corpus",
-    "pegas_grease_traps": "grease_trap",
+    "pegas_pro": "industrial_los_with_pumps",
     "pegas_tanks_accumulator": "accumulator_tank",
-    "pegas_caissons": "caisson_well",
-    "pegas_pogreba": "underground_cellar",
-    "pegas_pools": "pool",
 }
+
+# Линейки, ИСКЛЮЧЁННЫЕ из расчёта (септики/жироуловители/прочее без насосов):
+# pegas_lite, pegas_ekonom, pegas_base, pegas_premium, pegas_s_65,
+# pegas_grease_traps, pegas_caissons, pegas_pogreba, pegas_pools.
 
 
 def percentile(sorted_values: list[float], pct: float) -> float:
@@ -78,19 +66,29 @@ def build_tier(inflation: float = 1.20) -> dict:
     by_segment: dict[str, list[float]] = {"budget": [], "standard": [], "premium": []}
 
     for line_name, line in pegas.get("lines", {}).items():
+        # Пропускаем линейки, не относящиеся к КНС/насосам
+        if line_name not in LINE_TO_SEGMENT:
+            continue
+
         models = line.get("models", [])
-        prices_2023 = [
-            m["price_rub_2023"] for m in models
-            if m.get("price_rub_2023") and m["price_rub_2023"] > 0
-        ]
+        # PEGAS использует разные поля цены: price_rub_2023 (для большинства)
+        # и price_rub_2023_corpus_only (для pegas_kns — только корпус, без насосов).
+        prices_2023 = []
+        for m in models:
+            p = (
+                m.get("price_rub_2023")
+                or m.get("price_rub_2023_corpus_only")
+            )
+            if p and p > 0:
+                prices_2023.append(p)
         if not prices_2023:
             continue
 
         prices_2026 = [round(p * inflation) for p in prices_2023]
         prices_sorted = sorted(prices_2026)
 
-        segment = LINE_TO_SEGMENT.get(line_name, "standard")
-        category = LINE_TO_CATEGORY.get(line_name, "other")
+        segment = LINE_TO_SEGMENT[line_name]
+        category = LINE_TO_CATEGORY[line_name]
 
         tiers[line_name] = {
             "category": category,

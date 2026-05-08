@@ -6,73 +6,8 @@
   "_description": "Референсные ценовые коридоры от крупного российского конкурента (PEGAS Engineering, 12 линеек, 2023 prices × inflation). Используется для калибровки price_segment в калькуляторе.",
   "_engineer_note": "ВАЖНО: PEGAS — конкурент, наши цены могут быть на 5-15% выше (брендовая премия Серво-Юг как инжиниринг + фирменное обслуживание). Используйте median+15% как ориентир для standard, q75+10% для premium.",
   "tiers_by_line": {
-    "pegas_lite": {
-      "category": "septic_los",
-      "segment": "budget",
-      "models_count": 3,
-      "priced_count": 3,
-      "min_rub_2026": 91200,
-      "q25_rub_2026": 97200,
-      "median_rub_2026": 103200,
-      "q75_rub_2026": 111000,
-      "max_rub_2026": 118800,
-      "mean_rub_2026": 104400,
-      "stdev_rub_2026": 13839
-    },
-    "pegas_ekonom": {
-      "category": "septic_los",
-      "segment": "budget",
-      "models_count": 4,
-      "priced_count": 4,
-      "min_rub_2026": 92400,
-      "q25_rub_2026": 96900,
-      "median_rub_2026": 102000,
-      "q75_rub_2026": 107400,
-      "max_rub_2026": 112800,
-      "mean_rub_2026": 102300,
-      "stdev_rub_2026": 8839
-    },
-    "pegas_base": {
-      "category": "septic_los",
-      "segment": "standard",
-      "models_count": 18,
-      "priced_count": 18,
-      "min_rub_2026": 124800,
-      "q25_rub_2026": 143100,
-      "median_rub_2026": 166200,
-      "q75_rub_2026": 188100,
-      "max_rub_2026": 295200,
-      "mean_rub_2026": 179867,
-      "stdev_rub_2026": 51753
-    },
-    "pegas_premium": {
-      "category": "septic_los_aerated",
-      "segment": "premium",
-      "models_count": 5,
-      "priced_count": 5,
-      "min_rub_2026": 282000,
-      "q25_rub_2026": 300000,
-      "median_rub_2026": 330000,
-      "q75_rub_2026": 358800,
-      "max_rub_2026": 406800,
-      "mean_rub_2026": 335520,
-      "stdev_rub_2026": 49445
-    },
-    "pegas_s_65": {
-      "category": "septic_los_aerated",
-      "segment": "premium",
-      "models_count": 9,
-      "priced_count": 9,
-      "min_rub_2026": 80400,
-      "q25_rub_2026": 114000,
-      "median_rub_2026": 189600,
-      "q75_rub_2026": 236400,
-      "max_rub_2026": 333600,
-      "mean_rub_2026": 186933,
-      "stdev_rub_2026": 86479
-    },
     "pegas_pro": {
-      "category": "industrial_los",
+      "category": "industrial_los_with_pumps",
       "segment": "premium",
       "models_count": 14,
       "priced_count": 14,
@@ -84,18 +19,18 @@
       "mean_rub_2026": 841714,
       "stdev_rub_2026": 545584
     },
-    "pegas_grease_traps": {
-      "category": "grease_trap",
+    "pegas_kns": {
+      "category": "kns_corpus",
       "segment": "standard",
-      "models_count": 33,
-      "priced_count": 33,
-      "min_rub_2026": 11100,
-      "q25_rub_2026": 22800,
-      "median_rub_2026": 106800,
-      "q75_rub_2026": 225000,
-      "max_rub_2026": 698400,
-      "mean_rub_2026": 160409,
-      "stdev_rub_2026": 175123
+      "models_count": 12,
+      "priced_count": 12,
+      "min_rub_2026": 120000,
+      "q25_rub_2026": 191100,
+      "median_rub_2026": 266400,
+      "q75_rub_2026": 337800,
+      "max_rub_2026": 470400,
+      "mean_rub_2026": 272300,
+      "stdev_rub_2026": 112630
     },
     "pegas_tanks_accumulator": {
       "category": "accumulator_tank",
@@ -109,85 +44,40 @@
       "max_rub_2026": 1184400,
       "mean_rub_2026": 414300,
       "stdev_rub_2026": 379604
-    },
-    "pegas_caissons": {
-      "category": "caisson_well",
-      "segment": "standard",
-      "models_count": 6,
-      "priced_count": 6,
-      "min_rub_2026": 46200,
-      "q25_rub_2026": 58350,
-      "median_rub_2026": 78300,
-      "q75_rub_2026": 87900,
-      "max_rub_2026": 106200,
-      "mean_rub_2026": 75300,
-      "stdev_rub_2026": 22653
-    },
-    "pegas_pogreba": {
-      "category": "underground_cellar",
-      "segment": "standard",
-      "models_count": 6,
-      "priced_count": 6,
-      "min_rub_2026": 145200,
-      "q25_rub_2026": 177300,
-      "median_rub_2026": 297000,
-      "q75_rub_2026": 463500,
-      "max_rub_2026": 576000,
-      "mean_rub_2026": 328600,
-      "stdev_rub_2026": 182342
-    },
-    "pegas_pools": {
-      "category": "pool",
-      "segment": "premium",
-      "models_count": 52,
-      "priced_count": 29,
-      "min_rub_2026": 124800,
-      "q25_rub_2026": 200400,
-      "median_rub_2026": 291600,
-      "q75_rub_2026": 367200,
-      "max_rub_2026": 532800,
-      "mean_rub_2026": 292883,
-      "stdev_rub_2026": 109321
     }
   },
   "tiers_by_segment": {
     "budget": {
-      "samples_count": 19,
+      "samples_count": 12,
       "min_rub_2026": 86400,
-      "q25_rub_2026": 104400,
-      "median_rub_2026": 148800,
-      "q75_rub_2026": 248100,
+      "q25_rub_2026": 164550,
+      "median_rub_2026": 213900,
+      "q75_rub_2026": 656850,
       "max_rub_2026": 1184400,
-      "mean_rub_2026": 299684
+      "mean_rub_2026": 414300
     },
     "standard": {
-      "samples_count": 63,
-      "min_rub_2026": 11100,
-      "q25_rub_2026": 68700,
-      "median_rub_2026": 142800,
-      "q75_rub_2026": 211500,
-      "max_rub_2026": 698400,
-      "mean_rub_2026": 173881
+      "samples_count": 12,
+      "min_rub_2026": 120000,
+      "q25_rub_2026": 191100,
+      "median_rub_2026": 266400,
+      "q75_rub_2026": 337800,
+      "max_rub_2026": 470400,
+      "mean_rub_2026": 272300
     },
     "premium": {
-      "samples_count": 57,
-      "min_rub_2026": 80400,
-      "q25_rub_2026": 222000,
-      "median_rub_2026": 330000,
-      "q75_rub_2026": 458400,
+      "samples_count": 14,
+      "min_rub_2026": 402000,
+      "q25_rub_2026": 500700,
+      "median_rub_2026": 648600,
+      "q75_rub_2026": 877800,
       "max_rub_2026": 2250000,
-      "mean_rub_2026": 414695
+      "mean_rub_2026": 841714
     }
   },
   "categories_used": [
     "accumulator_tank",
-    "caisson_well",
-    "grease_trap",
-    "industrial_los",
-    "kns_corpus",
-    "pool",
-    "septic_los",
-    "septic_los_aerated",
-    "underground_cellar"
+    "industrial_los_with_pumps",
+    "kns_corpus"
   ]
 }
