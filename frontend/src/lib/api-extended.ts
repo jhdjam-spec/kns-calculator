@@ -91,12 +91,18 @@ export const projectApi = {
 
 // ─── Encyclopedia ───────────────────────────────────────────────────
 
+export interface RegulationFull {
+  code: string;
+  name: string;
+}
+
 export interface EncyclopediaTopicMeta {
   key: string;
   title: string;
   short_description: string;
   api_module: string;
   sections_count: number;
+  regulations_full?: RegulationFull[];
 }
 
 export interface EncyclopediaExample {
@@ -116,6 +122,7 @@ export interface EncyclopediaTopic {
   api_module: string;
   content_markdown: string;
   examples: EncyclopediaExample[];
+  regulations_full?: RegulationFull[];
 }
 
 export interface EncyclopediaSection {

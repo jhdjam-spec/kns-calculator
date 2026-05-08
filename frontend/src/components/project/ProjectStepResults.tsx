@@ -310,7 +310,7 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
         >
           {csvStatus === "loading"
             ? "Сборка CSV…"
-            : "📊 Спецификация BOM (CSV / Excel)"}
+            : "📊 BOM — список оборудования / спецификация (CSV / Excel)"}
         </button>
       </div>
       <div className="text-xs text-ink-500 mb-6">
@@ -460,7 +460,7 @@ function BomTable({ items }: { items: BOMItem[] }) {
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="font-display font-semibold text-ink-50">
-            Спецификация оборудования (BOM)
+            BOM — список оборудования / спецификация
           </div>
           <div className="text-xs text-ink-500 mt-0.5">
             {items.length} позиций · ориентировочные цены 2026

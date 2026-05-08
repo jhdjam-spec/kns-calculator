@@ -14,6 +14,14 @@ ENCYCLOPEDIA_DIR = PROJECT_ROOT / "02_dataset" / "_analysis" / "encyclopedia"
 
 
 @dataclass(frozen=True)
+class RegulationFull:
+    """Полное название норматива для отображения в UI энциклопедии."""
+
+    code: str    # "СП 8.13130.2020"
+    name: str    # "Источники наружного противопожарного водоснабжения"
+
+
+@dataclass(frozen=True)
 class EncyclopediaTopic:
     """Описание одной темы энциклопедии."""
 
@@ -23,6 +31,7 @@ class EncyclopediaTopic:
     file: str               # Имя markdown-файла
     api_module: str         # Связанный backend-модуль (для кросс-ссылок)
     sections_count: int     # Сколько разделов внутри (для UI)
+    regulations_full: tuple[RegulationFull, ...] = ()  # Полные названия норм
 
 
 ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
@@ -30,34 +39,64 @@ ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
         key="fire",
         title="Пожарное водоснабжение",
         short_description=(
-            "Расчёт расхода и резервуаров пожаротушения по СП 8.13130 + СП 10.13130 + ФЗ-123. "
+            "Расчёт расхода и резервуаров пожаротушения. "
             "Категории зданий, степени огнестойкости, насосные станции."
         ),
         file="fire_water_encyclopedia.md",
         api_module="fire_water",
         sections_count=14,
+        regulations_full=(
+            RegulationFull("СП 8.13130.2020",
+                "Системы противопожарной защиты. Источники наружного противопожарного водоснабжения"),
+            RegulationFull("СП 10.13130.2020",
+                "Системы противопожарной защиты. Внутренний противопожарный водопровод"),
+            RegulationFull("СП 485.1311500.2020",
+                "Установки пожаротушения автоматические. Нормы и правила проектирования"),
+            RegulationFull("123-ФЗ от 22.07.2008",
+                "Технический регламент о требованиях пожарной безопасности"),
+        ),
     ),
     "water": EncyclopediaTopic(
         key="water",
         title="Хозяйственно-питьевое водоснабжение",
         short_description=(
-            "Нормы потребления СП 30/31, расчёт ВНС, скважинных водозаборов, "
+            "Нормы потребления, расчёт ВНС, скважинных водозаборов, "
             "горячей воды, повысительных станций. 21 тип объекта."
         ),
         file="water_supply_encyclopedia.md",
         api_module="water_supply",
         sections_count=15,
+        regulations_full=(
+            RegulationFull("СП 30.13330.2020", "Внутренний водопровод и канализация зданий"),
+            RegulationFull("СП 31.13330.2021", "Водоснабжение. Наружные сети и сооружения"),
+            RegulationFull("СП 399.1325800.2018",
+                "Здания и сооружения. Правила проектирования сетей водоснабжения и водоотведения"),
+            RegulationFull("СанПиН 2.1.3684-21",
+                "Санитарно-эпидемиологические требования к содержанию территорий, водоснабжению"),
+        ),
     ),
     "electrical": EncyclopediaTopic(
         key="electrical",
         title="Электрика и автоматика",
         short_description=(
-            "ПУЭ 7-е + ТР ТС 004/020/012. Подбор двигателя, кабеля, автомата, "
-            "шкафов МИНИ/ОПТИ/МАКС/ATEX. Категории надёжности I/II/III."
+            "Подбор двигателя, кабеля, автомата, шкафов МИНИ/ОПТИ/МАКС/ATEX. "
+            "Категории надёжности I/II/III."
         ),
         file="electrical_automation_encyclopedia.md",
         api_module="electrical",
         sections_count=16,
+        regulations_full=(
+            RegulationFull("ПУЭ 7-е изд.", "Правила устройства электроустановок"),
+            RegulationFull("ТР ТС 004/2011", "О безопасности низковольтного оборудования"),
+            RegulationFull("ТР ТС 020/2011", "Электромагнитная совместимость технических средств"),
+            RegulationFull("ТР ТС 012/2011",
+                "О безопасности оборудования для работы во взрывоопасных средах (ATEX)"),
+            RegulationFull("ГОСТ Р 50571 (серия)", "Электроустановки низковольтные"),
+            RegulationFull("ГОСТ IEC 60034-1-2014",
+                "Машины электрические вращающиеся. Номинальные данные и характеристики"),
+            RegulationFull("СП 6.13130.2020",
+                "Системы противопожарной защиты. Электрооборудование"),
+        ),
     ),
     "hydraulics": EncyclopediaTopic(
         key="hydraulics",
@@ -69,17 +108,40 @@ ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
         file="hydraulics_physics_encyclopedia.md",
         api_module="physics_advanced",
         sections_count=17,
+        regulations_full=(
+            RegulationFull("СП 32.13330.2018", "Канализация. Наружные сети и сооружения"),
+            RegulationFull("СП 31.13330.2021",
+                "Водоснабжение. Наружные сети (§11 — гидравлический расчёт)"),
+            RegulationFull("ГОСТ 6134-2007 (ISO 9906:2012 IDT)",
+                "Насосы динамические. Методы испытаний"),
+            RegulationFull("ISO 9906:2012",
+                "Rotodynamic pumps — Hydraulic performance acceptance tests"),
+            RegulationFull("ГОСТ Р 56541-2015",
+                "Гидравлические расчёты систем водоснабжения и водоотведения"),
+        ),
     ),
     "structural": EncyclopediaTopic(
         key="structural",
         title="Корпус, прочность, климат",
         short_description=(
-            "Материалы корпусов, СП 20 (нагрузки), СП 14 (сейсмика), СП 25 (мерзлота), "
+            "Материалы корпусов, нагрузки, сейсмика, мерзлота, "
             "пригруз бетоном при УГВ. 11 производителей корпусов."
         ),
         file="corpus_structural_climate_encyclopedia.md",
         api_module="structural",
         sections_count=18,
+        regulations_full=(
+            RegulationFull("СП 20.13330.2016", "Нагрузки и воздействия (снег, ветер, грунт)"),
+            RegulationFull("СП 14.13330.2018",
+                "Строительство в сейсмических районах + ОСР-2015 (карты сейсморайонирования)"),
+            RegulationFull("СП 25.13330.2020",
+                "Основания и фундаменты на вечномёрзлых грунтах"),
+            RegulationFull("СП 131.13330.2020", "Строительная климатология"),
+            RegulationFull("СП 12-104-2002",
+                "Безопасность труда в строительстве. Лестницы, площадки"),
+            RegulationFull("СП 22.13330.2016", "Основания зданий и сооружений"),
+            RegulationFull("ISO 9969", "Классификация полимерных труб по жёсткости (SN)"),
+        ),
     ),
     "los": EncyclopediaTopic(
         key="los",
@@ -91,6 +153,20 @@ ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
         file="los_biology_ecology_encyclopedia.md",
         api_module="los",
         sections_count=21,
+        regulations_full=(
+            RegulationFull("СП 32.13330.2018 §7",
+                "Канализация. Очистные сооружения"),
+            RegulationFull("ПП РФ № 728 от 13.07.2013",
+                "Об утверждении Правил холодного водоснабжения и водоотведения"),
+            RegulationFull("ПП РФ № 644 от 29.07.2013",
+                "Правила холодного водоснабжения и водоотведения"),
+            RegulationFull("Приказ Минсельхоза РФ № 552 от 13.12.2016",
+                "Нормативы качества воды водных объектов рыбохозяйственного значения"),
+            RegulationFull("СанПиН 2.1.5.980-00",
+                "Гигиенические требования к охране поверхностных вод"),
+            RegulationFull("ИТС 10-2015",
+                "Очистка сточных вод с использованием централизованных систем (НДТ)"),
+        ),
     ),
 }
 
@@ -232,6 +308,9 @@ def list_topics() -> list[dict]:
             "short_description": t.short_description,
             "api_module": t.api_module,
             "sections_count": t.sections_count,
+            "regulations_full": [
+                {"code": r.code, "name": r.name} for r in t.regulations_full
+            ],
         }
         for t in ENCYCLOPEDIA_TOPICS.values()
     ]
@@ -275,6 +354,9 @@ def get_topic_full(topic_key: str) -> dict | None:
         "api_module": topic.api_module,
         "content_markdown": content,
         "examples": examples,
+        "regulations_full": [
+            {"code": r.code, "name": r.name} for r in topic.regulations_full
+        ],
     }
 
 

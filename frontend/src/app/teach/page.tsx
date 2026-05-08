@@ -49,14 +49,38 @@ export default function TeachPage() {
                 <a
                   key={t.key}
                   href={`/teach/${t.key}`}
-                  className="block p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
+                  className="flex flex-col p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
                 >
                   <div className="font-display font-semibold text-ink-50 group-hover:text-accent-500 transition-colors mb-2">
                     {t.title}
                   </div>
                   <div className="text-sm text-ink-400 mb-3">{t.short_description}</div>
-                  <div className="text-xs font-mono text-ink-500">
-                    {t.sections_count} разделов · модуль {t.api_module}
+
+                  {/* Полные названия норм, на которых основан раздел */}
+                  {t.regulations_full && t.regulations_full.length > 0 && (
+                    <div className="mt-2 mb-3 pt-3 border-t border-ink-800/60">
+                      <div className="text-[10px] font-mono uppercase tracking-wider text-ink-500 mb-2">
+                        Основано на нормах
+                      </div>
+                      <ul className="space-y-1.5">
+                        {t.regulations_full.slice(0, 4).map((r) => (
+                          <li key={r.code} className="text-xs leading-snug">
+                            <span className="text-accent-500/90 font-mono">{r.code}</span>
+                            <span className="text-ink-500"> — </span>
+                            <span className="text-ink-400">{r.name}</span>
+                          </li>
+                        ))}
+                        {t.regulations_full.length > 4 && (
+                          <li className="text-[11px] text-ink-500 italic">
+                            и ещё {t.regulations_full.length - 4} ↗
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="mt-auto text-xs font-mono text-ink-500">
+                    {t.sections_count} разделов
                   </div>
                 </a>
               ))}

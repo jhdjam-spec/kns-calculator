@@ -46,6 +46,24 @@ export default function TeachTopicPage() {
 
           {data && (
             <article>
+              {/* Нормы, на которых основан раздел */}
+              {data.regulations_full && data.regulations_full.length > 0 && (
+                <div className="mb-8 p-5 bg-ink-900 border border-ink-800 rounded-lg">
+                  <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-3">
+                    Раздел основан на действующих нормах
+                  </div>
+                  <ul className="space-y-2">
+                    {data.regulations_full.map((r) => (
+                      <li key={r.code} className="text-sm leading-snug">
+                        <span className="text-accent-500 font-mono">{r.code}</span>
+                        <span className="text-ink-500"> — </span>
+                        <span className="text-ink-300">{r.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* Эталонные примеры — наверху, сразу под заголовком */}
               {data.examples.length > 0 && (
                 <div className="mb-8 p-5 bg-accent-500/5 border border-accent-500/20 rounded-lg">
