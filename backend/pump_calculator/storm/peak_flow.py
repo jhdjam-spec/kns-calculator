@@ -13,21 +13,21 @@
 from __future__ import annotations
 
 import math
-from typing import Optional
 
 from .models import (
-    AnnualVolumes,
-    DesignVolumes,
     LosRecommendation,
     PeakFlow,
     StormInput,
     StormResult,
 )
 from .regions import get_climate_params
-from .surfaces import calc_psi_d_mid, calc_psi_design, calc_z_mid, surfaces_from_breakdown
+from .surfaces import calc_z_mid, surfaces_from_breakdown
 
-# γ показатель степени по табл. Б.4 СП 32. Дефолт для центральной части РФ.
-# Для южной — 1.54, для дальневосточной — 1.82. Уточнить по региону.
+# γ показатель степени по табл. Б.4 СП 32 §6.2.4.
+# Phase 18.2 (2026-05-08): γ берётся из climate_db_36_cities.json (поле "gamma"),
+# для городов без поля используется этот fallback (центральная часть РФ).
+# - Юг ЕТР, Кавказ, Крым, Дальний Восток (приморский климат): γ=1.82
+# - Центр ЕТР, Поволжье, Урал, Сибирь, Северо-Запад: γ=1.54
 _GAMMA_DEFAULT = 1.54
 
 
@@ -67,11 +67,13 @@ def calculate_peak_flow(inputs: StormInput) -> tuple[PeakFlow, dict]:
     q20 = region["q20_l_s_ha"]
     n = region["n"]
     mr = region["mr"]
+    # Phase 18.2: γ читается из БД, fallback на 1.54 (центральная РФ).
+    gamma = region.get("gamma", _GAMMA_DEFAULT)
 
     # Параметры
-    A = calc_A(q20, n, inputs.period_P_year, mr)
+    A = calc_A(q20, n, inputs.period_P_year, mr, gamma=gamma)
     surfaces = surfaces_from_breakdown(inputs.surfaces)
-    Z_mid, F_total_ha = calc_z_mid(surfaces)
+    Z_mid, F_total_ha = calc_z_mid(surfaces, inputs.sp_revision)
 
     if F_total_ha == 0:
         raise ValueError("Total area F = 0 — provide surfaces breakdown")
@@ -125,6 +127,12 @@ def calculate_full_storm(inputs: StormInput) -> StormResult:
             f"Малый расход {peak.Q_r_l_s} л/с — возможно достаточно самотёчной схемы без КНС"
         )
 
+    formula_ref_str = (
+        "СП 32.13330.2012 табл.14 (Q_r формула 8)"
+        if inputs.sp_revision == "SP_32_2012"
+        else "СП 32.13330.2018 §6.2.4 + прил. Б.2"
+    )
+
     return StormResult(
         annual=annual,
         design=design,
@@ -135,11 +143,15 @@ def calculate_full_storm(inputs: StormInput) -> StormResult:
             los_capacity_l_s_max=los_max,
             bypass_for_clean=inputs.selective_treatment,
         ),
+        sp_revision_used=inputs.sp_revision,
+        formula_ref=formula_ref_str,
+        tolerance_pct=15.0,
         warnings=warnings,
         region_data=region,
         inputs_summary={
             "city": inputs.region_city,
             "F_total_ha": round(inputs.surfaces.total_ha, 2),
             "P_year": inputs.period_P_year,
+            "sp_revision": inputs.sp_revision,
         },
     )

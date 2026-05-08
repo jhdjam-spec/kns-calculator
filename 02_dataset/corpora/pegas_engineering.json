@@ -1,0 +1,2338 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_source": "Цены ПЕГАС ИНЖИНИРИНГ.xlsx из массива КНС 2.zip",
+  "_description": "Прайс-лист PEGAS Engineering: ЛОС бытовые/промышленные, септики, КНС-корпуса, накопители, жироуловители, кессоны, погреба, купели, бассейны.",
+  "_engineer_note": "Главный конкурент Серво-Юг по бытовым ЛОС 3-200 чел. Цены 2023 года (поле price_rub_2023). Источник — официальный xlsx прайс-лист дилерам.",
+  "_competitor": "PEGAS Engineering",
+  "_brand": "PEGAS",
+  "_corpus_material": "ПП (полипропилен чешский)",
+  "_wall_thickness_typical": "8-10 мм",
+  "lines": {
+    "pegas_lite": {
+      "label": "PEGAS Lite",
+      "tier": "budget",
+      "use_case": "ИЖС, малые ЛОС с компрессором",
+      "_description": "Простая бюджетная серия 4-секционных СБО на 3-7 человек.",
+      "models": [
+        {
+          "id": "pegas-lite-pegas-lite-3",
+          "label": "PEGAS Lite 3",
+          "capacity_persons": 3,
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 180,
+          "weight_kg": 80,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 170.0
+          },
+          "dimensions_raw": "130*130*170",
+          "price_rub_2023": 76000
+        },
+        {
+          "id": "pegas-lite-pegas-lite-5",
+          "label": "PEGAS Lite 5",
+          "capacity_persons": 5,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 250,
+          "weight_kg": 90,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "130*130*200",
+          "price_rub_2023": 86000
+        },
+        {
+          "id": "pegas-lite-pegas-lite-7",
+          "label": "PEGAS Lite  7",
+          "capacity_persons": 7,
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 350,
+          "weight_kg": 95,
+          "dimensions_cm": {
+            "L_cm": 150.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "150*150*200",
+          "price_rub_2023": 99000
+        }
+      ]
+    },
+    "pegas_ekonom": {
+      "label": "PEGAS Ekonom",
+      "tier": "ultra_budget",
+      "use_case": "Сезонная эксплуатация, дача, режим выходного дня",
+      "_description": "Сверхбюджетная серия 3-секционных СБО на 3-5 человек, есть варианты 'пр' (принудительный сброс).",
+      "models": [
+        {
+          "id": "pegas-ekonom-pegas-ekonom-3",
+          "label": "PEGAS Ekonom 3",
+          "capacity_persons": 3,
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 240,
+          "weight_kg": 80,
+          "dimensions_cm": {
+            "L_cm": 100.0,
+            "W_cm": 100.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "100*100*150",
+          "price_rub_2023": 77000
+        },
+        {
+          "id": "pegas-ekonom-pegas-ekonom-3pr",
+          "label": "PEGAS Ekonom 3пр",
+          "capacity_persons": 3,
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 240,
+          "weight_kg": 85,
+          "dimensions_cm": {
+            "L_cm": 100.0,
+            "W_cm": 100.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "100*100*150",
+          "price_rub_2023": 82000
+        },
+        {
+          "id": "pegas-ekonom-pegas-ekonom-5",
+          "label": "PEGAS Ekonom 5",
+          "capacity_persons": 5,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 380,
+          "weight_kg": 90,
+          "dimensions_cm": {
+            "L_cm": 120.0,
+            "W_cm": 120.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "120*120*150",
+          "price_rub_2023": 88000
+        },
+        {
+          "id": "pegas-ekonom-pegas-ekonom-5pr",
+          "label": "PEGAS Ekonom 5пр",
+          "capacity_persons": 5,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 380,
+          "weight_kg": 95,
+          "dimensions_cm": {
+            "L_cm": 120.0,
+            "W_cm": 120.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "120*120*150",
+          "price_rub_2023": 94000
+        }
+      ]
+    },
+    "pegas_base": {
+      "label": "СБО PEGAS",
+      "tier": "base",
+      "use_case": "Базовая линейка ЛОС 3-15 чел, варианты самотечный/принудительный/LOW",
+      "_description": "Главная линейка станций биологической очистки PEGAS, 4 камеры, очистка до 98%. Серия LOW для сложных грунтов (плывун, высокий УГВ, торфяники).",
+      "models": [
+        {
+          "id": "pegas-base-pegas-3-gravity",
+          "label": "PEGAS 3",
+          "discharge_mode": "gravity",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "3-4",
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 180,
+          "power_kw": 0.08,
+          "weight_kg": 115,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 170.0
+          },
+          "dimensions_raw": "130*130*170",
+          "price_rub_2023": 104000
+        },
+        {
+          "id": "pegas-base-pegas-3low-gravity",
+          "label": "PEGAS 3low",
+          "discharge_mode": "gravity",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "3-4",
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 230,
+          "power_kw": 0.08,
+          "weight_kg": 105,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 130.0,
+            "H_cm": 120.0
+          },
+          "dimensions_raw": "200*130*120",
+          "price_rub_2023": 110000
+        },
+        {
+          "id": "pegas-base-pegas-4-gravity",
+          "label": "PEGAS 4",
+          "discharge_mode": "gravity",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "4",
+          "Q_m3sut": 0.8,
+          "salvo_discharge_l": 200,
+          "power_kw": 0.08,
+          "weight_kg": 130,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 180.0
+          },
+          "dimensions_raw": "130*130*180",
+          "price_rub_2023": 111000
+        },
+        {
+          "id": "pegas-base-pegas-5-gravity",
+          "label": "PEGAS 5",
+          "discharge_mode": "gravity",
+          "capacity_persons": 5,
+          "capacity_persons_raw": "5",
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 300,
+          "power_kw": 0.08,
+          "weight_kg": 135,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "130*130*200",
+          "price_rub_2023": 125000
+        },
+        {
+          "id": "pegas-base-pegas-5-low-gravity",
+          "label": "PEGAS 5 low",
+          "discharge_mode": "gravity",
+          "capacity_persons": 5,
+          "capacity_persons_raw": "5",
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 350,
+          "power_kw": 0.08,
+          "weight_kg": 125,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 120.0
+          },
+          "dimensions_raw": "200*150*120",
+          "price_rub_2023": 132000
+        },
+        {
+          "id": "pegas-base-pegas-7-gravity",
+          "label": "PEGAS 7",
+          "discharge_mode": "gravity",
+          "capacity_persons": 7,
+          "capacity_persons_raw": "7",
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 410,
+          "power_kw": 0.08,
+          "weight_kg": 145,
+          "dimensions_cm": {
+            "L_cm": 150.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "150*150*200",
+          "price_rub_2023": 145000
+        },
+        {
+          "id": "pegas-base-pegas-7-low-gravity",
+          "label": "PEGAS 7 low",
+          "discharge_mode": "gravity",
+          "capacity_persons": 7,
+          "capacity_persons_raw": "7",
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 460,
+          "power_kw": 0.08,
+          "weight_kg": 145,
+          "dimensions_cm": {
+            "L_cm": 230.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "230*150*200",
+          "price_rub_2023": 149000
+        },
+        {
+          "id": "pegas-base-pegas-10-gravity",
+          "label": "PEGAS 10",
+          "discharge_mode": "gravity",
+          "capacity_persons": 10,
+          "capacity_persons_raw": "10",
+          "Q_m3sut": 2,
+          "salvo_discharge_l": 560,
+          "power_kw": 0.08,
+          "weight_kg": 160,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*150*200",
+          "price_rub_2023": 196000
+        },
+        {
+          "id": "pegas-base-pegas-15-gravity",
+          "label": "PEGAS 15",
+          "discharge_mode": "gravity",
+          "capacity_persons": 15,
+          "capacity_persons_raw": "15",
+          "Q_m3sut": 3,
+          "salvo_discharge_l": 800,
+          "power_kw": 0.08,
+          "weight_kg": 240,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*200*200",
+          "price_rub_2023": 236000
+        },
+        {
+          "id": "pegas-base-pegas-3pr-pressure",
+          "label": "PEGAS 3пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "3-4",
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 180,
+          "power_kw": 0.95,
+          "weight_kg": 120,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 170.0
+          },
+          "dimensions_raw": "130*130*170",
+          "price_rub_2023": 112000
+        },
+        {
+          "id": "pegas-base-pegas-3low-pr-pressure",
+          "label": "PEGAS 3low пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "3-4",
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 230,
+          "power_kw": 0.95,
+          "weight_kg": 110,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 130.0,
+            "H_cm": 120.0
+          },
+          "dimensions_raw": "200*130*120",
+          "price_rub_2023": 120000
+        },
+        {
+          "id": "pegas-base-pegas-4pr-pressure",
+          "label": "PEGAS 4пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 4,
+          "capacity_persons_raw": "4",
+          "Q_m3sut": 0.8,
+          "salvo_discharge_l": 200,
+          "power_kw": 0.08,
+          "weight_kg": 135,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 180.0
+          },
+          "dimensions_raw": "130*130*180",
+          "price_rub_2023": 119000
+        },
+        {
+          "id": "pegas-base-pegas-5pr-pressure",
+          "label": "PEGAS 5пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 5,
+          "capacity_persons_raw": "5",
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 300,
+          "power_kw": 0.95,
+          "weight_kg": 140,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "130*130*200",
+          "price_rub_2023": 136000
+        },
+        {
+          "id": "pegas-base-pegas-5-low-pr-pressure",
+          "label": "PEGAS 5 low пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 5,
+          "capacity_persons_raw": "5",
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 350,
+          "power_kw": 0.95,
+          "weight_kg": 130,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 120.0
+          },
+          "dimensions_raw": "200*150*120",
+          "price_rub_2023": 141000
+        },
+        {
+          "id": "pegas-base-pegas-7pr-pressure",
+          "label": "PEGAS 7пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 7,
+          "capacity_persons_raw": "7",
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 410,
+          "power_kw": 0.95,
+          "weight_kg": 150,
+          "dimensions_cm": {
+            "L_cm": 150.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "150*150*200",
+          "price_rub_2023": 153000
+        },
+        {
+          "id": "pegas-base-pegas-7-low-pr-pressure",
+          "label": "PEGAS 7 low пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 7,
+          "capacity_persons_raw": "7",
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 460,
+          "power_kw": 0.95,
+          "weight_kg": 150,
+          "dimensions_cm": {
+            "L_cm": 230.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "230*150*200",
+          "price_rub_2023": 158000
+        },
+        {
+          "id": "pegas-base-pegas-10pr-pressure",
+          "label": "PEGAS 10пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 10,
+          "capacity_persons_raw": "10",
+          "Q_m3sut": 2,
+          "salvo_discharge_l": 560,
+          "power_kw": 0.95,
+          "weight_kg": 165,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*150*200",
+          "price_rub_2023": 205000
+        },
+        {
+          "id": "pegas-base-pegas-15pr-pressure",
+          "label": "PEGAS 15пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 15,
+          "capacity_persons_raw": "15",
+          "Q_m3sut": 3,
+          "salvo_discharge_l": 800,
+          "power_kw": 0.95,
+          "weight_kg": 205,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*200*200",
+          "price_rub_2023": 246000
+        }
+      ],
+      "extensions": [
+        {
+          "id": "pegas-extension-955-250",
+          "label": "Удлинительная горловина 955*250 мм",
+          "size_mm_raw": "955*250",
+          "price_rub_2023": 8000
+        },
+        {
+          "id": "pegas-extension-955-500",
+          "label": "Удлинительная горловина 955*500 мм",
+          "size_mm_raw": "955*500",
+          "price_rub_2023": 11000
+        }
+      ],
+      "addons": [
+        {
+          "id": "pegas-addon-wifi-modul",
+          "label": "WiFi модуль",
+          "description": "Контроль переполнения, аварийных ситуаций. Датчик концентрации активного ила - оповещает когда пора обслужить станцию. Мобильное приложение + десктопная версия. Оповещение о поломке приходит и клиенту и дилеру.\nВ стоимость входит датчик с блоком управления, заводская установка в станцию, ящик управления.",
+          "price_rub_2023": null
+        },
+        {
+          "id": "pegas-addon-gsm-modul",
+          "label": "GSM модуль",
+          "description": "Контроль переполнения, аварийных ситуаций. Датчик концентрации активного ила - оповещает когда пора обслужить станцию. Мобильное приложение + декстопная версия. Оповещение о поломке приходит и клиенту и дилеру.\nВ стоимость входит датчик с блоком управления, заводская установка в станцию, ящик управления.",
+          "price_rub_2023": null
+        },
+        {
+          "id": "pegas-addon-vstroennaya-otkachka-ila",
+          "label": "Встроенная откачка ила",
+          "description": "Доп.опция, которая позволяет пользователю обойтись без ассенизатора. Из горловины станции выводится доп.патрубок, присоединив шланг к которому пользователь откачивает ил в любое удобное место. Включение с помощью включения вилки в розетку. Идеально работает в совокупности с приложением. Позволяет пользователю даже не открывать крышк очистного сооружения.",
+          "price_rub_2023": null
+        },
+        {
+          "id": "pegas-addon-bioaktivator-pegas",
+          "label": "Биоактиватор PEGAS",
+          "description": "Для септиков (аэробных и анаэробных)\nПерерабатывает содержимое септиков\nУстраняет неприятные запахи \nНа объём 2000л\nБиоактиватор для септиков\nПрименение: для септиков (аэробных и анаэробных) взболтать, влить содержимое флакона в унитаз и спустить воду. Повторное внесение биоактиватора для септика необходимо повторить через 45 дней. Продукт эффективно работает при температуре от +10°С до +40°С.\nФлакон 200 мл",
+          "price_rub_2023": null
+        }
+      ]
+    },
+    "pegas_premium": {
+      "label": "PEGAS PREMIUM",
+      "tier": "premium",
+      "use_case": "Водоохранная зона, сброс в водоёмы",
+      "_description": "Премиум серия с двухступенчатой аэрацией (компрессор + насос + УФ-лампа). Pedrollo (Италия) + Hiblow (Япония). Корпус 10 мм. Только принудительный, вход 85 см.",
+      "models": [
+        {
+          "id": "pegas-premium-pegas-3",
+          "label": "PEGAS 3",
+          "capacity_persons": 3,
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 180,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 195.0
+          },
+          "dimensions_raw": "130*130*195",
+          "weight_kg": 135,
+          "price_rub_2023": 235000
+        },
+        {
+          "id": "pegas-premium-pegas-5",
+          "label": "PEGAS 5",
+          "capacity_persons": 5,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 300,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 225.0
+          },
+          "dimensions_raw": "130*130*225",
+          "weight_kg": 155,
+          "price_rub_2023": 250000
+        },
+        {
+          "id": "pegas-premium-pegas-7",
+          "label": "PEGAS 7",
+          "capacity_persons": 7,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 410,
+          "dimensions_cm": {
+            "L_cm": 150.0,
+            "W_cm": 150.0,
+            "H_cm": 225.0
+          },
+          "dimensions_raw": "150*150*225",
+          "weight_kg": 165,
+          "price_rub_2023": 275000
+        },
+        {
+          "id": "pegas-premium-pegas-10",
+          "label": "PEGAS 10",
+          "capacity_persons": 10,
+          "Q_m3sut": 2,
+          "salvo_discharge_l": 560,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 225.0
+          },
+          "dimensions_raw": "200*150*225",
+          "weight_kg": 180,
+          "price_rub_2023": 299000
+        },
+        {
+          "id": "pegas-premium-pegas-15",
+          "label": "PEGAS 15",
+          "capacity_persons": 15,
+          "Q_m3sut": 3,
+          "salvo_discharge_l": 800,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 200.0,
+            "H_cm": 225.0
+          },
+          "dimensions_raw": "200*200*225",
+          "weight_kg": 260,
+          "price_rub_2023": 339000
+        }
+      ]
+    },
+    "pegas_s_65": {
+      "label": "PEGAS S (65%)",
+      "tier": "septic_anaerobic",
+      "use_case": "Энергонезависимые септики-отстойники для песчаных/супесчаных грунтов с низким УГВ",
+      "_description": "Анаэробные септики без компрессора/насоса. 4-секционные. Требуется отдельный расчёт фильтрующих сооружений.",
+      "models": [
+        {
+          "id": "pegas-s-pegas-s-3",
+          "label": "PEGAS S 3",
+          "capacity_persons": 3,
+          "Q_m3sut": 0.6,
+          "salvo_discharge_l": 180,
+          "weight_kg": 60,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "130*130*150",
+          "price_rub_2023": 67000
+        },
+        {
+          "id": "pegas-s-pegas-s-5",
+          "label": "PEGAS S 5",
+          "capacity_persons": 5,
+          "Q_m3sut": 1,
+          "salvo_discharge_l": 280,
+          "weight_kg": 90,
+          "dimensions_cm": {
+            "L_cm": 130.0,
+            "W_cm": 130.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "130*130*200",
+          "price_rub_2023": 83000
+        },
+        {
+          "id": "pegas-s-pegas-s-7",
+          "label": "PEGAS S 7",
+          "capacity_persons": 7,
+          "Q_m3sut": 1.4,
+          "salvo_discharge_l": 390,
+          "weight_kg": 110,
+          "dimensions_cm": {
+            "L_cm": 150.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "150*150*200",
+          "price_rub_2023": 95000
+        },
+        {
+          "id": "pegas-s-pegas-s-10",
+          "label": "PEGAS S 10",
+          "capacity_persons": 10,
+          "Q_m3sut": 2,
+          "salvo_discharge_l": 560,
+          "weight_kg": 130,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*150*200",
+          "price_rub_2023": 116000
+        },
+        {
+          "id": "pegas-s-pegas-s-15",
+          "label": "PEGAS S 15",
+          "capacity_persons": 15,
+          "Q_m3sut": 3,
+          "salvo_discharge_l": 760,
+          "weight_kg": 160,
+          "dimensions_cm": {
+            "L_cm": 200.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "200*200*200",
+          "price_rub_2023": 158000
+        },
+        {
+          "id": "pegas-s-pegas-s-20",
+          "label": "PEGAS S 20",
+          "capacity_persons": 20,
+          "Q_m3sut": 4,
+          "salvo_discharge_l": 1000,
+          "weight_kg": 190,
+          "dimensions_cm": {
+            "L_cm": 300.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "300*150*200",
+          "price_rub_2023": 174000
+        },
+        {
+          "id": "pegas-s-pegas-s-25",
+          "label": "PEGAS S 25",
+          "capacity_persons": 25,
+          "Q_m3sut": 5,
+          "salvo_discharge_l": 1260,
+          "weight_kg": 230,
+          "dimensions_cm": {
+            "L_cm": 350.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "350*150*200",
+          "price_rub_2023": 197000
+        },
+        {
+          "id": "pegas-s-pegas-s-30",
+          "label": "PEGAS S 30",
+          "capacity_persons": 30,
+          "Q_m3sut": 6,
+          "salvo_discharge_l": 1520,
+          "weight_kg": 310,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*200*200",
+          "price_rub_2023": 234000
+        },
+        {
+          "id": "pegas-s-pegas-s-40",
+          "label": "PEGAS S 40",
+          "capacity_persons": 40,
+          "Q_m3sut": 8,
+          "salvo_discharge_l": 2100,
+          "weight_kg": 440,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*200*200",
+          "price_rub_2023": 278000
+        }
+      ],
+      "extensions": [
+        {
+          "id": "pegas-s-extension-955-250",
+          "label": "Удлинительная горловина 955*250 мм",
+          "size_mm_raw": "955*250",
+          "price_rub_2023": 8000
+        },
+        {
+          "id": "pegas-s-extension-955-500",
+          "label": "Удлинительная горловина 955*500 мм",
+          "size_mm_raw": "955*500",
+          "price_rub_2023": 11000
+        }
+      ]
+    },
+    "pegas_pro": {
+      "label": "PEGAS Промышленные / PEGAS PRO",
+      "tier": "industrial",
+      "use_case": "Адм.здания, гостиницы, склады, рестораны, коттеджные посёлки, пищпром",
+      "_description": "СГБО PEGAS 20-50 чел (повышенная производительность) + PEGAS PRO 75-200 (модульные ЛОС с УФ).",
+      "models": [
+        {
+          "id": "pegas-prom-pegas-20-gravity",
+          "label": "PEGAS 20",
+          "discharge_mode": "gravity",
+          "capacity_persons": 20,
+          "Q_m3sut": 4,
+          "salvo_discharge_l": 1000,
+          "weight_kg": 205,
+          "dimensions_cm": {
+            "L_cm": 300.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "300*150*200",
+          "price_rub_2023": 335000
+        },
+        {
+          "id": "pegas-prom-pegas-25-gravity",
+          "label": "PEGAS 25",
+          "discharge_mode": "gravity",
+          "capacity_persons": 25,
+          "Q_m3sut": 5,
+          "salvo_discharge_l": 1260,
+          "weight_kg": 245,
+          "dimensions_cm": {
+            "L_cm": 350.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "350*150*200",
+          "price_rub_2023": 390000
+        },
+        {
+          "id": "pegas-prom-pegas-30-gravity",
+          "label": "PEGAS 30",
+          "discharge_mode": "gravity",
+          "capacity_persons": 30,
+          "Q_m3sut": 6,
+          "salvo_discharge_l": 1520,
+          "weight_kg": 325,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*150*200",
+          "price_rub_2023": 436000
+        },
+        {
+          "id": "pegas-prom-pegas-40-gravity",
+          "label": "PEGAS 40",
+          "discharge_mode": "gravity",
+          "capacity_persons": 40,
+          "Q_m3sut": 8,
+          "salvo_discharge_l": 2100,
+          "weight_kg": 440,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*200*200",
+          "price_rub_2023": 531000
+        },
+        {
+          "id": "pegas-prom-pegas-50-gravity",
+          "label": "PEGAS 50",
+          "discharge_mode": "gravity",
+          "capacity_persons": 50,
+          "Q_m3sut": 10,
+          "salvo_discharge_l": 2700,
+          "weight_kg": 535,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "400*200*250",
+          "price_rub_2023": 607000
+        },
+        {
+          "id": "pegas-prom-pegas-20pr-pressure",
+          "label": "PEGAS 20пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 20,
+          "Q_m3sut": 4,
+          "salvo_discharge_l": 1000,
+          "weight_kg": 205,
+          "dimensions_cm": {
+            "L_cm": 300.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "300*150*200",
+          "price_rub_2023": 354000
+        },
+        {
+          "id": "pegas-prom-pegas-25pr-pressure",
+          "label": "PEGAS 25пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 25,
+          "Q_m3sut": 5,
+          "salvo_discharge_l": 1260,
+          "weight_kg": 245,
+          "dimensions_cm": {
+            "L_cm": 350.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "350*150*200",
+          "price_rub_2023": 411000
+        },
+        {
+          "id": "pegas-prom-pegas-30pr-pressure",
+          "label": "PEGAS 30пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 30,
+          "Q_m3sut": 6,
+          "salvo_discharge_l": 1520,
+          "weight_kg": 325,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*150*200",
+          "price_rub_2023": 455000
+        },
+        {
+          "id": "pegas-prom-pegas-40pr-pressure",
+          "label": "PEGAS 40пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 40,
+          "Q_m3sut": 8,
+          "salvo_discharge_l": 2100,
+          "weight_kg": 440,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "400*200*200",
+          "price_rub_2023": 550000
+        },
+        {
+          "id": "pegas-prom-pegas-50pr-pressure",
+          "label": "PEGAS 50пр",
+          "discharge_mode": "pressure",
+          "capacity_persons": 50,
+          "Q_m3sut": 10,
+          "salvo_discharge_l": 2700,
+          "weight_kg": 535,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "400*200*250",
+          "price_rub_2023": 631000
+        },
+        {
+          "id": "pegas-pro-pegas-pro-75",
+          "label": "Pegas PRO 75",
+          "tier": "pro",
+          "capacity_persons": 85,
+          "capacity_persons_raw": "до 85",
+          "Q_m3sut": 15,
+          "salvo_discharge_l": 1600,
+          "weight_kg": 1,
+          "dimensions_cm": {
+            "L_cm": 400.0,
+            "W_cm": 200.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "400*200*250",
+          "price_rub_2023": 765000,
+          "_engineer_note": "PEGAS PRO — модульные ЛОС для коттеджных посёлков, гостиниц, пищпрома"
+        },
+        {
+          "id": "pegas-pro-pegas-pro-100",
+          "label": "Pegas PRO 100",
+          "tier": "pro",
+          "capacity_persons": 120,
+          "capacity_persons_raw": "до120",
+          "Q_m3sut": 20,
+          "salvo_discharge_l": 2200,
+          "weight_kg": 1,
+          "dimensions_cm": {
+            "L_cm": 500.0,
+            "W_cm": 200.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "500*200*250",
+          "price_rub_2023": 1025000,
+          "_engineer_note": "PEGAS PRO — модульные ЛОС для коттеджных посёлков, гостиниц, пищпрома"
+        },
+        {
+          "id": "pegas-pro-pegas-pro-150",
+          "label": "Pegas PRO 150",
+          "tier": "pro",
+          "capacity_persons": 170,
+          "capacity_persons_raw": "до 170",
+          "Q_m3sut": 30,
+          "salvo_discharge_l": 3200,
+          "weight_kg": 2,
+          "dimensions_cm": {
+            "L_cm": 300.0,
+            "W_cm": 450.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "300/450*200*250",
+          "price_rub_2023": 1455000,
+          "_engineer_note": "PEGAS PRO — модульные ЛОС для коттеджных посёлков, гостиниц, пищпрома"
+        },
+        {
+          "id": "pegas-pro-pegas-pro-200",
+          "label": "Pegas PRO 200",
+          "tier": "pro",
+          "capacity_persons": 220,
+          "capacity_persons_raw": "до 220",
+          "Q_m3sut": 40,
+          "salvo_discharge_l": 4300,
+          "weight_kg": 2,
+          "dimensions_cm": {
+            "L_cm": 450.0,
+            "W_cm": 450.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "450/450*200*250",
+          "price_rub_2023": 1875000,
+          "_engineer_note": "PEGAS PRO — модульные ЛОС для коттеджных посёлков, гостиниц, пищпрома"
+        }
+      ]
+    },
+    "pegas_kns": {
+      "label": "PEGAS КНС (корпуса)",
+      "tier": "kns_corpus",
+      "use_case": "Корпуса КНС/НС для бытовых стоков",
+      "_description": "Цилиндрические корпуса ПП Ø1000-1900 мм, H=3000-4000 мм. Цена ТОЛЬКО за корпус — обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ.",
+      "_engineer_note": "Прямой конкурент Серво-Юг и Plastek-Group в сегменте бытовых КНС. Корпус 8 мм ПП литой бесшовный, до 9 м высоты, до 3 м диаметра.",
+      "models": [
+        {
+          "id": "pegas-kns-korpus-kns-1000-3000",
+          "label": "Корпус КНС 1000*3000",
+          "L_mm": 1000,
+          "W_mm": 1000,
+          "H_mm": 3000,
+          "D_mm": 1000,
+          "price_rub_2023_corpus_only": 100000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1000-3500",
+          "label": "Корпус КНС 1000*3500",
+          "L_mm": 1000,
+          "W_mm": 1000,
+          "H_mm": 3500,
+          "D_mm": 1000,
+          "price_rub_2023_corpus_only": 109000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1000-4000",
+          "label": "Корпус КНС 1000*4000",
+          "L_mm": 1000,
+          "W_mm": 1000,
+          "H_mm": 4000,
+          "D_mm": 1000,
+          "price_rub_2023_corpus_only": 124000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1200-3000",
+          "label": "Корпус КНС 1200*3000",
+          "L_mm": 1200,
+          "W_mm": 1200,
+          "H_mm": 3000,
+          "D_mm": 1200,
+          "price_rub_2023_corpus_only": 171000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1200-3500",
+          "label": "Корпус КНС 1200*3500",
+          "L_mm": 1200,
+          "W_mm": 1200,
+          "H_mm": 3500,
+          "D_mm": 1200,
+          "price_rub_2023_corpus_only": 204000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1200-4000",
+          "label": "Корпус КНС 1200*4000",
+          "L_mm": 1200,
+          "W_mm": 1200,
+          "H_mm": 4000,
+          "D_mm": 1200,
+          "price_rub_2023_corpus_only": 221000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1500-3000",
+          "label": "Корпус КНС 1500*3000",
+          "L_mm": 1500,
+          "W_mm": 1500,
+          "H_mm": 3000,
+          "D_mm": 1500,
+          "price_rub_2023_corpus_only": 223000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1500-3500",
+          "label": "Корпус КНС 1500*3500",
+          "L_mm": 1500,
+          "W_mm": 1500,
+          "H_mm": 3500,
+          "D_mm": 1500,
+          "price_rub_2023_corpus_only": 243000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1500-4000",
+          "label": "Корпус КНС 1500*4000",
+          "L_mm": 1500,
+          "W_mm": 1500,
+          "H_mm": 4000,
+          "D_mm": 1500,
+          "price_rub_2023_corpus_only": 272000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1900-3000",
+          "label": "Корпус КНС 1900*3000",
+          "L_mm": 1900,
+          "W_mm": 1900,
+          "H_mm": 3000,
+          "D_mm": 1900,
+          "price_rub_2023_corpus_only": 310000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1900-3500",
+          "label": "Корпус КНС 1900*3500",
+          "L_mm": 1900,
+          "W_mm": 1900,
+          "H_mm": 3500,
+          "D_mm": 1900,
+          "price_rub_2023_corpus_only": 354000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        },
+        {
+          "id": "pegas-kns-korpus-kns-1900-4000",
+          "label": "Корпус КНС 1900*4000",
+          "L_mm": 1900,
+          "W_mm": 1900,
+          "H_mm": 4000,
+          "D_mm": 1900,
+          "price_rub_2023_corpus_only": 392000,
+          "_note": "Цена ТОЛЬКО за корпус. Обвязка (насосы, ШУ, трубы, фланцы) считается отдельно по ТЗ."
+        }
+      ]
+    },
+    "pegas_grease_traps": {
+      "label": "PEGAS Жироуловители",
+      "tier": "grease_trap",
+      "use_case": "Кафе, рестораны, столовые, рыбозаводы",
+      "_description": "4 подгруппы: под мойку (Pegas 25-175), Pegas R pro (цилиндрические вертикальные), Pegas S pro (прямоугольные напольные), Pegas H pro (цилиндрические горизонтальные подземные).",
+      "models": [
+        {
+          "id": "pegas-grease-undersink-pegas-25",
+          "label": "Pegas 25",
+          "subtype": "under_sink",
+          "Q_m3h": 0.5,
+          "peak_l": 25,
+          "dimensions_mm_raw": "420*340*350",
+          "price_rub_2023": 9250
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-30",
+          "label": "Pegas 30",
+          "subtype": "under_sink",
+          "Q_m3h": 0.5,
+          "peak_l": 30,
+          "dimensions_mm_raw": "440*340*370",
+          "price_rub_2023": 10000
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-40",
+          "label": "Pegas 40",
+          "subtype": "under_sink",
+          "Q_m3h": 0.5,
+          "peak_l": 40,
+          "dimensions_mm_raw": "520*370*370",
+          "price_rub_2023": 11000
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-50",
+          "label": "Pegas 50",
+          "subtype": "under_sink",
+          "Q_m3h": 0.5,
+          "peak_l": 50,
+          "dimensions_mm_raw": "530*360*370",
+          "price_rub_2023": 11500
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-70",
+          "label": "Pegas 70",
+          "subtype": "under_sink",
+          "Q_m3h": 1,
+          "peak_l": 70,
+          "dimensions_mm_raw": "630*460*410",
+          "price_rub_2023": 13000
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-80",
+          "label": "Pegas 80",
+          "subtype": "under_sink",
+          "Q_m3h": 1,
+          "peak_l": 80,
+          "dimensions_mm_raw": "720*460*410",
+          "price_rub_2023": 14000
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-100",
+          "label": "Pegas 100",
+          "subtype": "under_sink",
+          "Q_m3h": 1.5,
+          "peak_l": 100,
+          "dimensions_mm_raw": "780*520*410",
+          "price_rub_2023": 16500
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-125",
+          "label": "Pegas 125",
+          "subtype": "under_sink",
+          "Q_m3h": 1.5,
+          "peak_l": 125,
+          "dimensions_mm_raw": "820*620*410",
+          "price_rub_2023": 17500
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-150",
+          "label": "Pegas 150",
+          "subtype": "under_sink",
+          "Q_m3h": 1.5,
+          "peak_l": 150,
+          "dimensions_mm_raw": "830*620*470",
+          "price_rub_2023": 19000
+        },
+        {
+          "id": "pegas-grease-undersink-pegas-175",
+          "label": "Pegas 175",
+          "subtype": "under_sink",
+          "Q_m3h": 1.5,
+          "peak_l": 175,
+          "dimensions_mm_raw": "830*620*510",
+          "price_rub_2023": 20500
+        },
+        {
+          "id": "pegas-grease-r-pro-pegas-r-pro-240",
+          "label": "Pegas R pro 240",
+          "subtype": "cylindrical_vertical_R_pro",
+          "Q_m3h": 3.6,
+          "peak_l": 240,
+          "dimensions_mm_raw": "1000*1000*1800",
+          "price_rub_2023": 44500
+        },
+        {
+          "id": "pegas-grease-r-pro-pegas-r-pro-500",
+          "label": "Pegas R pro 500",
+          "subtype": "cylindrical_vertical_R_pro",
+          "Q_m3h": 7,
+          "peak_l": 500,
+          "dimensions_mm_raw": "1300*1300*2000",
+          "price_rub_2023": 56500
+        },
+        {
+          "id": "pegas-grease-r-pro-pegas-r-pro-1000",
+          "label": "Pegas R pro 1000",
+          "subtype": "cylindrical_vertical_R_pro",
+          "Q_m3h": 14,
+          "peak_l": 1000,
+          "dimensions_mm_raw": "1500*1500*2000",
+          "price_rub_2023": 89000
+        },
+        {
+          "id": "pegas-grease-r-pro-pegas-r-pro-1500",
+          "label": "Pegas R pro 1500",
+          "subtype": "cylindrical_vertical_R_pro",
+          "Q_m3h": 21,
+          "peak_l": 1500,
+          "dimensions_mm_raw": "1700*1700*2000",
+          "price_rub_2023": 117000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-240",
+          "label": "Pegas S pro 240",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 3.6,
+          "peak_l": 240,
+          "dimensions_mm_raw": "1000*800*1300",
+          "price_rub_2023": 54000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-500",
+          "label": "Pegas S pro 500",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 7,
+          "peak_l": 500,
+          "dimensions_mm_raw": "1400*1000*1300",
+          "price_rub_2023": 65000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-800",
+          "label": "Pegas S pro 800",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 14,
+          "peak_l": 800,
+          "dimensions_mm_raw": "1500*1200*1300",
+          "price_rub_2023": 94000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-1200",
+          "label": "Pegas S pro 1200",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 22,
+          "peak_l": 1200,
+          "dimensions_mm_raw": "1700*1200*1800",
+          "price_rub_2023": 138000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-1700",
+          "label": "Pegas S pro 1700",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 25,
+          "peak_l": 1700,
+          "dimensions_mm_raw": "2000*1500*1800",
+          "price_rub_2023": 199000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-2300",
+          "label": "Pegas S pro 2300",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 30,
+          "peak_l": 2300,
+          "dimensions_mm_raw": "2500*1500*1800",
+          "price_rub_2023": 217000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-3400",
+          "label": "Pegas S pro 3400",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 45,
+          "peak_l": 3400,
+          "dimensions_mm_raw": "3000*1500*1800",
+          "price_rub_2023": 284000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-4800",
+          "label": "Pegas S pro 4800",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 72,
+          "peak_l": 4800,
+          "dimensions_mm_raw": "3000*2000*2300",
+          "price_rub_2023": 407000
+        },
+        {
+          "id": "pegas-grease-s-pro-pegas-s-pro-6000",
+          "label": "Pegas S pro 6000",
+          "subtype": "rectangular_S_pro",
+          "Q_m3h": 90,
+          "peak_l": 6000,
+          "dimensions_mm_raw": "4000*2000*2300",
+          "price_rub_2023": 582000
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-7",
+          "label": "Pegas H pro 7",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 7,
+          "volume_l": 1300,
+          "dimensions_mm_raw": "1000*1500*1300",
+          "price_rub_2023": 52500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-11",
+          "label": "Pegas H pro 11",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 11,
+          "volume_l": 1600,
+          "dimensions_mm_raw": "1000*2000*1300",
+          "price_rub_2023": 73500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-18",
+          "label": "Pegas H pro 18",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 18,
+          "volume_l": 2600,
+          "dimensions_mm_raw": "1200*2400*1500",
+          "price_rub_2023": 91500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-25",
+          "label": "Pegas H pro 25",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 25,
+          "volume_l": 3600,
+          "dimensions_mm_raw": "1200*3300*1500",
+          "price_rub_2023": 113500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-32",
+          "label": "Pegas H pro 32",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 32,
+          "volume_l": 4400,
+          "dimensions_mm_raw": "1500*2600*1800",
+          "price_rub_2023": 129500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-36",
+          "label": "Pegas H pro 36",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 36,
+          "volume_l": 4800,
+          "dimensions_mm_raw": "1500*3000*1800",
+          "price_rub_2023": 164500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-54",
+          "label": "Pegas H pro 54",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 54,
+          "volume_l": 7000,
+          "dimensions_mm_raw": "1500*4000*1800",
+          "price_rub_2023": 187500
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-72",
+          "label": "Pegas H pro 72",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 72,
+          "volume_l": 9000,
+          "dimensions_mm_raw": "2000*3000*2300",
+          "price_rub_2023": 283000
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-90",
+          "label": "Pegas H pro 90",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 96,
+          "volume_l": 12000,
+          "dimensions_mm_raw": "2000*4000*2300",
+          "price_rub_2023": 361000
+        },
+        {
+          "id": "pegas-grease-h-pro-pegas-h-pro-144",
+          "label": "Pegas H pro 144",
+          "subtype": "cylindrical_horizontal_H_pro",
+          "Q_m3h": 144,
+          "volume_l": 19000,
+          "dimensions_mm_raw": "2000*6000*2300",
+          "price_rub_2023": 465500
+        }
+      ]
+    },
+    "pegas_tanks_accumulator": {
+      "label": "PEGAS Накопительные ёмкости",
+      "tier": "tank_accumulator",
+      "use_case": "Сбор бытовых/технических стоков, выгребные ямы",
+      "_description": "ПП ёмкости 3-30 м³. Вертикальные, горизонтальные и из армированной ПНД-трубы (для крупных).",
+      "models": [
+        {
+          "id": "pegas-tank-vert-3m3",
+          "label": "Накопительная ёмкость вертикальная 3 м³",
+          "orientation": "vertical",
+          "V_m3": 3,
+          "D_mm": 1500,
+          "H_mm": 1700,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 72000
+        },
+        {
+          "id": "pegas-tank-vert-5m3",
+          "label": "Накопительная ёмкость вертикальная 5 м³",
+          "orientation": "vertical",
+          "V_m3": 5,
+          "D_mm": 1900,
+          "H_mm": 1750,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 124000
+        },
+        {
+          "id": "pegas-tank-vert-7m3",
+          "label": "Накопительная ёмкость вертикальная 7 м³",
+          "orientation": "vertical",
+          "V_m3": 7,
+          "D_mm": 1900,
+          "H_mm": 2500,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 141500
+        },
+        {
+          "id": "pegas-tank-vert-10m3",
+          "label": "Накопительная ёмкость вертикальная 10 м³",
+          "orientation": "vertical",
+          "V_m3": 10,
+          "D_mm": 2400,
+          "H_mm": 2200,
+          "neck_dimensions_raw": "960*500",
+          "price_rub_2023": 174500
+        },
+        {
+          "id": "pegas-tank-hor-3m3",
+          "label": "Накопительная ёмкость горизонтальная 3 м³",
+          "orientation": "horizontal",
+          "V_m3": 3,
+          "D_mm": 1300,
+          "L_mm": 2300,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 96000
+        },
+        {
+          "id": "pegas-tank-hor-5m3",
+          "label": "Накопительная ёмкость горизонтальная 5 м³",
+          "orientation": "horizontal",
+          "V_m3": 5,
+          "D_mm": 1500,
+          "L_mm": 2800,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 144000
+        },
+        {
+          "id": "pegas-tank-hor-7m3",
+          "label": "Накопительная ёмкость горизонтальная 7 м³",
+          "orientation": "horizontal",
+          "V_m3": 7,
+          "D_mm": 1500,
+          "L_mm": 4000,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 182000
+        },
+        {
+          "id": "pegas-tank-hor-10m3",
+          "label": "Накопительная ёмкость горизонтальная 10 м³",
+          "orientation": "horizontal",
+          "V_m3": 10,
+          "D_mm": 1500,
+          "L_mm": 5700,
+          "neck_dimensions_raw": "630*500",
+          "price_rub_2023": 231500
+        },
+        {
+          "id": "pegas-tank-pnd-15m3",
+          "label": "Накопительная ёмкость PND армированная 15 м³",
+          "orientation": "vertical",
+          "material": "ПНД армированная труба",
+          "V_m3": 15,
+          "D_mm": 2200,
+          "L_mm": 4000,
+          "neck_dimensions_raw": "630*200",
+          "price_rub_2023": 510500
+        },
+        {
+          "id": "pegas-tank-pnd-20m3",
+          "label": "Накопительная ёмкость PND армированная 20 м³",
+          "orientation": "vertical",
+          "material": "ПНД армированная труба",
+          "V_m3": 20,
+          "D_mm": 2200,
+          "L_mm": 5300,
+          "neck_dimensions_raw": "630*200",
+          "price_rub_2023": 658000
+        },
+        {
+          "id": "pegas-tank-pnd-25m3",
+          "label": "Накопительная ёмкость PND армированная 25 м³",
+          "orientation": "vertical",
+          "material": "ПНД армированная труба",
+          "V_m3": 25,
+          "D_mm": 2200,
+          "L_mm": 6600,
+          "neck_dimensions_raw": "630*200",
+          "price_rub_2023": 822000
+        },
+        {
+          "id": "pegas-tank-pnd-30m3",
+          "label": "Накопительная ёмкость PND армированная 30 м³",
+          "orientation": "vertical",
+          "material": "ПНД армированная труба",
+          "V_m3": 30,
+          "D_mm": 2200,
+          "L_mm": 8000,
+          "neck_dimensions_raw": "630*200",
+          "price_rub_2023": 987000
+        }
+      ]
+    },
+    "pegas_caissons": {
+      "label": "PEGAS Кессоны",
+      "tier": "caisson",
+      "use_case": "Скважины, насосное оборудование",
+      "_description": "Кессоны для скважин — корпус ПП 8 мм цилиндрический, литой, бесшовный.",
+      "models": [
+        {
+          "id": "pegas-caisson-pegas-1",
+          "label": "Кессон PEGAS 1",
+          "dimensions_cm": {
+            "D_cm": 100.0,
+            "H_cm": 150.0
+          },
+          "dimensions_raw": "100*150",
+          "D_mm": 1000,
+          "H_mm": 1500,
+          "price_rub_2023": 38500
+        },
+        {
+          "id": "pegas-caisson-pegas-2",
+          "label": "Кессон PEGAS 2",
+          "dimensions_cm": {
+            "D_cm": 100.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "100*200",
+          "D_mm": 1000,
+          "H_mm": 2000,
+          "price_rub_2023": 45500
+        },
+        {
+          "id": "pegas-caisson-pegas-3",
+          "label": "Кессон PEGAS 3",
+          "dimensions_cm": {
+            "D_cm": 130.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "130*200",
+          "D_mm": 1300,
+          "H_mm": 2000,
+          "price_rub_2023": 58000
+        },
+        {
+          "id": "pegas-caisson-pegas-4",
+          "label": "Кессон PEGAS 4",
+          "dimensions_cm": {
+            "D_cm": 130.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "130*250",
+          "D_mm": 1300,
+          "H_mm": 2500,
+          "price_rub_2023": 72500
+        },
+        {
+          "id": "pegas-caisson-pegas-5",
+          "label": "Кессон PEGAS 5",
+          "dimensions_cm": {
+            "D_cm": 150.0,
+            "H_cm": 200.0
+          },
+          "dimensions_raw": "150*200",
+          "D_mm": 1500,
+          "H_mm": 2000,
+          "price_rub_2023": 73500
+        },
+        {
+          "id": "pegas-caisson-pegas-6",
+          "label": "Кессон PEGAS 6",
+          "dimensions_cm": {
+            "D_cm": 150.0,
+            "H_cm": 250.0
+          },
+          "dimensions_raw": "150*250",
+          "D_mm": 1500,
+          "H_mm": 2500,
+          "price_rub_2023": 88500
+        }
+      ],
+      "addons": [
+        {
+          "id": "pegas-caisson-mufta-mufta-germetichnaya-dlya-kessona-d-125-133",
+          "label": "Муфта герметичная для кессона D 125-133",
+          "price_rub_2023": 5500
+        },
+        {
+          "id": "pegas-caisson-mufta-mufta-germetichnaya-dlya-kessona-d-159",
+          "label": "Муфта герметичная для кессона D 159",
+          "price_rub_2023": 6500
+        }
+      ]
+    },
+    "pegas_pogreba": {
+      "label": "PEGAS Погреба",
+      "tier": "cellar",
+      "use_case": "Хранение продуктов",
+      "_description": "Цилиндрические (8-10 мм) и квадратные (80 мм) погреба ПП. В комплекте лампа, лестница, полки, вытяжка.",
+      "models": [
+        {
+          "id": "pegas-pogreb-cyl-pegas-1",
+          "label": "Погреб (цилиндрический ПП) PEGAS 1",
+          "shape": "cylindrical",
+          "dimensions_cm": {
+            "D_cm": 1300.0,
+            "H_cm": 2000.0
+          },
+          "dimensions_raw": "1300*2000",
+          "D_mm": 13000,
+          "H_mm": 20000,
+          "neck_diameter_mm": 955,
+          "wall_thickness": "8мм",
+          "blocks": 4,
+          "price_rub_2023": 121000
+        },
+        {
+          "id": "pegas-pogreb-cyl-pegas-2",
+          "label": "Погреб (цилиндрический ПП) PEGAS 2",
+          "shape": "cylindrical",
+          "dimensions_cm": {
+            "D_cm": 1500.0,
+            "H_cm": 2000.0
+          },
+          "dimensions_raw": "1500*2000",
+          "D_mm": 15000,
+          "H_mm": 20000,
+          "neck_diameter_mm": 955,
+          "wall_thickness": "8мм",
+          "blocks": 4,
+          "price_rub_2023": 142000
+        },
+        {
+          "id": "pegas-pogreb-cyl-pegas-3",
+          "label": "Погреб (цилиндрический ПП) PEGAS 3",
+          "shape": "cylindrical",
+          "dimensions_cm": {
+            "D_cm": 1900.0,
+            "H_cm": 2000.0
+          },
+          "dimensions_raw": "1900*2000",
+          "D_mm": 19000,
+          "H_mm": 20000,
+          "neck_diameter_mm": 955,
+          "wall_thickness": "10мм",
+          "blocks": 4,
+          "price_rub_2023": 165000
+        },
+        {
+          "id": "pegas-pogreb-sq-pegas-1",
+          "label": "Погреб (квадратный ПП) PEGAS 1",
+          "shape": "rectangular",
+          "dimensions_cm": {
+            "D_cm": 2000.0,
+            "H_cm": 2000.0
+          },
+          "dimensions_raw": "2000*2000",
+          "neck_dimensions_raw": "1200*900*300",
+          "wall_thickness": "80мм",
+          "blocks": 4,
+          "price_rub_2023": 330000
+        },
+        {
+          "id": "pegas-pogreb-sq-pegas-2",
+          "label": "Погреб (квадратный ПП) PEGAS 2",
+          "shape": "rectangular",
+          "dimensions_cm": {
+            "D_cm": 2000.0,
+            "H_cm": 3000.0
+          },
+          "dimensions_raw": "2000*3000",
+          "neck_dimensions_raw": "1200*900*300",
+          "wall_thickness": "80мм",
+          "blocks": 4,
+          "price_rub_2023": 405000
+        },
+        {
+          "id": "pegas-pogreb-sq-pegas-3",
+          "label": "Погреб (квадратный ПП) PEGAS 3",
+          "shape": "rectangular",
+          "dimensions_cm": {
+            "D_cm": 4000.0,
+            "H_cm": 2000.0
+          },
+          "dimensions_raw": "4000*2000",
+          "neck_dimensions_raw": "1200*900*300",
+          "wall_thickness": "80мм",
+          "blocks": 6,
+          "price_rub_2023": 480000
+        }
+      ]
+    },
+    "pegas_pools": {
+      "label": "PEGAS Купели и бассейны",
+      "tier": "pools",
+      "use_case": "Купели и чаши бассейнов",
+      "_description": "ПП купели (круглые/квадратные/угловые, варианты с УФ и без) и бассейны (квадратные/круглые/овальные, чешский ПП с УФ).",
+      "_note": "Не профильный продукт для kns-calculator, оставлено для полноты прайс-листа.",
+      "models": [
+        {
+          "id": "pegas-kupel-round-1x1x1-2",
+          "label": "Купель круглая 1x1x1.2 м, V=0.9 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1,
+          "W_m": 1,
+          "depth_m": 1.2,
+          "V_m3": 0.9,
+          "price_rub_2023_no_uv": 23000,
+          "price_rub_2023_with_uv": 26500
+        },
+        {
+          "id": "pegas-kupel-round-1x1x1-5",
+          "label": "Купель круглая 1x1x1.5 м, V=1.2 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1,
+          "W_m": 1,
+          "depth_m": 1.5,
+          "V_m3": 1.2,
+          "price_rub_2023_no_uv": 26500,
+          "price_rub_2023_with_uv": 30500
+        },
+        {
+          "id": "pegas-kupel-round-1-2x1-2x1-2",
+          "label": "Купель круглая 1.2x1.2x1.2 м, V=1.4 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.2,
+          "W_m": 1.2,
+          "depth_m": 1.2,
+          "V_m3": 1.4,
+          "price_rub_2023_no_uv": 28000,
+          "price_rub_2023_with_uv": 31500
+        },
+        {
+          "id": "pegas-kupel-round-1-2x1-2x1-5",
+          "label": "Купель круглая 1.2x1.2x1.5 м, V=1.7 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.2,
+          "W_m": 1.2,
+          "depth_m": 1.5,
+          "V_m3": 1.7,
+          "price_rub_2023_no_uv": 30000,
+          "price_rub_2023_with_uv": 34000
+        },
+        {
+          "id": "pegas-kupel-round-1-5x1-5x1-2",
+          "label": "Купель круглая 1.5x1.5x1.2 м, V=2.1 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.5,
+          "W_m": 1.5,
+          "depth_m": 1.2,
+          "V_m3": 2.1,
+          "price_rub_2023_no_uv": 34000,
+          "price_rub_2023_with_uv": 38000
+        },
+        {
+          "id": "pegas-kupel-round-1-5x1-5x1-5",
+          "label": "Купель круглая 1.5x1.5x1.5 м, V=2.7 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.5,
+          "W_m": 1.5,
+          "depth_m": 1.5,
+          "V_m3": 2.7,
+          "price_rub_2023_no_uv": 39000,
+          "price_rub_2023_with_uv": 44000
+        },
+        {
+          "id": "pegas-kupel-round-1-8x1-8x1-2",
+          "label": "Купель круглая 1.8x1.8x1.2 м, V=3.1 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.8,
+          "W_m": 1.8,
+          "depth_m": 1.2,
+          "V_m3": 3.1,
+          "price_rub_2023_no_uv": 43000,
+          "price_rub_2023_with_uv": 47000
+        },
+        {
+          "id": "pegas-kupel-round-1-8x1-8x1-5",
+          "label": "Купель круглая 1.8x1.8x1.5 м, V=3.8 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 1.8,
+          "W_m": 1.8,
+          "depth_m": 1.5,
+          "V_m3": 3.8,
+          "price_rub_2023_no_uv": 49500,
+          "price_rub_2023_with_uv": 54500
+        },
+        {
+          "id": "pegas-kupel-round-2x2x1-5",
+          "label": "Купель круглая 2x2x1.5 м, V=4.7 м³",
+          "category": "kupel",
+          "shape": "round",
+          "L_m": 2,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 4.7,
+          "price_rub_2023_no_uv": 57000,
+          "price_rub_2023_with_uv": 62000
+        },
+        {
+          "id": "pegas-kupel-square-1x1x1-2",
+          "label": "Купель квадратная 1x1x1.2 м, V=1.2 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 1,
+          "W_m": 1,
+          "depth_m": 1.2,
+          "V_m3": 1.2,
+          "price_rub_2023_no_uv": 26500,
+          "price_rub_2023_with_uv": 30000
+        },
+        {
+          "id": "pegas-kupel-square-1x1-2x1-5",
+          "label": "Купель квадратная 1x1.2x1.5 м, V=1.8 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 1,
+          "W_m": 1.2,
+          "depth_m": 1.5,
+          "V_m3": 1.8,
+          "price_rub_2023_no_uv": 34000,
+          "price_rub_2023_with_uv": 38000
+        },
+        {
+          "id": "pegas-kupel-square-1x1-5x1-5",
+          "label": "Купель квадратная 1x1.5x1.5 м, V=2.2 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 1,
+          "W_m": 1.5,
+          "depth_m": 1.5,
+          "V_m3": 2.2,
+          "price_rub_2023_no_uv": 39000,
+          "price_rub_2023_with_uv": 43000
+        },
+        {
+          "id": "pegas-kupel-square-1-5x1-5x1-5",
+          "label": "Купель квадратная 1.5x1.5x1.5 м, V=3.3 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 1.5,
+          "W_m": 1.5,
+          "depth_m": 1.5,
+          "V_m3": 3.3,
+          "price_rub_2023_no_uv": 48000,
+          "price_rub_2023_with_uv": 53000
+        },
+        {
+          "id": "pegas-kupel-square-1-5x2x1-5",
+          "label": "Купель квадратная 1.5x2x1.5 м, V=4.5 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 1.5,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 4.5,
+          "price_rub_2023_no_uv": 57000,
+          "price_rub_2023_with_uv": 62000
+        },
+        {
+          "id": "pegas-kupel-square-2x2x1-5",
+          "label": "Купель квадратная 2x2x1.5 м, V=6 м³",
+          "category": "kupel",
+          "shape": "square",
+          "L_m": 2,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 6,
+          "price_rub_2023_no_uv": 67000,
+          "price_rub_2023_with_uv": 73500
+        },
+        {
+          "id": "pegas-kupel-corner-r1d1-2",
+          "label": "Купель угловая R=1 м, h=1.2 м, V=0.94 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1,
+          "depth_m": 1.2,
+          "V_m3": 0.94,
+          "price_rub_2023_no_uv": 20000,
+          "price_rub_2023_with_uv": 24000
+        },
+        {
+          "id": "pegas-kupel-corner-r1d1-5",
+          "label": "Купель угловая R=1 м, h=1.5 м, V=1.18 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1,
+          "depth_m": 1.5,
+          "V_m3": 1.18,
+          "price_rub_2023_no_uv": 23000,
+          "price_rub_2023_with_uv": 26500
+        },
+        {
+          "id": "pegas-kupel-corner-r1-2d1-2",
+          "label": "Купель угловая R=1.2 м, h=1.2 м, V=1.36 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.2,
+          "depth_m": 1.2,
+          "V_m3": 1.36,
+          "price_rub_2023_no_uv": 25500,
+          "price_rub_2023_with_uv": 29000
+        },
+        {
+          "id": "pegas-kupel-corner-r1-2d1-5",
+          "label": "Купель угловая R=1.2 м, h=1.5 м, V=1.7 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.2,
+          "depth_m": 1.5,
+          "V_m3": 1.7,
+          "price_rub_2023_no_uv": 29000,
+          "price_rub_2023_with_uv": 33000
+        },
+        {
+          "id": "pegas-kupel-corner-r1-3d1-2",
+          "label": "Купель угловая R=1.3 м, h=1.2 м, V=1.59 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.3,
+          "depth_m": 1.2,
+          "V_m3": 1.59,
+          "price_rub_2023_no_uv": 28000,
+          "price_rub_2023_with_uv": 32000
+        },
+        {
+          "id": "pegas-kupel-corner-r1-3d1-5",
+          "label": "Купель угловая R=1.3 м, h=1.5 м, V=2 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.3,
+          "depth_m": 1.5,
+          "V_m3": 2,
+          "price_rub_2023_no_uv": 33000,
+          "price_rub_2023_with_uv": 38000
+        },
+        {
+          "id": "pegas-kupel-corner-r1-5d1-2",
+          "label": "Купель угловая R=1.5 м, h=1.2 м, V=2.12 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.5,
+          "depth_m": 1.2,
+          "V_m3": 2.12,
+          "price_rub_2023_no_uv": 41500,
+          "price_rub_2023_with_uv": 43500
+        },
+        {
+          "id": "pegas-kupel-corner-r1-5d1-5",
+          "label": "Купель угловая R=1.5 м, h=1.5 м, V=2.65 м³",
+          "category": "kupel",
+          "shape": "corner",
+          "radius_m": 1.5,
+          "depth_m": 1.5,
+          "V_m3": 2.65,
+          "price_rub_2023_no_uv": 42500,
+          "price_rub_2023_with_uv": 49000
+        },
+        {
+          "id": "pegas-pool-square-3x2x1-5",
+          "label": "Бассейн квадратный 3x2x1.5 м, V=9 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 3,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 9,
+          "price_rub_2023": 104000
+        },
+        {
+          "id": "pegas-pool-square-4x2x1-5",
+          "label": "Бассейн квадратный 4x2x1.5 м, V=12 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 4,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 12,
+          "price_rub_2023": 125000
+        },
+        {
+          "id": "pegas-pool-square-5x2x1-5",
+          "label": "Бассейн квадратный 5x2x1.5 м, V=15 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 5,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 15,
+          "price_rub_2023": 148000
+        },
+        {
+          "id": "pegas-pool-square-4x3x1-5",
+          "label": "Бассейн квадратный 4x3x1.5 м, V=18 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 4,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 18,
+          "price_rub_2023": 158000
+        },
+        {
+          "id": "pegas-pool-square-5x3x1-5",
+          "label": "Бассейн квадратный 5x3x1.5 м, V=22.5 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 5,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 22.5,
+          "price_rub_2023": 186000
+        },
+        {
+          "id": "pegas-pool-square-6x3x1-5",
+          "label": "Бассейн квадратный 6x3x1.5 м, V=27 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 6,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 27,
+          "price_rub_2023": 211000
+        },
+        {
+          "id": "pegas-pool-square-7x3x1-5",
+          "label": "Бассейн квадратный 7x3x1.5 м, V=31.5 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 7,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 31.5,
+          "price_rub_2023": 241500
+        },
+        {
+          "id": "pegas-pool-square-6x4x1-5",
+          "label": "Бассейн квадратный 6x4x1.5 м, V=36 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 6,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 36,
+          "price_rub_2023": 254000
+        },
+        {
+          "id": "pegas-pool-square-7x4x1-5",
+          "label": "Бассейн квадратный 7x4x1.5 м, V=42 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 7,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 42,
+          "price_rub_2023": 288500
+        },
+        {
+          "id": "pegas-pool-square-8x4x1-5",
+          "label": "Бассейн квадратный 8x4x1.5 м, V=48 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 8,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 48,
+          "price_rub_2023": 320000
+        },
+        {
+          "id": "pegas-pool-square-10x4x1-5",
+          "label": "Бассейн квадратный 10x4x1.5 м, V=60 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 10,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 60,
+          "price_rub_2023": 386000
+        },
+        {
+          "id": "pegas-pool-square-5x5x1-5",
+          "label": "Бассейн квадратный 5x5x1.5 м, V=37.5 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 5,
+          "W_m": 5,
+          "depth_m": 1.5,
+          "V_m3": 37.5,
+          "price_rub_2023": 266000
+        },
+        {
+          "id": "pegas-pool-square-6x5x1-5",
+          "label": "Бассейн квадратный 6x5x1.5 м, V=45 м³",
+          "category": "pool",
+          "shape": "square",
+          "L_m": 6,
+          "W_m": 5,
+          "depth_m": 1.5,
+          "V_m3": 45,
+          "price_rub_2023": 306000
+        },
+        {
+          "id": "pegas-pool-round-3x3x1-5",
+          "label": "Бассейн круглый 3x3x1.5 м, V=10.6 м³",
+          "category": "pool",
+          "shape": "round",
+          "L_m": 3,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 10.6,
+          "price_rub_2023": 104000
+        },
+        {
+          "id": "pegas-pool-round-4x4x1-5",
+          "label": "Бассейн круглый 4x4x1.5 м, V=18.9 м³",
+          "category": "pool",
+          "shape": "round",
+          "L_m": 4,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 18.9,
+          "price_rub_2023": 167000
+        },
+        {
+          "id": "pegas-pool-round-5x5x1-5",
+          "label": "Бассейн круглый 5x5x1.5 м, V=29.5 м³",
+          "category": "pool",
+          "shape": "round",
+          "L_m": 5,
+          "W_m": 5,
+          "depth_m": 1.5,
+          "V_m3": 29.5,
+          "price_rub_2023": 225000
+        },
+        {
+          "id": "pegas-pool-round-6x6x1-5",
+          "label": "Бассейн круглый 6x6x1.5 м, V=42.5 м³",
+          "category": "pool",
+          "shape": "round",
+          "L_m": 6,
+          "W_m": 6,
+          "depth_m": 1.5,
+          "V_m3": 42.5,
+          "price_rub_2023": 292000
+        },
+        {
+          "id": "pegas-pool-oval-4x2x1-5",
+          "label": "Бассейн овальный 4x2x1.5 м, V=10.7 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 4,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 10.7,
+          "price_rub_2023": 125000
+        },
+        {
+          "id": "pegas-pool-oval-5x2x1-5",
+          "label": "Бассейн овальный 5x2x1.5 м, V=13.7 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 5,
+          "W_m": 2,
+          "depth_m": 1.5,
+          "V_m3": 13.7,
+          "price_rub_2023": 149000
+        },
+        {
+          "id": "pegas-pool-oval-4x3x1-5",
+          "label": "Бассейн овальный 4x3x1.5 м, V=19.7 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 4,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 19.7,
+          "price_rub_2023": 185000
+        },
+        {
+          "id": "pegas-pool-oval-6x3x1-5",
+          "label": "Бассейн овальный 6x3x1.5 м, V=24.2 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 6,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 24.2,
+          "price_rub_2023": 211000
+        },
+        {
+          "id": "pegas-pool-oval-7x3x1-5",
+          "label": "Бассейн овальный 7x3x1.5 м, V=28.7 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 7,
+          "W_m": 3,
+          "depth_m": 1.5,
+          "V_m3": 28.7,
+          "price_rub_2023": 243000
+        },
+        {
+          "id": "pegas-pool-oval-6x4x1-5",
+          "label": "Бассейн овальный 6x4x1.5 м, V=33.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 6,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 33.9,
+          "price_rub_2023": 257000
+        },
+        {
+          "id": "pegas-pool-oval-7x4x1-5",
+          "label": "Бассейн овальный 7x4x1.5 м, V=36.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 7,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 36.9,
+          "price_rub_2023": 283000
+        },
+        {
+          "id": "pegas-pool-oval-8x4x1-5",
+          "label": "Бассейн овальный 8x4x1.5 м, V=42.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 8,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 42.9,
+          "price_rub_2023": 315000
+        },
+        {
+          "id": "pegas-pool-oval-7x5x1-5",
+          "label": "Бассейн овальный 7x5x1.5 м, V=44.4 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 7,
+          "W_m": 5,
+          "depth_m": 1.5,
+          "V_m3": 44.4,
+          "price_rub_2023": 334000
+        },
+        {
+          "id": "pegas-pool-oval-8x5x1-5",
+          "label": "Бассейн овальный 8x5x1.5 м, V=51.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 8,
+          "W_m": 5,
+          "depth_m": 1.5,
+          "V_m3": 51.9,
+          "price_rub_2023": 368000
+        },
+        {
+          "id": "pegas-pool-oval-10x4x1-5",
+          "label": "Бассейн овальный 10x4x1.5 м, V=54.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 10,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 54.9,
+          "price_rub_2023": 382000
+        },
+        {
+          "id": "pegas-pool-oval-12x4x1-5",
+          "label": "Бассейн овальный 12x4x1.5 м, V=66.9 м³",
+          "category": "pool",
+          "shape": "oval",
+          "L_m": 12,
+          "W_m": 4,
+          "depth_m": 1.5,
+          "V_m3": 66.9,
+          "price_rub_2023": 444000
+        }
+      ]
+    }
+  }
+}

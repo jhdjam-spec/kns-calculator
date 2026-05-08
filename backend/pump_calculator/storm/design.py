@@ -7,8 +7,6 @@
 """
 from __future__ import annotations
 
-import math
-
 from .models import DesignVolumes, StormInput
 from .surfaces import calc_psi_design, surfaces_from_breakdown
 
@@ -50,7 +48,7 @@ def calculate_design_volume(inputs: StormInput, region: dict) -> DesignVolumes:
 
     # ψ_mid для дождевых (для очистных используются те же значения, что для расчёта стока)
     surfaces = surfaces_from_breakdown(inputs.surfaces)
-    psi_mid, F_total_ha = calc_psi_design(surfaces)
+    psi_mid, F_total_ha = calc_psi_design(surfaces, inputs.sp_revision)
 
     # Дождевые суточные
     W_d_design = 10 * h_a * psi_mid * F_total_ha

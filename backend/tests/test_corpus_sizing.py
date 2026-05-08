@@ -6,8 +6,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from pump_calculator.corpus_sizing import (
     compute_corpus_size,
     estimate_corpus_height_mm,

@@ -1,0 +1,26 @@
+name: Mirror to GitVerse
+
+on:
+  push:
+    branches: ['**']
+    tags: ['**']
+
+concurrency:
+  group: mirror-gitverse
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mirror push to GitVerse
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@gitverse.ru:jhdjam-spec/kns-calculator.git
+          ssh_private_key: ${{ secrets.GITVERSE_SSH_PRIVATE_KEY }}
+          ssh_username: git

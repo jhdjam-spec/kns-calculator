@@ -1,9 +1,11 @@
 """Pydantic-модели для калькулятора ливневых стоков (Phase 18)."""
 from __future__ import annotations
 
-from typing import Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field
+
+SpRevision = Literal["SP_32_2012", "SP_32_2018"]
 
 
 class SurfaceBreakdown(BaseModel):
@@ -39,14 +41,23 @@ class SurfaceBreakdown(BaseModel):
 class StormInput(BaseModel):
     """Входные данные калькулятора ливневок."""
 
+    sp_revision: SpRevision = Field(
+        description=(
+            "Редакция СП 32.13330. Без дефолта — пользователь обязан выбрать. "
+            "'SP_32_2012' (Z_асфальт=0.28, эталоны ВБД) или 'SP_32_2018' (Z=0.33, новые проекты)."
+        )
+    )
     region_city: str = Field(description="Название города (для q20, n, mr из climate_db)")
     surfaces: SurfaceBreakdown = Field(description="Распределение площадей")
     period_P_year: int = Field(default=1, ge=1, le=10, description="Период повторяемости, годы (СП 32 табл.9)")
 
     # tcon, tcan, tp параметры (опционально — есть defaults)
+    # ВНИМАНИЕ: t_concentration_min=10 по умолчанию (СП 32 §6.2.4 — типовое 5-10 мин,
+    # берём верхнюю границу как консервативную оценку для незастроенной территории).
+    # Калибровка по эталонам ВБД (Phase 18.1) показала: t_con=5 даёт +45-70% завышение.
     pipe_total_length_m: float = Field(default=500, ge=0, description="Общая длина трубопроводов сети")
     pipe_velocity_mps: float = Field(default=3.0, ge=0.1, le=10, description="Расчётная скорость в трубах")
-    t_concentration_min: float = Field(default=5.0, ge=0, description="Время поверхностной концентрации, мин")
+    t_concentration_min: float = Field(default=10.0, ge=0, description="Время поверхностной концентрации, мин (СП 32 §6.2.4)")
 
     # Опционально для расчёта ЛОС
     snow_clearance_pct: float = Field(default=0.05, ge=0, le=1, description="Доля F с уборкой снега (F_y/F)")
@@ -99,6 +110,15 @@ class StormResult(BaseModel):
     design: DesignVolumes
     peak: PeakFlow
     recommendation: LosRecommendation
+    sp_revision_used: SpRevision = Field(description="Редакция СП 32, по которой выполнен расчёт")
+    formula_ref: str = Field(
+        default="СП 32.13330 §6.2.4 (Q_r = Z_mid × A^1.2 × F / t_r^(1.2n−0.1))",
+        description="Ссылка на пункт норматива",
+    )
+    tolerance_pct: float = Field(
+        default=15.0,
+        description="Допуск инженерной точности (% относительно эталона)",
+    )
     warnings: list[str] = Field(default_factory=list)
     region_data: dict = Field(default_factory=dict, description="Использованные параметры из climate_db")
     inputs_summary: dict = Field(default_factory=dict)

@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Пресеты типов объектов для Минимального режима калькулятора ливневок (Phase 19). Маппинг тип-объекта → типовое распределение поверхностей + параметры расчёта по СП 32.",
+  "sp_revision_default": "SP_32_2018",
+  "presets": [
+    {
+      "id": "parking",
+      "label": "Открытая парковка",
+      "icon": "🅿️",
+      "short_description": "Асфальтированная стоянка для авто, без навесов",
+      "surfaces": { "asphalt_share": 1.0 },
+      "t_concentration_min": 10,
+      "period_P_year": 1,
+      "rationale": "Монопокрытие из асфальта. Z=0.33 (СП 32.2018) или 0.28 (СП 32.2012).",
+      "los_required": true,
+      "los_profile": "parking_oil_trap"
+    },
+    {
+      "id": "roof",
+      "label": "Кровли зданий",
+      "icon": "🏢",
+      "short_description": "Сбор с крыш складов, ангаров, ТЦ, МКД",
+      "surfaces": { "roof_share": 1.0 },
+      "t_concentration_min": 5,
+      "period_P_year": 1,
+      "rationale": "Кровельный сток — самый чистый. Z≈0.95-1.0, t_conc=5 мин (стекание).",
+      "los_required": false,
+      "los_profile": null
+    },
+    {
+      "id": "carwash",
+      "label": "Автомойка / СТО",
+      "icon": "🚗",
+      "short_description": "Площадка с интенсивным замывом нефтепродуктов",
+      "surfaces": { "asphalt_share": 0.9, "lawn_share": 0.1 },
+      "t_concentration_min": 10,
+      "period_P_year": 2,
+      "rationale": "P=2 года для надёжной защиты от перелива (нефтепродукты).",
+      "los_required": true,
+      "los_profile": "carwash_oil_trap_high"
+    },
+    {
+      "id": "industrial",
+      "label": "Промышленная площадка",
+      "icon": "🏭",
+      "short_description": "Производственная территория, склады, цеха",
+      "surfaces": { "asphalt_share": 0.6, "concrete_share": 0.2, "lawn_share": 0.2 },
+      "t_concentration_min": 15,
+      "period_P_year": 2,
+      "rationale": "Эталон Промливневка Q=132 ATEX. P=2 для промобъектов класса II (СП 32 §6.6).",
+      "los_required": true,
+      "los_profile": "industrial_full"
+    },
+    {
+      "id": "cottage_village",
+      "label": "Коттеджный посёлок / ИЖС",
+      "icon": "🏘️",
+      "short_description": "Внутренние проезды + участки",
+      "surfaces": { "asphalt_share": 0.3, "gravel_share": 0.2, "lawn_share": 0.5 },
+      "t_concentration_min": 15,
+      "period_P_year": 1,
+      "rationale": "Эталон ВБД ЕКБ К2. Доминирует газон (зелёные зоны участков).",
+      "los_required": false,
+      "los_profile": "village_light"
+    },
+    {
+      "id": "warehouse_yard",
+      "label": "Складской двор",
+      "icon": "📦",
+      "short_description": "Площадка для разгрузки, проезды, стоянки фур",
+      "surfaces": { "concrete_share": 0.7, "asphalt_share": 0.3 },
+      "t_concentration_min": 12,
+      "period_P_year": 1,
+      "rationale": "Эталон РВБ Кубань. Бетонные плиты доминируют.",
+      "los_required": true,
+      "los_profile": "warehouse_medium"
+    },
+    {
+      "id": "road_section",
+      "label": "Участок дороги",
+      "icon": "🛣️",
+      "short_description": "Дорожное полотно с обочинами",
+      "surfaces": { "asphalt_share": 0.85, "gravel_share": 0.15 },
+      "t_concentration_min": 8,
+      "period_P_year": 2,
+      "rationale": "P=2 года по СП 32 §6.6 для магистралей. Обочины 15% — щебень.",
+      "los_required": true,
+      "los_profile": "road_oil_trap"
+    }
+  ]
+}
