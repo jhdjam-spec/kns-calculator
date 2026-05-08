@@ -17,7 +17,7 @@ def calculate_annual_volumes(inputs: StormInput, region: dict) -> AnnualVolumes:
     h_cold = region["h_cold_mm"]
 
     surfaces = surfaces_from_breakdown(inputs.surfaces)
-    psi_d, F_total_ha = calc_psi_d_mid(surfaces)
+    psi_d, F_total_ha = calc_psi_d_mid(surfaces, inputs.sp_revision)
     F_paved_ha = (
         inputs.surfaces.roof_ha
         + inputs.surfaces.asphalt_ha
