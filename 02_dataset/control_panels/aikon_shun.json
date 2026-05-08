@@ -1,0 +1,134 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_description": "Каталог щитов управления насосами для КНС/НС/СПД. Phase 1 — линейка Aikon ЩУН-КНС (3 уровня) от ООО «СиЭнПи Рус».",
+  "_source": "Каталог SchUN_07.04.23.pdf из массива КНС 2.zip (14 страниц, CorelDRAW PDF). См. memory/reference_aikon_shun_kns_panels_2026-05-08.md",
+  "_engineer_note": "Этот раздел БД используется и kns-calculator (рекомендация шкафа по выбранному насосу), и параллельным проектом inservo-platform (типовой набор параметров мониторинга по моделям ПЛК).",
+  "panels": [
+    {
+      "id": "aikon-shun-kns-mini",
+      "brand": "Aikon",
+      "model": "ЩУН-КНС-МИНИ",
+      "tier": "budget",
+      "manufacturer": "ООО «СиЭнПи Рус» (Москва, субренд CNP Rus)",
+      "plc": {
+        "controller": "PDP",
+        "controller_origin": "RU",
+        "modbus_support": false,
+        "gsm_support": false
+      },
+      "power_max_kW": 18.5,
+      "start_method": "direct",
+      "ip_rating": "IP54",
+      "climate_options": ["УХЛ4", "УХЛ1(О)"],
+      "protections": [
+        "поплавковые датчики уровня (4 поплавка)",
+        "термоконтакты двигателя",
+        "перекос фаз",
+        "короткое замыкание"
+      ],
+      "supports_pumps_count": 2,
+      "cascade_logic": "4 поплавка: перелив/верх/средний/нижний → 0/1/2 насоса + авария",
+      "telemetry_outputs": ["локальная сигнализация (свет/звук)"],
+      "use_cases": [
+        "Бытовая КНС коттеджа / небольшого ЖК",
+        "Локальный объект без диспетчерской"
+      ],
+      "_engineer_flag": "needs_review",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "aikon-shun-kns-opti",
+      "brand": "Aikon",
+      "model": "ЩУН-КНС-ОПТИ",
+      "tier": "standard",
+      "manufacturer": "ООО «СиЭнПи Рус» (Москва, субренд CNP Rus)",
+      "plc": {
+        "controller": "PDP",
+        "controller_origin": "RU",
+        "modbus_support": false,
+        "gsm_support": false
+      },
+      "power_max_kW": 22.0,
+      "start_method": "direct_or_soft",
+      "ip_rating": "IP54",
+      "climate_options": ["УХЛ4", "УХЛ1(О)"],
+      "protections": [
+        "поплавковые датчики уровня (4 поплавка)",
+        "термоконтакты двигателя",
+        "РТС (датчики температуры обмоток)",
+        "перекос фаз",
+        "короткое замыкание"
+      ],
+      "supports_pumps_count": 2,
+      "cascade_logic": "4 поплавка: перелив/верх/средний/нижний → 0/1/2 насоса + авария",
+      "telemetry_outputs": ["локальная сигнализация (свет/звук)"],
+      "use_cases": [
+        "Средние КНС (бытово-промышленные)",
+        "Объекты с требованием РТС защиты"
+      ],
+      "_engineer_flag": "needs_review",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "aikon-shun-kns-max",
+      "brand": "Aikon",
+      "model": "ЩУН-КНС-МАКС",
+      "tier": "premium",
+      "manufacturer": "ООО «СиЭнПи Рус» (Москва, субренд CNP Rus)",
+      "plc": {
+        "controller": "ОНИКС МК4",
+        "controller_origin": "RU",
+        "controller_manufacturer": "Сегнетикс",
+        "modbus_support": true,
+        "modbus_protocols": ["Modbus RTU"],
+        "modbus_interface": "RS-485",
+        "gsm_support": true,
+        "gsm_features": ["мониторинг по SMS", "аварийное оповещение"]
+      },
+      "power_max_kW": 90.0,
+      "power_floor_mounted_above_kW": 90,
+      "start_method": "soft",
+      "ip_rating": "IP54",
+      "climate_options": ["УХЛ4", "УХЛ1(О)"],
+      "protections": [
+        "поплавковые датчики уровня (4 поплавка)",
+        "термоконтакты двигателя",
+        "РТС (датчики температуры обмоток)",
+        "перекос фаз",
+        "перенапряжение",
+        "короткое замыкание",
+        "отказ датчика уровня"
+      ],
+      "supports_pumps_count": 2,
+      "cascade_logic": "4 поплавка: перелив/верх/средний/нижний → 0/1/2 насоса + авария",
+      "telemetry_outputs": [
+        "локальная сигнализация",
+        "Modbus RTU → SCADA (диспетчерская)",
+        "GSM SMS (аварии, статус)",
+        "счётчик наработки каждого насоса",
+        "счётчик пусков"
+      ],
+      "monitoring_parameters": [
+        "уровни (4 поплавка)",
+        "состояние насосов (работа/авария/ручной/АВТО)",
+        "перелив",
+        "перегрев двигателя",
+        "перекос фаз",
+        "перенапряжение",
+        "КЗ",
+        "отказ датчика уровня",
+        "время наработки каждого насоса",
+        "число пусков"
+      ],
+      "use_cases": [
+        "Промышленные КНС с диспетчеризацией",
+        "Удалённые объекты (мониторинг по GSM)",
+        "Крупные объекты (от 22 кВт), плавный пуск обязателен"
+      ],
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Главный шкаф для inservo-platform: Modbus RTU + GSM = типовая интеграция. Параметры monitoring_parameters — основа MVP-набора платформы.",
+      "_added": "2026-05-08"
+    }
+  ]
+}

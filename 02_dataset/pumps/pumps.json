@@ -13749,6 +13749,209 @@
       "_engineer_note": "AUTOADAPT — самонастраивающаяся характеристика. SmartTrim. Уплотнение SiC/SiC + LIPSEAL. Корпус EN-GJL-200, импеллер PA-I. ISO9906:2012 grade 3B2. Артикул 96075897. Габариты 374×118×216×546 мм.",
       "_source": "Grundfos SEG4009250B полный паспорт (артикул 96075897)",
       "_added": "2026-05-08"
+    },
+    {
+      "id": "cnp-50wq20-15-2.2",
+      "brand": "CNP",
+      "model": "50WQ20-15-2.2(I)",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 50,
+      "envelope": {
+        "Q_min_m3h": 8,
+        "Q_max_m3h": 30,
+        "H_min_m": 6,
+        "H_max_m": 18,
+        "Q_BEP_m3h": 20,
+        "H_BEP_m": 15,
+        "eta_BEP_pct": 50.0,
+        "NPSHr_at_BEP_m": 2.5
+      },
+      "power": {
+        "P_kW": 1.63,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ООО СиЭнПи Рус (Москва)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков.",
+      "_source": "kns2.zip 50WQ20-15-2.2(I)  CNP.pdf (KP инженер Серво-Юг)",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "cnp-50wq25-10-2.2",
+      "brand": "CNP",
+      "model": "50WQ25-10-2.2(I)",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 50,
+      "envelope": {
+        "Q_min_m3h": 12,
+        "Q_max_m3h": 35,
+        "H_min_m": 4,
+        "H_max_m": 13,
+        "Q_BEP_m3h": 25,
+        "H_BEP_m": 10,
+        "eta_BEP_pct": 52.0,
+        "NPSHr_at_BEP_m": 2.5
+      },
+      "power": {
+        "P_kW": 2.2,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 50
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ООО СиЭнПи Рус (Москва)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN.",
+      "_source": "kns2.zip CNP паспорт",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "cnp-65wq50-55-15",
+      "brand": "CNP",
+      "model": "65WQ50-55-15(I)",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65,
+      "envelope": {
+        "Q_min_m3h": 30,
+        "Q_max_m3h": 75,
+        "H_min_m": 35,
+        "H_max_m": 70,
+        "Q_BEP_m3h": 50,
+        "H_BEP_m": 55,
+        "eta_BEP_pct": 56.0,
+        "NPSHr_at_BEP_m": 4.0
+      },
+      "power": {
+        "P_kW": 15.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ООО СиЭнПи Рус (Москва)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км.",
+      "_source": "kns2.zip CNP паспорт",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "cnp-80wq60-11-4",
+      "brand": "CNP",
+      "model": "80WQ60-11-4(I)",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80,
+      "envelope": {
+        "Q_min_m3h": 30,
+        "Q_max_m3h": 90,
+        "H_min_m": 5,
+        "H_max_m": 15,
+        "Q_BEP_m3h": 60,
+        "H_BEP_m": 11,
+        "eta_BEP_pct": 55.0,
+        "NPSHr_at_BEP_m": 3.0
+      },
+      "power": {
+        "P_kW": 4.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 80
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "official",
+        "distributor": "ООО СиЭнПи Рус (Москва)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный.",
+      "_source": "kns2.zip CNP паспорт",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "smz-kit-kpa-250-18-150-18.5",
+      "brand": "СМЗ",
+      "model": "КИТ КПА 250/18.150.18,5.380.1К",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 150,
+        "Q_max_m3h": 350,
+        "H_min_m": 10,
+        "H_max_m": 22,
+        "Q_BEP_m3h": 250,
+        "H_BEP_m": 18,
+        "eta_BEP_pct": 60.0,
+        "NPSHr_at_BEP_m": 4.5
+      },
+      "power": {
+        "P_kW": 18.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 150
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "domestic_manufacturer",
+        "distributor": "Средневолжский Машзавод (Самара)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "НОВЫЙ российский производитель — Средневолжский машзавод (Самара). Линейка КИТ КПА — крупные погружные канализационные. F-класс изоляции, 380 В, 1К комплектация. Импортозамещение Grundfos/Wilo для крупных КНС.",
+      "_source": "kns2.zip 250-18.150.18,5.380.1K.pdf (паспорт + КП №628 от 19.04.2023)",
+      "_added": "2026-05-08"
     }
   ],
   "_NOT_RECOMMENDED": [
