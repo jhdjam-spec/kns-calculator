@@ -76,11 +76,22 @@ export const corpusMaterialLabels: Record<CorpusMaterial, string> = {
   glass: "Стеклопластик",
 };
 
-/** L1Input — расширенные параметры. Сейчас на frontend используем только corpus_material;
- * остальные поля backend поддерживает но wizard их пока не предлагает.
- */
+/** Алгоритм работы насоса (Phase 13). */
+export const operatingModeSchema = z.enum(["continuous", "periodic", "level_based"]);
+export type OperatingMode = z.infer<typeof operatingModeSchema>;
+
+export const operatingModeLabels: Record<OperatingMode, string> = {
+  continuous: "Постоянный (24/7)",
+  periodic: "Периодический",
+  level_based: "По уровню (поплавки)",
+};
+
+/** L1Input — расширенные параметры (Phase 13: добавлены operating_mode, inflow, n_pumps). */
 export const l1InputSchema = z.object({
   corpus_material: corpusMaterialSchema.optional(),
+  operating_mode: operatingModeSchema.optional(),
+  inflow_per_hour_m3: z.number().min(0).max(10000).optional(),
+  pumps_total_override: z.number().int().min(1).max(10).optional(),
 });
 
 export type L1Input = z.infer<typeof l1InputSchema>;
@@ -113,6 +124,18 @@ export const wizardFormSchema = z.object({
   ),
   // L1 — материал корпуса (default "pe" чтобы radio было выбрано визуально)
   corpus_material: corpusMaterialSchema.default("pe"),
+  // Phase 13: режим работы, приток, число насосов — все опциональные
+  operating_mode: z.union([operatingModeSchema, z.literal("")]).transform(
+    (v): OperatingMode | undefined => (v === "" ? undefined : v),
+  ),
+  inflow_per_hour_m3: z
+    .union([z.string(), z.number()])
+    .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
+    .pipe(z.number().min(0).max(10000).optional()),
+  pumps_total_override: z
+    .union([z.string(), z.number()])
+    .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
+    .pipe(z.number().int().min(1).max(10).optional()),
 });
 
 export type WizardFormValues = z.infer<typeof wizardFormSchema>;
@@ -128,12 +151,15 @@ export function wizardFormToSelectionRequest(form: WizardFormValues): SelectionR
   if (form.L_m !== undefined) L0.L_m = form.L_m;
   if (form.wastewater_type !== undefined) L0.wastewater_type = form.wastewater_type;
 
-  // L1 отправляем только если пользователь явно выбрал стеклопластик.
-  // По умолчанию (pe) — не отправляем, backend применит default.
+  // L1 собираем только если есть хоть одно непустое поле.
+  const L1: L1Input = {};
+  if (form.corpus_material === "glass") L1.corpus_material = "glass";
+  if (form.operating_mode !== undefined) L1.operating_mode = form.operating_mode;
+  if (form.inflow_per_hour_m3 !== undefined) L1.inflow_per_hour_m3 = form.inflow_per_hour_m3;
+  if (form.pumps_total_override !== undefined) L1.pumps_total_override = form.pumps_total_override;
+
   const out: SelectionRequest = { L0 };
-  if (form.corpus_material === "glass") {
-    out.L1 = { corpus_material: "glass" };
-  }
+  if (Object.keys(L1).length > 0) out.L1 = L1;
   return out;
 }
 
