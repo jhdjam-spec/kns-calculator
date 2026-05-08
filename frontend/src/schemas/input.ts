@@ -110,30 +110,30 @@ export const wizardFormSchema = z.object({
     .union([z.string().min(1, "Введите расход"), z.number()])
     .pipe(z.coerce.number().positive("Расход должен быть больше 0")),
   Q_unit: qUnitSchema,
-  // Опциональные поля: пустая строка → undefined → backend подставит дефолт
+  // Опциональные поля: пустая строка/undefined → undefined → backend подставит дефолт
   dH_m: z
-    .union([z.string(), z.number()])
+    .union([z.string(), z.number(), z.undefined()])
     .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
     .pipe(z.number().min(-50).max(200).optional()),
   L_m: z
-    .union([z.string(), z.number()])
+    .union([z.string(), z.number(), z.undefined()])
     .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
     .pipe(z.number().min(0).max(5000).optional()),
-  wastewater_type: z.union([wastewaterTypeSchema, z.literal("")]).transform(
-    (v): WastewaterType | undefined => (v === "" ? undefined : v),
-  ),
+  wastewater_type: z
+    .union([wastewaterTypeSchema, z.literal(""), z.undefined()])
+    .transform((v): WastewaterType | undefined => (v === "" || v === undefined ? undefined : v)),
   // L1 — материал корпуса (default "pe" чтобы radio было выбрано визуально)
   corpus_material: corpusMaterialSchema.default("pe"),
   // Phase 13: режим работы, приток, число насосов — все опциональные
-  operating_mode: z.union([operatingModeSchema, z.literal("")]).transform(
-    (v): OperatingMode | undefined => (v === "" ? undefined : v),
-  ),
+  operating_mode: z
+    .union([operatingModeSchema, z.literal(""), z.undefined()])
+    .transform((v): OperatingMode | undefined => (v === "" || v === undefined ? undefined : v)),
   inflow_per_hour_m3: z
-    .union([z.string(), z.number()])
+    .union([z.string(), z.number(), z.undefined()])
     .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
     .pipe(z.number().min(0).max(10000).optional()),
   pumps_total_override: z
-    .union([z.string(), z.number()])
+    .union([z.string(), z.number(), z.undefined()])
     .transform((v) => (v === "" || v === undefined ? undefined : Number(v)))
     .pipe(z.number().int().min(1).max(10).optional()),
 });
