@@ -291,14 +291,16 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
       )}
 
       {/* Действия */}
-      <div className="flex flex-col md:flex-row gap-3 mb-6">
+      <div className="flex flex-col md:flex-row gap-3 mb-2">
         <button
           type="button"
           onClick={handleDownloadPdf}
           disabled={pdfStatus === "loading"}
           className="bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors"
         >
-          {pdfStatus === "loading" ? "Генерация PDF…" : "📄 Скачать PDF расчётной записки"}
+          {pdfStatus === "loading"
+            ? "Генерация PDF…"
+            : "📄 Расчётная записка (PDF)"}
         </button>
         <button
           type="button"
@@ -306,8 +308,14 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
           disabled={csvStatus === "loading"}
           className="bg-ink-100 hover:bg-ink-50 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors"
         >
-          {csvStatus === "loading" ? "Сборка CSV…" : "📊 Экспорт BOM в CSV"}
+          {csvStatus === "loading"
+            ? "Сборка CSV…"
+            : "📊 Спецификация BOM (CSV / Excel)"}
         </button>
+      </div>
+      <div className="text-xs text-ink-500 mb-6">
+        PDF — пятисекционный отчёт для защиты проекта (ОЛ → методика → результаты →
+        BOM → выводы). CSV — список оборудования для импорта в ГРАНД-Смету или Excel.
       </div>
 
       {exportError && (

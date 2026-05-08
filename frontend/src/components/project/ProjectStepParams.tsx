@@ -41,6 +41,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         <Field label="Название проекта">
           <input
             type="text"
+            aria-label="Название проекта"
             className="form-input"
             value={data.project_name || ""}
             onChange={(e) => setData({ ...data, project_name: e.target.value })}
@@ -50,6 +51,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         <Field label="Шифр (опционально)">
           <input
             type="text"
+            aria-label="Шифр проекта"
             className="form-input"
             value={data.project_code || ""}
             onChange={(e) => setData({ ...data, project_code: e.target.value })}
@@ -58,8 +60,12 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         </Field>
 
         {/* Город */}
-        <Field label="Город (для климата и нормативов)">
+        <Field
+          label="Город"
+          hint="Используется для глубины промерзания (СП 131), снеговых/ветровых районов (СП 20), q₂₀ ливнёвки (СП 32)"
+        >
           <select
+            aria-label="Город"
             className="form-input"
             value={data.region_city || "Краснодар"}
             onChange={(e) => setData({ ...data, region_city: e.target.value })}
@@ -74,6 +80,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         <Field label="Заказчик (опционально)">
           <input
             type="text"
+            aria-label="Заказчик"
             className="form-input"
             value={data.customer || ""}
             onChange={(e) => setData({ ...data, customer: e.target.value })}
@@ -82,11 +89,12 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
 
         {/* Население */}
         <Field
-          label="Расчётное число пользователей"
-          hint="Жители для ИЖС/ЖК · Сотрудники для офиса · Койки для больницы"
+          label="Расчётное число пользователей, чел"
+          hint="Жители (ИЖС/ЖК) · сотрудники (офис) · койки (больница) · посадочные места (кафе). Норма потребления — СП 30 прил. А.2"
         >
           <input
             type="number"
+            aria-label="Расчётное число пользователей"
             className="form-input"
             value={data.population || 0}
             min={0}
@@ -98,6 +106,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         <Field label="Этажность">
           <input
             type="number"
+            aria-label="Этажность"
             className="form-input"
             value={data.floors || 1}
             min={1}
@@ -108,10 +117,11 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         {/* Объём */}
         <Field
           label="Объём здания, м³"
-          hint="Для табл. 1 СП 8.13130 (расход на пожаротушение)"
+          hint="Определяет расход воды на пожаротушение по табл. 1 СП 8.13130 и группу спринклерных установок"
         >
           <input
             type="number"
+            aria-label="Объём здания, м³"
             className="form-input"
             value={data.volume_m3 || 0}
             min={0}
@@ -120,9 +130,13 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         </Field>
 
         {/* Площадь */}
-        <Field label="Площадь территории, м²">
+        <Field
+          label="Площадь территории, м²"
+          hint="Для расчёта ливневой канализации (СП 32 §6) и площади кровли"
+        >
           <input
             type="number"
+            aria-label="Площадь территории, м²"
             className="form-input"
             value={data.area_m2 || 0}
             min={0}
@@ -133,6 +147,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         {/* Грунт */}
         <Field label="Тип грунта">
           <select
+            aria-label="Тип грунта"
             className="form-input"
             value={data.soil_type || "clay_loam"}
             onChange={(e) => setData({ ...data, soil_type: e.target.value })}
@@ -144,7 +159,10 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         </Field>
 
         {/* УГВ */}
-        <Field label="УГВ ниже 1 м">
+        <Field
+          label="УГВ — уровень грунтовых вод"
+          hint="Если УГВ выше дна корпуса — нужен пригруз бетоном (СП 32 §6.3, K=1.1)"
+        >
           <label className="flex items-center gap-2 mt-2">
             <input
               type="checkbox"
@@ -153,13 +171,16 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
               className="size-4 accent-accent-500"
             />
             <span className="text-sm text-ink-300">
-              Высокий УГВ — потребуется пригруз корпуса
+              Высокий УГВ (ниже 1 м от поверхности)
             </span>
           </label>
         </Field>
 
         {/* ATEX */}
-        <Field label="ATEX зона">
+        <Field
+          label="Взрывоопасная зона (ATEX)"
+          hint="Зоны B-1а / IIB-T3 — нефтехимия, АЗС, фильтрат ТКО. Шкаф +35-45% к цене (ТР ТС 012/2011)"
+        >
           <label className="flex items-center gap-2 mt-2">
             <input
               type="checkbox"
@@ -168,7 +189,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
               className="size-4 accent-accent-500"
             />
             <span className="text-sm text-ink-300">
-              Взрывоопасная зона (нефтехимия, фильтрат ТКО)
+              Объект во взрывоопасной зоне
             </span>
           </label>
         </Field>

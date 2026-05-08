@@ -9,6 +9,33 @@ interface HeroProps {
   isCalculating?: boolean;
 }
 
+/**
+ * Скачивание пустого опросного листа DOCX через POST /handoff/empty-questionnaire-docx.
+ * Один и тот же файл с двумя названиями:
+ * — «Техзадание_КНС.docx» — для заказчика, формулировка через «техническое задание»
+ * — «Опросный_лист_КНС.docx» — для инженера, формулировка через «опросный лист»
+ */
+async function downloadEmptyQuestionnaire(filename: string): Promise<void> {
+  const res = await fetch("/api/backend/handoff/empty-questionnaire-docx", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
+  if (!res.ok) {
+    alert(`Не удалось скачать форму: ${res.status} ${res.statusText}`);
+    return;
+  }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 export function Hero({ onCalculate, isCalculating }: HeroProps) {
   const [qInput, setQInput] = useState("21.2");
 
@@ -58,9 +85,15 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
             за 60 секунд
           </h1>
 
+          <p className="text-sm md:text-base text-ink-500 leading-relaxed max-w-xl -mt-2">
+            <span className="text-ink-400">КНС</span> — канализационные насосные станции ·{" "}
+            <span className="text-ink-400">ЛОС</span> — локальные очистные сооружения ·{" "}
+            <span className="text-ink-400">СПД</span> — станции повышения давления
+          </p>
+
           <p className="text-lg md:text-xl text-ink-300 leading-relaxed max-w-xl">
-            От ТЗ до спецификации с гидравликой. Без регистрации. От производителя
-            оборудования с 2009 года.
+            От ТЗ до спецификации с гидравликой по СП 32.13330. Без регистрации.
+            От производителя оборудования с 2009 года.
           </p>
 
           {/* One-field calc */}
@@ -106,7 +139,7 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
             <span className="text-ink-700">·</span>
             <span className="inline-flex items-center gap-1.5">
               <Building2 size={14} strokeWidth={1.5} className="text-accent-500" />
-              199 моделей в базе
+              284 модели в базе
             </span>
             <span className="text-ink-700">·</span>
             <span className="inline-flex items-center gap-1.5">
@@ -115,18 +148,35 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
             </span>
           </div>
 
-          <a
-            href="#calculator"
-            className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-accent-500 transition-colors group"
-          >
-            <FileDown size={16} strokeWidth={1.5} />
-            Скачать опросный лист DOCX
-            <ArrowRight
-              size={14}
-              strokeWidth={2}
-              className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-base"
-            />
-          </a>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+            <button
+              type="button"
+              onClick={() => downloadEmptyQuestionnaire("Техзадание_КНС.docx")}
+              className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-accent-500 transition-colors group"
+            >
+              <FileDown size={16} strokeWidth={1.5} />
+              Скачать техзадание DOCX
+              <ArrowRight
+                size={14}
+                strokeWidth={2}
+                className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-base"
+              />
+            </button>
+            <span className="hidden sm:inline text-ink-700">·</span>
+            <button
+              type="button"
+              onClick={() => downloadEmptyQuestionnaire("Опросный_лист_КНС.docx")}
+              className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-accent-500 transition-colors group"
+            >
+              <FileDown size={16} strokeWidth={1.5} />
+              Скачать опросный лист DOCX
+              <ArrowRight
+                size={14}
+                strokeWidth={2}
+                className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-base"
+              />
+            </button>
+          </div>
         </div>
 
         {/* Right: Q-H curve */}

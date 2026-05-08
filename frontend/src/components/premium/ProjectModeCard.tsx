@@ -36,7 +36,7 @@ export function ProjectModeCard() {
           >
             <div className="flex items-center justify-between mb-4">
               <div className="text-xs font-mono uppercase tracking-wider text-accent-500">
-                Главный режим
+                Полный расчёт проекта
               </div>
               <div className="px-2 py-0.5 bg-accent-500 text-ink-950 text-xs font-mono rounded">
                 Рекомендуем
@@ -46,16 +46,17 @@ export function ProjectModeCard() {
               Проект целиком
             </div>
             <div className="text-ink-300 mb-6 leading-relaxed">
-              Один визард, один результат. Выбираете тип объекта (ИЖС, ЖК, АЗС и т.д.), вводите
-              базовые параметры — и калькулятор автоматически прогонит расчёты по всем подсистемам:
-              КНС, ВНС, пожарка, ЛОС, электрика, климат, прочность.
+              Выбираете тип объекта (ИЖС, ЖК, АЗС, гостиница и т.п.), вводите базовые параметры —
+              калькулятор прогонит расчёты по всем инженерным системам: <strong>КНС</strong>{" "}
+              (канализация), <strong>ВНС</strong> (водоснабжение), пожаротушение, очистные (ЛОС),
+              электрика, климат и прочность корпуса.
             </div>
             <div className="flex flex-wrap gap-1.5 mb-6">
               {[
                 "Все расчёты сразу",
-                "Сводка с нормативами",
+                "Ссылки на СП и ГОСТ",
                 "Готов к защите проекта",
-                "Для ГИП и инженера",
+                "Для ГИП и инженера-проектировщика",
               ].map((tag) => (
                 <span
                   key={tag}
@@ -81,22 +82,23 @@ export function ProjectModeCard() {
             className="group block p-7 md:p-8 bg-ink-100 rounded-xl border border-ink-200 hover:border-ink-400 transition-all hover:shadow-xl hover:-translate-y-0.5"
           >
             <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-4">
-              Быстрый режим
+              Быстрый подбор насоса
             </div>
             <div className="text-2xl md:text-3xl font-display font-bold text-ink-950 mb-3">
-              Быстрый подбор
+              Только насос
             </div>
             <div className="text-ink-700 mb-6 leading-relaxed">
-              Только насос. 4 поля (Q, dH, L, тип стоков) — топ-3 моделей в трёх ценовых сегментах
-              (бюджет / средний / премиум) с примерной стоимостью комплекта. Для оперативного КП
-              менеджера или предварительной оценки.
+              4 поля: расход <strong>Q</strong> м³/ч, перепад высот <strong>dH</strong> м,
+              длина напорной линии <strong>L</strong> м, тип стоков. Получаете топ-3 моделей в
+              трёх ценовых сегментах с предварительной стоимостью комплекта. Для оперативного
+              КП или ранней оценки бюджета.
             </div>
             <div className="flex flex-wrap gap-1.5 mb-6">
               {[
                 "Подбор за 30 сек",
-                "3 ценовых сегмента",
+                "Бюджет / средний / премиум",
                 "Только насос",
-                "Для менеджера КП",
+                "Для менеджера и ГИП",
               ].map((tag) => (
                 <span
                   key={tag}
