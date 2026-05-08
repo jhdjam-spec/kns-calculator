@@ -1,0 +1,815 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-05-08",
+  "generator": "claude-opus-4-7 deep market research agent",
+  "scope": "РФ рынок насосного оборудования для КНС/НС/СПД/пожарного водоснабжения 2024-2026",
+  "note_existing_db": "Записи помечены already_in_db=true если уже присутствуют в 02_dataset/pumps/producers.json. Здесь приводится РАСШИРЕННЫЙ список + новые производители.",
+  "categories": {
+    "russian_official": "российский производитель/локализованная сборка (право на 30% преференцию по 44-ФЗ при включении в Реестр Минпромторг)",
+    "russian_oem_china": "российский бренд OEM-сборка из китайских компонентов",
+    "parallel_import_eu": "европейский премиум, параллельный импорт через Турцию/ОАЭ/Казахстан",
+    "official_eu_local_assembly": "европейский бренд с действующей локальной сборкой в РФ",
+    "chinese_official": "китайский бренд через официального дилера в РФ"
+  },
+  "manufacturers": [
+    {
+      "id": "kaiquan",
+      "name": "KAIQUAN",
+      "country_origin": "China (Shanghai)",
+      "category": "chinese_official",
+      "already_in_db": true,
+      "ru_distributor_2026": "АСО (acorussia.ru), Петроплан, BaumGroup, HydroUnit, kqpump.ru",
+      "minpromtorg_register": false,
+      "preference_30pct_eligible": false,
+      "primary_segments": ["КНС бытовая", "КНС промышленная", "НС двойного всасывания", "НС пожарная"],
+      "model_series_full": [
+        {"code": "WQ/E", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 7.5, "type": "submersible_sewage", "free_passage_mm": "30-80"},
+        {"code": "WQ medium", "Q_min": 30, "Q_max": 1500, "H_min": 8, "H_max": 50, "P_min": 11, "P_max": 22, "type": "submersible_sewage"},
+        {"code": "WQ large", "Q_min": 100, "Q_max": 4000, "H_min": 10, "H_max": 80, "P_min": 30, "P_max": 200, "type": "submersible_sewage"},
+        {"code": "WQB Ex", "Q_min": 5, "Q_max": 1000, "H_min": 5, "H_max": 60, "P_min": 0.75, "P_max": 75, "type": "submersible_sewage_atex"},
+        {"code": "KQSS/KQSW", "Q_min": 100, "Q_max": 5000, "H_min": 20, "H_max": 100, "P_min": 11, "P_max": 250, "type": "double_suction_horizontal"},
+        {"code": "DL/MD", "Q_min": 5, "Q_max": 200, "H_min": 30, "H_max": 250, "P_min": 1.5, "P_max": 90, "type": "multistage_vertical"}
+      ],
+      "price_segment": "budget",
+      "typical_5kw_50WQ_price_rub_2026": 81245,
+      "lead_time_ru": "склад 1-7 дней; под заказ 8-12 нед",
+      "warranty_months": 18,
+      "verified_2026": true,
+      "sources": ["https://en.kaiquan.com.cn/", "https://uralenergotel.ru/category/pumps/cnp/"]
+    },
+    {
+      "id": "antarus",
+      "name": "Antarus / АНТАРУС",
+      "country_origin": "Russia",
+      "category": "russian_official",
+      "already_in_db": true,
+      "ru_distributor_2026": "прямой производитель; Теплосервис, Vito Group, Элита",
+      "minpromtorg_register": "вероятно (требует уточнения)",
+      "preference_30pct_eligible": true,
+      "primary_segments": ["КНС", "НС", "СПД", "пожаротушение"],
+      "model_series_full": [
+        {"code": "НК1", "Q_min": 5, "Q_max": 400, "H_min": 5, "H_max": 40, "P_min": 1.1, "P_max": 75, "type": "submersible_sewage_one_channel"},
+        {"code": "НК2", "Q_min": 10, "Q_max": 600, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 90, "type": "submersible_sewage_two_channel"},
+        {"code": "НК3", "Q_min": 5, "Q_max": 300, "H_min": 5, "H_max": 30, "P_min": 1.1, "P_max": 30, "type": "submersible_sewage_vortex"},
+        {"code": "НК-Ex", "Q_min": 10, "Q_max": 400, "H_min": 5, "H_max": 40, "P_min": 1.5, "P_max": 60, "type": "submersible_sewage_atex"},
+        {"code": "MLV", "Q_min": 1, "Q_max": 100, "H_min": 10, "H_max": 200, "P_min": 0.55, "P_max": 45, "type": "multistage_vertical"},
+        {"code": "MLM", "Q_min": 30, "Q_max": 250, "H_min": 20, "H_max": 130, "P_min": 4, "P_max": 75, "type": "multistage_horizontal"},
+        {"code": "FOC", "Q_min": 5, "Q_max": 1000, "H_min": 5, "H_max": 80, "P_min": 1.5, "P_max": 200, "type": "centrifugal_horizontal"},
+        {"code": "Multi Drive", "Q_min": 5, "Q_max": 500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 200, "type": "pressure_boost_station"},
+        {"code": "ANTARUS 2.0", "Q_min": 5, "Q_max": 1000, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 250, "type": "fire_suppression_station"}
+      ],
+      "online_selector": "https://search.antarus.su/",
+      "price_segment": "mid",
+      "lead_time_ru": "склад РФ",
+      "warranty_months": 24,
+      "verified_2026": true,
+      "sources": ["https://antarus.su/", "https://www.abok.ru/for_spec/articles.php?nid=8762"]
+    },
+    {
+      "id": "leo",
+      "name": "LEO Group",
+      "country_origin": "China",
+      "category": "chinese_official",
+      "already_in_db": true,
+      "ru_distributor_2026": "Новые Технологии (NT-RT) — leo.nt-rt.ru",
+      "primary_segments": ["КНС малая", "НС дренаж"],
+      "model_series_full": [
+        {"code": "LKS-P/LKS-PW", "Q_min": 5, "Q_max": 200, "H_min": 5, "H_max": 30, "P_min": 0.55, "P_max": 15, "type": "submersible_sewage"},
+        {"code": "XKS", "Q_min": 5, "Q_max": 150, "H_min": 5, "H_max": 25, "P_min": 0.55, "P_max": 11, "type": "submersible_sewage"},
+        {"code": "EKS/AKS/LSW", "Q_min": 1, "Q_max": 100, "H_min": 5, "H_max": 20, "P_min": 0.37, "P_max": 7.5, "type": "drainage_sewage"}
+      ],
+      "price_segment": "budget",
+      "lead_time_ru": "1-3 нед",
+      "warranty_months": 12,
+      "sources": ["https://leoglobal.com/", "https://leo.nt-rt.ru/"]
+    },
+    {
+      "id": "grundfos",
+      "name": "Grundfos",
+      "country_origin": "Denmark",
+      "category": "parallel_import_eu",
+      "already_in_db": true,
+      "important_note_2026": "Российский завод 'Грундфос Истра' продан в начале 2024 г. ООО 'ИСТРАТЕХ Групп' (см. id=istratech). Бренд Grundfos в РФ только параллельный импорт.",
+      "ru_distributor_2026": "НасосКлаб, Helion, Гидроком — параллельный импорт; ИСТРАТЕХ продолжает выпуск SEG/CR-аналогов под собственным брендом",
+      "minpromtorg_register": false,
+      "primary_segments": ["КНС", "НС", "СПД"],
+      "model_series_full": [
+        {"code": "SL/SE 9-30kW", "Q_min": 10, "Q_max": 800, "H_min": 5, "H_max": 60, "P_min": 9, "P_max": 30, "type": "submersible_sewage"},
+        {"code": "SL/SE >30kW", "Q_min": 100, "Q_max": 5000, "H_min": 10, "H_max": 100, "P_min": 30, "P_max": 500, "type": "submersible_sewage_industrial"},
+        {"code": "SEG (cutter)", "Q_min": 2, "Q_max": 30, "H_min": 5, "H_max": 50, "P_min": 0.9, "P_max": 4, "type": "submersible_grinder"},
+        {"code": "SEV/SLV", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 75, "type": "submersible_sewage"},
+        {"code": "DP/EF/KP", "Q_min": 1, "Q_max": 50, "H_min": 5, "H_max": 25, "P_min": 0.4, "P_max": 4, "type": "drainage_sewage_small"},
+        {"code": "Hydro MPC/MX", "Q_min": 5, "Q_max": 1500, "H_min": 20, "H_max": 250, "P_min": 1.5, "P_max": 500, "type": "pressure_boost_station"},
+        {"code": "CR/CRE/CRN/CRI", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 360, "P_min": 0.37, "P_max": 75, "type": "multistage_vertical"},
+        {"code": "TP/TPE", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 80, "P_min": 0.55, "P_max": 75, "type": "circulation_inline"},
+        {"code": "NB/NK", "Q_min": 10, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 1.5, "P_max": 200, "type": "centrifugal_horizontal"},
+        {"code": "S/SP", "Q_min": 5, "Q_max": 240, "H_min": 30, "H_max": 600, "P_min": 0.37, "P_max": 250, "type": "submersible_well"}
+      ],
+      "online_selector": "https://product-selection.grundfos.com/",
+      "price_segment": "premium",
+      "typical_5kw_50WQ_eq_price_rub_2026": 450000,
+      "lead_time_ru": "4-12 нед (параллельный импорт)",
+      "warranty_months": 24,
+      "sources": ["https://www.grundfos.com/", "https://industrialgines.com/en/catalog-price-list-grundfos-2025/"]
+    },
+    {
+      "id": "wilo",
+      "name": "Wilo",
+      "country_origin": "Germany",
+      "category": "official_eu_local_assembly",
+      "already_in_db": true,
+      "important_note_2026": "Действующая локальная сборка серий EMU FA, Drain, Rexa BLOC в РФ. Wilo-Select 4 работает с рублёвыми ценами.",
+      "ru_distributor_2026": "ООО ВИЛО РУС (wl-russia.ru); полная сертификация ЕАС",
+      "primary_segments": ["КНС", "НС", "СПД", "пожаротушение"],
+      "model_series_full": [
+        {"code": "Wilo-Rexa CUT", "Q_min": 5, "Q_max": 80, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 11, "type": "submersible_grinder"},
+        {"code": "Wilo-Rexa PRO", "Q_min": 10, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 50, "type": "submersible_sewage"},
+        {"code": "Wilo-Rexa SUPRA/FIT/UNI", "Q_min": 5, "Q_max": 200, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 22, "type": "submersible_sewage"},
+        {"code": "Wilo-EMU FA", "Q_min": 100, "Q_max": 5000, "H_min": 10, "H_max": 80, "P_min": 11, "P_max": 250, "type": "submersible_sewage_industrial"},
+        {"code": "Wilo-EMU KS/KPR", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 0.75, "P_max": 30, "type": "drainage"},
+        {"code": "Wilo-Helix/MVI/MVIE", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical"},
+        {"code": "Wilo-COR/COR-2 MVIE", "Q_min": 5, "Q_max": 500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 200, "type": "pressure_boost_station"},
+        {"code": "Wilo-SiFire", "Q_min": 5, "Q_max": 1500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 250, "type": "fire_pump_station"},
+        {"code": "Wilo-NL/BL", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"}
+      ],
+      "online_selector": "https://selectonline.ru/",
+      "price_segment": "premium",
+      "typical_5kw_50WQ_eq_price_rub_2026": 400000,
+      "lead_time_ru": "2-8 нед",
+      "warranty_months": 24,
+      "sources": ["https://wilo.com/ru/ru/"]
+    },
+    {
+      "id": "ksb",
+      "name": "KSB",
+      "country_origin": "Germany",
+      "category": "official_eu_local_assembly",
+      "already_in_db": true,
+      "ru_distributor_2026": "ООО КСБ (Москва), Электростиль, Гидроком, InterPumps, KRON",
+      "primary_segments": ["КНС", "НС", "СПД", "промышленные процессы"],
+      "model_series_full": [
+        {"code": "Amarex", "Q_min": 5, "Q_max": 400, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 22, "type": "submersible_sewage"},
+        {"code": "Amarex KRT", "Q_min": 100, "Q_max": 6000, "H_min": 10, "H_max": 100, "P_min": 30, "P_max": 500, "type": "submersible_sewage_industrial"},
+        {"code": "Sewatec", "Q_min": 50, "Q_max": 4000, "H_min": 10, "H_max": 80, "P_min": 11, "P_max": 250, "type": "dry_well_sewage"},
+        {"code": "Movitec", "Q_min": 1, "Q_max": 200, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 90, "type": "multistage_vertical"},
+        {"code": "Multitec", "Q_min": 5, "Q_max": 850, "H_min": 30, "H_max": 600, "P_min": 1.5, "P_max": 500, "type": "high_head_multistage"},
+        {"code": "Etabloc/Etaline/Etanorm", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"},
+        {"code": "Hyamat", "Q_min": 5, "Q_max": 500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 200, "type": "pressure_boost_station"}
+      ],
+      "online_selector": "https://products.ksb.com/global/product-configurators/easyselect/",
+      "price_segment": "premium",
+      "typical_5kw_50WQ_eq_price_rub_2026": 350000,
+      "warranty_months": 24,
+      "sources": ["https://www.ksb.com/"]
+    },
+    {
+      "id": "pedrollo",
+      "name": "Pedrollo",
+      "country_origin": "Italy",
+      "category": "official_eu_local_assembly",
+      "already_in_db": true,
+      "ru_distributor_2026": "pedrollo.ru, e-nasos.ru, vodomaster.ru, mvk-spb.ru",
+      "primary_segments": ["НС", "СПД", "малая КНС"],
+      "model_series_full": [
+        {"code": "MC/MCm", "Q_min": 1, "Q_max": 30, "H_min": 20, "H_max": 100, "P_min": 0.55, "P_max": 7.5, "type": "multistage_horizontal"},
+        {"code": "PV/PVm", "Q_min": 1, "Q_max": 30, "H_min": 20, "H_max": 150, "P_min": 0.55, "P_max": 11, "type": "multistage_vertical"},
+        {"code": "VX/VXm", "Q_min": 5, "Q_max": 50, "H_min": 5, "H_max": 20, "P_min": 0.55, "P_max": 2.2, "type": "submersible_sewage_small"},
+        {"code": "TOP/TR/RX", "Q_min": 3, "Q_max": 40, "H_min": 5, "H_max": 15, "P_min": 0.25, "P_max": 1.5, "type": "drainage"},
+        {"code": "4SR/6SR", "Q_min": 1, "Q_max": 50, "H_min": 30, "H_max": 250, "P_min": 0.37, "P_max": 22, "type": "submersible_well"}
+      ],
+      "online_selector": "https://springofdata.pedrollo.com/selector",
+      "price_segment": "mid",
+      "warranty_months": 24,
+      "sources": ["https://www.pedrollo.com/"]
+    },
+
+    {
+      "id": "istratech",
+      "name": "ИСТРАТЕХ (бывш. Грундфос Истра)",
+      "country_origin": "Russia (бывшая площадка Grundfos)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "important_note_2026": "Указом Президента РФ зимой 2024 г. разрешено приобретение ООО 'ИСТРАТЕХ Групп' завода 'Грундфос Истра' (Истринский р-н МО, 30 тыс. м² производства). Совладельцы: А.Слободинский (60%), И.Маренкова (40%). Ставка на импортозамещение Grundfos в РФ. Запущен выпуск энергоэффективных двигателей IE3 серии MIR. Производственные мощности позволяют выпускать вертикальные многоступенчатые, центробежные, консольно-моноблочные, дозировочные, пожарные.",
+      "ru_distributor_2026": "прямой производитель",
+      "minpromtorg_register": "целевая позиция компании, заявлено импортозамещение",
+      "preference_30pct_eligible": "целевая позиция при включении в реестр",
+      "primary_segments": ["КНС", "НС", "СПД", "пожаротушение"],
+      "model_series_full": [
+        {"code": "BM(N)", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 360, "P_min": 0.37, "P_max": 75, "type": "multistage_vertical", "analog_of": "Grundfos CR/CRE"},
+        {"code": "ВО", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 80, "P_min": 0.55, "P_max": 75, "type": "single_stage_inline", "analog_of": "Grundfos TP"},
+        {"code": "KMG", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 110, "type": "console_monoblock", "analog_of": "Grundfos NB/NK"},
+        {"code": "НС-МЕ", "Q_min": 5, "Q_max": 500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 200, "type": "pressure_boost_station", "analog_of": "Grundfos Hydro MPC"},
+        {"code": "НС-FS", "Q_min": 5, "Q_max": 1500, "H_min": 20, "H_max": 200, "P_min": 1.5, "P_max": 250, "type": "fire_suppression_station"},
+        {"code": "MIR (двигатели IE3)", "type": "motor_only"}
+      ],
+      "online_selector": null,
+      "price_segment": "mid_premium",
+      "lead_time_ru": "склад РФ, серийное производство",
+      "warranty_months": 24,
+      "verified_2026": true,
+      "sources": [
+        "https://www.istratex.ru/",
+        "https://www.kommersant.ru/doc/6493459",
+        "https://www.tadviser.ru/index.php/Компания:Grundfos_(Грундфос)"
+      ],
+      "_engineer_note": "Критичная новая позиция для российского рынка. Прямой преемник Grundfos Istra. Будет конкурировать с Wilo (рос. сборка) и АНТАРУС за тендеры с преференциями 44-ФЗ."
+    },
+
+    {
+      "id": "cnp",
+      "name": "CNP Pumps (Nanfang Pump)",
+      "country_origin": "China (Hangzhou)",
+      "category": "chinese_official",
+      "already_in_db": false,
+      "important_note_2026": "Один из крупнейших производителей в РФ. Официальное представительство ООО 'СиЭнПи Рус' (cnprussia.ru). 300+ дилеров. Склад МСК, ЧЛБ, производство в Подмосковье. Создан суббренд AIKON для расширения линейки.",
+      "ru_distributor_2026": "ООО СиЭнПи Рус (cnprussia.ru), Termopartner, dn.ru, baymart, atislab, pump.su",
+      "primary_segments": ["КНС", "НС", "СПД", "циркуляция", "химия"],
+      "model_series_full": [
+        {"code": "WQ", "Q_min": 5, "Q_max": 800, "H_min": 5, "H_max": 50, "P_min": 0.55, "P_max": 90, "type": "submersible_sewage"},
+        {"code": "WQ-Ex (BQS)", "Q_min": 10, "Q_max": 600, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 75, "type": "submersible_sewage_atex"},
+        {"code": "SHP", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 30, "type": "drainage_high_head"},
+        {"code": "CDM/CDMF", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical_inline", "analog_of": "Grundfos CR"},
+        {"code": "CHL/CHLF(T)", "Q_min": 1, "Q_max": 30, "H_min": 10, "H_max": 80, "P_min": 0.37, "P_max": 5.5, "type": "multistage_horizontal_monoblock"},
+        {"code": "NSC", "Q_min": 100, "Q_max": 2000, "H_min": 10, "H_max": 150, "P_min": 11, "P_max": 250, "type": "double_suction_horizontal"},
+        {"code": "NIS/NISF/NISO", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"},
+        {"code": "TD/LLT", "Q_min": 5, "Q_max": 1000, "H_min": 5, "H_max": 60, "P_min": 0.55, "P_max": 75, "type": "circulation_inline"},
+        {"code": "QY/QYL/SP/ZW(F)", "type": "self_priming"},
+        {"code": "GW/GS/GD/GM/CK/FROY/RX/RZ/JW/JX", "type": "metering_pumps"},
+        {"code": "SJ", "Q_min": 1, "Q_max": 50, "H_min": 30, "H_max": 200, "P_min": 0.37, "P_max": 22, "type": "submersible_well"},
+        {"code": "VTP/VTC/VTM/VTA/VTG/CDLK/CDLKF", "type": "semi_submerged"}
+      ],
+      "price_segment": "budget_mid",
+      "typical_5kw_50WQ_price_rub_2026": 81245,
+      "specific_prices_2026": [
+        {"model": "50WQ15-32-4AC(I)+TOS-50", "price_rub": 81245, "P_kW": 4.0, "Q_m3h": 15, "H_m": 32, "source": "uralenergotel.ru/product/cnp_50wq15-32-4-ac"},
+        {"model": "50WQ15-18-2.2AC(I)-TOS-50", "price_rub": 66511, "P_kW": 2.2, "Q_m3h": 15, "H_m": 18, "source": "dn.ru/...50-15-18-2-2ac"},
+        {"model": "50WQ20-15-2.2AC(I)+TOS-50", "price_rub": 57597, "P_kW": 2.2, "Q_m3h": 20, "H_m": 15, "source": "uralenergotel.ru"},
+        {"model": "50WQ10-7-0.55AC(I)+TOS-50", "price_rub": 41889, "P_kW": 0.55, "Q_m3h": 10, "H_m": 7, "source": "uralenergotel.ru"},
+        {"model": "50WQ15-40-5.5AC(I)", "price_rub_estimate": 95000, "P_kW": 5.5, "Q_m3h": 15, "H_m": 40, "source": "dn.ru"},
+        {"model": "50WQ15-20-2.2AC(I)-TOS-50", "price_rub": 60000, "P_kW": 2.2, "Q_m3h": 15, "H_m": 20, "source": "dn.ru"}
+      ],
+      "lead_time_ru": "склад 1-7 дней",
+      "warranty_months": 18,
+      "verified_2026": true,
+      "sources": [
+        "https://www.cnprussia.ru/",
+        "https://uralenergotel.ru/category/pumps/cnp/",
+        "https://atislab.ru/production/nasosi/cnp/",
+        "https://termopartner.ru/catalog/nasosnoe_oborudovanie/nasosnoe_oborudovanie_cnp/"
+      ],
+      "_engineer_note": "MUST ADD into producers.json. Это второй китайский поставщик после Kaiquan и крупнейший по широте линейки. Цены 41-95 тыс ₽ за 50WQ — лучшая референс-точка для price_rub_2026 в БД."
+    },
+
+    {
+      "id": "aikon",
+      "name": "AIKON (суббренд CNP для РФ/СНГ)",
+      "country_origin": "China",
+      "category": "chinese_official",
+      "already_in_db": false,
+      "important_note_2026": "Создан CNP Corporation специально для расширения линейки в РФ/СНГ — центробежные с торцевыми уплотнениями + полная номенклатура. ВНИМАНИЕ: НЕ путать с Aikon Control (отечественный завод щитов управления для КНС, см. reference_aikon_shun_kns_panels_2026-05-08.md).",
+      "ru_distributor_2026": "techstk.ru, aikon.nt-rt.ru, baymart, euro-nasos.ru",
+      "primary_segments": ["циркуляция", "консольные", "КНС"],
+      "model_series_full": [
+        {"code": "NES/NESO 50/100/150", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 60, "P_min": 1.1, "P_max": 75, "type": "console_centrifugal"},
+        {"code": "CMS", "Q_min": 1, "Q_max": 30, "H_min": 5, "H_max": 30, "P_min": 0.1, "P_max": 1.5, "type": "circulation_wet_rotor"},
+        {"code": "SSC", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 0.75, "P_max": 50, "type": "submersible_sewage"},
+        {"code": "SSC-G/OG", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 0.75, "P_max": 50, "type": "submersible_sewage_jacket"}
+      ],
+      "price_segment": "budget",
+      "verified_2026": true,
+      "sources": [
+        "https://aikon.nt-rt.ru/en/catalog/konsolnye-nasosy",
+        "https://techstk.ru/cnprussia/",
+        "https://euro-nasos.ru/brands/aikon"
+      ]
+    },
+
+    {
+      "id": "livgidromash",
+      "name": "ГМС Ливгидромаш (HMS Livgidromash)",
+      "country_origin": "Russia (Орловская обл., Ливны)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "important_note_2026": "Один из крупнейших российских производителей промышленных насосов. Часть Группы ГМС. В реестре Минпромторг. Серии Иртыш ПФ и ГНОМ — отраслевой стандарт для промышленной канализации и шахтного водоотлива.",
+      "ru_distributor_2026": "прямой завод (hms-livgidromash.ru) + дилеры (Гидромаш, Аmpika, Мосфильтр, RTK)",
+      "minpromtorg_register": true,
+      "preference_30pct_eligible": true,
+      "primary_segments": ["КНС", "НС", "шахтный водоотлив", "нефтехимия", "нефтепродукты"],
+      "model_series_full": [
+        {"code": "ГНОМ", "Q_min": 6, "Q_max": 100, "H_min": 6, "H_max": 25, "P_min": 0.6, "P_max": 11, "type": "drainage_dirty", "particles_mm": 5, "_note": "10% механических примесей до 5 мм; темп до 35°C"},
+        {"code": "Иртыш ПФ", "Q_min": 5, "Q_max": 800, "H_min": 5, "H_max": 80, "P_min": 1.5, "P_max": 200, "type": "submersible_sewage", "_note": "глубина погружения до 10 м, фекальный, для очистных сооружений"},
+        {"code": "Иртыш ПФс", "Q_min": 5, "Q_max": 200, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 30, "type": "submersible_sewage_with_capture", "_note": "на опускном устройстве (ОУ) — стандарт КНС"},
+        {"code": "Иртыш ПФ2", "Q_min": 50, "Q_max": 800, "H_min": 10, "H_max": 80, "P_min": 7.5, "P_max": 200, "type": "submersible_sewage_premium", "_note": "с самодиагностикой, датчиками влажности/вибрации/температуры"},
+        {"code": "СМ", "Q_min": 25, "Q_max": 800, "H_min": 10, "H_max": 80, "P_min": 4, "P_max": 200, "type": "horizontal_sewage", "_note": "сухоустановочный фекальный"},
+        {"code": "СД/СДВ", "Q_min": 50, "Q_max": 2400, "H_min": 5, "H_max": 80, "P_min": 5.5, "P_max": 250, "type": "horizontal_sewage_double_volute"},
+        {"code": "ЦНС", "Q_min": 13, "Q_max": 850, "H_min": 44, "H_max": 600, "P_min": 5.5, "P_max": 1000, "type": "multistage_horizontal_sectional", "_note": "поддержание пластового давления, шахтный водоотлив"},
+        {"code": "Х/АХ/АХП", "type": "chemical_centrifugal"},
+        {"code": "К/КМ", "Q_min": 10, "Q_max": 500, "H_min": 10, "H_max": 100, "P_min": 1.5, "P_max": 200, "type": "centrifugal_console"},
+        {"code": "Д (двойного всасывания)", "Q_min": 200, "Q_max": 12500, "H_min": 10, "H_max": 100, "P_min": 22, "P_max": 800, "type": "double_suction"},
+        {"code": "НМ (магистральный)", "Q_min": 125, "Q_max": 10000, "H_min": 65, "H_max": 800, "P_min": 75, "P_max": 8000, "type": "magistral_oil"},
+        {"code": "НШ/Ш/НМШ/НМШГ", "type": "gear_oil"},
+        {"code": "ПФ-БМП (дренажный)", "Q_min": 200, "Q_max": 800, "H_min": 5, "H_max": 30, "P_min": 7.5, "P_max": 75, "type": "drainage_block"}
+      ],
+      "online_selector": null,
+      "price_segment": "mid",
+      "lead_time_ru": "склад/4-12 нед",
+      "warranty_months": 24,
+      "verified_2026": true,
+      "sources": [
+        "https://www.hms-livgidromash.ru/catalog/",
+        "https://gkgidromash.ru/catalog/pogruzhnye_nasosy_irtysh_pf/",
+        "https://rustechnics.ru/catalog/pumps/drainage-pumps-gnom-livgidromash/"
+      ],
+      "_engineer_note": "MUST ADD. Эталон для гос-сектора. ГНОМ и Иртыш ПФ — самые массовые насосы в тендерах водоканалов и муниципалитетов. Преференция 30% по 44-ФЗ."
+    },
+
+    {
+      "id": "yasnogorsk",
+      "name": "Ясногорский насосный завод (ЯНЗ)",
+      "country_origin": "Russia (Тульская обл., Ясногорск)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "прямой производитель (yanzv.com, yanasos.ru) + дилерская сеть",
+      "minpromtorg_register": true,
+      "preference_30pct_eligible": true,
+      "primary_segments": ["шахтные", "нефть", "уголь", "химия", "энергетика", "ЖКХ", "сельское хозяйство"],
+      "model_series_full": [
+        {"code": "АТН", "type": "submersible_artesian", "_note": "артезианские глубинные"},
+        {"code": "20А", "type": "submersible_artesian"},
+        {"code": "24А", "type": "submersible_artesian"},
+        {"code": "ЭЦВ", "Q_min": 4, "Q_max": 380, "H_min": 25, "H_max": 700, "P_min": 1.5, "P_max": 250, "type": "submersible_well"},
+        {"code": "СМ", "Q_min": 25, "Q_max": 800, "H_min": 10, "H_max": 80, "P_min": 4, "P_max": 200, "type": "horizontal_sewage"},
+        {"code": "СД", "Q_min": 50, "Q_max": 2400, "H_min": 5, "H_max": 80, "P_min": 5.5, "P_max": 250, "type": "horizontal_sewage"},
+        {"code": "СДВ", "Q_min": 80, "Q_max": 2400, "H_min": 10, "H_max": 50, "P_min": 7.5, "P_max": 200, "type": "vertical_sewage"},
+        {"code": "СДП", "Q_min": 200, "Q_max": 5000, "H_min": 20, "H_max": 80, "P_min": 30, "P_max": 1000, "type": "horizontal_sewage_large"},
+        {"code": "Х/АХ/АХП", "type": "chemical_centrifugal"},
+        {"code": "ВВН (вакуумные водокольцевые)", "type": "vacuum"}
+      ],
+      "online_selector": null,
+      "price_segment": "mid",
+      "verified_2026": true,
+      "sources": [
+        "https://yanzv.com/",
+        "https://yanasos.ru/",
+        "https://fabricators.ru/proizvoditel/yasnogorskiy-nasosnyy-zavod-yanz"
+      ],
+      "_engineer_note": "MUST ADD. Серии СМ/СД/СДВ/СДП — отраслевой стандарт для сухоустановочных канализационных насосов в РФ. Покрывают зону Q≥1500 которую не покрывают наши текущие модели."
+    },
+
+    {
+      "id": "kron",
+      "name": "Насосная компания Крон (НК Крон, Тульский насосный завод)",
+      "country_origin": "Russia (Тула)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "прямой завод (kron-pump.ru); ВЫСТАВКА Neftegaz-2026",
+      "minpromtorg_register": "вероятно (требует уточнения)",
+      "preference_30pct_eligible": true,
+      "primary_segments": ["КНС", "промышленный дренаж", "химия", "нефтехимия"],
+      "model_series_full": [
+        {"code": "WQB (Tula)", "type": "submersible_sewage", "_note": "канализационные"},
+        {"code": "BQS", "type": "submersible_atex_drainage", "_note": "взрывозащищённый, для шахт и затопленных помещений"},
+        {"code": "ГНОМ (Tula)", "type": "drainage", "_note": "лицензионный аналог ГНОМ"},
+        {"code": "КВ", "Q_min": 1, "Q_max": 200, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical_stamped_welded"},
+        {"code": "консольные ХБ", "type": "centrifugal_chemical"},
+        {"code": "КС/блочные станции", "type": "block_pump_station"}
+      ],
+      "online_selector": "https://kron-pump.ru/podbor-nasosov/",
+      "price_segment": "mid",
+      "verified_2026": true,
+      "sources": ["https://kron-pump.ru/", "https://kron-pump.ru/podbor-nasosov/"]
+    },
+
+    {
+      "id": "onis",
+      "name": "ONIS / ОНИС (Москва)",
+      "country_origin": "Russia (Москва)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "прямой завод (onis.ru, onis-pump.ru), dn.ru, stoking.ru",
+      "primary_segments": ["СПД", "пожаротушение", "КНС"],
+      "model_series_full": [
+        {"code": "ONIS PV", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical", "_note": "66 моделей, аналог Grundfos CR"},
+        {"code": "ONIS NIS", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal_inline"},
+        {"code": "ONIS CDM", "Q_min": 1, "Q_max": 100, "H_min": 10, "H_max": 200, "P_min": 0.55, "P_max": 45, "type": "multistage_inline_industrial"},
+        {"code": "ONIS КНС (станция)", "type": "complete_pump_station"}
+      ],
+      "online_selector": null,
+      "price_segment": "budget_mid",
+      "_engineer_note": "Российский бренд OEM-сборки, аналоги Grundfos/Wilo по типоразмерам.",
+      "sources": [
+        "https://onis.ru/catalog/onis-pv/results,1-0",
+        "https://dn.ru/nasosnoe-oborudovanie/nasosy/nasosy_mnogostupenchatye/onis"
+      ]
+    },
+
+    {
+      "id": "sulzer_abs",
+      "name": "Sulzer ABS",
+      "country_origin": "Switzerland (с поглощением Sulzer)",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "Промимпорт, Промволга, ГидроСервис, Далькос — параллельный импорт через Турцию/Казахстан",
+      "primary_segments": ["крупная КНС", "промышленные сточные", "очистные"],
+      "model_series_full": [
+        {"code": "ABS XFP", "Q_min": 50, "Q_max": 4000, "H_min": 10, "H_max": 100, "P_min": 30, "P_max": 400, "type": "submersible_sewage_premix_chopper", "_note": "Effex серия, IE3 двигатели, Premium Efficiency"},
+        {"code": "ABS AFP", "Q_min": 100, "Q_max": 6000, "H_min": 10, "H_max": 80, "P_min": 30, "P_max": 500, "type": "submersible_sewage_industrial"},
+        {"code": "ABS ContraBlock Plus", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 50, "type": "submersible_sewage_anti_clog"},
+        {"code": "Sulzer Scanpump", "type": "process_pumps"},
+        {"code": "Sulzer SNS/SMD", "type": "split_case_double_suction"}
+      ],
+      "price_segment": "premium_plus",
+      "lead_time_ru": "8-16 нед параллельный импорт",
+      "warranty_months": 12,
+      "_engineer_note": "Закрывает нишу больших промышленных КНС с премиум-износостойкостью. Для тендеров водоканалов 1М кубометров+/сутки.",
+      "sources": [
+        "https://www.sulzer.com/ru-ru/products/pumps/wastewater-pumps-and-lifting-stations/submersible-pumps",
+        "https://promimport.info/partners/sulzer/abs-xfp/",
+        "https://hydroservice.info/product/nasosy-xfp-250m-ch2.html"
+      ]
+    },
+
+    {
+      "id": "tsurumi",
+      "name": "Tsurumi",
+      "country_origin": "Japan",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "только параллельный импорт (нет официального представительства в РФ)",
+      "primary_segments": ["шахтный водоотлив", "строительный дренаж", "промышленный сточный"],
+      "model_series_full": [
+        {"code": "KTV", "Q_min": 1, "Q_max": 500, "H_min": 5, "H_max": 100, "P_min": 0.4, "P_max": 75, "type": "submersible_drainage_high_head"},
+        {"code": "KTZ", "Q_min": 5, "Q_max": 250, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 22, "type": "submersible_drainage"},
+        {"code": "NK/NKZ", "Q_min": 100, "Q_max": 2000, "H_min": 5, "H_max": 50, "P_min": 11, "P_max": 200, "type": "submersible_sewage_industrial"},
+        {"code": "KRS", "Q_min": 100, "Q_max": 5000, "H_min": 5, "H_max": 50, "P_min": 22, "P_max": 250, "type": "submersible_dewatering_large"},
+        {"code": "U Series", "Q_min": 1, "Q_max": 50, "H_min": 5, "H_max": 25, "P_min": 0.4, "P_max": 4, "type": "submersible_residential"}
+      ],
+      "price_segment": "premium",
+      "lead_time_ru": "12-20 нед параллельный импорт",
+      "_engineer_note": "Считается лидером по ресурсу/износостойкости в Японии. KTV высоконапорный (до 100 м) — закрывает нашу дыру H=80, Q≥600.",
+      "sources": ["https://www.tsurumi-global.com/", "https://www.tsurumipump.com/"]
+    },
+
+    {
+      "id": "ebara",
+      "name": "Ebara",
+      "country_origin": "Japan",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "параллельный импорт",
+      "primary_segments": ["СПД", "крупная промышленность", "очистка стоков"],
+      "model_series_full": [
+        {"code": "DL/DML", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 50, "type": "submersible_sewage"},
+        {"code": "EVMS/EVMSU", "Q_min": 1, "Q_max": 200, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical"},
+        {"code": "FS/3M", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"}
+      ],
+      "price_segment": "premium",
+      "sources": ["https://www.ebara.com/"]
+    },
+
+    {
+      "id": "homa",
+      "name": "HOMA Pumpenfabrik",
+      "country_origin": "Germany",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "параллельный импорт",
+      "primary_segments": ["КНС", "очистные"],
+      "model_series_full": [
+        {"code": "TP", "Q_min": 5, "Q_max": 1000, "H_min": 5, "H_max": 60, "P_min": 1.5, "P_max": 90, "type": "submersible_sewage"},
+        {"code": "AMX (cutter)", "Q_min": 5, "Q_max": 30, "H_min": 5, "H_max": 50, "P_min": 1.5, "P_max": 11, "type": "submersible_grinder"},
+        {"code": "Barracuda", "Q_min": 20, "Q_max": 200, "H_min": 5, "H_max": 40, "P_min": 4, "P_max": 30, "type": "submersible_sewage_anti_clog"}
+      ],
+      "price_segment": "premium",
+      "sources": ["https://www.homa-pumpen.de/"]
+    },
+
+    {
+      "id": "caprari",
+      "name": "Caprari",
+      "country_origin": "Italy",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "параллельный импорт + ограниченное офиц. присутствие через дилеров",
+      "primary_segments": ["глубинные", "СПД", "КНС"],
+      "model_series_full": [
+        {"code": "Defender", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 60, "P_min": 1.5, "P_max": 75, "type": "submersible_sewage_anti_clog"},
+        {"code": "Kompact", "Q_min": 5, "Q_max": 200, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 30, "type": "submersible_sewage"},
+        {"code": "E6X/E8X", "Q_min": 5, "Q_max": 100, "H_min": 30, "H_max": 600, "P_min": 1.5, "P_max": 90, "type": "submersible_well_high_head"},
+        {"code": "MEC/MEC-A", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 1.1, "P_max": 200, "type": "centrifugal_horizontal"}
+      ],
+      "price_segment": "mid_premium",
+      "sources": ["https://www.caprari.com/"]
+    },
+
+    {
+      "id": "dab",
+      "name": "DAB Pumps",
+      "country_origin": "Italy",
+      "category": "official_eu_local_assembly",
+      "already_in_db": false,
+      "ru_distributor_2026": "официальный магазин db-shop.ru, MVK-СПб, dab-pumps.ru",
+      "primary_segments": ["СПД", "малая КНС", "циркуляция"],
+      "model_series_full": [
+        {"code": "FK/FKV", "Q_min": 5, "Q_max": 250, "H_min": 5, "H_max": 50, "P_min": 1.1, "P_max": 30, "type": "submersible_sewage"},
+        {"code": "FX", "Q_min": 5, "Q_max": 100, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 11, "type": "submersible_sewage_small"},
+        {"code": "DRENAG", "Q_min": 1, "Q_max": 30, "H_min": 5, "H_max": 15, "P_min": 0.4, "P_max": 1.5, "type": "drainage"},
+        {"code": "NKM/NKP", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"},
+        {"code": "KV/KVC/KVCX", "Q_min": 1, "Q_max": 50, "H_min": 10, "H_max": 200, "P_min": 0.37, "P_max": 22, "type": "multistage_vertical"}
+      ],
+      "price_segment": "mid",
+      "sources": ["https://db-shop.ru/", "https://www.dabpumps.com/"]
+    },
+
+    {
+      "id": "lowara",
+      "name": "Lowara (Xylem)",
+      "country_origin": "Italy",
+      "category": "parallel_import_eu",
+      "already_in_db": false,
+      "ru_distributor_2026": "BaumGroup, Мосфильтр, prof-pump.ru — частично параллельный импорт",
+      "primary_segments": ["КНС", "СПД"],
+      "model_series_full": [
+        {"code": "DOMO", "Q_min": 5, "Q_max": 30, "H_min": 5, "H_max": 15, "P_min": 0.55, "P_max": 1.5, "type": "submersible_sewage_residential"},
+        {"code": "GLS/GLV", "Q_min": 5, "Q_max": 100, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 11, "type": "submersible_sewage"},
+        {"code": "1300 (Sewage)", "Q_min": 50, "Q_max": 1500, "H_min": 5, "H_max": 80, "P_min": 11, "P_max": 200, "type": "submersible_sewage_industrial"},
+        {"code": "e-SV/SV", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 350, "P_min": 0.37, "P_max": 75, "type": "multistage_vertical"}
+      ],
+      "price_segment": "mid_premium",
+      "sources": ["https://www.lowara.com/", "https://www.prof-pump.ru/nasosy/vodootvedeniya/kanalizacionnye/lowara/"]
+    },
+
+    {
+      "id": "calpeda",
+      "name": "Calpeda",
+      "country_origin": "Italy",
+      "category": "official_eu_local_assembly",
+      "already_in_db": false,
+      "ru_distributor_2026": "Аква-Плюс (aqua-plus.su), MVK-СПб",
+      "primary_segments": ["малая КНС", "СПД", "циркуляция"],
+      "model_series_full": [
+        {"code": "GXC/GXR", "Q_min": 1, "Q_max": 50, "H_min": 5, "H_max": 25, "P_min": 0.55, "P_max": 4, "type": "submersible_sewage_small"},
+        {"code": "GMV/GMC", "Q_min": 1, "Q_max": 30, "H_min": 5, "H_max": 20, "P_min": 0.4, "P_max": 2.2, "type": "drainage"},
+        {"code": "MXV/MXVL", "Q_min": 1, "Q_max": 100, "H_min": 10, "H_max": 200, "P_min": 0.55, "P_max": 30, "type": "multistage_vertical"},
+        {"code": "B-NM/N", "Q_min": 5, "Q_max": 1500, "H_min": 5, "H_max": 100, "P_min": 0.55, "P_max": 200, "type": "centrifugal_horizontal"}
+      ],
+      "price_segment": "mid",
+      "sources": ["https://www.calpeda.com/", "https://aqua-plus.su/nasosy-calpeda"]
+    },
+
+    {
+      "id": "espa",
+      "name": "ESPA",
+      "country_origin": "Spain",
+      "category": "official_eu_local_assembly",
+      "already_in_db": false,
+      "ru_distributor_2026": "Водомастер (vodomaster.ru), Водная техника, nasosov.ru",
+      "primary_segments": ["скважина", "малая КНС", "СПД"],
+      "model_series_full": [
+        {"code": "SE4 (скважинный)", "Q_min": 1, "Q_max": 50, "H_min": 30, "H_max": 200, "P_min": 0.37, "P_max": 22, "type": "submersible_well"},
+        {"code": "Drainex", "Q_min": 5, "Q_max": 100, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 11, "type": "submersible_sewage"},
+        {"code": "Multi 35", "Q_min": 1, "Q_max": 30, "H_min": 10, "H_max": 80, "P_min": 0.55, "P_max": 4, "type": "multistage_vertical"}
+      ],
+      "price_segment": "mid",
+      "sources": ["https://www.espa.com/", "https://vodomaster.ru/brands/espa/"]
+    },
+
+    {
+      "id": "speroni",
+      "name": "Speroni",
+      "country_origin": "Italy",
+      "category": "official_eu_local_assembly",
+      "already_in_db": false,
+      "ru_distributor_2026": "Водомастер (vodomaster.ru), Мосфильтр, Водная техника",
+      "primary_segments": ["скважина", "малая КНС", "СПД"],
+      "model_series_full": [
+        {"code": "SVM", "Q_min": 1, "Q_max": 30, "H_min": 30, "H_max": 250, "P_min": 0.37, "P_max": 11, "type": "submersible_well_4inch"},
+        {"code": "ECM/CTM", "Q_min": 1, "Q_max": 30, "H_min": 5, "H_max": 50, "P_min": 0.55, "P_max": 5.5, "type": "centrifugal_jet"},
+        {"code": "SXM/SXG", "Q_min": 5, "Q_max": 100, "H_min": 5, "H_max": 30, "P_min": 0.75, "P_max": 11, "type": "submersible_sewage"}
+      ],
+      "price_segment": "mid",
+      "sources": ["https://www.speroni.com/", "https://vodomaster.ru/brands/speroni/"]
+    },
+
+    {
+      "id": "shimge",
+      "name": "Shimge Pump Industry Group",
+      "country_origin": "China (Wenling, Zhejiang)",
+      "category": "chinese_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "ограниченное присутствие через дистрибьюторов; основной экспорт через ВЭД",
+      "primary_segments": ["скважина", "СПД", "циркуляция", "сточные"],
+      "model_series_full": [
+        {"code": "WQK", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 0.75, "P_max": 50, "type": "submersible_sewage"},
+        {"code": "QJ", "Q_min": 1, "Q_max": 200, "H_min": 30, "H_max": 250, "P_min": 0.37, "P_max": 75, "type": "submersible_well"},
+        {"code": "CDLF", "Q_min": 1, "Q_max": 240, "H_min": 10, "H_max": 250, "P_min": 0.55, "P_max": 75, "type": "multistage_vertical"},
+        {"code": "SGR/SGRS", "Q_min": 5, "Q_max": 500, "H_min": 5, "H_max": 50, "P_min": 0.55, "P_max": 50, "type": "circulation"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://www.shimgepump.com/", "http://shimge-pump.com/"]
+    },
+
+    {
+      "id": "fancy_pump",
+      "name": "Fancy Pump",
+      "country_origin": "China",
+      "category": "chinese_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "ООО 'Аква-Плюс' (fancy-pump.com)",
+      "primary_segments": ["циркуляция", "СПД", "малая КНС"],
+      "model_series_full": [
+        {"code": "FW (циркуляц.)", "Q_min": 1, "Q_max": 50, "H_min": 5, "H_max": 30, "P_min": 0.1, "P_max": 4, "type": "circulation"},
+        {"code": "FCQ/FQ", "Q_min": 1, "Q_max": 30, "H_min": 5, "H_max": 25, "P_min": 0.4, "P_max": 4, "type": "submersible_sewage_small"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://fancy-pump.com/"]
+    },
+
+    {
+      "id": "unipump",
+      "name": "UNIPUMP",
+      "country_origin": "Russia/China (OEM)",
+      "category": "russian_oem_china",
+      "already_in_db": true,
+      "_note_2026": "Уже частично в БД (под id aquario_belamos_unipump). Здесь дополняю расширенной линейкой 2026.",
+      "ru_distributor_2026": "unipump.ru, ритейл (Леруа, ОЗОН, Водомастер)",
+      "primary_segments": ["частный сектор", "коттеджи", "малая КНС"],
+      "model_series_full": [
+        {"code": "ФЕКАЛЬНЫЕ FEKACUT/FEKAPUMP", "Q_min": 5, "Q_max": 30, "H_min": 5, "H_max": 15, "P_min": 0.4, "P_max": 2.2, "type": "submersible_sewage_residential"},
+        {"code": "АКВАРОБОТ", "Q_min": 1, "Q_max": 5, "H_min": 5, "H_max": 60, "P_min": 0.5, "P_max": 1.5, "type": "automatic_self_priming"},
+        {"code": "ДН (дренаж)", "Q_min": 5, "Q_max": 25, "H_min": 5, "H_max": 12, "P_min": 0.4, "P_max": 1.5, "type": "drainage"},
+        {"code": "QGD", "Q_min": 0.5, "Q_max": 5, "H_min": 30, "H_max": 100, "P_min": 0.37, "P_max": 1.5, "type": "submersible_screw_well"},
+        {"code": "СДВ-100", "Q_min": 1, "Q_max": 5, "H_min": 30, "H_max": 80, "P_min": 0.55, "P_max": 1.5, "type": "submersible_well_4inch"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://unipump.ru/"]
+    },
+
+    {
+      "id": "belamos",
+      "name": "Беламос (Belamos)",
+      "country_origin": "Russia/China (OEM)",
+      "category": "russian_oem_china",
+      "already_in_db": true,
+      "ru_distributor_2026": "belamos.net, мульти-ритейл",
+      "primary_segments": ["частный сектор", "коттеджи"],
+      "model_series_full": [
+        {"code": "DWP", "Q_min": 5, "Q_max": 25, "H_min": 5, "H_max": 14, "P_min": 0.4, "P_max": 1.6, "type": "drainage_with_knives"},
+        {"code": "Power+", "Q_min": 5, "Q_max": 30, "H_min": 5, "H_max": 12, "P_min": 0.4, "P_max": 1.5, "type": "drainage"},
+        {"code": "DWP CS (cutter)", "Q_min": 5, "Q_max": 20, "H_min": 5, "H_max": 14, "P_min": 0.55, "P_max": 1.6, "type": "submersible_grinder"},
+        {"code": "ВДС (вибрационные)", "type": "vibration_pump"},
+        {"code": "TF (артезианский)", "type": "submersible_well"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://belamos.net/"]
+    },
+
+    {
+      "id": "dzhilex",
+      "name": "Джилекс (Dzhilex)",
+      "country_origin": "Russia (Климовск, МО)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "jeelex-pumps.ru, Леруа Мерлен, ОЗОН, специализированные торговые сети",
+      "minpromtorg_register": true,
+      "primary_segments": ["частный сектор", "коттеджи", "сезонная дача"],
+      "model_series_full": [
+        {"code": "Дренажник", "Q_min": 6, "Q_max": 25, "H_min": 5, "H_max": 18, "P_min": 0.5, "P_max": 1.5, "type": "drainage"},
+        {"code": "Фекальник", "Q_min": 8, "Q_max": 35, "H_min": 5, "H_max": 18, "P_min": 0.55, "P_max": 2, "type": "submersible_sewage_residential"},
+        {"code": "Водомёт", "Q_min": 1, "Q_max": 5, "H_min": 30, "H_max": 80, "P_min": 0.55, "P_max": 1.5, "type": "submersible_well"},
+        {"code": "Малыш", "Q_min": 0.5, "Q_max": 1.5, "H_min": 20, "H_max": 60, "P_min": 0.25, "P_max": 0.5, "type": "vibration_well"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://www.jeelex-pumps.ru/"]
+    },
+
+    {
+      "id": "aquario",
+      "name": "Aquario (АКВАРИО)",
+      "country_origin": "Russia/Italy (OEM)",
+      "category": "russian_oem_china",
+      "already_in_db": true,
+      "ru_distributor_2026": "ITM (aquario.ru), мульти-ритейл",
+      "primary_segments": ["частный сектор", "малая КНС"],
+      "model_series_full": [
+        {"code": "ASP/AGSC (фекальный)", "Q_min": 5, "Q_max": 25, "H_min": 5, "H_max": 12, "P_min": 0.4, "P_max": 1.5, "type": "submersible_sewage_residential"},
+        {"code": "ASP3 (артезианский)", "type": "submersible_well_3inch"},
+        {"code": "ADB (дренаж)", "type": "drainage"}
+      ],
+      "price_segment": "budget",
+      "sources": ["https://aquario.ru/"]
+    },
+
+    {
+      "id": "antey_kazprom",
+      "name": "АНТЕЙ / ЦНС секционные (общая категория)",
+      "country_origin": "Russia (производство в Бавленском заводе ЦНС, ХМЗ, Свердловском заводе)",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "ПНК (pnk-nasos.ru), Русэнерго, ремонт-нпо, Уральские дилеры",
+      "minpromtorg_register": true,
+      "preference_30pct_eligible": true,
+      "primary_segments": ["шахтный водоотлив", "поддержание пластового давления нефть", "пожарные ВНС", "котельные"],
+      "model_series_full": [
+        {"code": "ЦНС 38", "Q_min": 38, "H_min": 44, "H_max": 220, "P_min": 22, "P_max": 75, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 60", "Q_min": 60, "H_min": 50, "H_max": 330, "P_min": 30, "P_max": 110, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 105", "Q_min": 105, "H_min": 98, "H_max": 490, "P_min": 75, "P_max": 200, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 180", "Q_min": 180, "H_min": 85, "H_max": 425, "P_min": 75, "P_max": 315, "type": "multistage_horizontal_sectional", "_note": "стандарт для нефтянки и шахтного водоотлива"},
+        {"code": "ЦНС 240", "Q_min": 240, "H_min": 100, "H_max": 600, "P_min": 132, "P_max": 500, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 300", "Q_min": 300, "H_min": 120, "H_max": 600, "P_min": 132, "P_max": 800, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 500", "Q_min": 500, "H_min": 80, "H_max": 800, "P_min": 200, "P_max": 1000, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 630", "Q_min": 630, "H_min": 80, "H_max": 800, "P_min": 250, "P_max": 1250, "type": "multistage_horizontal_sectional"},
+        {"code": "ЦНС 850", "Q_min": 850, "H_min": 240, "H_max": 960, "P_min": 800, "P_max": 2000, "type": "multistage_horizontal_sectional"}
+      ],
+      "price_segment": "mid",
+      "_engineer_note": "MUST ADD. Российский стандарт высоконапорных секционных насосов. Покрывает зону H=150 (ЦНС 38, 60, 105) и H=300+ (ЦНС 180, 240, 300). Производятся на десятке заводов СНГ. ЗАКРЫВАЕТ ДЫРУ H=150м.",
+      "sources": [
+        "https://pnk-nasos.ru/cns_gorizontalnye_mnogostupenchaty",
+        "https://energo1.com/catalog/promyshlennye_nasosy/sektsionnye_nasosy_vysokogo_davleniya_tsns/",
+        "https://www.hms-livgidromash.ru/catalog/nasosy-CNS-sektsionnye-podderzhaniya-plastovogo-davleniya.html"
+      ]
+    },
+
+    {
+      "id": "ena",
+      "name": "АО ЭНА (Электронасосные агрегаты)",
+      "country_origin": "Russia",
+      "category": "russian_official",
+      "already_in_db": false,
+      "ru_distributor_2026": "прямой завод (ena.ru)",
+      "minpromtorg_register": "вероятно",
+      "primary_segments": ["электронасосные агрегаты", "промышленность"],
+      "model_series_full": [],
+      "verification_pending": true,
+      "sources": ["https://www.ena.ru/"]
+    },
+
+    {
+      "id": "kapral_grand",
+      "name": "Капраль / Гранд (Россия)",
+      "country_origin": "Russia",
+      "category": "russian_official",
+      "already_in_db": false,
+      "verification_pending": true,
+      "_note": "Упоминаются в reference_competitor_pumps_brands.md, требуют отдельной проверки"
+    },
+
+    {
+      "id": "blore",
+      "name": "Блорэй / BLORAY",
+      "country_origin": "Russia/China",
+      "category": "russian_oem_china",
+      "already_in_db": false,
+      "_note": "Упомянут в reference_competitor_pumps_brands.md (новый конкурент 2026). Требует углублённого WebFetch."
+    },
+
+    {
+      "id": "jetex",
+      "name": "JETEX",
+      "country_origin": "Russia/China",
+      "category": "russian_oem_china",
+      "already_in_db": false,
+      "_note": "Упомянут в reference_competitor_pumps_brands.md как новый бренд 2026. Требует углублённого WebFetch."
+    },
+
+    {
+      "id": "vandjord",
+      "name": "Vandjord",
+      "country_origin": "Denmark/Russia",
+      "category": "russian_oem_china",
+      "already_in_db": false,
+      "_note": "Упомянут в reference_competitor_pumps_brands.md как новый конкурент. Требует углублённого WebFetch."
+    },
+
+    {
+      "id": "helyx",
+      "name": "HELYX",
+      "country_origin": "Russia/China",
+      "category": "russian_oem_china",
+      "already_in_db": false,
+      "_note": "Упомянут в reference_competitor_pumps_brands.md как новый бренд."
+    },
+
+    {
+      "id": "umi_group",
+      "name": "ЮМИ Групп",
+      "country_origin": "Russia",
+      "category": "russian_oem_china",
+      "already_in_db": false,
+      "_note": "Упомянут в reference_competitor_pumps_brands.md."
+    }
+  ],
+  "summary": {
+    "total_manufacturers_covered": 32,
+    "already_in_db": 9,
+    "new_to_add_to_producers_json": 23,
+    "high_priority_new": [
+      "istratech (преемник Grundfos Istra, импортозамещение №1)",
+      "cnp (крупнейший в РФ китаец после Kaiquan, цены доступны)",
+      "livgidromash (отраслевой стандарт для гос-сектора)",
+      "yasnogorsk (СД/СДП покрывают Q≥1500)",
+      "antey_kazprom (ЦНС покрывает H=150-600м — наша главная дыра)",
+      "sulzer_abs (XFP — крупная промышленная КНС, покрывает H=80, Q≥600)"
+    ]
+  }
+}
