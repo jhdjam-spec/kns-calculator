@@ -1,8 +1,8 @@
 """Parse pegas_full_dump.json -> structured pegas_engineering.json for kns-calculator."""
+import io
 import json
 import re
 import sys
-import io
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 

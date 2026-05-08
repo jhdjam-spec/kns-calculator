@@ -1,0 +1,53 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_description": "Runline — шкафы управления КНС с ПЛК Искра lite + SCADA. РФ, 21 год на рынке.",
+  "_source": "kns3.zip / Shkaf_Runline.pdf",
+  "panels": [
+    {
+      "id": "runline-iskra-lite-2pump",
+      "brand": "Runline",
+      "model": "ШУ КНС с ПЛК «Искра lite»",
+      "category": "with_scada",
+      "pumps_supported": 2,
+      "voltage_v": 380,
+      "power_per_pump_kw_min": 0.7,
+      "power_per_pump_kw_max": 11.0,
+      "phase": 3,
+      "ip_rating": "IP65",
+      "communication": [
+        "RS-485",
+        "Runline_SCADA",
+        "mobile_app",
+        "radio"
+      ],
+      "modbus_rtu": true,
+      "modbus_tcp": false,
+      "gsm_sms": false,
+      "remote_access": true,
+      "level_sensors_supported": [
+        "floats_x5",
+        "hydrostatic"
+      ],
+      "protections": [
+        "phase_loss",
+        "phase_skew",
+        "voltage_surge",
+        "overload",
+        "short_circuit"
+      ],
+      "voltage_220v_option": true,
+      "manufacturer_url": "runline.ru",
+      "manufacturer_region": "РФ",
+      "manufacturer_age_years": 21,
+      "manufacturer_defect_rate_pct": 0.01,
+      "deployment_geography": "РФ + СНГ + дальнее зарубежье",
+      "deployment_count": 2000,
+      "price_rub_2026": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "ГЛАВНЫЙ артефакт диспетчеризации после Aikon ЩУН. SCADA через RS-485+радио, мобильное/ПК. Поддержка 0.7-11 кВт. 5 поплавков либо гидростат. Применение по всей РФ + ближнее/дальнее зарубежье. 21 год на рынке, 2000+ объектов, брак 0.01%. Запросить прайс отдельно.",
+      "_source": "kns3.zip / Shkaf_Runline.pdf (top-level 2.4 МБ)",
+      "_added": "2026-05-08"
+    }
+  ]
+}

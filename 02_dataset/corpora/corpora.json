@@ -18,8 +18,12 @@
     "configuration": "1+1 | 2+1 | 3+1 | spd | accumulator | etc",
     "PN": "класс давления",
     "wall_thickness_min_mm": "минимальная толщина стенки",
-    "includes": ["список комплектации"],
-    "compatible_pumps": ["pump_id из pumps.json"],
+    "includes": [
+      "список комплектации"
+    ],
+    "compatible_pumps": [
+      "pump_id из pumps.json"
+    ],
     "_competitor": "флаг конкурент Серво-Юг"
   },
   "corpora": [
@@ -54,7 +58,9 @@
         "площадка обслуживания AISI",
         "поплавки 4-5 шт кабель 10м"
       ],
-      "compatible_pumps": ["kaiquan-50wqs202-3"],
+      "compatible_pumps": [
+        "kaiquan-50wqs202-3"
+      ],
       "default_cabinet": "bloplast-shuks-213",
       "_competitor": "Блорэй (Краснодар, blorey.com, +7 861 212-97-00)",
       "_source": "ARTWIND РД АВ.1382.08.23-М-НК (Мысхако/Новороссийск)",
@@ -94,7 +100,9 @@
         "огнетушитель",
         "анкерные болты Ст3 ×15"
       ],
-      "compatible_pumps": ["wilo-bl-80-200-30-2"],
+      "compatible_pumps": [
+        "wilo-bl-80-200-30-2"
+      ],
       "default_cabinet": "bloplast-shtorm-f-c-1-1",
       "_competitor": "Блорэй",
       "_source": "BloPlast Шторм-Ф(C) 1/1 BL80/20+Sf+Орс159.22",
@@ -227,7 +235,9 @@
       "corpus_material": "ПП 2500 г/м²",
       "D_mm": 1200,
       "H_mm": 2700,
-      "compatible_pumps": ["grundfos-seg-40-09-2-50b"],
+      "compatible_pumps": [
+        "grundfos-seg-40-09-2-50b"
+      ],
       "_competitor": "Plastek-Group",
       "_source": "КП 2111-19/03",
       "_added": "2026-05-08"
@@ -319,9 +329,15 @@
       "Q_m3h_typical": 140,
       "H_m_typical": 48.2,
       "configuration": "1+1",
-      "compatible_pumps": ["jetex-kms-100-80-200-30"],
+      "compatible_pumps": [
+        "jetex-kms-100-80-200-30"
+      ],
       "weight_kg": 1500,
-      "dimensions_mm": {"L": 1500, "W": 2600, "H": 2000},
+      "dimensions_mm": {
+        "L": 1500,
+        "W": 2600,
+        "H": 2000
+      },
       "includes": [
         "2 насоса JETEX KMS 100-80-200/30",
         "ШУ JETEX CPF Jet-CS 2/30/3×380/F/ABP/КВ (УПП+АВР)",
@@ -345,7 +361,12 @@
       "H_m_typical": 82,
       "configuration": "3 параллельных насоса с частотниками",
       "weight_kg": 450,
-      "dimensions_mm": {"L_min": 1500, "L_max": 1800, "W": 1150, "H": 1400},
+      "dimensions_mm": {
+        "L_min": 1500,
+        "L_max": 1800,
+        "W": 1150,
+        "H": 1400
+      },
       "includes": [
         "3 насоса JETEX V 20-7",
         "ШУ JETEX CP Jet-FM (ПЧ на каждый насос)",
@@ -367,7 +388,11 @@
       "H_m_typical": 75,
       "configuration": "3 насоса MLV20-5 (5 ступеней)",
       "weight_kg": 315,
-      "dimensions_mm": {"L": 1700, "W": 1085, "H": 1645},
+      "dimensions_mm": {
+        "L": 1700,
+        "W": 1085,
+        "H": 1645
+      },
       "price_rub_2026": 3500650,
       "includes": [
         "3 насоса MLV20-5 P=5,5 кВт",
@@ -422,7 +447,9 @@
       "H_m_typical": 12.04,
       "configuration": "2+1 CNP 250WQ600",
       "price_rub_2026": 14100000,
-      "compatible_pumps": ["cnp-250wq600-10-22"],
+      "compatible_pumps": [
+        "cnp-250wq600-10-22"
+      ],
       "_competitor": "ПВТ Краснодар",
       "_source": "ТКП ПВТ 822005890-ОК-НВК-6.4",
       "_added": "2026-05-08"
@@ -438,7 +465,9 @@
       "Q_m3h_typical": 23,
       "H_m_typical": 6,
       "configuration": "1+1",
-      "compatible_pumps": ["cnp-50wq12-10-075"],
+      "compatible_pumps": [
+        "cnp-50wq12-10-075"
+      ],
       "_competitor": "ПВТ Краснодар",
       "_source": "2021.ОК-221-НВК",
       "_added": "2026-05-08"
@@ -455,20 +484,268 @@
       "_competitor": "Промбэйс (prombase.ru) — для ливневых очистных 'ЭкоВод'",
       "_source": "R-GRR-20-0063-ИОС3 НК",
       "_added": "2026-05-08"
+    },
+    {
+      "id": "geon-vkns-sp-1159",
+      "brand": "ГК ГЕОН",
+      "model": "ВКНС-СП-1159",
+      "type": "submersible_sewage_station_underground",
+      "corpus_material": "стеклопластик",
+      "D_mm": 3600,
+      "H_mm": 10600,
+      "L_mm": null,
+      "anchor_plate_D_mm": 4200,
+      "Q_m3h_typical": 1159,
+      "H_m_typical": 11,
+      "configuration": "2+1_redundant",
+      "PN": null,
+      "wall_thickness_min_mm": null,
+      "includes": [
+        "Корпус стеклопластиковый D3600 H10600",
+        "Анкерная плита D4200",
+        "2 насоса Fancy 350WQ1400-75 + 1 резерв",
+        "Затворы DN350",
+        "Обратные клапаны",
+        "Цепи нерж. сталь 316",
+        "Шкаф управления"
+      ],
+      "price_rub_2026": null,
+      "price_segment": "premium",
+      "manufacturer_url": "https://geongroup.ru",
+      "manufacturer_region": "Н.Новгород",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "ГК ГЕОН — 13 лет на рынке, заказчики OZON/Wildberries. Один из 4 ТКП по объекту 'ООО Центральный Маркет'. Цена не указана в кп, нужен запрос.",
+      "_source": "kns3.zip / GEON_VKNS_SP_1159",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "neowater-kns-dryroom-medium",
+      "brand": "Нео Дрейн / Neo Water",
+      "model": "КНС с сухой камерой 250 м³",
+      "type": "submersible_sewage_station_dry_well",
+      "corpus_material": "стеклопластик",
+      "D_mm": 2400,
+      "H_mm": 6000,
+      "L_mm": null,
+      "anchor_plate_D_mm": 2800,
+      "Q_m3h_typical": 100,
+      "H_m_typical": 20,
+      "configuration": "1+1+1_warehouse",
+      "PN": null,
+      "wall_thickness_min_mm": 12,
+      "includes": [
+        "Стеклопластиковый корпус с сухой камерой",
+        "Лотки серий NEO-TOP/NORMAL/PLUS/MASSIVE A15-F900",
+        "Резервуары до 250 м³",
+        "Насосы по подбору"
+      ],
+      "price_rub_2026": null,
+      "price_segment": "standard",
+      "manufacturer_url": "https://neowater.ru",
+      "manufacturer_region": "Пересвет МО",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Полный завод 2000 кв.м в Пересвете. Делают и КНС с сухой камерой и лотки DN90-500 (NEO-TOP/NORMAL/PLUS/MASSIVE) и резервуары до 250 м³. Реальные размеры/цены требуют запроса по объекту.",
+      "_source": "kns3.zip / Catalog_NeoWater + Catalog_NeoDrain",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "bioproject-kns-typical",
+      "brand": "ООО «БиоПроект»",
+      "model": "КНС типовая",
+      "type": "submersible_sewage_station_underground",
+      "corpus_material": "стеклопластик",
+      "D_mm": 2000,
+      "H_mm": 5000,
+      "L_mm": null,
+      "anchor_plate_D_mm": 2400,
+      "Q_m3h_typical": 50,
+      "H_m_typical": 15,
+      "configuration": "1+1+1_warehouse",
+      "PN": null,
+      "wall_thickness_min_mm": 10,
+      "includes": [
+        "Стеклопластиковый корпус",
+        "КНС/ЛОС/КОС/ёмкости в одном производителе"
+      ],
+      "price_rub_2026": null,
+      "price_segment": "premium",
+      "manufacturer_url": null,
+      "manufacturer_region": "Пересвет МО",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "С 2018 года. Премиум-заказчики: РЖД, Минобороны, Росавтодор, Металлоинвест, Мосводоканал, ГК ЕКС. Конкурент-эталон по премиум-сегменту.",
+      "_source": "kns3.zip / BioProekt_present",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "gis-ekovell-kns-6-913",
+      "brand": "ООО «ГИС»",
+      "model": "ЭКОВЭЛЛ КНС-6-9.13",
+      "type": "submersible_sewage_station_underground",
+      "corpus_material": "concrete_lined",
+      "D_mm": 1500,
+      "H_mm": 4000,
+      "L_mm": null,
+      "anchor_plate_D_mm": null,
+      "Q_m3h_typical": 6,
+      "H_m_typical": 9.13,
+      "configuration": "1+1_redundant",
+      "PN": null,
+      "wall_thickness_min_mm": null,
+      "includes": [
+        "Ж/б корпус с футеровкой ТУ 23.61.12-001-23107031-2017",
+        "Газоанализатор Хоббит-Т",
+        "ШУ ГИС ШУ1",
+        "Насос ГИС SG.40.075.2.5.0D"
+      ],
+      "price_rub_2026": null,
+      "price_segment": "standard",
+      "manufacturer_url": null,
+      "manufacturer_region": "Симферополь, Крым",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "УНИКАЛЬНАЯ технология — ж/б футерованные КНС (отличаются от стеклопластика и полимера). НОВЫЙ corpus_material='concrete_lined' добавлен. ТУ 23.61.12-001-23107031-2017.",
+      "_source": "kns3.zip / GIS-KNS-6-9,13-2-02072025-1",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "kit-minteko-sbo-30",
+      "brand": "КИТ ПРО / ГК Минтеко",
+      "model": "СБО-30",
+      "type": "biological_treatment_unit",
+      "corpus_material": "полипропилен",
+      "D_mm": 2000,
+      "H_mm": 4500,
+      "L_mm": null,
+      "anchor_plate_D_mm": 2300,
+      "Q_m3h_typical": 5.4,
+      "H_m_typical": null,
+      "configuration": "lOS_30_users",
+      "PN": null,
+      "wall_thickness_min_mm": null,
+      "includes": [
+        "Биологическая очистка СБО 4-30 чел",
+        "5 типоразмерных линеек",
+        "Дилерские скидки 30/35/40%"
+      ],
+      "price_rub_2026": 432000,
+      "price_segment": "budget",
+      "manufacturer_url": "https://kits.minteko.ru",
+      "manufacturer_region": "РФ",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Полный прайс. 5 линеек: 108-432 тыс ₽ (СБО-4 → СБО-30). Конкурент PEGAS Lite. Дилерские: -30/35/40%. Загрузить в pricing_segments как референс.",
+      "_source": "kns3.zip / KIT_septik prices",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "aliva-kns-6-complex",
+      "brand": "АЛИВА",
+      "model": "АЛИВА-КНС-6 (комплекс из 4 модулей)",
+      "type": "submersible_sewage_station_underground",
+      "corpus_material": "стеклопластик",
+      "D_mm": 2400,
+      "H_mm": 5500,
+      "L_mm": null,
+      "anchor_plate_D_mm": 2800,
+      "Q_m3h_typical": 60,
+      "H_m_typical": 15,
+      "configuration": "1+1_redundant",
+      "PN": null,
+      "wall_thickness_min_mm": null,
+      "includes": [
+        "АЛИВА-СЕ1.520131 (септик)",
+        "АЛИВА-НЕ-10 (насосный модуль)",
+        "АЛИВА-СС-35.3 (стабилизатор)",
+        "АЛИВА-КНС-6 (КНС)"
+      ],
+      "price_rub_2026": null,
+      "price_segment": "standard",
+      "manufacturer_url": null,
+      "manufacturer_region": "РФ",
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Комплекс из 4 модулей — септик + насосный модуль + стабилизатор + КНС. Полная схема локальной канализации.",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08"
     }
   ],
   "manufacturers_summary": [
-    {"brand": "Серво-Юг", "region": "Краснодар", "specialty": "стеклопластиковые КНС/НС/ЛОС полного цикла", "_owner_project": true},
-    {"brand": "Блорэй", "region": "Краснодар", "url": "blorey.com", "phone": "+7 861 212-97-00", "specialty": "BloPlast PV/SPT/КОП линейка", "competitor_priority": "high"},
-    {"brand": "АКВАТЕХ", "region": "Москва", "specialty": "блочно-модульные КНС/ЛОС/ПНС/НЕ/Био/ЖУ", "competitor_priority": "high"},
-    {"brand": "HELYX", "region": "Москва (Иваново)", "specialty": "стеклопластик, премиум сегмент", "competitor_priority": "medium"},
-    {"brand": "Plastek-Group", "region": "Волгоград/Москва", "url": "plastekogroup.ru", "specialty": "ПП-КНС/септики/биостанции 2500 г/м²", "competitor_priority": "medium"},
-    {"brand": "Standartpark/Rainpark", "region": "Краснодар", "phone": "+7-938-423-15-19", "specialty": "BIOLINE/DSLU/PLS/TLT линейка", "competitor_priority": "high"},
-    {"brand": "ИНБИОКС/ONIS", "region": "Ростов-на-Дону", "specialty": "крупные drainage Q>500 л/с", "competitor_priority": "medium"},
-    {"brand": "ПВТ", "region": "Краснодар", "url": "pvt23.ru", "phone": "+7 989 122 7457", "specialty": "Стеклопластиковые КНС полного цикла", "competitor_priority": "high"},
-    {"brand": "ANTARUS", "region": "Москва", "specialty": "MLV-серия повысительные + НК2 канализационные", "competitor_priority": "medium"},
-    {"brand": "JETEX", "region": "РФ", "url": "jetexpumps.ru", "specialty": "KHMF/V серии скид-станции пожарные/повысительные", "competitor_priority": "medium"},
-    {"brand": "Vandjord Group", "region": "Москва", "url": "vandjord.com", "specialty": "канализационные cutter SG-серия (китайский OEM)", "competitor_priority": "low"},
-    {"brand": "Промбэйс", "url": "prombase.ru", "specialty": "разделительные камеры для ливневой 'ЭкоВод'", "competitor_priority": "low"}
+    {
+      "brand": "Серво-Юг",
+      "region": "Краснодар",
+      "specialty": "стеклопластиковые КНС/НС/ЛОС полного цикла",
+      "_owner_project": true
+    },
+    {
+      "brand": "Блорэй",
+      "region": "Краснодар",
+      "url": "blorey.com",
+      "phone": "+7 861 212-97-00",
+      "specialty": "BloPlast PV/SPT/КОП линейка",
+      "competitor_priority": "high"
+    },
+    {
+      "brand": "АКВАТЕХ",
+      "region": "Москва",
+      "specialty": "блочно-модульные КНС/ЛОС/ПНС/НЕ/Био/ЖУ",
+      "competitor_priority": "high"
+    },
+    {
+      "brand": "HELYX",
+      "region": "Москва (Иваново)",
+      "specialty": "стеклопластик, премиум сегмент",
+      "competitor_priority": "medium"
+    },
+    {
+      "brand": "Plastek-Group",
+      "region": "Волгоград/Москва",
+      "url": "plastekogroup.ru",
+      "specialty": "ПП-КНС/септики/биостанции 2500 г/м²",
+      "competitor_priority": "medium"
+    },
+    {
+      "brand": "Standartpark/Rainpark",
+      "region": "Краснодар",
+      "phone": "+7-938-423-15-19",
+      "specialty": "BIOLINE/DSLU/PLS/TLT линейка",
+      "competitor_priority": "high"
+    },
+    {
+      "brand": "ИНБИОКС/ONIS",
+      "region": "Ростов-на-Дону",
+      "specialty": "крупные drainage Q>500 л/с",
+      "competitor_priority": "medium"
+    },
+    {
+      "brand": "ПВТ",
+      "region": "Краснодар",
+      "url": "pvt23.ru",
+      "phone": "+7 989 122 7457",
+      "specialty": "Стеклопластиковые КНС полного цикла",
+      "competitor_priority": "high"
+    },
+    {
+      "brand": "ANTARUS",
+      "region": "Москва",
+      "specialty": "MLV-серия повысительные + НК2 канализационные",
+      "competitor_priority": "medium"
+    },
+    {
+      "brand": "JETEX",
+      "region": "РФ",
+      "url": "jetexpumps.ru",
+      "specialty": "KHMF/V серии скид-станции пожарные/повысительные",
+      "competitor_priority": "medium"
+    },
+    {
+      "brand": "Vandjord Group",
+      "region": "Москва",
+      "url": "vandjord.com",
+      "specialty": "канализационные cutter SG-серия (китайский OEM)",
+      "competitor_priority": "low"
+    },
+    {
+      "brand": "Промбэйс",
+      "url": "prombase.ru",
+      "specialty": "разделительные камеры для ливневой 'ЭкоВод'",
+      "competitor_priority": "low"
+    }
   ]
 }

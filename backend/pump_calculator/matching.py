@@ -94,7 +94,12 @@ def filter_by_wastewater_type(
             continue
         if wastewater_type not in p.get("wastewater_compat", []):
             continue
-        if p.get("free_passage_mm", 0) < free_passage_min:
+        # NB: free_passage_mm может быть null у насосов чистой воды (booster_station,
+        # CWP, жокей-насосы) — там свободный проход неприменим. Трактуем null как 0
+        # (для wastewater_compat=[clean_water]/fire_protection это не блокирует, т.к.
+        # для них free_passage_required=0).
+        fp = p.get("free_passage_mm") or 0
+        if fp < free_passage_min:
             continue
         if p.get("impeller") and p["impeller"] not in allowed_impellers:
             continue

@@ -1,0 +1,48 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_description": "ESTL-Control ECLmini — двухнасосные/однонасосные шкафы по уровнемеру 4-20мА.",
+  "_source": "kns3.zip / 1294907_PGK_2025",
+  "panels": [
+    {
+      "id": "estl-eclmini-380-15-18-s1n",
+      "brand": "ESTL-Control",
+      "model": "ECLmini -380[15-18]-S1N-NNN1",
+      "category": "level_based",
+      "pumps_supported": 2,
+      "voltage_v": 380,
+      "power_per_pump_kw_min": 4.0,
+      "power_per_pump_kw_max": 11.0,
+      "phase": 3,
+      "ip_rating": "IP65",
+      "communication": [
+        "4-20mA"
+      ],
+      "modbus_rtu": false,
+      "modbus_tcp": false,
+      "gsm_sms": false,
+      "remote_access": false,
+      "level_sensors_supported": [
+        "ultrasonic_il-ec-a_0-15m",
+        "floats"
+      ],
+      "protections": [
+        "overload",
+        "short_circuit",
+        "phase_loss"
+      ],
+      "voltage_220v_option": false,
+      "manufacturer_url": null,
+      "manufacturer_region": "РФ",
+      "manufacturer_age_years": null,
+      "manufacturer_defect_rate_pct": null,
+      "deployment_geography": "РФ",
+      "deployment_count": null,
+      "price_rub_2026": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Двухнасосный с ультразвуковым уровнемером IL-EC-A 0-15м, 4-20 мА. Использован в АО ПГК Татьянка. Также есть -380[7-10]-K2N-NNNN (однонасосный).",
+      "_source": "kns3.zip / 1294907_PGK_2025",
+      "_added": "2026-05-08"
+    }
+  ]
+}

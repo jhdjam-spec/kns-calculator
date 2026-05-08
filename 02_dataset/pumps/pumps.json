@@ -13952,6 +13952,365 @@
       "_engineer_note": "НОВЫЙ российский производитель — Средневолжский машзавод (Самара). Линейка КИТ КПА — крупные погружные канализационные. F-класс изоляции, 380 В, 1К комплектация. Импортозамещение Grundfos/Wilo для крупных КНС.",
       "_source": "kns2.zip 250-18.150.18,5.380.1K.pdf (паспорт + КП №628 от 19.04.2023)",
       "_added": "2026-05-08"
+    },
+    {
+      "id": "cnp-80wq40-12-3qg",
+      "brand": "CNP",
+      "model": "80WQ40-12-3QG",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 60,
+      "envelope": {
+        "Q_min_m3h": 25,
+        "Q_max_m3h": 60,
+        "H_min_m": 8,
+        "H_max_m": 16,
+        "Q_BEP_m3h": 40,
+        "H_BEP_m": 12,
+        "eta_BEP_pct": 55.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 3.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 80,
+        "mating_method": "quick_coupling"
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "imported_china",
+        "distributor": "Аркада"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Найдено в КП #28052025_1 ООО «Серво-Полимер» — наша КНС D1600 H8500 для Симферополя. Q=40 H=12 P=3кВт DN80 муфта QG. Эталон собственной сделки.",
+      "_source": "kns3.zip / KP_28052025.txt",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "masdaf-nmm-100-160",
+      "brand": "MAS DAF",
+      "model": "NMM 100-160",
+      "type": "booster_station",
+      "impeller": "centrifugal_closed",
+      "free_passage_mm": null,
+      "envelope": {
+        "Q_min_m3h": 240,
+        "Q_max_m3h": 356,
+        "H_min_m": 21.6,
+        "H_max_m": 41.8,
+        "Q_BEP_m3h": 300,
+        "H_BEP_m": 32,
+        "eta_BEP_pct": 75.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 27.9,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP55"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "imported_turkey",
+        "distributor": "MAS DAF (Турция) — официальный дилер РФ"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "End Suction Monoblock — НОВЫЙ для нас турецкий бренд. Проверить по паспорту — кривая Q-H, NPSHr, точные точки BEP.",
+      "_source": "kns3.zip / архив с TANECO либо ПГК Татьянка",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "shtorm-nes-100-80-260-75-2",
+      "brand": "Шторм Ф",
+      "model": "NES 100-80-260-75-2",
+      "type": "booster_station",
+      "impeller": "centrifugal_closed",
+      "free_passage_mm": null,
+      "envelope": {
+        "Q_min_m3h": 100,
+        "Q_max_m3h": 200,
+        "H_min_m": 60,
+        "H_max_m": 100,
+        "Q_BEP_m3h": 150,
+        "H_BEP_m": 80,
+        "eta_BEP_pct": 70.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 75.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 80
+      },
+      "wastewater_compat": [
+        "clean_water"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "domestic_manufacturer",
+        "distributor": "ООО «Шторм Ф» (РФ)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "ПНС повышения давления, комплектный блок. Цена/конкретика не указаны в массиве — ждём паспорт.",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "grundfos-cdm-10-11",
+      "brand": "Grundfos",
+      "model": "CDM 10-11",
+      "type": "booster_station",
+      "impeller": "centrifugal_closed",
+      "free_passage_mm": null,
+      "envelope": {
+        "Q_min_m3h": 4,
+        "Q_max_m3h": 14,
+        "H_min_m": 15,
+        "H_max_m": 65,
+        "Q_BEP_m3h": 10,
+        "H_BEP_m": 30,
+        "eta_BEP_pct": 60.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP55"
+      },
+      "discharge": {
+        "DN_mm": 32
+      },
+      "wastewater_compat": [
+        "clean_water",
+        "fire_protection"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "imported_eu",
+        "distributor": "Grundfos РФ (через дилеров)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт.",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "grundfos-unilift-ap12-40-06-1",
+      "brand": "Grundfos",
+      "model": "Unilift AP12.40.06.1",
+      "type": "submersible_sewage",
+      "impeller": "vortex",
+      "free_passage_mm": 35,
+      "envelope": {
+        "Q_min_m3h": 0.5,
+        "Q_max_m3h": 5,
+        "H_min_m": 1,
+        "H_max_m": 10,
+        "Q_BEP_m3h": 3.2,
+        "H_BEP_m": 7.8,
+        "eta_BEP_pct": 45.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 0.6,
+        "voltage_v": 220,
+        "phase": 1,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 40
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "imported_eu",
+        "distributor": "Grundfos РФ"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Маломощный погружной для бытового применения. Однофазный 220В. Free passage 35 мм — ограниченное применение.",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "gis-sg-40-075-25-0d",
+      "brand": "ГИС",
+      "model": "SG.40.075.2.5.0D",
+      "type": "submersible_sewage",
+      "impeller": "channel",
+      "free_passage_mm": 40,
+      "envelope": {
+        "Q_min_m3h": 2,
+        "Q_max_m3h": 10,
+        "H_min_m": 5,
+        "H_max_m": 15,
+        "Q_BEP_m3h": 6,
+        "H_BEP_m": 9.13,
+        "eta_BEP_pct": 50.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 0.75,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 40
+      },
+      "wastewater_compat": [
+        "domestic"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "domestic_manufacturer",
+        "distributor": "ООО «ГИС» (Симферополь)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Используется в КНС ГИС ЭКОВЭЛЛ (ж/б футерованных). Малая КНС бытового применения. Точные характеристики уточнить по PDF КНС-6,9.13.",
+      "_source": "kns3.zip / GIS-KNS-6-9,13-2-02072025-1",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "fancy-350wq1400-75-6",
+      "brand": "Fancy",
+      "model": "350WQ1400-75-6",
+      "type": "submersible_sewage",
+      "impeller": "channel",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 800,
+        "Q_max_m3h": 1800,
+        "H_min_m": 50,
+        "H_max_m": 90,
+        "Q_BEP_m3h": 1400,
+        "H_BEP_m": 75,
+        "eta_BEP_pct": 75.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 350.0,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 350
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "imported_china",
+        "distributor": "ГК ГЕОН (Н.Новгород)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Найдено в ГЕОН ВКНС-СП-1159 (Q=1159 м³/ч). Очень крупный насос — DN350. Power 350 кВт. Проверить по паспорту, оценка по табличному обозначению.",
+      "_source": "kns3.zip / GEON_VKNS_SP_1159",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "fgpu-120-16",
+      "brand": "ФГПУ",
+      "model": "ФГПУ 120/16",
+      "type": "vertical_dry_well",
+      "impeller": "channel",
+      "free_passage_mm": 80,
+      "envelope": {
+        "Q_min_m3h": 60,
+        "Q_max_m3h": 180,
+        "H_min_m": 8,
+        "H_max_m": 22,
+        "Q_BEP_m3h": 120,
+        "H_BEP_m": 16,
+        "eta_BEP_pct": 65.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 7.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP54"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "industrial",
+        "drainage"
+      ],
+      "price_segment": "standard",
+      "available_ru": {
+        "status": "domestic_manufacturer",
+        "distributor": "Завод ФГПУ (РФ)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Российский ПОЛУПОГРУЖНОЙ насос (новый тип `vertical_dry_well` для нашей БД — отличается от submersible тем что мотор сухой над уровнем стоков). Применён в АО «ПГК» Татьянка для песколовушек. Q=120 H=16.",
+      "_source": "kns3.zip / 1294907_PGK_2025",
+      "_added": "2026-05-08"
+    },
+    {
+      "id": "kaiquan-wq2290-6155-300",
+      "brand": "KAIQUAN",
+      "model": "WQ2290-6155-300",
+      "type": "submersible_sewage",
+      "impeller": "channel",
+      "free_passage_mm": 120,
+      "envelope": {
+        "Q_min_m3h": 400,
+        "Q_max_m3h": 900,
+        "H_min_m": 4,
+        "H_max_m": 10,
+        "Q_BEP_m3h": 650,
+        "H_BEP_m": 7,
+        "eta_BEP_pct": 70.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 14.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68"
+      },
+      "discharge": {
+        "DN_mm": 300
+      },
+      "wastewater_compat": [
+        "domestic",
+        "drainage",
+        "industrial"
+      ],
+      "price_segment": "budget",
+      "available_ru": {
+        "status": "imported_china",
+        "distributor": "Аркада"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа.",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08"
     }
   ],
   "_NOT_RECOMMENDED": [

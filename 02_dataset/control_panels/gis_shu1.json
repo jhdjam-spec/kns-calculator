@@ -1,0 +1,46 @@
+{
+  "_version": "0.1",
+  "_updated": "2026-05-08",
+  "_description": "ГИС ШУ1 — простой шкаф для КНС ЭКОВЭЛЛ, поплавки+АВР+светозвук.",
+  "_source": "kns3.zip / GIS_KNS_2025",
+  "panels": [
+    {
+      "id": "gis-shu1-2pump-naruzhnyi",
+      "brand": "ГИС",
+      "model": "ШУ1 (1р/1р, наружный)",
+      "category": "level_based",
+      "pumps_supported": 2,
+      "voltage_v": 380,
+      "power_per_pump_kw_min": 0.55,
+      "power_per_pump_kw_max": 5.5,
+      "phase": 3,
+      "ip_rating": "IP54",
+      "communication": [],
+      "modbus_rtu": false,
+      "modbus_tcp": false,
+      "gsm_sms": false,
+      "remote_access": false,
+      "level_sensors_supported": [
+        "floats"
+      ],
+      "protections": [
+        "AVR",
+        "light_sound_alarm",
+        "overload",
+        "short_circuit"
+      ],
+      "voltage_220v_option": false,
+      "manufacturer_url": null,
+      "manufacturer_region": "Симферополь, Крым",
+      "manufacturer_age_years": null,
+      "manufacturer_defect_rate_pct": null,
+      "deployment_geography": "Крым",
+      "deployment_count": null,
+      "price_rub_2026": null,
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Простой шкаф для КНС ГИС ЭКОВЭЛЛ. Без удалённой связи. Поплавки + АВР + светозвуковая сигнализация.",
+      "_source": "kns3.zip / GIS-KNS-6-9,13-2-02072025-1",
+      "_added": "2026-05-08"
+    }
+  ]
+}
