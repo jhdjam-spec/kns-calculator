@@ -493,6 +493,89 @@ def list_regulations(category: str | None = None) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────────────
+# Phase 31: Encyclopedia (drawer + /teach)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.get("/encyclopedia/topics", tags=["encyclopedia"])
+def list_encyclopedia_topics() -> dict:
+    """Список всех тем энциклопедии для главной /teach."""
+    from pump_calculator.encyclopedia import list_topics
+    return {"topics": list_topics()}
+
+
+@app.get("/encyclopedia/topic/{topic_key}", tags=["encyclopedia"])
+def get_encyclopedia_topic(topic_key: str) -> dict:
+    """Полная статья по теме (markdown + интерактивные примеры)."""
+    from pump_calculator.encyclopedia import get_topic_full
+    result = get_topic_full(topic_key)
+    if result is None:
+        raise HTTPException(status_code=404, detail=f"Topic not found: {topic_key}")
+    return result
+
+
+@app.get("/encyclopedia/section/{topic_key}", tags=["encyclopedia"])
+def get_encyclopedia_section(topic_key: str, anchor: str) -> dict:
+    """Фрагмент статьи по якорю заголовка (для drill-down drawer)."""
+    from pump_calculator.encyclopedia import get_topic_section
+    result = get_topic_section(topic_key, anchor)
+    if result is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Section not found: topic={topic_key}, anchor={anchor}",
+        )
+    return result
+
+
+@app.get("/encyclopedia/examples", tags=["encyclopedia"])
+def list_encyclopedia_examples() -> dict:
+    """Эталонные примеры для запуска из энциклопедии."""
+    from pump_calculator.encyclopedia import EXAMPLES_REGISTRY
+    return {
+        "examples": [
+            {
+                "id": e.id,
+                "title": e.title,
+                "topic": e.topic,
+                "description": e.description,
+                "api_endpoint": e.api_endpoint,
+                "payload": e.payload,
+                "expected_outcome": e.expected_outcome,
+            }
+            for e in EXAMPLES_REGISTRY
+        ],
+    }
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 32: Project (главный flow — единый визард)
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.get("/project/presets", tags=["project"])
+def list_project_presets() -> dict:
+    """13 типовых пресетов проекта (ИЖС, ЖК, АЗС, ТРЦ и т.п.)."""
+    from pump_calculator.project import list_presets
+    return {"presets": list_presets()}
+
+
+@app.post("/project/calculate", tags=["project"])
+def calculate_project_endpoint(payload: dict) -> dict:
+    """Главный оркестратор: запускает все подсистемы по проекту.
+
+    Возвращает ProjectResult со всеми расчётами + сводную BOM + ссылки на нормативы.
+    Это сердце калькулятора — пользователь вводит 5-7 полей раз и получает
+    готовое решение проектировщика.
+    """
+    from pump_calculator.project import ProjectInput, calculate_project
+    try:
+        inputs = ProjectInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    return calculate_project(inputs).model_dump()
+
+
+# ──────────────────────────────────────────────────────────────────────────
 # Phase 25-30: Climate, Structural, LOS, Reports, Complexes, BOM
 # ──────────────────────────────────────────────────────────────────────────
 

@@ -35,15 +35,21 @@ export function SiteNav() {
           </div>
         </a>
 
-        <nav className="hidden lg:flex items-center gap-8 text-sm text-ink-300">
-          <a href="#how" className="hover:text-ink-50 transition-colors duration-fast">
-            Как это работает
+        <nav className="hidden lg:flex items-center gap-6 text-sm text-ink-300">
+          <a href="/project" className="hover:text-accent-500 transition-colors duration-fast font-medium">
+            Проект целиком
+          </a>
+          <a href="/storm/minimal" className="hover:text-ink-50 transition-colors duration-fast">
+            Ливнёвка
+          </a>
+          <a href="/tanks" className="hover:text-ink-50 transition-colors duration-fast">
+            Резервуары
+          </a>
+          <a href="/teach" className="hover:text-ink-50 transition-colors duration-fast">
+            Энциклопедия
           </a>
           <a href="#calculator" className="hover:text-ink-50 transition-colors duration-fast">
-            Калькулятор
-          </a>
-          <a href="#trust" className="hover:text-ink-50 transition-colors duration-fast">
-            Производство
+            Быстрый подбор
           </a>
           <a href="#faq" className="hover:text-ink-50 transition-colors duration-fast">
             FAQ
@@ -59,10 +65,10 @@ export function SiteNav() {
             8 (800) 222-44-57
           </a>
           <a
-            href="#calculator"
-            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-ink-50 text-ink-950 text-sm font-medium hover:bg-accent-500 transition-colors duration-base"
+            href="/project"
+            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-accent-500 text-ink-950 text-sm font-medium hover:bg-accent-400 transition-colors duration-base"
           >
-            Подобрать
+            Проект →
             <ArrowRight
               size={14}
               strokeWidth={2}

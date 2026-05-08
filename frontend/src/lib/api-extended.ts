@@ -1,0 +1,255 @@
+/**
+ * Расширенный API-клиент для Phase 22-32.
+ * Покрывает: fire_water, water_supply, electrical (через project),
+ * climate, structural, los, encyclopedia, project (главный flow).
+ *
+ * Базовый префикс — `/api/backend/*` (см. lib/api.ts).
+ */
+
+const API_PREFIX = "/api/backend";
+
+async function postJSON<T>(endpoint: string, payload: unknown): Promise<T> {
+  const res = await fetch(`${API_PREFIX}${endpoint}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+  return res.json() as Promise<T>;
+}
+
+async function getJSON<T>(endpoint: string): Promise<T> {
+  const res = await fetch(`${API_PREFIX}${endpoint}`);
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+  return res.json() as Promise<T>;
+}
+
+// ─── Project (главный flow) ─────────────────────────────────────────
+
+export interface ProjectPresetMeta {
+  key: string;
+  title: string;
+  description: string;
+  default_subsystems: Record<string, boolean>;
+}
+
+export interface ProjectInput {
+  project_name: string;
+  project_code?: string;
+  customer?: string;
+  preset: string;
+  region_city: string;
+  population: number;
+  floors: number;
+  volume_m3: number;
+  area_m2?: number;
+  subsystems?: Record<string, boolean>;
+  has_groundwater?: boolean;
+  soil_type?: string;
+  is_atex_zone?: boolean;
+}
+
+export interface SubsystemResult {
+  name: string;
+  status: "ok" | "warning" | "skipped" | "error";
+  summary: string;
+  data: Record<string, unknown>;
+  references?: Array<Record<string, string>>;
+  warnings?: string[];
+}
+
+export interface ProjectResult {
+  project_name: string;
+  project_code: string;
+  preset: string;
+  kns: SubsystemResult | null;
+  vns_potable: SubsystemResult | null;
+  vns_fire: SubsystemResult | null;
+  storm: SubsystemResult | null;
+  los: SubsystemResult | null;
+  electrical: SubsystemResult | null;
+  climate: SubsystemResult | null;
+  structural: SubsystemResult | null;
+  total_estimated_cost_rub: number;
+  total_warnings: number;
+  bom: Array<Record<string, unknown>>;
+  references_consolidated: Array<Record<string, string>>;
+  notes: string[];
+}
+
+export const projectApi = {
+  listPresets: () => getJSON<{ presets: ProjectPresetMeta[] }>("/project/presets"),
+  calculate: (input: ProjectInput) =>
+    postJSON<ProjectResult>("/project/calculate", input),
+};
+
+// ─── Encyclopedia ───────────────────────────────────────────────────
+
+export interface EncyclopediaTopicMeta {
+  key: string;
+  title: string;
+  short_description: string;
+  api_module: string;
+  sections_count: number;
+}
+
+export interface EncyclopediaExample {
+  id: string;
+  title: string;
+  topic: string;
+  description: string;
+  api_endpoint: string;
+  payload: Record<string, unknown>;
+  expected_outcome: string;
+}
+
+export interface EncyclopediaTopic {
+  key: string;
+  title: string;
+  short_description: string;
+  api_module: string;
+  content_markdown: string;
+  examples: EncyclopediaExample[];
+}
+
+export interface EncyclopediaSection {
+  topic: string;
+  section_anchor: string;
+  section_title: string;
+  content_markdown: string;
+}
+
+export const encyclopediaApi = {
+  listTopics: () =>
+    getJSON<{ topics: EncyclopediaTopicMeta[] }>("/encyclopedia/topics"),
+  getTopic: (key: string) =>
+    getJSON<EncyclopediaTopic>(`/encyclopedia/topic/${key}`),
+  getSection: (topic: string, anchor: string) =>
+    getJSON<EncyclopediaSection>(
+      `/encyclopedia/section/${topic}?anchor=${encodeURIComponent(anchor)}`,
+    ),
+  listExamples: () =>
+    getJSON<{ examples: EncyclopediaExample[] }>("/encyclopedia/examples"),
+};
+
+// ─── Fire water (Phase 22) ──────────────────────────────────────────
+
+export interface FireScenarioInput {
+  occupancy: string;
+  building_class?: string;
+  volume_m3: number;
+  height_m?: number;
+  floors: number;
+  population?: number;
+  fire_duration_h?: number;
+  has_internal_system?: boolean;
+  water_source?: string;
+  sprinkler_flow_lps?: number;
+}
+
+export const fireWaterApi = {
+  calculate: (input: FireScenarioInput) =>
+    postJSON<Record<string, unknown>>("/fire-water/calc", input),
+};
+
+// ─── Water supply (Phase 23) ────────────────────────────────────────
+
+export interface WaterScenarioInput {
+  building_type: string;
+  population?: number;
+  rooms?: number;
+  beds?: number;
+  visits_per_day?: number;
+  area_m2?: number;
+  floors?: number;
+  has_hot_water?: boolean;
+  has_irrigation?: boolean;
+  irrigation_area_m2?: number;
+  water_source?: string;
+}
+
+export const waterSupplyApi = {
+  calculate: (input: WaterScenarioInput) =>
+    postJSON<Record<string, unknown>>("/water/demand", input),
+  listNorms: () => getJSON<Record<string, unknown>>("/water/norms"),
+};
+
+// ─── Climate (Phase 25) ─────────────────────────────────────────────
+
+export interface BurialDepthInput {
+  region_city: string;
+  soil_type?: string;
+  pipe_dn_mm?: number;
+  has_groundwater?: boolean;
+}
+
+export const climateApi = {
+  burialDepth: (input: BurialDepthInput) =>
+    postJSON<Record<string, unknown>>("/climate/burial-depth", input),
+  loads: (input: Record<string, unknown>) =>
+    postJSON<Record<string, unknown>>("/climate/loads", input),
+};
+
+// ─── Structural (Phase 26) ──────────────────────────────────────────
+
+export interface StructuralInput {
+  diameter_m: number;
+  height_m: number;
+  material: string;
+  wall_thickness_mm?: number;
+  groundwater_depth_m?: number;
+  burial_depth_m: number;
+  soil_type?: string;
+  fill_level_pct?: number;
+}
+
+export const structuralApi = {
+  ballast: (input: StructuralInput) =>
+    postJSON<Record<string, unknown>>("/structural/ballast", input),
+  wallThickness: (input: StructuralInput) =>
+    postJSON<Record<string, unknown>>("/structural/wall-thickness", input),
+  ladder: (input: { height_m: number; pit_diameter_m: number; is_corrosive_environment?: boolean }) =>
+    postJSON<Record<string, unknown>>("/structural/ladder", input),
+};
+
+// ─── LOS (Phase 27) ─────────────────────────────────────────────────
+
+export interface LOSInput {
+  source_type: string;
+  flow_m3_per_day: number;
+  discharge_category: string;
+  population_equivalent?: number;
+}
+
+export const losApi = {
+  select: (input: LOSInput) =>
+    postJSON<Record<string, unknown>>("/los/select", input),
+  catalog: () => getJSON<Record<string, unknown>>("/los/catalog"),
+};
+
+// ─── Regulations (Phase 22) ─────────────────────────────────────────
+
+export interface Regulation {
+  code: string;
+  title: string;
+  edition: string;
+  in_force_from: string;
+  superseded_by: string | null;
+  url_official: string;
+  scope: string;
+  category: string;
+}
+
+export const regulationsApi = {
+  list: (category?: string) =>
+    getJSON<{ count: number; regulations: Regulation[] }>(
+      `/regulations${category ? `?category=${category}` : ""}`,
+    ),
+  get: (code: string) => getJSON<Regulation>(`/regulations/${code}`),
+};

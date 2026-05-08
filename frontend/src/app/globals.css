@@ -38,3 +38,22 @@ body {
 .scroll-rail {
   scrollbar-width: none;
 }
+
+/* Form input — единый стиль для текстовых, числовых и select */
+.form-input {
+  width: 100%;
+  background-color: theme("colors.ink.950");
+  border: 1px solid theme("colors.ink.700");
+  border-radius: 6px;
+  color: theme("colors.ink.50");
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: border-color 150ms ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: theme("colors.accent.500");
+}
+.form-input:hover {
+  border-color: theme("colors.ink.500");
+}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SiteNav } from "@/components/premium/SiteNav";
 import { Hero } from "@/components/premium/Hero";
 import { HowItWorks } from "@/components/premium/HowItWorks";
+import { ProjectModeCard } from "@/components/premium/ProjectModeCard";
 import { CalculatorPanel } from "@/components/premium/CalculatorPanel";
 import { ResultsCompare } from "@/components/premium/ResultsCompare";
 import { Trust } from "@/components/premium/Trust";
@@ -53,6 +54,7 @@ export default function HomePage() {
       <main>
         <Hero onCalculate={handleHeroSubmit} isCalculating={mutation.isPending} />
         <HowItWorks />
+        <ProjectModeCard />
         <CalculatorPanel
           onSubmit={handleCalcSubmit}
           isPending={mutation.isPending}

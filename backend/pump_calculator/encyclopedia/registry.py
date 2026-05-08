@@ -1,0 +1,327 @@
+"""Реестр энциклопедических тем + загрузка markdown-файлов.
+
+Связывает топики с файлами и описывает интерактивные примеры
+из эталонных проектов.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+
+# Корень проекта (на 4 уровня вверх от backend/pump_calculator/encyclopedia/)
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+ENCYCLOPEDIA_DIR = PROJECT_ROOT / "02_dataset" / "_analysis" / "encyclopedia"
+
+
+@dataclass(frozen=True)
+class EncyclopediaTopic:
+    """Описание одной темы энциклопедии."""
+
+    key: str                # "fire" | "water" | "electrical" | ...
+    title: str              # "Пожарное водоснабжение"
+    short_description: str  # Для карточки в /teach
+    file: str               # Имя markdown-файла
+    api_module: str         # Связанный backend-модуль (для кросс-ссылок)
+    sections_count: int     # Сколько разделов внутри (для UI)
+
+
+ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
+    "fire": EncyclopediaTopic(
+        key="fire",
+        title="Пожарное водоснабжение",
+        short_description=(
+            "Расчёт расхода и резервуаров пожаротушения по СП 8.13130 + СП 10.13130 + ФЗ-123. "
+            "Категории зданий, степени огнестойкости, насосные станции."
+        ),
+        file="fire_water_encyclopedia.md",
+        api_module="fire_water",
+        sections_count=14,
+    ),
+    "water": EncyclopediaTopic(
+        key="water",
+        title="Хозяйственно-питьевое водоснабжение",
+        short_description=(
+            "Нормы потребления СП 30/31, расчёт ВНС, скважинных водозаборов, "
+            "горячей воды, повысительных станций. 21 тип объекта."
+        ),
+        file="water_supply_encyclopedia.md",
+        api_module="water_supply",
+        sections_count=15,
+    ),
+    "electrical": EncyclopediaTopic(
+        key="electrical",
+        title="Электрика и автоматика",
+        short_description=(
+            "ПУЭ 7-е + ТР ТС 004/020/012. Подбор двигателя, кабеля, автомата, "
+            "шкафов МИНИ/ОПТИ/МАКС/ATEX. Категории надёжности I/II/III."
+        ),
+        file="electrical_automation_encyclopedia.md",
+        api_module="electrical",
+        sections_count=16,
+    ),
+    "hydraulics": EncyclopediaTopic(
+        key="hydraulics",
+        title="Гидравлика и физика",
+        short_description=(
+            "Бернулли, Идельчик, Дарси-Вейсбах, NPSH, гидроудар Жуковского, "
+            "параллельная работа насосов. Полная теория с выводами."
+        ),
+        file="hydraulics_physics_encyclopedia.md",
+        api_module="physics_advanced",
+        sections_count=17,
+    ),
+    "structural": EncyclopediaTopic(
+        key="structural",
+        title="Корпус, прочность, климат",
+        short_description=(
+            "Материалы корпусов, СП 20 (нагрузки), СП 14 (сейсмика), СП 25 (мерзлота), "
+            "пригруз бетоном при УГВ. 11 производителей корпусов."
+        ),
+        file="corpus_structural_climate_encyclopedia.md",
+        api_module="structural",
+        sections_count=18,
+    ),
+    "los": EncyclopediaTopic(
+        key="los",
+        title="ЛОС, биология, экология",
+        short_description=(
+            "Состав стоков, ПДК для 6 категорий сброса, биологическая очистка, "
+            "выбор ЛОС-блока (PEGAS, ТОПАС, БиоПроект). Штрафы за превышение."
+        ),
+        file="los_biology_ecology_encyclopedia.md",
+        api_module="los",
+        sections_count=21,
+    ),
+}
+
+
+# Интерактивные примеры из эталонных проектов.
+# Каждый пример — pre-filled запрос на одно из API.
+# Используется в /teach: «Запустить пример: ВБД Екб» → переход на калькулятор
+# с заполненными полями.
+@dataclass(frozen=True)
+class EncyclopediaExample:
+    """Эталонный пример для запуска из энциклопедии."""
+
+    id: str
+    title: str
+    topic: str          # Связанная тема
+    description: str    # Что показывает
+    api_endpoint: str   # На какое API отправлять
+    payload: dict       # Pre-filled данные
+    expected_outcome: str  # Что должен увидеть пользователь
+
+
+EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
+    EncyclopediaExample(
+        id="vbd_ekb_storm",
+        title="ВБД Екатеринбург — ливневая КНС",
+        topic="hydraulics",
+        description="Расчёт пикового расхода ливневых стоков по СП 32 для F=7.7 га, юг Урала",
+        api_endpoint="/storm/calc",
+        payload={
+            "sp_revision": "SP_32_2018",
+            "region_city": "Екатеринбург",
+            "surfaces": {"asphalt_ha": 6.5, "lawn_ha": 1.2},
+            "period_P_year": 1,
+        },
+        expected_outcome="Q_r ≈ 540 л/с (эталон проекта 66-06-22-РД)",
+    ),
+    EncyclopediaExample(
+        id="ppd_omon_fire",
+        title="ППД ОМОН Мариуполь — пожарное водоснабжение",
+        topic="fire",
+        description="ВНС-2 пожарная для казармы 202 чел + спорткомплекс",
+        api_endpoint="/fire-water/calc",
+        payload={
+            "occupancy": "public",
+            "building_class": "I",
+            "volume_m3": 30000,
+            "floors": 3,
+            "population": 202,
+            "water_source": "reservoir",
+            "fire_duration_h": 3.0,
+        },
+        expected_outcome="Q_наруж=15-20 л/с, V_резервуара ≈ 200 м³ (4×50 м³)",
+    ),
+    EncyclopediaExample(
+        id="rvb_kuban_kns9",
+        title="РВБ Кубань КНС-9 — подбор электрики",
+        topic="electrical",
+        description="Хозбытовая КНС Q=86 м³/ч H=7 м, 2 рабочих + 1 резерв",
+        api_endpoint="/select",
+        payload={
+            "L0": {"Q_m3h": 86.22, "dH_m": 7, "L_m": 50, "wastewater_type": "domestic"},
+        },
+        expected_outcome="2 насоса по 43 м³/ч, P≈2.2 кВт каждый, ШУ с АВР (категория I)",
+    ),
+    EncyclopediaExample(
+        id="promlivnevka_atex",
+        title="Промливневая КНС Q=132 ATEX",
+        topic="electrical",
+        description="ATEX зона B-1а / IIB-T3, 2×Q_66 параллельно × H=35",
+        api_endpoint="/select",
+        payload={
+            "L0": {"Q_m3h": 132, "dH_m": 35, "L_m": 100, "wastewater_type": "industrial"},
+        },
+        expected_outcome="Шкаф ATEX, IP66, газоанализатор Хоббит-Т, цена 500тыс-2.5млн ₽",
+    ),
+    EncyclopediaExample(
+        id="pedrollo_household",
+        title="Pedrollo VXm 15/50 — бытовая ИЖС",
+        topic="hydraulics",
+        description="Готовая КНС в сборе SAR550 + VXm 15/50, типовое решение для 4-5 чел",
+        api_endpoint="/select",
+        payload={
+            "L0": {"Q_m3h": 15, "dH_m": 10, "L_m": 30, "wastewater_type": "domestic"},
+        },
+        expected_outcome="Pedrollo VXm 15/50-N, P=1.1 кВт, шкаф МИНИ, 70-110 тыс ₽",
+    ),
+    EncyclopediaExample(
+        id="jk_50_apartments",
+        title="ЖК 12 эт. 50 квартир — пожарка + хозпит.",
+        topic="fire",
+        description="Жилой 12 этажей, V=15000 м³, 150 жителей",
+        api_endpoint="/fire-water/calc",
+        payload={
+            "occupancy": "residential",
+            "floors": 12,
+            "volume_m3": 15000,
+            "population": 150,
+            "water_source": "reservoir",
+        },
+        expected_outcome="Q_наруж=15 л/с, Q_внутр=2.6 л/с (1 струя), V_рез ≈200 м³",
+    ),
+    EncyclopediaExample(
+        id="kotedge_los_5_persons",
+        title="Коттедж 5 чел — ЛОС бытовая",
+        topic="los",
+        description="ИЖС-семья, сброс на полив, типовая Топас 5 / ПЕГАС-Б 5",
+        api_endpoint="/los/select",
+        payload={
+            "source_type": "domestic",
+            "flow_m3_per_day": 1.0,
+            "discharge_category": "irrigation",
+            "population_equivalent": 5,
+        },
+        expected_outcome="ПЕГАС-Б 5 (67-95 тыс ₽) или Топас 5 (95-130 тыс ₽)",
+    ),
+    EncyclopediaExample(
+        id="krasnodar_burial",
+        title="Краснодар — глубина заложения трубы",
+        topic="structural",
+        description="Хозбытовая канализация DN200, суглинок, без УГВ",
+        api_endpoint="/climate/burial-depth",
+        payload={
+            "region_city": "Краснодар",
+            "soil_type": "clay_loam",
+            "pipe_dn_mm": 200,
+            "has_groundwater": False,
+        },
+        expected_outcome="d_заложения ≈ 1.1 м (d_fn=0.8 + 0.3 запас по СП 32 §6.5)",
+    ),
+]
+
+
+def list_topics() -> list[dict]:
+    """Список всех тем для главной /teach страницы."""
+    return [
+        {
+            "key": t.key,
+            "title": t.title,
+            "short_description": t.short_description,
+            "api_module": t.api_module,
+            "sections_count": t.sections_count,
+        }
+        for t in ENCYCLOPEDIA_TOPICS.values()
+    ]
+
+
+def get_topic_full(topic_key: str) -> dict | None:
+    """Полное содержимое статьи по топику.
+
+    Returns:
+        {key, title, content_markdown, examples} либо None.
+    """
+    if topic_key not in ENCYCLOPEDIA_TOPICS:
+        return None
+    topic = ENCYCLOPEDIA_TOPICS[topic_key]
+    file_path = ENCYCLOPEDIA_DIR / topic.file
+    if not file_path.exists():
+        return {
+            "key": topic.key,
+            "title": topic.title,
+            "content_markdown": f"# {topic.title}\n\n*Файл {topic.file} не найден.*",
+            "examples": [],
+        }
+
+    content = file_path.read_text(encoding="utf-8")
+    examples = [
+        {
+            "id": e.id,
+            "title": e.title,
+            "description": e.description,
+            "api_endpoint": e.api_endpoint,
+            "payload": e.payload,
+            "expected_outcome": e.expected_outcome,
+        }
+        for e in EXAMPLES_REGISTRY
+        if e.topic == topic_key
+    ]
+    return {
+        "key": topic.key,
+        "title": topic.title,
+        "short_description": topic.short_description,
+        "api_module": topic.api_module,
+        "content_markdown": content,
+        "examples": examples,
+    }
+
+
+def get_topic_section(topic_key: str, section_anchor: str) -> dict | None:
+    """Фрагмент статьи по якорю заголовка.
+
+    Используется для drawer drill-down: при клике на «Q_r формула 8 СП 32 §6.2.4»
+    → возвращаем секцию из hydraulics-encyclopedia с этим заголовком.
+
+    Args:
+        topic_key: топик ("hydraulics", "fire" и т.д.)
+        section_anchor: строка для поиска в заголовке (case-insensitive)
+    """
+    full = get_topic_full(topic_key)
+    if full is None:
+        return None
+
+    content = full["content_markdown"]
+    lines = content.split("\n")
+
+    # Поиск раздела по подстроке в заголовке (## или ###)
+    found_idx = -1
+    for i, line in enumerate(lines):
+        if line.startswith("##") and section_anchor.lower() in line.lower():
+            found_idx = i
+            break
+
+    if found_idx < 0:
+        return None
+
+    # Извлекаем секцию до следующего того же или большего уровня заголовка
+    section_lines = [lines[found_idx]]
+    header_level = lines[found_idx].count("#", 0, 6)
+
+    for line in lines[found_idx + 1 :]:
+        if line.startswith("#"):
+            this_level = line.count("#", 0, 6)
+            if this_level <= header_level:
+                break
+        section_lines.append(line)
+        # Ограничение — не более 200 строк
+        if len(section_lines) >= 200:
+            break
+
+    return {
+        "topic": topic_key,
+        "section_anchor": section_anchor,
+        "section_title": lines[found_idx].lstrip("#").strip(),
+        "content_markdown": "\n".join(section_lines),
+    }
