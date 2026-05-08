@@ -492,6 +492,157 @@ def list_regulations(category: str | None = None) -> dict:
     }
 
 
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 25-30: Climate, Structural, LOS, Reports, Complexes, BOM
+# ──────────────────────────────────────────────────────────────────────────
+
+
+@app.post("/climate/burial-depth", tags=["climate"])
+def calc_burial_depth_endpoint(payload: dict) -> dict:
+    """Глубина заложения трубопровода по СП 32 + СП 131."""
+    from pump_calculator.climate import calc_pipe_burial_depth
+    try:
+        result = calc_pipe_burial_depth(
+            region_city=payload["region_city"],
+            soil_type=payload.get("soil_type", "clay_loam"),
+            pipe_dn_mm=payload.get("pipe_dn_mm", 200),
+            has_groundwater=payload.get("has_groundwater", False),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    return result.model_dump()
+
+
+@app.post("/climate/loads", tags=["climate"])
+def calc_climate_loads_endpoint(payload: dict) -> dict:
+    """Снеговая, ветровая и сейсмическая нагрузки по СП 20 + СП 14."""
+    from pump_calculator.climate.loads import (
+        calc_seismic_load,
+        calc_snow_load_pavilion,
+        calc_wind_load_pavilion,
+    )
+    city = payload.get("region_city", "Москва")
+    area = payload.get("pavilion_area_m2", 0.0)
+    height = payload.get("pavilion_height_m", 3.0)
+    facade = payload.get("pavilion_facade_area_m2", height * 4)
+
+    s, s_total, s_region, s_notes = calc_snow_load_pavilion(city, area)
+    w, w_total, w_region, w_notes = calc_wind_load_pavilion(city, height, facade)
+    K, F_seism, seism_notes = calc_seismic_load(
+        payload.get("seismic_intensity_balls", 6),
+        payload.get("object_mass_kg", 5000),
+    )
+    return {
+        "snow": {"load_kn_m2": s, "total_kn": s_total, "region": s_region, "notes": s_notes},
+        "wind": {"load_pa": w, "total_kn": w_total, "region": w_region, "notes": w_notes},
+        "seismic": {"K": K, "F_kn": F_seism, "notes": seism_notes},
+    }
+
+
+@app.post("/structural/ballast", tags=["structural"])
+def calc_ballast_endpoint(payload: dict) -> dict:
+    """Расчёт пригруза корпуса бетоном при УГВ (СП 32 §6.3)."""
+    from pump_calculator.structural import StructuralScenarioInput, calc_ballast_concrete
+    try:
+        inputs = StructuralScenarioInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    return calc_ballast_concrete(inputs).model_dump()
+
+
+@app.post("/structural/wall-thickness", tags=["structural"])
+def calc_wall_thickness_endpoint(payload: dict) -> dict:
+    """Минимальная толщина стенки полимерного корпуса по ISO 9969 SN."""
+    from pump_calculator.structural import StructuralScenarioInput, calc_polymer_wall_thickness
+    try:
+        inputs = StructuralScenarioInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    return calc_polymer_wall_thickness(inputs).model_dump()
+
+
+@app.post("/structural/ladder", tags=["structural"])
+def calc_ladder_endpoint(payload: dict) -> dict:
+    """Расчёт лестницы внутри корпуса (СП 12-104)."""
+    from pump_calculator.structural import calc_ladder_geometry
+    return calc_ladder_geometry(
+        height_m=payload["height_m"],
+        pit_diameter_m=payload["pit_diameter_m"],
+        is_corrosive_environment=payload.get("is_corrosive_environment", True),
+    ).model_dump()
+
+
+@app.post("/los/select", tags=["los"])
+def calc_los_select_endpoint(payload: dict) -> dict:
+    """Подбор ЛОС-блока по типу стоков и точке сброса."""
+    from pump_calculator.los import LOSScenarioInput, select_los_block
+    try:
+        inputs = LOSScenarioInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    return select_los_block(inputs).model_dump()
+
+
+@app.get("/los/catalog", tags=["los"])
+def list_los_catalog() -> dict:
+    """Каталог ЛОС-блоков (PEGAS, ТОПАС, БиоПроект, КИТ, ГЕОН и др.)."""
+    from pump_calculator.los import LOS_CATALOG
+    return {
+        "count": len(LOS_CATALOG),
+        "blocks": [b.model_dump() for b in LOS_CATALOG],
+    }
+
+
+@app.post("/reports/calculation-pdf", tags=["reports"], response_class=Response)
+def calc_report_pdf_endpoint(payload: dict) -> Response:
+    """Генерация PDF расчётной записки на основе результатов всех модулей."""
+    from pump_calculator.reports import (
+        CalculationReportInput,
+        generate_calculation_report_pdf,
+    )
+    try:
+        inputs = CalculationReportInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    pdf_bytes = generate_calculation_report_pdf(inputs)
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="Расчётная_записка_{inputs.project_code or "kns"}.pdf"',
+        },
+    )
+
+
+@app.post("/complex/summary", tags=["complexes"])
+def calc_complex_summary_endpoint(payload: dict) -> dict:
+    """Сводная BOM по многообъектному комплексу (РЭУ → площадка → объект)."""
+    from pump_calculator.complexes import Complex, build_complex_bom_summary
+    try:
+        complex_obj = Complex(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    return build_complex_bom_summary(complex_obj).model_dump()
+
+
+@app.post("/bom/export-csv", tags=["bom"], response_class=Response)
+def export_bom_csv_endpoint(payload: dict) -> Response:
+    """Экспорт BOM в CSV (для импорта в Excel/ГРАНД-Смету)."""
+    from pump_calculator.bom import BOMSpecification, export_bom_csv
+    try:
+        spec = BOMSpecification(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    csv_text = export_bom_csv(spec)
+    return Response(
+        content=csv_text.encode("utf-8-sig"),
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="BOM_{spec.project_code or "kns"}.csv"',
+        },
+    )
+
+
 @app.get("/regulations/{code}", tags=["regulations"])
 def get_regulation_by_code(code: str) -> dict:
     """Получить норматив по коду (например 'SP_32' или 'СП 32.13330.2018')."""
