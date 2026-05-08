@@ -1,0 +1,87 @@
+=== Total pumps: 223 ===
+
+=== 1. Q-H coverage matrix (pumps per cell) ===
+Q\H     H=   5H=  10H=  20H=  40H=  80H= 150
+Q=   5:    38  103  139   67   12    1
+Q=  10:    39  105  141   69   12    1
+Q=  20:    39  105  140   67   12    1
+Q=  40:    22   91  137   68   11    1
+Q=  80:    19   76  124   64   10    1
+Q= 150:     8   44   94   53   10    1
+Q= 300:     3    8   51   35    3    1
+Q= 600:     3    5   33   33    2    0
+Q=1500:     0    2   18   18    3    0
+Q=3000:     0    2    2    2    2    0
+
+Empty/sparse cells: 18
+  (5, 150, 'few')
+  (10, 150, 'few')
+  (20, 150, 'few')
+  (40, 150, 'few')
+  (80, 150, 'few')
+  (150, 150, 'few')
+  (300, 150, 'few')
+  (600, 80, 'few')
+  (600, 150)
+  (1500, 5)
+
+=== 2. Brand x Type ===
+  Brands: 16, Types: 4
+    booster_station: 12 pumps
+    fire_protection: 1 pumps
+    submersible_sewage: 209 pumps
+    vertical_dry_well: 1 pumps
+
+    Antarus                    81
+    CNP                         8
+    Fancy                       1
+    Grundfos                    5
+    KAIQUAN                     9
+    KSB                        86
+    LEO Group                   1
+    MAS DAF                     1
+    Pedrollo                   17
+    Vandjord                    1
+    Wilo                        8
+    √»—                         1
+    √Ã—                         1
+    —Ã«                         1
+    ‘√œ”                        1
+    ÿÚÓÏ ‘                     1
+
+=== 3. Price segment ===
+  premium      116
+  mid           85
+  budget        13
+  standard       9
+
+=== 4. Wastewater compat (pump may match multiple) ===
+  industrial                193
+  domestic                  162
+  drainage                  143
+  clean_water                12
+  fire_protection             4
+
+=== 5. Free passage by type ===
+  submersible_sewage             min= 4.0 max= 250 median=76.0  (207 samples)
+  booster_station                min=   0 max=   0 median=   0  (7 samples)
+  vertical_dry_well              min=  80 max=  80 median=  80  (1 samples)
+
+=== 6. Origin (by distributor status) ===
+  official                       122
+  parallel_import                 90
+  domestic_manufacturer            4
+  imported_china                   3
+  imported_eu                      2
+  official_RU                      1
+  imported_turkey                  1
+
+=== 7. Duplicate suspects (same Q_BEP, H_BEP, P_kW) ===
+  (none)
+
+=== 8. Data gaps ===
+  no NPSHr_at_BEP_m: 206 (92%)
+  no discharge.DN_mm:  75 (33%)
+  no eta_BEP_pct: 193 (86%)
+  no price_rub_2026: 221 (99%)
+  needs_review flagged: 199
