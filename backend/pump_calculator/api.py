@@ -804,6 +804,31 @@ def list_los_catalog() -> dict:
     }
 
 
+@app.post("/reports/rpz-gost-pdf", tags=["reports"], response_class=Response)
+def generate_rpz_gost_endpoint(payload: dict) -> Response:
+    """Расчётно-пояснительная записка (РПЗ) по ГОСТ Р 21.101-2020.
+
+    13-разделовая каноническая структура для защиты проекта в
+    гос/негосэкспертизе (ст. 49 ГрК РФ).
+    Спецификация — по форме 7 ГОСТ 21.110-2013 (8 колонок).
+    """
+    from pump_calculator.reports import RPZGostInput, generate_rpz_gost_pdf
+    try:
+        inputs = RPZGostInput(**payload)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    pdf_bytes = generate_rpz_gost_pdf(inputs)
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (
+                f'attachment; filename="РПЗ_{inputs.project_code or "kns"}.pdf"'
+            ),
+        },
+    )
+
+
 @app.post("/reports/calculation-pdf", tags=["reports"], response_class=Response)
 def calc_report_pdf_endpoint(payload: dict) -> Response:
     """Генерация PDF расчётной записки на основе результатов всех модулей."""

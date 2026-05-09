@@ -4,10 +4,27 @@
 // ╰───────────────────────────────────────────────────────────────────────╯
 "use client";
 
+import { useState } from "react";
 import { useParams } from "next/navigation";
+import { Play, ChevronDown } from "lucide-react";
 import { useEncyclopediaTopic } from "@/hooks/useProject";
 import { MarkdownView } from "@/components/teach/MarkdownView";
+import { SiteNav } from "@/components/premium/SiteNav";
 import { SiteFooter } from "@/components/premium/SiteFooter";
+
+/** POST на API endpoint примера и возврат JSON-результата. */
+async function runExample(endpoint: string, payload: unknown): Promise<unknown> {
+  const res = await fetch(`/api/backend${endpoint}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Backend error ${res.status}: ${text}`);
+  }
+  return res.json();
+}
 
 export default function TeachTopicPage() {
   const params = useParams();
@@ -16,7 +33,8 @@ export default function TeachTopicPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-ink-950 px-5 md:px-10 py-10">
+      <SiteNav />
+      <main className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
             <a
@@ -72,19 +90,7 @@ export default function TeachTopicPage() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {data.examples.map((ex) => (
-                      <div
-                        key={ex.id}
-                        id={ex.id}
-                        className="p-3 bg-ink-900 border border-ink-800 rounded-md"
-                      >
-                        <div className="font-display font-semibold text-ink-50 text-sm mb-1">
-                          {ex.title}
-                        </div>
-                        <div className="text-xs text-ink-400 mb-2">{ex.description}</div>
-                        <div className="text-xs text-accent-300 font-mono">
-                          → {ex.expected_outcome}
-                        </div>
-                      </div>
+                      <ExampleCard key={ex.id} example={ex} />
                     ))}
                   </div>
                 </div>
@@ -104,5 +110,88 @@ export default function TeachTopicPage() {
       </main>
       <SiteFooter />
     </>
+  );
+}
+
+interface ExampleData {
+  id: string;
+  title: string;
+  description: string;
+  api_endpoint: string;
+  payload: Record<string, unknown>;
+  expected_outcome: string;
+}
+
+/** Карточка эталонного примера с кнопкой «Запустить расчёт» и развёртыванием результата. */
+function ExampleCard({ example }: { example: ExampleData }) {
+  const [status, setStatus] = useState<"idle" | "running" | "ok" | "error">("idle");
+  const [result, setResult] = useState<unknown>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const handleRun = async () => {
+    setStatus("running");
+    setError(null);
+    try {
+      const data = await runExample(example.api_endpoint, example.payload);
+      setResult(data);
+      setStatus("ok");
+      setExpanded(true);
+    } catch (e) {
+      setError(String(e));
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div
+      id={example.id}
+      className="p-3 bg-ink-900 border border-ink-800 rounded-md"
+    >
+      <div className="font-display font-semibold text-ink-50 text-sm mb-1">
+        {example.title}
+      </div>
+      <div className="text-xs text-ink-400 mb-2">{example.description}</div>
+      <div className="text-xs text-accent-300 font-mono mb-3">
+        → {example.expected_outcome}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={handleRun}
+          disabled={status === "running"}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 transition-colors"
+        >
+          <Play size={11} strokeWidth={2.2} />
+          {status === "running" ? "Считаем…" : status === "ok" ? "Запустить ещё раз" : "Запустить расчёт"}
+        </button>
+        {status === "ok" && (
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="text-xs text-ink-400 hover:text-ink-200 inline-flex items-center gap-1"
+          >
+            <ChevronDown
+              size={12}
+              className={expanded ? "rotate-180 transition-transform" : "transition-transform"}
+            />
+            {expanded ? "Свернуть результат" : "Показать результат"}
+          </button>
+        )}
+      </div>
+
+      {error && (
+        <div className="mt-3 p-2 bg-red-500/10 border border-red-500/30 rounded text-xs text-red-300">
+          {error}
+        </div>
+      )}
+
+      {expanded && result !== null && (
+        <pre className="mt-3 p-3 bg-ink-950 border border-ink-800 rounded text-[10px] text-ink-300 font-mono overflow-x-auto max-h-64">
+          {JSON.stringify(result, null, 2)}
+        </pre>
+      )}
+    </div>
   );
 }

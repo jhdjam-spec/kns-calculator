@@ -19,16 +19,16 @@ from pump_calculator.project import (
 
 
 def test_encyclopedia_has_6_topics():
-    """В реестре 6 базовых тем."""
-    assert len(ENCYCLOPEDIA_TOPICS) == 6
-    expected = {"fire", "water", "electrical", "hydraulics", "structural", "los"}
+    """В реестре 7 базовых тем (6 расчётных + рабочая документация)."""
+    assert len(ENCYCLOPEDIA_TOPICS) == 7
+    expected = {"fire", "water", "electrical", "hydraulics", "structural", "los", "documentation"}
     assert set(ENCYCLOPEDIA_TOPICS.keys()) == expected
 
 
 def test_list_topics_returns_metadata():
     """list_topics возвращает структуру для UI."""
     topics = list_topics()
-    assert len(topics) == 6
+    assert len(topics) == 7
     for t in topics:
         assert "key" in t
         assert "title" in t

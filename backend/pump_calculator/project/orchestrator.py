@@ -111,35 +111,141 @@ def list_presets() -> list[dict]:
     ]
 
 
-def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
-    """Подсистема КНС — вызывает основной /select."""
-    from pump_calculator.matching import select_pumps as run_selection
-    from pump_calculator.schemas import L0Input, SelectionRequest
+# Маппинг preset → тип стоков для КНС
+_PRESET_WASTEWATER_TYPE: dict[str, str] = {
+    "ihs": "domestic",
+    "kotedj_settlement": "domestic",
+    "apartment_complex": "domestic",
+    "hotel": "domestic",
+    "trc": "domestic",
+    "azs": "industrial",         # АЗС: нефтесодержащие стоки + ливнёвка через сепаратор
+    "industrial": "industrial",
+    "warehouse": "drainage",     # склад: преимущественно ливнёвка
+    "gazprom": "industrial",
+    "agricultural": "drainage",  # сельхоз: дренаж + поилка
+    "school": "domestic",
+    "hospital": "domestic",
+    "custom": "domestic",
+}
 
-    # Оценка Q по населению (норма 200 л/чел·сут × коэф_часовой)
-    q_avg_m3day = inputs.population * 0.25
-    q_max_m3h = q_avg_m3day / 24 * 2.5  # K_час_max ≈ 2.5
+
+# Маппинг preset → building_type из water_supply (для нормы потребления)
+_PRESET_BUILDING_TYPE: dict[str, str] = {
+    "ihs": "residential_with_baths",
+    "kotedj_settlement": "residential_with_baths",
+    "apartment_complex": "residential_with_baths",
+    "hotel": "hotel_standard",
+    "trc": "trc",
+    "azs": "carwash",       # ближайший аналог в нормах
+    "industrial": "industrial_generic",
+    "warehouse": "industrial_generic",
+    "gazprom": "industrial_generic",
+    "agricultural": "agricultural",
+    "school": "school",
+    "hospital": "hospital",
+    "custom": "office",
+}
+
+
+def _resolve_q_for_kns(inputs: ProjectInput) -> tuple[float, str]:
+    """Определяет расчётный Q для КНС с учётом типа объекта и числа пользователей.
+
+    Возвращает (Q_max_час_м³/ч, объяснение).
+    """
+    from pump_calculator.water_supply import NORMS_LITERS_PER_DAY
+
+    bt = _PRESET_BUILDING_TYPE.get(inputs.preset, "office")
+    norm = NORMS_LITERS_PER_DAY.get(bt)
+    if norm is None:
+        return max(inputs.population * 0.25 / 24 * 2.5, 1.0), "fallback 0.25"
+
+    # Определяем число расчётных единиц
+    unit = norm["unit"]
+    if unit in ("чел", "место", "учащийся", "голова"):
+        n_units = inputs.population
+    elif unit == "номер":
+        n_units = inputs.rooms or max(inputs.population, 1)
+    elif unit == "койка":
+        n_units = inputs.beds or max(inputs.population, 1)
+    elif unit in ("посещение", "посетитель"):
+        n_units = inputs.visits_per_day or max(inputs.population, 1)
+    elif unit == "100м²":
+        n_units = max(int(inputs.area_m2 / 100), 1) if inputs.area_m2 else 1
+    elif unit == "авто":
+        n_units = inputs.visits_per_day or 50    # default ~50 авто/сут на АЗС
+    elif unit == "кг":
+        n_units = inputs.visits_per_day or 100
+    else:
+        n_units = max(inputs.population, 1)
+
+    norm_total = norm["norm_total"]
+    K_sut = norm["K_sut_max"]
+    K_hour = norm["K_hour_max"]
+
+    # Q_сред (м³/сут) → Q_max_час (м³/ч)
+    q_avg = n_units * norm_total / 1000.0      # м³/сут
+    q_max_day = q_avg * K_sut
+    q_max_hour = q_max_day / 24 * K_hour
+
+    explanation = (
+        f"{n_units} {unit} × {norm_total} л/сут × K_сут={K_sut} × K_ч={K_hour}/24 "
+        f"= {q_max_hour:.1f} м³/ч"
+    )
+    return max(q_max_hour, 1.0), explanation
+
+
+def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
+    """Подсистема КНС — вызывает /select с правильным wastewater_type и Q."""
+    from pump_calculator.matching import select_pumps as run_selection
+    from pump_calculator.schemas import L0Input, L1Input, SelectionRequest
+
+    wastewater = _PRESET_WASTEWATER_TYPE.get(inputs.preset, "domestic")
+    q_max_m3h, q_explanation = _resolve_q_for_kns(inputs)
 
     try:
-        request = SelectionRequest(L0=L0Input(
-            Q_m3h=max(q_max_m3h, 1.0),
+        l0 = L0Input(
+            Q_m3h=q_max_m3h,
             dH_m=5,
             L_m=50,
-            wastewater_type="domestic",
-        ))
+            wastewater_type=wastewater,
+        )
+        l1: L1Input | None = None
+        if inputs.is_atex_zone:
+            l1 = L1Input(Ex_required=True)
+        request = SelectionRequest(L0=l0, L1=l1)
         result = run_selection(request)
+
+        atex_note = " (ATEX)" if inputs.is_atex_zone else ""
         return SubsystemResult(
-            name="КНС хозбытовая",
+            name=f"КНС {wastewater}{atex_note}",
             status="ok",
-            summary=f"Q={q_max_m3h:.1f} м³/ч, подобрано {len(result.results)} вариантов",
-            data={"Q_m3h": q_max_m3h, "selection": result.model_dump()},
+            summary=(
+                f"Q={q_max_m3h:.1f} м³/ч ({q_explanation}). "
+                f"Подобрано {len(result.results.__dict__) if hasattr(result.results, '__dict__') else 3} вариантов."
+            ),
+            data={
+                "Q_m3h": q_max_m3h,
+                "wastewater_type": wastewater,
+                "atex_required": inputs.is_atex_zone,
+                "q_explanation": q_explanation,
+                "selection": result.model_dump(),
+            },
             references=[
-                {"regulation_code": "СП 32.13330.2018", "section": "§6", "purpose": "Канализация наружная"},
+                {
+                    "regulation_code": "СП 32.13330.2018",
+                    "section": "§6",
+                    "purpose": "Канализация наружная — расчёт КНС",
+                },
+                {
+                    "regulation_code": "СП 30.13330.2020",
+                    "section": "прил. А.2",
+                    "purpose": "Норма водопотребления (формула расхода)",
+                },
             ],
         )
     except Exception as e:
         return SubsystemResult(
-            name="КНС хозбытовая",
+            name="КНС",
             status="error",
             summary=f"Ошибка расчёта: {e}",
             data={},
@@ -147,27 +253,24 @@ def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
 
 
 def _calc_water_subsystem(inputs: ProjectInput) -> SubsystemResult:
-    """Подсистема ВНС хозпитьевая (Phase 23)."""
+    """Подсистема ВНС хозпитьевая (Phase 23) с поддержкой rooms/beds."""
     from pump_calculator.water_supply import (
         WaterScenarioInput,
         calc_water_demand,
         sizing_water_station,
     )
     try:
-        # Маппинг preset → building_type
-        bt_map = {
-            "ihs": "residential_with_baths",
-            "apartment_complex": "residential_with_baths",
-            "hotel": "hotel_standard",
-            "trc": "trc",
-            "school": "school",
-            "hospital": "hospital",
-            "industrial": "industrial_generic",
-        }
-        bt = bt_map.get(inputs.preset, "residential_with_baths")
+        bt = _PRESET_BUILDING_TYPE.get(inputs.preset, "residential_with_baths")
+
+        # Передаём все возможные единицы — `calc_water_demand` сам выберет
+        # подходящее по типу здания.
         water_input = WaterScenarioInput(
             building_type=bt,
             population=max(inputs.population, 1),
+            rooms=inputs.rooms,
+            beds=inputs.beds,
+            visits_per_day=inputs.visits_per_day,
+            area_m2=inputs.area_m2,
             floors=inputs.floors,
         )
         demand = calc_water_demand(water_input)
@@ -315,14 +418,37 @@ def _calc_structural_subsystem(inputs: ProjectInput) -> SubsystemResult:
         )
 
 
+_PRESET_LOS_SOURCE: dict[str, str] = {
+    "ihs": "domestic",
+    "kotedj_settlement": "domestic",
+    "apartment_complex": "domestic",
+    "hotel": "domestic",
+    "trc": "domestic",
+    "azs": "industrial_oily",       # АЗС: нефтесодержащие
+    "industrial": "industrial_oily",
+    "warehouse": "stormwater",
+    "gazprom": "industrial_oily",
+    "agricultural": "agricultural",
+    "school": "domestic",
+    "hospital": "domestic",
+    "custom": "domestic",
+}
+
+
 def _calc_los_subsystem(inputs: ProjectInput) -> SubsystemResult:
-    """Подсистема ЛОС (Phase 27)."""
+    """Подсистема ЛОС (Phase 27) с маппингом preset → source_type."""
     from pump_calculator.los import LOSScenarioInput, select_los_block
+
+    source_type = _PRESET_LOS_SOURCE.get(inputs.preset, "domestic")
 
     try:
         flow_m3day = inputs.population * 0.20    # хозбытовая норма
+        # Для АЗС/промышл. — берём из visits_per_day если задано
+        if source_type == "industrial_oily" and inputs.visits_per_day:
+            flow_m3day = max(inputs.visits_per_day * 0.25, 1.0)    # ~250 л на авто/посетителя
+
         los_input = LOSScenarioInput(
-            source_type="domestic",
+            source_type=source_type,
             flow_m3_per_day=max(flow_m3day, 1.0),
             discharge_category="irrigation",
             population_equivalent=inputs.population,
@@ -330,11 +456,11 @@ def _calc_los_subsystem(inputs: ProjectInput) -> SubsystemResult:
         result = select_los_block(los_input)
         block = result.selected_block
         if block:
-            summary = f"{block.manufacturer} {block.model}, {block.capacity_m3_per_day} м³/сут"
+            summary = f"{block.manufacturer} {block.model}, {block.capacity_m3_per_day} м³/сут ({source_type})"
         else:
-            summary = f"Q={flow_m3day:.1f} м³/сут — индивидуальный проект"
+            summary = f"Q={flow_m3day:.1f} м³/сут — индивидуальный проект ({source_type})"
         return SubsystemResult(
-            name="ЛОС биологическая",
+            name=f"ЛОС {source_type}",
             status="ok" if block else "warning",
             summary=summary,
             data=result.model_dump(),
@@ -343,7 +469,184 @@ def _calc_los_subsystem(inputs: ProjectInput) -> SubsystemResult:
         )
     except Exception as e:
         return SubsystemResult(
-            name="ЛОС биологическая",
+            name="ЛОС",
+            status="error",
+            summary=f"Ошибка: {e}",
+            data={},
+        )
+
+
+# Дефолтные распределения поверхностей по типу объекта (для storm-расчёта)
+_PRESET_STORM_SURFACES: dict[str, dict[str, float]] = {
+    "ihs":               {"roof": 0.25, "asphalt": 0.20, "lawn": 0.55},
+    "kotedj_settlement": {"roof": 0.20, "asphalt": 0.30, "lawn": 0.50},
+    "apartment_complex": {"roof": 0.30, "asphalt": 0.50, "lawn": 0.20},
+    "hotel":             {"roof": 0.30, "asphalt": 0.40, "lawn": 0.30},
+    "trc":               {"roof": 0.40, "asphalt": 0.55, "lawn": 0.05},
+    "azs":               {"asphalt": 0.95, "lawn": 0.05},
+    "industrial":        {"roof": 0.30, "asphalt": 0.60, "lawn": 0.10},
+    "warehouse":         {"roof": 0.50, "asphalt": 0.40, "lawn": 0.10},
+    "gazprom":           {"roof": 0.20, "asphalt": 0.70, "lawn": 0.10},
+    "agricultural":      {"roof": 0.10, "asphalt": 0.20, "lawn": 0.70},
+    "school":            {"roof": 0.30, "asphalt": 0.40, "lawn": 0.30},
+    "hospital":          {"roof": 0.30, "asphalt": 0.40, "lawn": 0.30},
+    "custom":            {"asphalt": 0.50, "lawn": 0.50},
+}
+
+
+def _calc_storm_subsystem(inputs: ProjectInput) -> SubsystemResult:
+    """Подсистема ливневой канализации (Phase 18) — расчёт пикового Q_r по СП 32 §6.
+
+    Использует площадь территории и дефолтное распределение поверхностей по
+    типу объекта.
+    """
+    from pump_calculator.storm import calculate_full_storm
+    from pump_calculator.storm.models import StormInput, SurfaceBreakdown
+
+    if inputs.area_m2 <= 0:
+        return SubsystemResult(
+            name="Ливневая канализация",
+            status="skipped",
+            summary="Площадь территории не указана — расчёт ливнёвки невозможен",
+            data={},
+        )
+
+    try:
+        area_ha = inputs.area_m2 / 10000.0
+        distribution = _PRESET_STORM_SURFACES.get(inputs.preset, _PRESET_STORM_SURFACES["custom"])
+
+        surfaces = SurfaceBreakdown(
+            roof_ha=area_ha * distribution.get("roof", 0),
+            asphalt_ha=area_ha * distribution.get("asphalt", 0),
+            lawn_ha=area_ha * distribution.get("lawn", 0),
+        )
+
+        storm_input = StormInput(
+            sp_revision="SP_32_2018",
+            region_city=inputs.region_city,
+            surfaces=surfaces,
+            period_P_year=2 if inputs.preset in ("industrial", "azs", "trc", "gazprom") else 1,
+        )
+        result = calculate_full_storm(storm_input)
+
+        return SubsystemResult(
+            name="Ливневая канализация",
+            status="ok",
+            summary=(
+                f"Q_r = {result.peak_flow.Q_r_l_s:.1f} л/с "
+                f"({result.peak_flow.Q_r_m3h:.0f} м³/ч), F={area_ha:.2f} га"
+            ),
+            data=result.model_dump(),
+            references=[
+                {
+                    "regulation_code": "СП 32.13330.2018",
+                    "section": "§6.2.4",
+                    "purpose": "Метод предельных интенсивностей (ливнёвка)",
+                },
+            ],
+        )
+    except Exception as e:
+        return SubsystemResult(
+            name="Ливневая канализация",
+            status="error",
+            summary=f"Ошибка: {e}",
+            data={},
+        )
+
+
+def _calc_electrical_subsystem(inputs: ProjectInput, kns_result: SubsystemResult | None) -> SubsystemResult:
+    """Подсистема электрики (Phase 24) — мощность двигателя, кабель, шкаф.
+
+    Опирается на результат КНС (мощность подобранного насоса).
+    """
+    from pump_calculator.electrical import (
+        calc_motor_power_required,
+        select_cable_section,
+        select_circuit_breaker,
+        select_control_panel,
+    )
+
+    if kns_result is None or kns_result.status != "ok":
+        return SubsystemResult(
+            name="Электрика",
+            status="skipped",
+            summary="Электрика рассчитывается на базе КНС — сначала включите КНС",
+            data={},
+        )
+
+    try:
+        # Q и H берём из подобранного насоса (mid-сегмент)
+        sel = kns_result.data.get("selection", {})
+        results = sel.get("results", {})
+        mid = results.get("mid") or results.get("budget") or results.get("premium")
+        if not mid:
+            return SubsystemResult(
+                name="Электрика",
+                status="warning",
+                summary="Не удалось извлечь параметры подобранного насоса",
+                data={},
+            )
+
+        Q = mid.get("duty_point", {}).get("Q_m3h", kns_result.data.get("Q_m3h", 10))
+        H = mid.get("duty_point", {}).get("H_m", 10)
+        P_motor = mid.get("P_kW") or 5.5    # fallback
+
+        motor_calc = calc_motor_power_required(
+            Q_m3h=Q, H_m=H,
+            pump_efficiency=0.65,
+            starting_method="VFD" if inputs.is_atex_zone or P_motor > 30 else "soft_start",
+        )
+        cable = select_cable_section(
+            I_load_a=motor_calc.nominal_current_a,
+            L_m=50,
+        )
+        breaker = select_circuit_breaker(
+            I_load_a=motor_calc.nominal_current_a,
+            starting_method=motor_calc.starting_method,
+        )
+        panel = select_control_panel(
+            P_motor_kw=motor_calc.P_motor_nominal_kw,
+            n_pumps=2,
+            reliability_category=1 if inputs.preset == "gazprom" else 2,
+            is_atex_zone=inputs.is_atex_zone,
+        )
+
+        atex_note = " (ATEX)" if inputs.is_atex_zone else ""
+        return SubsystemResult(
+            name=f"Электрика и автоматика{atex_note}",
+            status="ok",
+            summary=(
+                f"P_двиг={motor_calc.P_motor_nominal_kw} кВт, "
+                f"кабель {cable.cable_type} {cable.n_cores}×{cable.section_mm2} мм², "
+                f"автомат {breaker.description}, шкаф {panel.name}"
+            ),
+            data={
+                "motor": motor_calc.__dict__,
+                "cable": cable.__dict__,
+                "breaker": breaker.__dict__,
+                "panel": panel.model_dump(),
+            },
+            references=[
+                {
+                    "regulation_code": "ПУЭ 7-е изд.",
+                    "section": "гл. 1.3, 7.3",
+                    "purpose": "Подбор кабеля и защиты",
+                },
+                {
+                    "regulation_code": "ГОСТ IEC 60034-1-2014",
+                    "section": "общ.",
+                    "purpose": "Электрические машины (двигатели насосов)",
+                },
+                {
+                    "regulation_code": "ТР ТС 004/2011",
+                    "section": "общ.",
+                    "purpose": "Безопасность низковольтного оборудования",
+                },
+            ],
+        )
+    except Exception as e:
+        return SubsystemResult(
+            name="Электрика",
             status="error",
             summary=f"Ошибка: {e}",
             data={},
@@ -373,13 +676,17 @@ def calculate_project(inputs: ProjectInput) -> ProjectResult:
         result.vns_potable = _calc_water_subsystem(inputs)
     if inputs.subsystems.vns_fire:
         result.vns_fire = _calc_fire_subsystem(inputs)
+    if inputs.subsystems.storm:
+        result.storm = _calc_storm_subsystem(inputs)
     if inputs.subsystems.los:
         result.los = _calc_los_subsystem(inputs)
     if inputs.subsystems.climate:
         result.climate = _calc_climate_subsystem(inputs)
     if inputs.subsystems.structural:
         result.structural = _calc_structural_subsystem(inputs)
-    # storm — пока пропускаем (требует много полей по поверхностям)
+    # electrical — после KNS, на основе подобранного насоса
+    if inputs.subsystems.electrical:
+        result.electrical = _calc_electrical_subsystem(inputs, result.kns)
 
     # Подсчёт сводных метрик
     all_subsystems = [

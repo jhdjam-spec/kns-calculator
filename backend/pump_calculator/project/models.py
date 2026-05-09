@@ -48,10 +48,13 @@ class ProjectInput(BaseModel):
     region_city: str = "Краснодар"
 
     # Базовые параметры
-    population: int = Field(default=4, ge=0, description="Расчётное число пользователей")
+    population: int = Field(default=4, ge=0, description="Расчётное число пользователей (жители/сотрудники)")
     floors: int = Field(default=1, ge=1)
     volume_m3: float = Field(default=500, ge=0, description="Объём здания, м³")
     area_m2: float = Field(default=200, ge=0, description="Площадь территории, м²")
+    rooms: int = Field(default=0, ge=0, description="Число номеров (для гостиниц)")
+    beds: int = Field(default=0, ge=0, description="Число коек (для больниц)")
+    visits_per_day: int = Field(default=0, ge=0, description="Посещений в сутки (поликлиники, кафе)")
 
     # Подсистемы
     subsystems: ProjectSubsystems = ProjectSubsystems()

@@ -309,6 +309,11 @@ function PreviewResult({
 }) {
   const recommended = result.results.mid ?? result.results.budget ?? result.results.premium;
 
+  // Q из duty_point рекомендуемого насоса (или из input.L0.Q_m3h)
+  const q_from_duty = recommended?.duty_point?.Q_m3h;
+  const q_from_input = (result.input as { L0?: { Q_m3h?: number } })?.L0?.Q_m3h;
+  const q_display = q_from_duty ?? q_from_input;
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
@@ -317,9 +322,7 @@ function PreviewResult({
             Q расчётный
           </div>
           <div className="font-mono tabular-nums text-3xl md:text-5xl text-ink-50">
-            {(result.computed?.H_full_m
-              ? result.computed.H_full_m.toFixed(1)
-              : "–")}
+            {q_display !== undefined ? q_display.toFixed(1) : "–"}
             <span className="ml-2 text-base text-ink-400">м³/ч</span>
           </div>
         </div>

@@ -37,64 +37,223 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-/** Сборка BOM из ProjectResult — упрощённая. Берём данные из подсистем. */
+/** Извлечение price_breakdown подобранного насоса из subsystem.data.selection. */
+function extractPumpBreakdown(
+  subsystemData: Record<string, unknown> | undefined,
+): {
+  pump?: Record<string, unknown>;
+  breakdown?: Record<string, number>;
+} {
+  if (!subsystemData) return {};
+  const sel = subsystemData.selection as Record<string, unknown> | undefined;
+  if (!sel) return {};
+  const results = sel.results as
+    | { mid?: Record<string, unknown>; budget?: Record<string, unknown>; premium?: Record<string, unknown> }
+    | undefined;
+  const pump = results?.mid ?? results?.budget ?? results?.premium;
+  if (!pump) return {};
+  const breakdown = pump.price_breakdown as Record<string, number> | undefined;
+  return { pump, breakdown };
+}
+
+
+/** Сборка BOM из ProjectResult — берём реальные цены из price_breakdown. */
 function buildBomFromProject(result: ProjectResult): BOMItem[] {
   const items: BOMItem[] = [];
 
-  // КНС → насос + корпус (упрощённо)
+  // ─── КНС: реальный price_breakdown подобранного насоса ──────────────
   if (result.kns?.status === "ok") {
-    items.push({
-      section: "pumps",
-      name: "Насос погружной канализационный",
-      manufacturer: "Подбирается",
-      quantity: 2,
-      units: "шт",
-      price_rub_2026: 50000,
-      note: "1 рабочий + 1 резервный (СП 32 §6.2)",
-    });
-    items.push({
-      section: "corpus",
-      name: "Корпус КНС стеклопластик",
-      quantity: 1,
-      units: "шт",
-      price_rub_2026: 300000,
-      note: result.kns.summary,
-    });
-  }
-  // ВНС хозпит.
-  if (result.vns_potable?.status === "ok") {
-    items.push({
-      section: "pumps",
-      name: "Насос повысительный ВНС",
-      quantity: 2,
-      units: "шт",
-      price_rub_2026: 75000,
-      note: "ВНС хозпитьевая (СП 31 §6)",
-    });
-  }
-  // ВНС пожарная (с резервуаром)
-  if (result.vns_fire?.status === "ok") {
-    items.push({
-      section: "fire_water",
-      name: "Насос пожарный",
-      quantity: 2,
-      units: "шт",
-      price_rub_2026: 120000,
-      note: "1 раб + 1 рез (СП 10.13130 §6.2)",
-    });
-    const data = result.vns_fire.data as Record<string, unknown>;
-    const reservoir = data.reservoir as Record<string, unknown> | null;
-    if (reservoir) {
+    const { pump, breakdown } = extractPumpBreakdown(result.kns.data);
+    const brand = pump ? String(pump.brand ?? "Не выбрано") : "Не выбрано";
+    const model = pump ? String(pump.model ?? "") : "";
+    const article = pump ? String(pump.id ?? "") : "";
+    const Pkw = pump ? Number(pump.P_kW ?? 0) : 0;
+
+    if (breakdown) {
+      // Реальные цифры: pump_rub за 2 шт (1 раб + 1 рез)
+      if (breakdown.pump_rub > 0) {
+        items.push({
+          section: "pumps",
+          name: `${brand} ${model}`.trim(),
+          article,
+          manufacturer: brand,
+          quantity: 2,
+          units: "шт",
+          price_rub_2026: breakdown.pump_rub / 2,
+          note: `${Pkw} кВт · 1 раб + 1 рез (СП 32 §6.2)`,
+        });
+      }
+      if (breakdown.corpus_rub > 0) {
+        items.push({
+          section: "corpus",
+          name: "Корпус КНС стеклопластик",
+          quantity: 1,
+          units: "шт",
+          price_rub_2026: breakdown.corpus_rub,
+        });
+      }
+      if (breakdown.atm_rub > 0) {
+        items.push({
+          section: "piping",
+          name: "Автомуфта АТМ",
+          quantity: 2,
+          units: "шт",
+          price_rub_2026: breakdown.atm_rub / 2,
+        });
+      }
+      if (breakdown.valve_rub > 0) {
+        items.push({
+          section: "piping",
+          name: "Задвижка",
+          quantity: 2,
+          units: "шт",
+          price_rub_2026: breakdown.valve_rub / 2,
+        });
+      }
+      if (breakdown.check_valve_rub > 0) {
+        items.push({
+          section: "piping",
+          name: "Обратный клапан",
+          quantity: 2,
+          units: "шт",
+          price_rub_2026: breakdown.check_valve_rub / 2,
+        });
+      }
+      if (breakdown.rails_rub > 0) {
+        items.push({
+          section: "piping",
+          name: "Направляющие AISI 304",
+          quantity: 1,
+          units: "комплект",
+          price_rub_2026: breakdown.rails_rub,
+        });
+      }
+      if (breakdown.chain_rub > 0) {
+        items.push({
+          section: "piping",
+          name: "Цепь подъёма",
+          quantity: 1,
+          units: "комплект",
+          price_rub_2026: breakdown.chain_rub,
+        });
+      }
+      if (breakdown.floats_rub > 0) {
+        items.push({
+          section: "automation",
+          name: "Поплавки (датчики уровня)",
+          quantity: 4,
+          units: "шт",
+          price_rub_2026: breakdown.floats_rub / 4,
+        });
+      }
+      if (breakdown.cabinet_rub > 0) {
+        items.push({
+          section: "control_panel",
+          name: "Шкаф управления КНС",
+          quantity: 1,
+          units: "шт",
+          price_rub_2026: breakdown.cabinet_rub,
+        });
+      }
+    } else {
+      // Fallback если price_breakdown не пришёл — note об этом
       items.push({
-        section: "fire_water",
-        name: `Резервуар пожарный V=${reservoir.required_volume_m3} м³`,
-        quantity: Number(reservoir.n_reservoirs ?? 1),
+        section: "pumps",
+        name: `${brand} ${model}`.trim() || "Насос (не подобран)",
+        manufacturer: brand,
+        quantity: 2,
         units: "шт",
-        price_rub_2026: 400000,
+        price_rub_2026: 0,
+        note: "Цены отсутствуют — запросите у инженера Серво-Юг",
       });
     }
   }
-  // ЛОС
+
+  // ─── ВНС хозпит. ─────────────────────────────────────────────────────
+  if (result.vns_potable?.status === "ok") {
+    const data = result.vns_potable.data as Record<string, unknown>;
+    const station = data.station as Record<string, unknown> | undefined;
+    const ops = Number(station?.operating_pumps ?? 1);
+    const standby = Number(station?.standby_pumps ?? 1);
+    items.push({
+      section: "pumps",
+      name: "Насос повысительный ВНС",
+      quantity: ops + standby,
+      units: "шт",
+      // Эмпирически 75 тыс ₽ за повысительный насос среднего размера —
+      // реальный подбор делается позже инженером
+      price_rub_2026: 75000,
+      note: `${ops} раб + ${standby} рез (СП 31 §6.5). Цена ориентировочная.`,
+    });
+  }
+
+  // ─── ВНС пожарная ────────────────────────────────────────────────────
+  if (result.vns_fire?.status === "ok") {
+    const data = result.vns_fire.data as Record<string, unknown>;
+    const station = data.pump_station as Record<string, unknown> | undefined;
+    const reservoir = data.reservoir as Record<string, unknown> | null;
+
+    const opsFire = Number(station?.operating_pumps ?? 1);
+    const stbFire = Number(station?.standby_pumps ?? 1);
+    items.push({
+      section: "fire_water",
+      name: "Насос пожарный",
+      quantity: opsFire + stbFire,
+      units: "шт",
+      price_rub_2026: 120000,
+      note: `${opsFire} раб + ${stbFire} рез (СП 10.13130 §6.2). Цена ориентировочная.`,
+    });
+    if (reservoir) {
+      const v_m3 = Number(reservoir.required_volume_m3 ?? 0);
+      const n_res = Number(reservoir.n_reservoirs ?? 1);
+      // Цена пожарного резервуара ~ 8000₽/м³ для стеклопластика V=50-200 м³
+      const v_per = v_m3 / Math.max(n_res, 1);
+      items.push({
+        section: "fire_water",
+        name: `Резервуар пожарный V=${v_per.toFixed(0)} м³`,
+        quantity: n_res,
+        units: "шт",
+        price_rub_2026: Math.round(v_per * 8000),
+        note: "Стеклопластиковый, заглубленный (СП 8.13130 §9)",
+      });
+    }
+  }
+
+  // ─── Электрика — реальный шкаф из подсистемы ────────────────────────
+  if (result.electrical?.status === "ok") {
+    const data = result.electrical.data as Record<string, unknown>;
+    const panel = data.panel as Record<string, unknown> | undefined;
+    if (panel) {
+      const priceTuple = panel.estimated_price_rub_2026 as [number, number] | undefined;
+      const avgPanel = priceTuple ? (priceTuple[0] + priceTuple[1]) / 2 : 100000;
+      items.push({
+        section: "control_panel",
+        name: String(panel.name ?? "Шкаф управления"),
+        quantity: 1,
+        units: "шт",
+        price_rub_2026: avgPanel,
+        note: `Уровень: ${panel.level} · Категория надёжности по подсистеме`,
+      });
+    }
+
+    const cable = data.cable as Record<string, unknown> | undefined;
+    if (cable) {
+      const len = 50;
+      const section = Number(cable.section_mm2 ?? 2.5);
+      // Цена кабеля примерно 80-200 ₽/м для 2.5-10 мм², растёт с сечением
+      const pricePerM = Math.round(50 + section * 18);
+      items.push({
+        section: "electrical",
+        name: `Кабель ${cable.cable_type} ${cable.n_cores}×${section} мм²`,
+        quantity: len,
+        units: "м",
+        price_rub_2026: pricePerM,
+        note: "Длина ориентировочная; уточняется по проекту трасс",
+      });
+    }
+  }
+
+  // ─── ЛОС — реальный блок из selected_block ──────────────────────────
   if (result.los?.status === "ok") {
     const data = result.los.data as Record<string, unknown>;
     const block = data.selected_block as Record<string, unknown> | null;
@@ -108,11 +267,12 @@ function buildBomFromProject(result: ProjectResult): BOMItem[] {
         quantity: 1,
         units: "комплект",
         price_rub_2026: avg,
-        note: `Q=${block.capacity_m3_per_day} м³/сут`,
+        note: `Q=${block.capacity_m3_per_day} м³/сут, технология ${block.technology}`,
       });
     }
   }
-  // Прочность → пригруз
+
+  // ─── Прочность → пригруз бетоном ────────────────────────────────────
   if (result.structural?.status === "ok") {
     const data = result.structural.data as Record<string, unknown>;
     if (data.is_required) {
@@ -122,20 +282,27 @@ function buildBomFromProject(result: ProjectResult): BOMItem[] {
         quantity: Number(data.ballast_concrete_volume_m3 ?? 0),
         units: "м³",
         price_rub_2026: 8500,
+        note: "Цена бетона В20 в товарной готовности (с доставкой) на 2026",
       });
     }
   }
-  // Электрика — шкаф управления (по умолчанию ОПТИ)
-  if (result.kns?.status === "ok" || result.vns_potable?.status === "ok") {
-    items.push({
-      section: "control_panel",
-      name: "Шкаф управления (ШУ ОПТИ)",
-      quantity: 1,
-      units: "шт",
-      price_rub_2026: 100000,
-      note: "ПЛК + софтстарт + GSM",
-    });
+
+  // ─── Климат → утепление если требуется ──────────────────────────────
+  if (result.climate?.status === "ok") {
+    const data = result.climate.data as Record<string, unknown>;
+    if (data.insulation_required) {
+      const thickness = Number(data.insulation_thickness_mm ?? 50);
+      items.push({
+        section: "insulation",
+        name: `Утепление трубопровода минвата ${thickness} мм`,
+        quantity: 50, // длина ориентир.
+        units: "м",
+        price_rub_2026: 350,
+        note: "Длина уточняется по проекту трасс",
+      });
+    }
   }
+
   return items;
 }
 

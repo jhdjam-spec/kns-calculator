@@ -4,6 +4,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { HorizontalTankForm } from "@/components/HorizontalTankForm";
 import { KnsCorpusForm } from "@/components/KnsCorpusForm";
+import { SiteNav } from "@/components/premium/SiteNav";
 import { SiteFooter } from "@/components/premium/SiteFooter";
 
 type Tab = "pp" | "fiberglass" | "kns";
@@ -19,7 +20,8 @@ export default function TanksPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-ink-950 px-5 md:px-10 py-10">
+      <SiteNav />
+      <main className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-5xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
             <h1 className="text-sm font-mono uppercase tracking-wider text-ink-500">

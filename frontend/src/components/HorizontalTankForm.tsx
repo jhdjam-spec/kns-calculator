@@ -191,9 +191,9 @@ export function HorizontalTankForm() {
         )}
 
         <p className="mt-3 text-xs text-gray-500">
-          Источник модели:{" "}
-          <code>02_dataset/tanks/tank_calculator_models.json</code> (Серво-Юг ODS).
-          Это <strong>калькулятор стоимости</strong>, не прочности — толщина задаётся вручную.
+          Расчёт по технологическому калькулятору Серво-Юг (производственная ODS-модель).
+          Это <strong>калькулятор стоимости</strong>, не прочности — толщина стенки и
+          элементов задаётся вручную инженером.
         </p>
       </section>
     </div>
