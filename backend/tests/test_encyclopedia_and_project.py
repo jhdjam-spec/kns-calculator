@@ -8,6 +8,7 @@ from pump_calculator.encyclopedia import (
     get_topic_section,
     list_topics,
 )
+from pump_calculator.encyclopedia.registry import build_pdf_citation
 from pump_calculator.project import (
     ProjectInput,
     ProjectSubsystems,
@@ -59,6 +60,36 @@ def test_get_topic_section_finds_anchor():
     if result is not None:    # секция может отсутствовать в новых файлах
         assert "Нормативная база" in result["section_title"]
         assert len(result["content_markdown"]) > 0
+
+
+def test_build_pdf_citation_returns_dict():
+    """build_pdf_citation возвращает {topic, section, text} для Phase 28 PDF."""
+    cit = build_pdf_citation("hydraulics", "Уравнение неразрывности", max_chars=400)
+    assert cit is not None
+    assert "topic" in cit
+    assert "section" in cit
+    assert "text" in cit
+    assert cit["topic"] == "hydraulics"
+    assert "Уравнение неразрывности" in cit["section"]
+    # Текст не должен быть пустым
+    assert len(cit["text"]) > 30
+    # max_chars соблюдается (с запасом на "...")
+    assert len(cit["text"]) <= 410
+
+
+def test_build_pdf_citation_unknown_returns_none():
+    """build_pdf_citation возвращает None если секция не найдена."""
+    cit = build_pdf_citation("hydraulics", "несуществующий якорь zzzz", max_chars=200)
+    assert cit is None
+
+
+def test_build_pdf_citation_strips_markdown():
+    """build_pdf_citation чистит markdown (** __ `) для reportlab."""
+    cit = build_pdf_citation("hydraulics", "Уравнение неразрывности", max_chars=400)
+    if cit:
+        assert "**" not in cit["text"]
+        assert "__" not in cit["text"]
+        assert "`" not in cit["text"]
 
 
 def test_examples_have_payload():
