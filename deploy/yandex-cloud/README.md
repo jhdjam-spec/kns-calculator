@@ -27,13 +27,18 @@ deploy/yandex-cloud/
 
 ```text
 Organization ID  : bpft7o1pahp23rlhkliq
-Cloud            : cloud-servoug (id: b1gafatuvqpp5e9lp7sh)
-Folder           : default       (id: b1g6culuo3737j3pbupu)
+Cloud            : cloud-servoug      (id: b1gafatuvqpp5e9lp7sh)
+Folder kns       : kns-calculator     (id: b1ge2mgg8tgh92uerm9c)  ← ИЗОЛИРОВАН
+Folder default   : default            (id: b1g6culuo3737j3pbupu)  ← content factory
 Service Account  : kns-calculator-api (id: ajeur7e0n1k1n458t79n)
-                   роли: serverless.functions.invoker + storage.viewer
+                   роли в kns-calculator folder:
+                     - serverless.functions.invoker
+                     - serverless.functions.admin
+                     - storage.viewer
 ```
 
-Тот же аккаунт что использовался для content factory (есть второй SA `ai-studio-cfed21`).
+**Изоляция проектов:** kns-calculator и content factory в разных folder одного cloud.
+Общий billing, но изолированные ресурсы и IAM.
 
 ### 1. Yandex Cloud CLI
 
