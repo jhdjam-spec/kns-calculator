@@ -314,7 +314,7 @@ IEC_60034 = Regulation(
 # КАЧЕСТВО ВОДЫ И СТОКОВ
 # ============================================================================
 
-SANPIN_2_1_4 = Regulation(
+SANPIN_2_1_3684 = Regulation(
     code="СанПиН 2.1.3684-21",
     title="Санитарно-эпидемиологические требования к содержанию территорий, водоснабжению",
     edition="2021 (заменил СанПиН 2.1.4.1074-01)",
@@ -323,6 +323,8 @@ SANPIN_2_1_4 = Regulation(
     scope="Качество питьевой воды, защита источников",
     category="sanitary",
 )
+# Deprecated alias — старое имя ссылалось на отменённый СанПиН 2.1.4.1074-01.
+SANPIN_2_1_4 = SANPIN_2_1_3684
 
 PP_728 = Regulation(
     code="ПП РФ № 728",
@@ -392,7 +394,8 @@ ALL_REGULATIONS: dict[str, Regulation] = {
     "ISO_9906": ISO_9906,
     "IEC_60034": IEC_60034,
     # Санитария
-    "SANPIN_2_1_4": SANPIN_2_1_4,
+    "SANPIN_2_1_3684": SANPIN_2_1_3684,
+    "SANPIN_2_1_4": SANPIN_2_1_3684,  # deprecated alias
     "PP_728": PP_728,
     "PP_644": PP_644,
     "PRIKAZ_MSH_552": PRIKAZ_MSH_552,
