@@ -101,7 +101,7 @@ def map_istratech(src: dict) -> dict | None:
         },
         "warranty_months": 24,
         "_engineer_flag": "ok",
-        "_source": f"Agent A research 2026-05-08, ИСТРАТЕХ (бывший Grundfos Истра)" + (f", arts {article}" if article else ""),
+        "_source": "Agent A research 2026-05-08, ИСТРАТЕХ (бывший Grundfos Истра)" + (f", arts {article}" if article else ""),
         "_added": "2026-05-10",
     }
     if price:
@@ -294,7 +294,7 @@ def main() -> None:
     )
 
     # Report
-    print(f"\n=== IMPORT SUMMARY ===")
+    print("\n=== IMPORT SUMMARY ===")
     print(f"Added new pumps:     {len(new_pumps)}")
     print(f"  ИСТРАТЕХ:          {sum(1 for p in new_pumps if p['brand'] == 'ИСТРАТЕХ')}")
     print(f"  ГМС Ливгидромаш:   {sum(1 for p in new_pumps if p['brand'] == 'ГМС Ливгидромаш')}")
@@ -304,7 +304,7 @@ def main() -> None:
     print(f"Skipped invalid:     {len(skipped_invalid)} (motors/cabinets)")
     print(f"\nTotal pumps in DB: {len(existing)}")
     brand_dist = Counter(p["brand"] for p in existing)
-    print(f"Brand distribution top 15:")
+    print("Brand distribution top 15:")
     for b, c in brand_dist.most_common(15):
         print(f"  {b:<25} {c}")
 
