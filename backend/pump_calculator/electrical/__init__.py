@@ -33,6 +33,11 @@ from .protection import (
     ProtectionDevice,
     select_circuit_breaker,
 )
+from .short_circuit import (
+    TRANSFORMER_IMPEDANCES_MOHM,
+    ShortCircuitCalc,
+    calc_short_circuit,
+)
 
 __all__ = [
     "CABLE_SECTIONS_MM2",
@@ -40,8 +45,11 @@ __all__ = [
     "ControlPanelSpec",
     "MotorPowerCalc",
     "ProtectionDevice",
+    "ShortCircuitCalc",
+    "TRANSFORMER_IMPEDANCES_MOHM",
     "calc_full_load_current",
     "calc_motor_power_required",
+    "calc_short_circuit",
     "select_cable_section",
     "select_circuit_breaker",
     "select_control_panel",

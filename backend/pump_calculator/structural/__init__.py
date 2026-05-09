@@ -26,14 +26,26 @@ from .models import (
     StructuralScenarioInput,
     WallThicknessResult,
 )
+from .seismic import (
+    SOIL_SEISMIC_FACTORS,
+    SeismicResult,
+    SoilSeismicCategory,
+    calc_seismic_force_on_corpus,
+    list_soil_categories,
+)
 from .wall_thickness import calc_polymer_wall_thickness
 
 __all__ = [
     "BallastResult",
     "LadderResult",
+    "SOIL_SEISMIC_FACTORS",
+    "SeismicResult",
+    "SoilSeismicCategory",
     "StructuralScenarioInput",
     "WallThicknessResult",
     "calc_ballast_concrete",
     "calc_ladder_geometry",
     "calc_polymer_wall_thickness",
+    "calc_seismic_force_on_corpus",
+    "list_soil_categories",
 ]

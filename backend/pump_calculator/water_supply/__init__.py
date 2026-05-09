@@ -11,6 +11,14 @@
 - Расчёт ёмкости резервуара хозпитьевого
 - Зонирование высотных зданий (СП 30 §7.10)
 """
+from .alpha_coefficients import (
+    TYPICAL_DEVICE_FLOWS_LPS,
+    TYPICAL_DEVICES_PER_USER,
+    AlphaCalculation,
+    alpha_b1,
+    calc_q_max_sec_alpha,
+    estimate_n_devices,
+)
 from .demand import (
     NORMS_LITERS_PER_DAY,
     Q_aggregate,
@@ -25,12 +33,18 @@ from .models import (
 from .station import sizing_water_station
 
 __all__ = [
+    "AlphaCalculation",
     "BuildingType",
     "NORMS_LITERS_PER_DAY",
     "Q_aggregate",
+    "TYPICAL_DEVICE_FLOWS_LPS",
+    "TYPICAL_DEVICES_PER_USER",
     "WaterDemandResult",
     "WaterScenarioInput",
     "WaterStationSpec",
+    "alpha_b1",
+    "calc_q_max_sec_alpha",
     "calc_water_demand",
+    "estimate_n_devices",
     "sizing_water_station",
 ]

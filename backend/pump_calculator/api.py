@@ -348,6 +348,44 @@ def list_storm_presets() -> dict:
 # ──────────────────────────────────────────────────────────────────────────
 
 
+@app.post("/fire-water/sprinklers", tags=["fire_water"])
+def calc_sprinklers_endpoint(payload: dict) -> dict:
+    """Расчёт автоматических спринклерных установок по СП 485.1311500.2020.
+
+    Требует:
+    - group: одна из ["1", "2", "3", "4.1", "4.2", "5", "6", "7"]
+    - coverage_area_m2 (опционально): реальная площадь защищаемого помещения
+    """
+    from pump_calculator.fire_water import calc_sprinkler_demand
+    try:
+        result = calc_sprinkler_demand(
+            group=payload["group"],
+            coverage_area_m2=payload.get("coverage_area_m2"),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    return {
+        "group": result.group,
+        "group_title": result.group_title,
+        "q_total_lps": result.q_total_lps,
+        "q_total_m3h": result.q_total_m3h,
+        "area_m2": result.area_m2,
+        "duration_min": result.duration_min,
+        "n_sprinklers_min": result.n_sprinklers_min,
+        "min_pressure_m": result.min_pressure_m,
+        "water_volume_m3": result.water_volume_m3,
+        "notes": result.notes,
+        "references": result.references,
+    }
+
+
+@app.get("/fire-water/sprinkler-groups", tags=["fire_water"])
+def list_sprinkler_groups_endpoint() -> dict:
+    """Каталог 8 групп помещений по СП 485 для UI."""
+    from pump_calculator.fire_water import list_sprinkler_groups
+    return {"groups": list_sprinkler_groups()}
+
+
 @app.post("/fire-water/calc", tags=["fire_water"])
 def calculate_fire_water(payload: dict) -> dict:
     """Расчёт противопожарного водоснабжения по СП 8.13130 + СП 10.13130.

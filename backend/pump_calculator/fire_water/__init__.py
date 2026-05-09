@@ -25,6 +25,13 @@ from .models import (
 from .pump_station import sizing_fire_pump_station
 from .reservoir import sizing_reservoir
 from .scenario import calculate_fire_scenario
+from .sprinklers import (
+    SPRINKLER_GROUPS,
+    SprinklerCalcResult,
+    SprinklerGroup,
+    calc_sprinkler_demand,
+    list_sprinkler_groups,
+)
 
 __all__ = [
     "BuildingClass",
@@ -34,9 +41,14 @@ __all__ = [
     "OccupancyType",
     "PumpStationSpec",
     "ReservoirSpec",
+    "SPRINKLER_GROUPS",
+    "SprinklerCalcResult",
+    "SprinklerGroup",
     "calc_external_demand",
     "calc_internal_demand",
+    "calc_sprinkler_demand",
     "calculate_fire_scenario",
+    "list_sprinkler_groups",
     "sizing_fire_pump_station",
     "sizing_reservoir",
 ]

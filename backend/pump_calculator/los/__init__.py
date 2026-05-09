@@ -14,6 +14,13 @@
 - Расчёт степени очистки η = (C_in - C_out) / C_in
 - Подбор ЛОС-блока по производительности
 """
+from .aerotank import (
+    LOAD_PROFILES,
+    AerotankCalcResult,
+    LoadProfile,
+    calc_aerotank,
+    list_load_profiles,
+)
 from .composition import (
     POLLUTANT_LIMITS_BY_DISCHARGE,
     TYPICAL_INFLUENT_DOMESTIC,
@@ -30,7 +37,10 @@ from .models import (
 from .selection import LOS_CATALOG, select_los_block
 
 __all__ = [
+    "AerotankCalcResult",
     "DischargeCategory",
+    "LOAD_PROFILES",
+    "LoadProfile",
     "LOSResult",
     "LOSScenarioInput",
     "LOSTreatmentLevel",
@@ -38,7 +48,9 @@ __all__ = [
     "POLLUTANT_LIMITS_BY_DISCHARGE",
     "PollutantConcentration",
     "TYPICAL_INFLUENT_DOMESTIC",
+    "calc_aerotank",
     "calc_purification_efficiency",
+    "list_load_profiles",
     "select_los_block",
     "typical_influent_for_object",
 ]
