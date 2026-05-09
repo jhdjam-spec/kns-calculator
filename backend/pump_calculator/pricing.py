@@ -75,8 +75,9 @@ def estimate_pump_price_rub(
 
     rate = PUMP_RUB_PER_KW.get(segment, 50_000)
     raw = max(P_kW, 0.5) * rate
-    raw = max(raw, PUMP_MIN_RUB[segment])
-    raw = min(raw, PUMP_MAX_RUB[segment])
+    # Безопасное обращение к min/max (на случай неизвестного segment типа "standard")
+    raw = max(raw, PUMP_MIN_RUB.get(segment, 30_000))
+    raw = min(raw, PUMP_MAX_RUB.get(segment, 600_000))
     return int(round(raw / 1000.0) * 1000)
 
 

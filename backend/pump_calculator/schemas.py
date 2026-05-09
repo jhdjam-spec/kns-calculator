@@ -81,6 +81,49 @@ class L1Input(BaseModel):
         ),
     )
 
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-09: 8 новых полей из анализа 109 полей по 54 ОЛ (Agent B)
+    # ──────────────────────────────────────────────────────────────────
+    # Геометрия подвода
+    inlet_pipe_diam_mm: float | None = Field(
+        None, gt=0, le=2000,
+        description="Диаметр подводящей трубы (в КНС), мм. Влияет на подбор корпуса по DN.",
+    )
+    install_depth_inlet_mm: float | None = Field(
+        None, ge=0, le=20000,
+        description="Глубина лотка подвода относительно поверхности, мм. Влияет на высоту корпуса.",
+    )
+    # Уровневое управление и защита
+    level_sensor_type: Literal["floats", "ultrasonic", "capacitive", "pneumatic"] | None = Field(
+        None,
+        description="Тип датчиков уровня: поплавки/УЗД/ёмкостные/пневматические.",
+    )
+    dry_run_protection: bool = Field(
+        True,
+        description="Защита от сухого хода (default True по СП 32 §6.2).",
+    )
+    # Электрика и автоматика
+    ip_motor: Literal["IP54", "IP55", "IP58", "IP68"] | None = Field(
+        None,
+        description="IP-рейтинг двигателя. IP68 — погружные стандарт, IP55 — наземные.",
+    )
+    modbus_rtu_required: bool = Field(
+        False,
+        description="Требуется Modbus RTU для интеграции в SCADA (CIM 200, и т.п.).",
+    )
+    above_ground_pavilion: bool = Field(
+        False,
+        description="Наземный павильон над КНС (для доступа в холодных регионах).",
+    )
+    # Грунт и УГВ
+    groundwater_level_m: float | None = Field(
+        None, ge=-50, le=10,
+        description=(
+            "Отметка УГВ относительно земли, м (отрицательные — ниже земли). "
+            "Если ниже отметки дна корпуса — нужен anti-buoyancy расчёт."
+        ),
+    )
+
 
 class SelectionRequest(BaseModel):
     """Полный запрос на подбор: L0 обязательный, L1 опциональный."""
@@ -237,6 +280,15 @@ class SelectionResult(BaseModel):
             "Минимальные размеры стеклопластикового корпуса КНС: "
             "diameter_mm × height_mm + DN входа/выхода. None если корпус не нужен "
             "(малые бытовые с готовым приямком, СПД-блоки)"
+        ),
+    )
+    # 2026-05-09: альтернативные кандидаты по брендам (P2.3)
+    alternatives: list["PumpResult"] = Field(
+        default_factory=list,
+        description=(
+            "До 6 альтернативных кандидатов с разными брендами от topbudget/mid/premium, "
+            "чтобы менеджер видел не только Antarus, но и Pedrollo/KSB/CNP/ИЛТ и т.д. "
+            "Сортировка по убыванию score."
         ),
     )
 

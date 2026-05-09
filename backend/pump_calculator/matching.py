@@ -367,8 +367,13 @@ def pick_top_per_segment(
     wastewater_type: str = "domestic",
     ex_required: bool = False,
     n_pumps_override: int | None = None,
-) -> tuple[SelectionResultsBySegment, int, list[str]]:
-    """Шаг 6: топ-1 в каждом из {budget, mid, premium}."""
+) -> tuple[SelectionResultsBySegment, int, list[str], list[Any]]:
+    """Шаг 6: топ-1 в каждом из {budget, mid, premium} + alternatives с другими брендами.
+
+    Возвращает (results, total_candidates, warnings, alternatives).
+    `alternatives` — до 6 кандидатов с уникальными брендами, не попавшими в top-1
+    каждого сегмента. Отсортированы по убыванию score.
+    """
     scored = []
     for p in pumps:
         score, breakdown, zone = composite_score(p, Q_m3h, H_full_m)
@@ -376,6 +381,8 @@ def pick_top_per_segment(
 
     results = SelectionResultsBySegment()
     warnings = []
+    selected_brands: set[str] = set()  # бренды которые уже в top-1
+    selected_ids: set[str] = set()
     for segment in ("budget", "mid", "premium"):
         seg_candidates = [s for s in scored if s[0]["price_segment"] == segment]
         if not seg_candidates:
@@ -391,8 +398,41 @@ def pick_top_per_segment(
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
         setattr(results, segment, pr)
+        selected_brands.add(best[0].get("brand", ""))
+        selected_ids.add(best[0].get("id", ""))
 
-    return results, len(scored), warnings
+    # Альтернативы — топ-1 в каждом ещё не показанном бренде, score сортировка убывания
+    # Только из 3 поддерживаемых сегментов (budget/mid/premium); standard и пр. — пропускаем
+    SUPPORTED_SEGMENTS = {"budget", "mid", "premium"}
+    scored_sorted = sorted(scored, key=lambda x: -x[1])
+    alternatives: list[Any] = []
+    seen_alt_brands: set[str] = set()
+    for p, score, breakdown, zone in scored_sorted:
+        if len(alternatives) >= 6:
+            break
+        if p.get("price_segment") not in SUPPORTED_SEGMENTS:
+            continue
+        brand = p.get("brand", "")
+        if not brand:
+            continue
+        if p.get("id") in selected_ids:
+            continue
+        if brand in selected_brands or brand in seen_alt_brands:
+            continue
+        # Пропустим _NOT_RECOMMENDED маркеры
+        if p.get("_engineer_flag") == "not_recommended":
+            continue
+        seen_alt_brands.add(brand)
+        alt = make_pump_result(
+            p, score, breakdown, zone,
+            Q_m3h=Q_m3h, corpus_material=corpus_material,
+            wastewater_type=wastewater_type, ex_required=ex_required,
+            n_pumps_override=n_pumps_override,
+        )
+        alt.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
+        alternatives.append(alt)
+
+    return results, len(scored), warnings, alternatives
 
 
 # ----------------------- Шаг 7: триггеры hand-off -----------------------
@@ -476,7 +516,7 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
     ex_required = bool(L1 and L1.Ex_required)
     n_pumps_override = L1.pumps_total_override if L1 and L1.pumps_total_override else None
-    results, candidates_total, warnings = pick_top_per_segment(
+    results, candidates_total, warnings, alternatives = pick_top_per_segment(
         f3, L0_filled.Q_m3h, computed.H_full_m, corpus_material=corpus_material,
         wastewater_type=L0_filled.wastewater_type,
         ex_required=ex_required,
@@ -522,6 +562,7 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         completeness_pct=completeness_pct,
         summary_text=summary_text,
         corpus_size=corpus_size,
+        alternatives=alternatives,
     )
 
 

@@ -13,6 +13,31 @@ from .models import (
     ProjectSubsystems,
     SubsystemResult,
 )
+from pump_calculator.regulations import ref as _reg_ref
+
+
+def _ref_dict(reg_key: str, section: str, purpose: str, quote: str = "") -> dict:
+    """Хелпер: создаёт dict-references из ALL_REGULATIONS через ref().
+
+    Преимущества vs hand-typed dict:
+    - regulation_code и url подтянутся автоматически из БД нормативов
+    - typo в reg_key выбросит KeyError на инициализации, не silent-bug
+    - section/purpose остаются под контролем местного кода
+
+    Использование:
+        references=[
+            _ref_dict("SP_32", "§6", "Канализация наружная — расчёт КНС"),
+            _ref_dict("SP_30", "прил. А.2", "Норма водопотребления"),
+        ]
+    """
+    r = _reg_ref(reg_key, section, purpose, quote)
+    return {
+        "regulation_code": r.regulation_code,
+        "section": r.section,
+        "purpose": r.purpose,
+        "quote": r.quote,
+        "url": r.url,
+    }
 
 # Пресеты — какие подсистемы по умолчанию включить для каждого типа объекта.
 PRESET_DEFAULT_SUBSYSTEMS: dict[ProjectPreset, ProjectSubsystems] = {
@@ -231,16 +256,8 @@ def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
                 "selection": result.model_dump(),
             },
             references=[
-                {
-                    "regulation_code": "СП 32.13330.2018",
-                    "section": "§6",
-                    "purpose": "Канализация наружная — расчёт КНС",
-                },
-                {
-                    "regulation_code": "СП 30.13330.2020",
-                    "section": "прил. А.2",
-                    "purpose": "Норма водопотребления (формула расхода)",
-                },
+                _ref_dict("SP_32", "§6", "Канализация наружная — расчёт КНС"),
+                _ref_dict("SP_30", "прил. А.2", "Норма водопотребления (формула расхода)"),
             ],
         )
     except Exception as e:
@@ -538,11 +555,7 @@ def _calc_storm_subsystem(inputs: ProjectInput) -> SubsystemResult:
             ),
             data=result.model_dump(),
             references=[
-                {
-                    "regulation_code": "СП 32.13330.2018",
-                    "section": "§6.2.4",
-                    "purpose": "Метод предельных интенсивностей (ливнёвка)",
-                },
+                _ref_dict("SP_32", "§6.2.4", "Метод предельных интенсивностей (ливнёвка)"),
             ],
         )
     except Exception as e:
@@ -627,21 +640,9 @@ def _calc_electrical_subsystem(inputs: ProjectInput, kns_result: SubsystemResult
                 "panel": panel.model_dump(),
             },
             references=[
-                {
-                    "regulation_code": "ПУЭ 7-е изд.",
-                    "section": "гл. 1.3, 7.3",
-                    "purpose": "Подбор кабеля и защиты",
-                },
-                {
-                    "regulation_code": "ГОСТ IEC 60034-1-2014",
-                    "section": "общ.",
-                    "purpose": "Электрические машины (двигатели насосов)",
-                },
-                {
-                    "regulation_code": "ТР ТС 004/2011",
-                    "section": "общ.",
-                    "purpose": "Безопасность низковольтного оборудования",
-                },
+                _ref_dict("PUE_7", "гл. 1.3, 7.3", "Подбор кабеля и защиты"),
+                _ref_dict("IEC_60034", "общ.", "Электрические машины (двигатели насосов)"),
+                _ref_dict("TR_TS_004", "общ.", "Безопасность низковольтного оборудования"),
             ],
         )
     except Exception as e:
