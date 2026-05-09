@@ -6,10 +6,11 @@ from pump_calculator.hydraulics import (
     auto_select_diameter_mm,
     calc_velocity_ms,
     compute_hydraulics,
+    nu_water_at_t,
     round_up_to_standard,
     zhukovsky_shock_m,
 )
-from pump_calculator.schemas import L0Input
+from pump_calculator.schemas import L0Input, L1Input
 
 
 def test_round_up_to_standard():
@@ -63,3 +64,47 @@ def test_zhukovsky_shock_steel():
     """Сталь имеет высокую a → больший гидроудар: 1150·1.5/9.81 ≈ 176 м."""
     delta_H = zhukovsky_shock_m(1.5, "steel_seamless_new")
     assert 170 < delta_H < 185
+
+
+def test_nu_water_at_t_default_20c():
+    """Default T=20°C → классическая константа NU_WATER_20C."""
+    nu = nu_water_at_t(20.0)
+    assert abs(nu - 1.01e-6) < 1e-9
+
+
+def test_nu_water_at_t_hot_40c_reduces_viscosity():
+    """T=40°C → ν=0.66e-6 (vs 1.01e-6 при 20°C). По таблице IAPWS-IF97."""
+    nu_20 = nu_water_at_t(20.0)
+    nu_40 = nu_water_at_t(40.0)
+    assert nu_40 < nu_20
+    assert abs(nu_40 - 0.66e-6) < 0.05e-6  # ±5%
+
+
+def test_nu_water_at_t_extrapolation():
+    """T < 0 или T > 100 → fallback на крайние значения таблицы."""
+    assert nu_water_at_t(-10.0) == 1.79e-6  # T=0 нижняя граница
+    assert nu_water_at_t(150.0) == 0.30e-6  # T=100 верхняя граница
+
+
+def test_compute_hydraulics_hot_stocks_lower_friction():
+    """Для горячих стоков 40°C H_тр должно быть меньше чем для 20°C
+    (ν меньше → Re выше → λ ниже)."""
+    L0 = L0Input(Q_m3h=100, dH_m=10, L_m=500, wastewater_type="industrial")
+    cold = compute_hydraulics(L0, None)  # default 20°C
+    hot = compute_hydraulics(L0, L1Input(liquid_temp_c=40.0))
+
+    assert hot.Re > cold.Re, "Re должно расти при нагреве"
+    assert hot.friction_factor < cold.friction_factor, "λ должно падать при нагреве"
+    assert hot.H_tr_m < cold.H_tr_m, "H_тр должно падать при нагреве"
+    # Эффект ~5-10% для T=40°C при типовых L=500м
+    assert (cold.H_tr_m - hot.H_tr_m) / cold.H_tr_m > 0.04
+
+
+def test_compute_hydraulics_default_temp_backward_compat():
+    """L1=None ИЛИ L1.liquid_temp_c=None → расчёт идентичен прежнему (T=20°C)."""
+    L0 = L0Input(Q_m3h=50, dH_m=8, L_m=200, wastewater_type="domestic")
+    r1 = compute_hydraulics(L0, None)
+    r2 = compute_hydraulics(L0, L1Input(liquid_temp_c=None))
+    r3 = compute_hydraulics(L0, L1Input(liquid_temp_c=20.0))
+    assert r1.Re == r2.Re == r3.Re
+    assert r1.H_tr_m == r2.H_tr_m == r3.H_tr_m
