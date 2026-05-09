@@ -58,3 +58,7 @@ backend/.ruff_cache/
 backend/runs/
 
 .vercel
+
+# Yandex Cloud Functions build artifacts
+deploy/yandex-cloud/_build/
+deploy/yandex-cloud/*.zip

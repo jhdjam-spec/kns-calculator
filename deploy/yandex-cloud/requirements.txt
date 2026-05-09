@@ -1,0 +1,17 @@
+# Зависимости для Yandex Cloud Functions runtime python311
+# Цель: backend kns-calculator (FastAPI + Pydantic + ASGI-адаптер)
+
+# Ядро API
+fastapi>=0.110,<0.140
+pydantic>=2.6,<3.0
+starlette>=0.36
+
+# YC Functions ASGI-адаптер (event → ASGI scope → FastAPI)
+mangum>=0.17
+
+# PDF/DOCX отчёты (RPZ ГОСТ Р 21.101, BOM ГОСТ 21.110, опросники)
+reportlab>=4.0
+python-docx>=1.1
+
+# Хелперы для PDF (опросники с таблицами)
+pdfplumber>=0.10
