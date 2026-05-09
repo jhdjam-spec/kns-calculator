@@ -3,7 +3,15 @@
 **Заказчик:** Серво-Юг (Краснодар), партнёр INSERVO
 **Лицензия:** MIT
 **Период разработки:** 2026-05-03 → продолжается
-**Vercel:** READY на https://kns-calc-test.vercel.app
+**Vercel (preview/staging):** READY на https://kns-calc-test.vercel.app
+**Production target:** Yandex Cloud (backend + frontend) — после полного тестирования на Vercel
+
+## Roadmap
+
+- ✅ **Priority 1** — БД пожарных насосов, ANTARUS MLV/MST, НДС 22%, dealer-флаг
+- ✅ **Priority 2** — Wizard L1 (+8 полей), ref() helper, alternatives (множественные бренды)
+- 🚧 **Priority 4 (PRE-PROD)** — Design UX/UI, генерация TS-типов из Pydantic, упрощение главной
+- 🚧 **Priority 5 (PROD)** — переезд на Yandex Cloud Functions/Compute
 
 ---
 
