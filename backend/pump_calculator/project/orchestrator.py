@@ -6,7 +6,11 @@
 """
 from __future__ import annotations
 
+import logging
+
 from pump_calculator.regulations import ref as _reg_ref
+
+logger = logging.getLogger(__name__)
 
 from .models import (
     ProjectInput,
@@ -262,6 +266,7 @@ def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
             ],
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="КНС",
             status="error",
@@ -306,6 +311,7 @@ def _calc_water_subsystem(inputs: ProjectInput) -> SubsystemResult:
             references=demand.references,
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="ВНС хозпитьевая",
             status="error",
@@ -356,6 +362,7 @@ def _calc_fire_subsystem(inputs: ProjectInput) -> SubsystemResult:
             warnings=result.warnings,
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="Пожарное водоснабжение",
             status="error",
@@ -387,6 +394,7 @@ def _calc_climate_subsystem(inputs: ProjectInput) -> SubsystemResult:
             references=result.references,
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="Климат и заложение",
             status="error",
@@ -428,6 +436,7 @@ def _calc_structural_subsystem(inputs: ProjectInput) -> SubsystemResult:
             references=result.references,
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="Прочность корпуса",
             status="error",
@@ -486,6 +495,7 @@ def _calc_los_subsystem(inputs: ProjectInput) -> SubsystemResult:
             warnings=result.warnings,
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="ЛОС",
             status="error",
@@ -560,6 +570,7 @@ def _calc_storm_subsystem(inputs: ProjectInput) -> SubsystemResult:
             ],
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="Ливневая канализация",
             status="error",
@@ -647,6 +658,7 @@ def _calc_electrical_subsystem(inputs: ProjectInput, kns_result: SubsystemResult
             ],
         )
     except Exception as e:
+        logger.exception("orchestrator subsystem failed: %s", e.__class__.__name__)
         return SubsystemResult(
             name="Электрика",
             status="error",
