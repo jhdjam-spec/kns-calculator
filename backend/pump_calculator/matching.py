@@ -8,7 +8,7 @@ from __future__ import annotations
 from typing import Any
 
 from pump_calculator import catalog
-from pump_calculator.forecast import (
+from pump_calculator.result_enrichment import (
     build_summary_text,
     calculate_completeness_pct,
     fill_price_ranges,

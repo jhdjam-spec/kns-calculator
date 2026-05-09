@@ -9,7 +9,7 @@
 
 from __future__ import annotations
 
-from pump_calculator.forecast import (
+from pump_calculator.result_enrichment import (
     calculate_completeness_pct,
     calculate_price_range,
 )
