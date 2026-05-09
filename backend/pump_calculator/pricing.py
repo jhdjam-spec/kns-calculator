@@ -18,6 +18,32 @@ from pump_calculator.schemas import PriceBreakdown, PriceSegment
 
 CorpusMaterial = Literal["pe", "glass"]
 
+# ---------- НДС и дилерская скидка (2026) ----------
+# С 2026 г. ставка НДС в РФ = 22% (повышена с 20%).
+# Источник: счета Серво-Юг №94, №161 от 01.01.2026 (Agent C 2026-05-09).
+VAT_RATE_2026: float = 0.22
+
+# Медианная дилерская скидка по Серво-Юг (analysis 2026-05-09): -25%
+# Применяется к финальной сумме при флаге is_dealer=True.
+DEALER_DISCOUNT: float = 0.25
+
+
+def apply_vat(amount_rub: int, vat_included: bool = True) -> int:
+    """Если vat_included=False — амт без НДС, добавить НДС.
+    Если True — амт уже с НДС, вернуть как есть.
+    """
+    if vat_included:
+        return amount_rub
+    return int(round(amount_rub * (1 + VAT_RATE_2026)))
+
+
+def apply_dealer_discount(amount_rub: int, is_dealer: bool = False) -> int:
+    """При флаге дилера снизить цену на 25% (медиана Серво-Юг 2026)."""
+    if is_dealer:
+        return int(round(amount_rub * (1 - DEALER_DISCOUNT)))
+    return amount_rub
+
+
 # ---------- Heuristic: цена насоса ----------
 # Базис: АРКАДА КП 29.01.2026 + публичные прайсы 2026
 # KAIQUAN 50WQ/S 20-22-3 (3 кВт, budget): 65 600 ₽; YW2368-8157-400 (premium): 1 352 052 ₽
@@ -252,6 +278,9 @@ def estimate_kns_kit_price(
         chain_rub=chain_rub,
         corpus_rub=corpus_rub,
         total_rub=total,
+        vat_rate=VAT_RATE_2026,
+        vat_included=True,
+        total_dealer_rub=apply_dealer_discount(total, is_dealer=True),
     )
     return breakdown, confidence
 

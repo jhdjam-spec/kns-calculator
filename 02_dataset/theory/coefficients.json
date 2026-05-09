@@ -230,7 +230,7 @@
     "drainage":   {"min": 10, "label": "Дренаж/ливнёвка чистая (отстоянная)",                 "impeller_types": ["open", "semi-open", "channel", "single-channel", "multi-channel", "vortex"]},
     "industrial": {"min": 80, "label": "Производственные с включениями",                       "impeller_types": ["vortex", "cutter", "single-channel", "multi-channel", "channel"]},
     "clean_water": {"min": 0,  "label": "Чистая вода (СПД, водоснабжение)",                    "impeller_types": ["multi-channel", "single-channel", "open", "semi-open", "vortex"]},
-    "fire_protection": {"min": 0, "label": "Пожаротушение (СП 10.13130, спринклеры/гидранты)", "impeller_types": ["multi-channel", "single-channel", "open", "semi-open"]}
+    "fire_protection": {"min": 0, "label": "Пожаротушение (СП 10.13130, спринклеры/гидранты)", "impeller_types": ["multi-channel", "single-channel", "open", "semi-open", "radial-multistage", "radial-multistage-vertical", "channel"]}
   },
 
   "pump_power_safety_factor": {

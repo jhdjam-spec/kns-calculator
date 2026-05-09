@@ -160,6 +160,11 @@ class PriceBreakdown(BaseModel):
     # При неполном вводе диапазон шире (±20-30%), при полном — узкий (±5-10%)
     total_low_rub: int = Field(0, description="Нижняя граница диапазона цены, ₽")
     total_high_rub: int = Field(0, description="Верхняя граница диапазона цены, ₽")
+    # 2026-05-09: НДС и дилерская скидка
+    vat_rate: float = Field(0.22, description="Ставка НДС (с 2026 = 22%)")
+    vat_included: bool = Field(True, description="True = total_rub уже включает НДС")
+    is_dealer_price: bool = Field(False, description="True = применена дилерская скидка -25%")
+    total_dealer_rub: int = Field(0, description="Цена со скидкой -25% (если is_dealer)")
 
 
 class PumpResult(BaseModel):
