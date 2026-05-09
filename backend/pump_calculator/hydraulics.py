@@ -13,7 +13,39 @@ from pump_calculator import catalog
 from pump_calculator.schemas import ComputedHydraulics, L0Input, L1Input
 
 G = 9.81  # м/с²
-NU_WATER_20C = 1.01e-6  # м²/с
+NU_WATER_20C = 1.01e-6  # м²/с (стандарт ISO 9906 для расчётов при 20°C)
+
+
+def nu_water_at_t(T_celsius: float = 20.0) -> float:
+    """Кинематическая вязкость воды (м²/с) при заданной температуре.
+
+    Линейная интерполяция по таблице IAPWS-IF97 (точные значения):
+      T=0°C   → 1.79e-6
+      T=10°C  → 1.31e-6
+      T=20°C  → 1.01e-6 (default)
+      T=30°C  → 0.80e-6
+      T=40°C  → 0.66e-6 (горячие стоки — Re выше, λ ниже)
+      T=60°C  → 0.47e-6
+      T=80°C  → 0.36e-6
+      T=100°C → 0.30e-6
+    Используется в физически точных расчётах (physics_advanced).
+    compute_hydraulics пока работает на константе NU_WATER_20C —
+    функция доступна для будущей проброски через L1Input.liquid_temp_c.
+    """
+    table = [
+        (0, 1.79e-6), (10, 1.31e-6), (20, 1.01e-6), (30, 0.80e-6),
+        (40, 0.66e-6), (60, 0.47e-6), (80, 0.36e-6), (100, 0.30e-6),
+    ]
+    if T_celsius <= table[0][0]:
+        return table[0][1]
+    if T_celsius >= table[-1][0]:
+        return table[-1][1]
+    for i in range(len(table) - 1):
+        T1, n1 = table[i]
+        T2, n2 = table[i + 1]
+        if T1 <= T_celsius <= T2:
+            return n1 + (n2 - n1) * (T_celsius - T1) / (T2 - T1)
+    return NU_WATER_20C
 
 
 def round_up_to_standard(value_mm: float, ladder: list[float]) -> float:
