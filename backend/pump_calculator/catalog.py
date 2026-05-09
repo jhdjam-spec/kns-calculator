@@ -7,10 +7,13 @@ Override через env var `KNS_DATASET_ROOT` — нужен для serverless-
 from __future__ import annotations
 
 import json
+import logging
 import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 _env_root = os.environ.get("KNS_DATASET_ROOT")
 if _env_root:
@@ -24,17 +27,35 @@ else:
 def load_coefficients() -> dict[str, Any]:
     """Все таблицы коэффициентов (k_э, ζ, K_gen, скорости, AOR/POR и др.)."""
     path = DATASET_ROOT / "theory" / "coefficients.json"
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        logger.exception("coefficients.json corrupt or missing at %s", path)
+        # Не маскируем — для коэффициентов лучше упасть громко при старте.
+        raise RuntimeError(f"Coefficients dataset unavailable: {e}") from e
 
 
 @lru_cache(maxsize=1)
 def load_pumps() -> list[dict[str, Any]]:
-    """БД насосов envelope-only (14 моделей в seed)."""
+    """БД насосов. При повреждении JSON возвращает [] — endpoint /health
+    отдаст pumps_in_db=0, и фронт покажет maintenance message вместо 500.
+    """
     path = DATASET_ROOT / "pumps" / "pumps.json"
-    with open(path, encoding="utf-8") as f:
-        data = json.load(f)
-    return data.get("pumps", [])
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+        pumps = data.get("pumps", [])
+        if not isinstance(pumps, list):
+            logger.error("pumps.json malformed: 'pumps' is not a list (got %s)", type(pumps).__name__)
+            return []
+        return pumps
+    except FileNotFoundError:
+        logger.error("pumps.json not found at %s", path)
+        return []
+    except json.JSONDecodeError as e:
+        logger.exception("pumps.json malformed JSON at %s: %s", path, e)
+        return []
 
 
 @lru_cache(maxsize=1)

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
@@ -24,10 +26,17 @@ app = FastAPI(
     version=__version__,
 )
 
-# Permissive CORS for the open-source MVP. Tighten in production.
+# CORS: prod — список разрешённых origin'ов через ENV `CORS_ALLOWED_ORIGINS`
+# (запятая-разделённый). Dev/MVP по умолчанию ["*"]. См. PRR audit 2026-05-10.
+_cors_env = os.environ.get("CORS_ALLOWED_ORIGINS", "*").strip()
+if _cors_env == "*":
+    _cors_origins = ["*"]
+else:
+    _cors_origins = [o.strip() for o in _cors_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,9 +55,12 @@ def root() -> dict:
 
 @app.get("/health", tags=["meta"])
 def health() -> dict:
-    """Простой health check + проверка что dataset подгружается."""
+    """Health check + dataset integrity. 503 если pumps.json не загружен."""
     pumps = catalog.load_pumps()
     coeffs = catalog.load_coefficients()
+    if not pumps:
+        # safe-empty из catalog.load_pumps() — pumps.json повреждён или отсутствует
+        raise HTTPException(503, "pumps dataset unavailable")
     return {
         "status": "ok",
         "version": __version__,

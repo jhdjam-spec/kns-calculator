@@ -13781,13 +13781,13 @@
         "domestic",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков.",
+      "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns2.zip 50WQ20-15-2.2(I)  CNP.pdf (KP инженер Серво-Юг)",
       "_added": "2026-05-08"
     },
@@ -13821,13 +13821,13 @@
         "domestic",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN.",
+      "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08"
     },
@@ -13862,13 +13862,13 @@
         "industrial",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км.",
+      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08"
     },
@@ -13903,13 +13903,13 @@
         "industrial",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный.",
+      "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08"
     },
@@ -13944,13 +13944,13 @@
         "industrial",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "domestic_manufacturer",
         "distributor": "Средневолжский Машзавод (Самара)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "НОВЫЙ российский производитель — Средневолжский машзавод (Самара). Линейка КИТ КПА — крупные погружные канализационные. F-класс изоляции, 380 В, 1К комплектация. Импортозамещение Grundfos/Wilo для крупных КНС.",
+      "_engineer_note": "НОВЫЙ российский производитель — Средневолжский машзавод (Самара). Линейка КИТ КПА — крупные погружные канализационные. F-класс изоляции, 380 В, 1К комплектация. Импортозамещение Grundfos/Wilo для крупных КНС. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns2.zip 250-18.150.18,5.380.1K.pdf (паспорт + КП №628 от 19.04.2023)",
       "_added": "2026-05-08"
     },
@@ -14024,13 +14024,13 @@
       "wastewater_compat": [
         "clean_water"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "imported_turkey",
         "distributor": "MAS DAF (Турция) — официальный дилер РФ"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "End Suction Monoblock — НОВЫЙ для нас турецкий бренд. Проверить по паспорту — кривая Q-H, NPSHr, точные точки BEP.",
+      "_engineer_note": "End Suction Monoblock — НОВЫЙ для нас турецкий бренд. Проверить по паспорту — кривая Q-H, NPSHr, точные точки BEP. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns3.zip / архив с TANECO либо ПГК Татьянка",
       "_added": "2026-05-08"
     },
@@ -14063,13 +14063,13 @@
       "wastewater_compat": [
         "clean_water"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "domestic_manufacturer",
         "distributor": "ООО «Шторм Ф» (РФ)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "ПНС повышения давления, комплектный блок. Цена/конкретика не указаны в массиве — ждём паспорт.",
+      "_engineer_note": "ПНС повышения давления, комплектный блок. Цена/конкретика не указаны в массиве — ждём паспорт. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns3.zip",
       "_added": "2026-05-08"
     },
@@ -14182,13 +14182,13 @@
       "wastewater_compat": [
         "domestic"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "domestic_manufacturer",
         "distributor": "ООО «ГИС» (Симферополь)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Используется в КНС ГИС ЭКОВЭЛЛ (ж/б футерованных). Малая КНС бытового применения. Точные характеристики уточнить по PDF КНС-6,9.13.",
+      "_engineer_note": "Используется в КНС ГИС ЭКОВЭЛЛ (ж/б футерованных). Малая КНС бытового применения. Точные характеристики уточнить по PDF КНС-6,9.13. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns3.zip / GIS-KNS-6-9,13-2-02072025-1",
       "_added": "2026-05-08"
     },
@@ -14262,13 +14262,13 @@
         "industrial",
         "drainage"
       ],
-      "price_segment": "standard",
+      "price_segment": "mid",
       "available_ru": {
         "status": "domestic_manufacturer",
         "distributor": "Завод ФГПУ (РФ)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Российский ПОЛУПОГРУЖНОЙ насос (новый тип `vertical_dry_well` для нашей БД — отличается от submersible тем что мотор сухой над уровнем стоков). Применён в АО «ПГК» Татьянка для песколовушек. Q=120 H=16.",
+      "_engineer_note": "Российский ПОЛУПОГРУЖНОЙ насос (новый тип `vertical_dry_well` для нашей БД — отличается от submersible тем что мотор сухой над уровнем стоков). Применён в АО «ПГК» Татьянка для песколовушек. Q=120 H=16. | segment standard→mid (PRR fix 2026-05-10)",
       "_source": "kns3.zip / 1294907_PGK_2025",
       "_added": "2026-05-08"
     },

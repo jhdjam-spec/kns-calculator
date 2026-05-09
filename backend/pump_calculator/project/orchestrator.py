@@ -6,6 +6,8 @@
 """
 from __future__ import annotations
 
+from pump_calculator.regulations import ref as _reg_ref
+
 from .models import (
     ProjectInput,
     ProjectPreset,
@@ -13,7 +15,6 @@ from .models import (
     ProjectSubsystems,
     SubsystemResult,
 )
-from pump_calculator.regulations import ref as _reg_ref
 
 
 def _ref_dict(reg_key: str, section: str, purpose: str, quote: str = "") -> dict:

@@ -135,6 +135,11 @@ def filter_by_envelope(
         # допустим, только КПД ниже).
         if H_full_m > e["H_max_m"] * 1.05:
             continue
+        # NB: ceiling H_max не вводим — КП Серво-Юг 2026 показывает что для
+        # Q=0.5 H_full=4 ставят KAIQUAN с H_max=25 (6× запас). Защита от
+        # экстремальных ЦНС (H до 1422 м) для бытовых запросов работает
+        # через filter_by_wastewater_type — ЦНС имеют compat=[clean_water],
+        # для domestic/drainage они уже отсеяны.
         out.append(p)
     return out
 
@@ -188,6 +193,13 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
     Ns_value = calc_specific_speed_ns(rpm, Q_m3h, H_BEP)
     ns_factor = score_ns_compatibility(Ns_value)
     base_score *= ns_factor
+
+    # Штраф для некалиброванных ETL-импортов: 49% БД (231 насос) имеют
+    # _engineer_flag="needs_review" — преимущественно pdfplumber-парсинг KSB
+    # и Antarus, паспортные данные не сверены инженером. Снижаем score ×0.7,
+    # чтобы калиброванные модели побеждали при равенстве BEP/η.
+    if pump.get("_engineer_flag") == "needs_review":
+        base_score *= 0.7
 
     # Pulsed-mode bonus: для малых Q бытовой канализации (< 5 м³/ч)
     # инженеры предпочитают **минимальный достаточный** насос — меньше Q_BEP,

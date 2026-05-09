@@ -16,7 +16,7 @@ export function SiteNav() {
   return (
     <header
       className={clsx(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-base ease-out-quart",
+        "fixed top-9 md:top-10 inset-x-0 z-40 transition-all duration-base ease-out-quart",
         scrolled
           ? "h-14 bg-ink-950/72 backdrop-blur-md backdrop-saturate-150 border-b border-white/[0.06]"
           : "h-[72px] bg-transparent",
