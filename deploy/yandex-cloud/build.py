@@ -75,6 +75,12 @@ def main() -> int:
         copytree_filtered(src_public, dataset_dst / "etalons" / "public")
         print("    + etalons/public")
 
+    # Encyclopedia md-файлы (нужны для /teach/[topic] runtime)
+    src_enc = REPO_ROOT / "02_dataset" / "_analysis" / "encyclopedia"
+    if src_enc.exists():
+        copytree_filtered(src_enc, dataset_dst / "_analysis" / "encyclopedia")
+        print("    + _analysis/encyclopedia (7 md-файлов)")
+
     print("[*] Установка зависимостей под Linux Python 3.11 (manylinux2014_x86_64)")
     # YC Functions runs on Linux Python 3.11 — нужны соответствующие wheels.
     # Windows-binaries (.pyd) НЕ совместимы с Linux runtime!

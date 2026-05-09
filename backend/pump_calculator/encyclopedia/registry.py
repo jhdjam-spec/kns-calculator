@@ -5,12 +5,39 @@
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
-# Корень проекта (на 4 уровня вверх от backend/pump_calculator/encyclopedia/)
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-ENCYCLOPEDIA_DIR = PROJECT_ROOT / "02_dataset" / "_analysis" / "encyclopedia"
+
+def _resolve_encyclopedia_dir() -> Path:
+    """Найти каталог md-файлов энциклопедии.
+
+    Структура отличается локально (`backend/pump_calculator/...`) и в YC
+    Function deploy package (`pump_calculator/...` без `backend/`). Ищем
+    `02_dataset/_analysis/encyclopedia` в нескольких кандидатах.
+    """
+    # 1) env override (deploy задаёт KNS_DATASET_ROOT=./02_dataset)
+    env_root = os.environ.get("KNS_DATASET_ROOT")
+    if env_root:
+        candidate = Path(env_root).expanduser()
+        if not candidate.is_absolute():
+            candidate = Path.cwd() / candidate
+        target = candidate / "_analysis" / "encyclopedia"
+        if target.is_dir():
+            return target
+    # 2) walk up from this file looking for 02_dataset
+    here = Path(__file__).resolve()
+    for parent in here.parents:
+        target = parent / "02_dataset" / "_analysis" / "encyclopedia"
+        if target.is_dir():
+            return target
+    # 3) cwd fallback (last resort)
+    return Path.cwd() / "02_dataset" / "_analysis" / "encyclopedia"
+
+
+ENCYCLOPEDIA_DIR = _resolve_encyclopedia_dir()
+PROJECT_ROOT = ENCYCLOPEDIA_DIR.parent.parent.parent  # backwards-compat для других модулей
 
 
 @dataclass(frozen=True)
@@ -203,8 +230,7 @@ ENCYCLOPEDIA_TOPICS: dict[str, EncyclopediaTopic] = {
 
 # Интерактивные примеры из эталонных проектов.
 # Каждый пример — pre-filled запрос на одно из API.
-# Используется в /teach: «Запустить пример: ВБД Екб» → переход на калькулятор
-# с заполненными полями.
+# Используется в /teach: переход на калькулятор с заполненными полями.
 @dataclass(frozen=True)
 class EncyclopediaExample:
     """Эталонный пример для запуска из энциклопедии."""
@@ -221,9 +247,9 @@ class EncyclopediaExample:
 EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
     EncyclopediaExample(
         id="vbd_ekb_storm",
-        title="ВБД Екатеринбург — ливневая КНС",
+        title="Ливневая КНС — F=7.7 га, северный регион",
         topic="hydraulics",
-        description="Расчёт пикового расхода ливневых стоков по СП 32 для F=7.7 га, юг Урала",
+        description="Расчёт пикового расхода ливневых стоков по СП 32 для F=7.7 га, северный регион",
         api_endpoint="/storm/calc",
         payload={
             "sp_revision": "SP_32_2018",
@@ -231,13 +257,13 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
             "surfaces": {"asphalt_ha": 6.5, "lawn_ha": 1.2},
             "period_P_year": 1,
         },
-        expected_outcome="Q_r ≈ 540 л/с (эталон проекта 66-06-22-РД)",
+        expected_outcome="Q_r ≈ 540 л/с",
     ),
     EncyclopediaExample(
         id="ppd_omon_fire",
-        title="ППД ОМОН Мариуполь — пожарное водоснабжение",
+        title="Пожарное водоснабжение — общественное здание 202 чел",
         topic="fire",
-        description="ВНС-2 пожарная для казармы 202 чел + спорткомплекс",
+        description="ВНС-2 пожарная для общественного здания на 202 чел + спорткомплекс",
         api_endpoint="/fire-water/calc",
         payload={
             "occupancy": "public",
@@ -252,7 +278,7 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
     ),
     EncyclopediaExample(
         id="rvb_kuban_kns9",
-        title="РВБ Кубань КНС-9 — подбор электрики",
+        title="Хозбытовая КНС — подбор электрики, Q=86 м³/ч",
         topic="electrical",
         description="Хозбытовая КНС Q=86 м³/ч H=7 м, 2 рабочих + 1 резерв",
         api_endpoint="/select",
@@ -263,18 +289,18 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
     ),
     EncyclopediaExample(
         id="promlivnevka_atex",
-        title="Промливневая КНС Q=132 ATEX",
+        title="Промливневая КНС Q=132 — взрывозащищённое исполнение",
         topic="electrical",
         description="ATEX зона B-1а / IIB-T3, 2×Q_66 параллельно × H=35",
         api_endpoint="/select",
         payload={
             "L0": {"Q_m3h": 132, "dH_m": 35, "L_m": 100, "wastewater_type": "industrial"},
         },
-        expected_outcome="Шкаф ATEX, IP66, газоанализатор Хоббит-Т, цена 500тыс-2.5млн ₽",
+        expected_outcome="Шкаф ATEX, IP66, газоанализатор, цена 500тыс-2.5млн ₽",
     ),
     EncyclopediaExample(
         id="pedrollo_household",
-        title="Pedrollo VXm 15/50 — бытовая ИЖС",
+        title="Бытовая КНС в сборе — частный дом 4-5 чел",
         topic="hydraulics",
         description="Готовая КНС в сборе SAR550 + VXm 15/50, типовое решение для 4-5 чел",
         api_endpoint="/select",
@@ -285,7 +311,7 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
     ),
     EncyclopediaExample(
         id="jk_50_apartments",
-        title="ЖК 12 эт. 50 квартир — пожарка + хозпит.",
+        title="МКД 12 этажей, 150 жителей — пожарка + хозпит.",
         topic="fire",
         description="Жилой 12 этажей, V=15000 м³, 150 жителей",
         api_endpoint="/fire-water/calc",
@@ -300,9 +326,9 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
     ),
     EncyclopediaExample(
         id="kotedge_los_5_persons",
-        title="Коттедж 5 чел — ЛОС бытовая",
+        title="Частный дом 5 чел — ЛОС бытовая",
         topic="los",
-        description="ИЖС-семья, сброс на полив, типовая Топас 5 / ПЕГАС-Б 5",
+        description="ИЖС-семья, сброс на полив, типовое решение",
         api_endpoint="/los/select",
         payload={
             "source_type": "domestic",
@@ -310,11 +336,11 @@ EXAMPLES_REGISTRY: list[EncyclopediaExample] = [
             "discharge_category": "irrigation",
             "population_equivalent": 5,
         },
-        expected_outcome="ПЕГАС-Б 5 (67-95 тыс ₽) или Топас 5 (95-130 тыс ₽)",
+        expected_outcome="Бюджетный класс 67-95 тыс ₽ или премиум 95-130 тыс ₽",
     ),
     EncyclopediaExample(
         id="krasnodar_burial",
-        title="Краснодар — глубина заложения трубы",
+        title="Глубина заложения трубы — южный регион",
         topic="structural",
         description="Хозбытовая канализация DN200, суглинок, без УГВ",
         api_endpoint="/climate/burial-depth",
