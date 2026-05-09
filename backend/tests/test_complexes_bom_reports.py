@@ -191,3 +191,65 @@ def test_calculation_report_pdf_generates_bytes():
     assert len(pdf) > 1000   # PDF минимум содержит кое-что
     # PDF должен начинаться с %PDF
     assert pdf[:4] == b"%PDF"
+
+
+def test_calculation_report_pdf_with_qh_chart_and_citations():
+    """Phase 28: PDF включает Q-H график + encyclopedia цитаты + кликабельные ссылки на нормативы."""
+    inputs = CalculationReportInput(
+        project_name="КНС-Тест Phase 28",
+        project_code="TST-P28",
+        customer="ООО Phase 28",
+        inputs_summary={"Q, м³/ч": 20, "H_full, м": 15},
+        hydraulics={"D подобран, мм": 90, "v, м/с": 1.05, "H_тр, м": 1.2},
+        electrical={"P_фидера, кВт": 5.5},
+        # Кликабельные нормативы
+        references=[
+            {
+                "regulation_code": "СП 32.13330.2018",
+                "section": "§6.2",
+                "purpose": "Канализация наружная",
+                "url": "https://docs.cntd.ru/document/554820821",
+            },
+            {
+                "regulation_code": "СП 8.13130.2020",
+                "section": "§6.3",
+                "purpose": "Пожарное водоснабжение",
+                "url_official": "https://docs.cntd.ru/document/566420296",
+            },
+        ],
+        # Цитаты из энциклопедии
+        encyclopedia_citations=[
+            {
+                "topic": "Гидравлика",
+                "section": "§4 Местные потери",
+                "text": "Сумма коэффициентов местных потерь Σζ для типовой обвязки КНС "
+                        "(задвижка + 4 отвода 90° + обратный клапан) составляет 6.5 (Идельчик, табл. 6-13).",
+            },
+            {
+                "topic": "Пожарное водоснабжение",
+                "section": "§3 Расход",
+                "text": "Минимальный расход на наружное пожаротушение — 10 л/с по СП 8.13130 §6.3 табл. 1 "
+                        "для зданий V степени огнестойкости и категории Д.",
+            },
+        ],
+        # Q-H график рабочего насоса
+        pump_for_chart={
+            "brand": "KAIQUAN",
+            "model": "65WQ/S223-2.2",
+            "envelope": {
+                "Q_min_m3h": 5, "Q_max_m3h": 30,
+                "H_min_m": 6, "H_max_m": 25,
+                "Q_BEP_m3h": 18, "H_BEP_m": 18,
+            },
+        },
+        duty_Q_m3h=20.0,
+        duty_H_m=15.0,
+        bom=[
+            {"name": "Насос KAIQUAN 65WQ/S223-2.2", "article": "K-65", "quantity": 2, "price_rub": 85_384},
+        ],
+    )
+    pdf = generate_calculation_report_pdf(inputs)
+    assert isinstance(pdf, bytes)
+    # PDF с графиком должен быть существенно больше базового (PNG ~30 KB)
+    assert len(pdf) > 30_000
+    assert pdf[:4] == b"%PDF"

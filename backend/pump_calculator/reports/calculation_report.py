@@ -37,6 +37,26 @@ class CalculationReportInput(BaseModel):
     # Ссылки на нормативы
     references: list[dict] = Field(default_factory=list)
 
+    # Q-H график рабочего насоса (опционально, Phase 28)
+    pump_for_chart: dict | None = Field(
+        default=None,
+        description=(
+            "Запись насоса из pumps.json (с envelope, опц. qh_curve) для "
+            "генерации Q-H графика в секции 3. Требуется duty_Q_m3h и duty_H_m."
+        ),
+    )
+    duty_Q_m3h: float | None = None
+    duty_H_m: float | None = None
+
+    # Цитаты из энциклопедии (Phase 28: обоснования)
+    encyclopedia_citations: list[dict] = Field(
+        default_factory=list,
+        description=(
+            "Список словарей {topic, section, text} из encyclopedia/*.md "
+            "для вставки в секцию 'Методика' с прямыми цитатами."
+        ),
+    )
+
 
 def generate_calculation_report_pdf(inputs: CalculationReportInput) -> bytes:
     """Генерирует PDF-расчётную записку.
@@ -155,9 +175,32 @@ def generate_calculation_report_pdf(inputs: CalculationReportInput) -> bytes:
         "Расчёт выполнен на основании следующих нормативных документов:", styles["RuBody"]))
     if inputs.references:
         for ref in inputs.references:
-            line = f"— {ref.get('regulation_code', '')} {ref.get('section', '')}: {ref.get('purpose', '')}"
+            url = ref.get("url") or ref.get("url_official") or ""
+            if url:
+                line = (
+                    f'— <a href="{url}" color="blue">'
+                    f'{ref.get("regulation_code", "")} {ref.get("section", "")}'
+                    f'</a>: {ref.get("purpose", "")}'
+                )
+            else:
+                line = f"— {ref.get('regulation_code', '')} {ref.get('section', '')}: {ref.get('purpose', '')}"
             story.append(Paragraph(line, styles["RuMono"]))
     story.append(Spacer(1, 0.3 * cm))
+
+    # Цитаты из энциклопедии (Phase 28: обоснования)
+    if inputs.encyclopedia_citations:
+        story.append(Paragraph("Обоснование расчётных подходов:", styles["RuH2"]))
+        for cit in inputs.encyclopedia_citations:
+            topic = cit.get("topic", "")
+            section = cit.get("section", "")
+            text = cit.get("text", "")
+            header = f"<b>{topic}</b>"
+            if section:
+                header += f" / {section}"
+            story.append(Paragraph(header, styles["RuMono"]))
+            story.append(Paragraph(text, styles["RuBody"]))
+            story.append(Spacer(1, 0.15 * cm))
+        story.append(Spacer(1, 0.3 * cm))
 
     # ─── 3. Результаты ─────────────────────────────────────────────────
     story.append(Paragraph("3. РЕЗУЛЬТАТЫ РАСЧЁТА", styles["RuH1"]))
@@ -179,6 +222,29 @@ def generate_calculation_report_pdf(inputs: CalculationReportInput) -> bytes:
             line = f"<b>{k}:</b> {v}"
             story.append(Paragraph(line, styles["RuBody"]))
         story.append(Spacer(1, 0.2 * cm))
+
+    # Q-H график рабочего насоса (Phase 28)
+    if inputs.pump_for_chart and inputs.duty_Q_m3h is not None and inputs.duty_H_m is not None:
+        try:
+            from reportlab.platypus import Image as RLImage
+
+            from pump_calculator.reports.qh_chart import render_qh_chart_png
+            png = render_qh_chart_png(
+                inputs.pump_for_chart,
+                duty_Q_m3h=inputs.duty_Q_m3h,
+                duty_H_m=inputs.duty_H_m,
+                width_inch=6.0,
+                height_inch=4.0,
+                dpi=100,
+            )
+            story.append(Paragraph("3.8. Q-H характеристика рабочего насоса", styles["RuH2"]))
+            # NB: используем глобальный BytesIO (импортирован в шапке модуля).
+            img = RLImage(BytesIO(png), width=15 * cm, height=10 * cm)
+            story.append(img)
+            story.append(Spacer(1, 0.3 * cm))
+        except Exception:  # pragma: no cover
+            # Если matplotlib недоступен (lite-deploy) — пропускаем
+            pass
 
     # ─── 4. Спецификация ───────────────────────────────────────────────
     if inputs.bom:
