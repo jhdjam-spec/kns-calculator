@@ -349,7 +349,8 @@
         "needs_review",
         "not_recommended",
         "deprecated",
-        "calibration_pending"
+        "calibration_pending",
+        "request_quote"
       ],
       "default": "ok",
       "description": "Инженерная пометка: ok=использовать, needs_review=проверить данные, not_recommended=не подходит для нашего сегмента, deprecated=снят с производства"

@@ -416,6 +416,63 @@ def get_topic_full(topic_key: str) -> dict | None:
     }
 
 
+def build_pdf_citation(topic_key: str, section_anchor: str, max_chars: int = 600) -> dict | None:
+    """Phase 28: построить цитату для PDF РПЗ.
+
+    Берёт секцию через get_topic_section, обрезает markdown до max_chars
+    (фокус на первом параграфе с формулой/нормативом), удаляет markdown
+    для чистого вывода в reportlab Paragraph.
+
+    Возвращает dict в формате CalculationReportInput.encyclopedia_citations:
+        {"topic": str, "section": str, "text": str}
+    или None если секция не найдена.
+    """
+    raw = get_topic_section(topic_key, section_anchor)
+    if raw is None:
+        return None
+
+    # Берём 1-2 непустых параграфа после заголовка. Если сразу подзаголовок —
+    # пропускаем его и берём из следующего раздела (часто верхний # — overview,
+    # содержание идёт в подсекциях).
+    lines = raw["content_markdown"].split("\n")
+    body_lines = []
+    skip_next_header = False
+    for line in lines[1:]:  # пропускаем основной header
+        stripped = line.strip()
+        if not stripped and not body_lines:
+            continue  # leading empty
+        if stripped.startswith("#"):
+            # если ещё ничего не набрали — это подзаголовок, пропустим его
+            if not body_lines:
+                skip_next_header = True
+                continue
+            # уже набрали текст — это следующий раздел, выходим
+            if not skip_next_header:
+                break
+            skip_next_header = False
+            continue
+        body_lines.append(line)
+        text_so_far = "\n".join(body_lines)
+        if len(text_so_far) >= max_chars:
+            break
+
+    text = "\n".join(body_lines).strip()
+    # Урезка до max_chars (по последнему пробелу для чистоты)
+    if len(text) > max_chars:
+        cut = text.rfind(" ", 0, max_chars)
+        text = text[: cut if cut > 0 else max_chars] + "..."
+
+    # Минимальная очистка markdown (жирный/курсив)
+    text = text.replace("**", "").replace("__", "")
+    text = text.replace("`", "")
+
+    return {
+        "topic": raw["topic"],
+        "section": raw["section_title"],
+        "text": text,
+    }
+
+
 def get_topic_section(topic_key: str, section_anchor: str) -> dict | None:
     """Фрагмент статьи по якорю заголовка.
 

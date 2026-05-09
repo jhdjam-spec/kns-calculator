@@ -194,12 +194,16 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
     ns_factor = score_ns_compatibility(Ns_value)
     base_score *= ns_factor
 
-    # Штраф для некалиброванных ETL-импортов: 49% БД (231 насос) имеют
-    # _engineer_flag="needs_review" — преимущественно pdfplumber-парсинг KSB
-    # и Antarus, паспортные данные не сверены инженером. Снижаем score ×0.7,
-    # чтобы калиброванные модели побеждали при равенстве BEP/η.
-    if pump.get("_engineer_flag") == "needs_review":
+    # Штраф для некалиброванных ETL-импортов: ~13% БД имеют
+    # _engineer_flag="needs_review" — pdfplumber-парсинг с непроверенными
+    # данными, но цена есть. Снижаем score ×0.7.
+    # Штраф ×0.5 для request_quote (~32% БД — Antarus+KSB B2B-only / exit РФ):
+    # цена недоступна публично, нужно ручное обращение к дилеру.
+    flag = pump.get("_engineer_flag")
+    if flag == "needs_review":
         base_score *= 0.7
+    elif flag == "request_quote":
+        base_score *= 0.5
 
     # Pulsed-mode bonus: для малых Q бытовой канализации (< 5 м³/ч)
     # инженеры предпочитают **минимальный достаточный** насос — меньше Q_BEP,
