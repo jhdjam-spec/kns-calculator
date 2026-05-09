@@ -147,6 +147,42 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
         {/* Кнопки экспорта по выбранному (рекомендуемому) насосу */}
         {result.results.mid && <ExportActions pump={result.results.mid} />}
 
+        {/* P2.3: Альтернативные бренды для одного и того же Q/H */}
+        {result.alternatives && result.alternatives.length > 0 && (
+          <div className="mt-8">
+            <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-3">
+              Альтернативы из других брендов
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {result.alternatives.map((alt) => (
+                <div
+                  key={alt.id}
+                  className="p-4 rounded-card bg-white border border-ink-200 hover:border-accent-500/50 transition-colors"
+                >
+                  <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-1">
+                    {alt.brand}
+                  </div>
+                  <div className="font-display font-semibold text-ink-900 mb-2 text-sm">
+                    {alt.model}
+                  </div>
+                  <div className="text-xs text-ink-600 space-y-0.5">
+                    <div>P = {alt.P_kW} кВт</div>
+                    <div>
+                      Q = {alt.duty_point?.Q_m3h?.toFixed(1) ?? "—"} м³/ч,
+                      H = {alt.duty_point?.H_m?.toFixed(1) ?? "—"} м
+                    </div>
+                    {alt.price_estimate_rub > 0 && (
+                      <div className="font-mono text-ink-700 mt-1.5">
+                        ≈ {(alt.price_estimate_rub / 1000).toFixed(0)} тыс ₽
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {result.assumptions && result.assumptions.length > 0 && (
           <div className="mt-8 p-4 rounded-card bg-ink-100 border border-ink-200">
             <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-2">

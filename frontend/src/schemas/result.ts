@@ -96,6 +96,8 @@ export const selectionResultSchema = z.object({
   // Phase 9 — полнота ввода и человекочитаемая сводка
   completeness_pct: z.number().int().min(0).max(100).default(100),
   summary_text: z.string().default(""),
+  // 2026-05-09 P2.3 — альтернативные кандидаты по другим брендам
+  alternatives: z.array(pumpResultSchema).default([]),
 });
 
 export type SelectionResult = z.infer<typeof selectionResultSchema>;
