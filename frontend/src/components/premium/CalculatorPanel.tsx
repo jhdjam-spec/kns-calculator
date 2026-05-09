@@ -25,12 +25,12 @@ interface CalculatorPanelProps {
   result?: SelectionResult | null;
 }
 
-const wastewaterPills: { id: WastewaterType; label: string }[] = [
-  { id: "domestic", label: "Бытовая" },
-  { id: "drainage", label: "Дождевая" },
-  { id: "industrial", label: "Промышл." },
-  { id: "clean_water", label: "СПД" },
-  { id: "fire_protection", label: "Пожар." },
+const wastewaterPills: { id: WastewaterType; label: string; hint: string }[] = [
+  { id: "domestic", label: "Бытовая", hint: "Хозбытовые стоки от жилья и офисов" },
+  { id: "drainage", label: "Дождевая", hint: "Ливневая канализация с территории" },
+  { id: "industrial", label: "Промышленная", hint: "Промстоки с производства" },
+  { id: "clean_water", label: "СПД (чистая вода)", hint: "Станция повышения давления — питьевая или техническая вода" },
+  { id: "fire_protection", label: "Пожаротушение", hint: "Пожарные насосы по СП 10.13130 (резерв 1+1)" },
 ];
 
 const corpusPills: { id: CorpusMaterial; label: string }[] = [
@@ -80,7 +80,8 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
             Введите параметры объекта
           </h2>
           <p className="mt-4 text-ink-300 text-lg">
-            Расчёт inline в реальном времени. Результат — топ-3 насоса с диапазоном цены.
+            Расчёт сразу после ввода. Результат — топ-3 насоса в трёх ценовых сегментах
+            (бюджет / средний / премиум) с диапазоном цены комплекта.
           </p>
         </div>
 
@@ -98,6 +99,7 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
                     <button
                       key={p.id}
                       type="button"
+                      title={p.hint}
                       onClick={() => setWastewater(p.id)}
                       className={clsx(
                         "px-3 py-2 rounded-md text-sm transition-all duration-base",
@@ -109,6 +111,10 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
                       {p.label}
                     </button>
                   ))}
+                </div>
+                {/* Hint выбранного типа стоков */}
+                <div className="mt-2 text-xs text-ink-400 leading-snug">
+                  {wastewaterPills.find((p) => p.id === wastewater)?.hint}
                 </div>
               </div>
 

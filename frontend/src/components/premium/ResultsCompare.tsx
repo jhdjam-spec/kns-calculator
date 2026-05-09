@@ -146,18 +146,18 @@ function PumpCard({
       <div className="text-base text-ink-700 mt-0.5">{pump.model}</div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 text-xs font-mono text-ink-500">
-        <div>
-          <div className="uppercase tracking-wider text-[9px]">P</div>
+        <div title="Мощность электродвигателя">
+          <div className="uppercase tracking-wider text-[9px]">P, мощн.</div>
           <div className="text-ink-950 text-sm tabular-nums">{pump.P_kW} кВт</div>
         </div>
-        <div>
-          <div className="uppercase tracking-wider text-[9px]">DN</div>
+        <div title="Диаметр напорного патрубка (Diameter Nominal)">
+          <div className="uppercase tracking-wider text-[9px]">DN, патруб.</div>
           <div className="text-ink-950 text-sm tabular-nums">
-            {pump.discharge_DN_mm ?? "–"}
+            {pump.discharge_DN_mm ? `${pump.discharge_DN_mm} мм` : "–"}
           </div>
         </div>
-        <div>
-          <div className="uppercase tracking-wider text-[9px]">Импеллер</div>
+        <div title="Тип рабочего колеса (impeller). Vortex — открытое для волокон, channel — каналное, cutter — с режущим механизмом">
+          <div className="uppercase tracking-wider text-[9px]">Тип к/к</div>
           <div className="text-ink-950 text-sm">{pump.impeller || "–"}</div>
         </div>
       </div>
@@ -230,22 +230,26 @@ function MatchRing({ pct, highlight }: { pct: number; highlight: boolean }) {
 }
 
 function BomTable({ breakdown }: { breakdown: PriceBreakdown }) {
-  const items: { label: string; rub: number }[] = [
-    { label: "Насос(ы)", rub: breakdown.pump_rub },
-    { label: "Корпус", rub: breakdown.corpus_rub },
-    { label: "АТМ (автомуфта)", rub: breakdown.atm_rub },
+  const items: { label: string; rub: number; hint?: string }[] = [
+    { label: "Насос(ы)", rub: breakdown.pump_rub, hint: "1 рабочий + 1 резервный по СП 32 §6.2" },
+    { label: "Корпус", rub: breakdown.corpus_rub, hint: "Полимерный (стеклопластик / ПЭ)" },
+    { label: "Автомуфта (АТМ)", rub: breakdown.atm_rub, hint: "Автоматическое сцепление насоса с напорным трубопроводом" },
     { label: "Задвижка", rub: breakdown.valve_rub },
-    { label: "Обратный клапан", rub: breakdown.check_valve_rub },
-    { label: "Направляющие", rub: breakdown.rails_rub },
-    { label: "Цепь", rub: breakdown.chain_rub },
-    { label: "Поплавки", rub: breakdown.floats_rub },
-    { label: "Шкаф управления", rub: breakdown.cabinet_rub },
+    { label: "Обратный клапан", rub: breakdown.check_valve_rub, hint: "Предотвращает обратный ток жидкости при остановке насоса" },
+    { label: "Направляющие", rub: breakdown.rails_rub, hint: "Трубы для опускания/подъёма насоса (AISI 304)" },
+    { label: "Цепь подъёма", rub: breakdown.chain_rub },
+    { label: "Поплавки (датчики уровня)", rub: breakdown.floats_rub, hint: "Датчики уровня для пуска/останова насоса" },
+    { label: "Шкаф управления", rub: breakdown.cabinet_rub, hint: "ШУ с пускателями и автоматами защиты" },
   ].filter((i) => i.rub > 0);
 
   return (
     <div className="mt-4 pt-4 border-t border-ink-200 space-y-1.5">
       {items.map((item) => (
-        <div key={item.label} className="flex justify-between text-sm">
+        <div
+          key={item.label}
+          className="flex justify-between text-sm"
+          title={item.hint}
+        >
           <span className="text-ink-600">{item.label}</span>
           <span className="font-mono tabular-nums text-ink-950">
             {formatRubFull(item.rub)}

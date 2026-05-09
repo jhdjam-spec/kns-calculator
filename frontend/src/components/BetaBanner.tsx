@@ -31,11 +31,12 @@ export function BetaBanner() {
           aria-hidden="true"
         />
         <p className="leading-snug">
-          <strong className="font-semibold">Бета-версия.</strong>
-          <span className="md:hidden"> Расчёт проверяет инженер.</span>
+          <strong className="font-semibold">Бета.</strong>
+          <span className="md:hidden"> Точность ±15% — финальный расчёт у инженера.</span>
           <span className="hidden md:inline">
-            {" "}Результаты информативные. Перед коммерческим использованием расчёт обязательно
-            проверяет инженер.
+            {" "}Инструмент в активной разработке. Точность ±15% от паспортного расчёта —
+            подходит для тендера, ТЭО и КП. Для финального проекта согласуйте с инженером
+            Серво-Юг.
           </span>
         </p>
       </div>
