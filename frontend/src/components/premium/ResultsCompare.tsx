@@ -2,10 +2,78 @@
 
 import { useState } from "react";
 import clsx from "clsx";
-import { Check, ChevronDown, AlertTriangle } from "lucide-react";
+import { Check, ChevronDown, AlertTriangle, FileDown, FileSpreadsheet } from "lucide-react";
 import type { SelectionResult, PumpResult, PriceBreakdown } from "@/schemas/result";
 import { triggerReasonLabels } from "@/schemas/result";
 import { formatRubFull, calcMatchPct } from "@/lib/units";
+import { openEncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
+import {
+  downloadCalculationPdf,
+  downloadBomCsv,
+  type BOMItem,
+} from "@/lib/api-extended";
+
+/** Скачивание Blob через временный <a download>. */
+function triggerBlobDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/** Сборка BOM из результата быстрого подбора (упрощённо — на основе price_breakdown). */
+function buildBomFromQuickResult(pump: PumpResult): BOMItem[] {
+  const b = pump.price_breakdown;
+  if (!b) return [];
+  const items: BOMItem[] = [];
+  if (b.pump_rub > 0) items.push({
+    section: "pumps",
+    name: `${pump.brand} ${pump.model}`,
+    article: pump.id || "",
+    manufacturer: pump.brand,
+    quantity: 2,
+    units: "шт",
+    price_rub_2026: b.pump_rub / 2,
+    note: "1 рабочий + 1 резервный (СП 32 §6.2)",
+  });
+  if (b.corpus_rub > 0) items.push({
+    section: "corpus", name: "Корпус КНС", quantity: 1, units: "шт",
+    price_rub_2026: b.corpus_rub,
+  });
+  if (b.atm_rub > 0) items.push({
+    section: "piping", name: "Автомуфта (АТМ)", quantity: 2, units: "шт",
+    price_rub_2026: b.atm_rub / 2,
+  });
+  if (b.valve_rub > 0) items.push({
+    section: "piping", name: "Задвижка", quantity: 2, units: "шт",
+    price_rub_2026: b.valve_rub / 2,
+  });
+  if (b.check_valve_rub > 0) items.push({
+    section: "piping", name: "Обратный клапан", quantity: 2, units: "шт",
+    price_rub_2026: b.check_valve_rub / 2,
+  });
+  if (b.rails_rub > 0) items.push({
+    section: "piping", name: "Направляющие AISI 304", quantity: 1, units: "комплект",
+    price_rub_2026: b.rails_rub,
+  });
+  if (b.chain_rub > 0) items.push({
+    section: "piping", name: "Цепь подъёма", quantity: 1, units: "комплект",
+    price_rub_2026: b.chain_rub,
+  });
+  if (b.floats_rub > 0) items.push({
+    section: "automation", name: "Поплавки (датчики уровня)", quantity: 4, units: "шт",
+    price_rub_2026: b.floats_rub / 4,
+  });
+  if (b.cabinet_rub > 0) items.push({
+    section: "control_panel", name: "Шкаф управления", quantity: 1, units: "шт",
+    price_rub_2026: b.cabinet_rub,
+  });
+  return items;
+}
 
 interface ResultsCompareProps {
   result: SelectionResult;
@@ -76,6 +144,9 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
           })}
         </div>
 
+        {/* Кнопки экспорта по выбранному (рекомендуемому) насосу */}
+        {result.results.mid && <ExportActions pump={result.results.mid} />}
+
         {result.assumptions && result.assumptions.length > 0 && (
           <div className="mt-8 p-4 rounded-card bg-ink-100 border border-ink-200">
             <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-2">
@@ -90,6 +161,112 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
         )}
       </div>
     </section>
+  );
+}
+
+/** Полоска действий: скачать PDF/CSV для выбранного насоса. */
+function ExportActions({ pump }: { pump: PumpResult }) {
+  const [pdfStatus, setPdfStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [csvStatus, setCsvStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [error, setError] = useState<string | null>(null);
+
+  const filenameSuffix = `${pump.brand}_${pump.model}`.replace(/[^a-zA-Z0-9_-]/g, "_");
+
+  const handlePdf = async () => {
+    setPdfStatus("loading");
+    setError(null);
+    try {
+      const bomItems = buildBomFromQuickResult(pump);
+      const blob = await downloadCalculationPdf({
+        project_name: `Подбор насоса — ${pump.brand} ${pump.model}`,
+        inputs_summary: {
+          "Расход Q, м³/ч": pump.duty_point?.Q_m3h ?? "—",
+          "Напор H, м": pump.duty_point?.H_m ?? "—",
+        },
+        hydraulics: {
+          Q_m3h: pump.duty_point?.Q_m3h,
+          H_m: pump.duty_point?.H_m,
+          "P, кВт": pump.P_kW,
+          "DN, мм": pump.discharge_DN_mm,
+          "Тип рабочего колеса": pump.impeller,
+        },
+        bom: bomItems.map((it) => ({
+          name: it.name,
+          article: it.article || "",
+          quantity: it.quantity ?? 1,
+          price_rub: it.price_rub_2026 ?? 0,
+        })),
+        references: [
+          {
+            regulation_code: "СП 32.13330.2018",
+            section: "§6.2",
+            purpose: "Канализация наружная — расчёт КНС",
+          },
+        ],
+      });
+      triggerBlobDownload(blob, `Отчёт_${filenameSuffix}.pdf`);
+      setPdfStatus("idle");
+    } catch (e) {
+      setPdfStatus("error");
+      setError(String(e));
+    }
+  };
+
+  const handleCsv = async () => {
+    setCsvStatus("loading");
+    setError(null);
+    try {
+      const items = buildBomFromQuickResult(pump);
+      const blob = await downloadBomCsv({
+        project_name: `${pump.brand} ${pump.model}`,
+        items,
+      });
+      triggerBlobDownload(blob, `BOM_${filenameSuffix}.csv`);
+      setCsvStatus("idle");
+    } catch (e) {
+      setCsvStatus("error");
+      setError(String(e));
+    }
+  };
+
+  return (
+    <div className="mt-8 p-5 rounded-card bg-white border border-ink-200">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-1">
+            Скачать по выбранному насосу
+          </div>
+          <div className="text-sm text-ink-700">
+            <strong>{pump.brand} {pump.model}</strong> — отчёт и спецификация для тендера или КП
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button
+            type="button"
+            onClick={handlePdf}
+            disabled={pdfStatus === "loading"}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md bg-ink-950 text-ink-50 text-sm font-medium hover:bg-brand-700 disabled:opacity-50 transition-colors"
+          >
+            <FileDown size={16} strokeWidth={1.75} />
+            {pdfStatus === "loading" ? "Генерация…" : "Расчётная записка (PDF)"}
+          </button>
+          <button
+            type="button"
+            onClick={handleCsv}
+            disabled={csvStatus === "loading"}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md bg-ink-100 text-ink-950 text-sm font-medium hover:bg-ink-200 disabled:opacity-50 transition-colors border border-ink-300"
+          >
+            <FileSpreadsheet size={16} strokeWidth={1.75} />
+            {csvStatus === "loading" ? "Сборка…" : "BOM — список оборудования (CSV)"}
+          </button>
+        </div>
+      </div>
+      {error && (
+        <div className="mt-3 p-2 rounded bg-red-50 border border-red-200 text-xs text-red-700">
+          Ошибка экспорта: {error}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -146,20 +323,53 @@ function PumpCard({
       <div className="text-base text-ink-700 mt-0.5">{pump.model}</div>
 
       <div className="mt-4 grid grid-cols-3 gap-2 text-xs font-mono text-ink-500">
-        <div title="Мощность электродвигателя">
+        <button
+          type="button"
+          onClick={() =>
+            openEncyclopediaDrawer({
+              topic: "electrical",
+              anchor: "Двигатели насосов",
+              valueLabel: `Мощность ${pump.P_kW} кВт`,
+            })
+          }
+          title="Мощность электродвигателя — кликните для справки"
+          className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
+        >
           <div className="uppercase tracking-wider text-[9px]">P, мощн.</div>
           <div className="text-ink-950 text-sm tabular-nums">{pump.P_kW} кВт</div>
-        </div>
-        <div title="Диаметр напорного патрубка (Diameter Nominal)">
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            openEncyclopediaDrawer({
+              topic: "hydraulics",
+              anchor: "Гидравлические сопротивления",
+              valueLabel: `DN${pump.discharge_DN_mm} напорный патрубок`,
+            })
+          }
+          title="Диаметр напорного патрубка (Diameter Nominal)"
+          className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
+        >
           <div className="uppercase tracking-wider text-[9px]">DN, патруб.</div>
           <div className="text-ink-950 text-sm tabular-nums">
             {pump.discharge_DN_mm ? `${pump.discharge_DN_mm} мм` : "–"}
           </div>
-        </div>
-        <div title="Тип рабочего колеса (impeller). Vortex — открытое для волокон, channel — каналное, cutter — с режущим механизмом">
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            openEncyclopediaDrawer({
+              topic: "hydraulics",
+              anchor: "Q-H насосов",
+              valueLabel: `Рабочее колесо: ${pump.impeller || "—"}`,
+            })
+          }
+          title="Тип рабочего колеса. Vortex — открытое для волокон, channel — канальное, cutter — с режущим механизмом"
+          className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
+        >
           <div className="uppercase tracking-wider text-[9px]">Тип к/к</div>
           <div className="text-ink-950 text-sm">{pump.impeller || "–"}</div>
-        </div>
+        </button>
       </div>
 
       <div className="mt-6 pt-4 border-t border-ink-200">
@@ -219,6 +429,8 @@ function MatchRing({ pct, highlight }: { pct: number; highlight: boolean }) {
           strokeDasharray={c}
           strokeDashoffset={offset}
           strokeLinecap="round"
+          // SVG stroke-dashoffset не покрывается Tailwind transition утилитами
+          // eslint-disable-next-line react/forbid-dom-props
           style={{ transition: "stroke-dashoffset 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
         />
       </svg>
@@ -230,32 +442,93 @@ function MatchRing({ pct, highlight }: { pct: number; highlight: boolean }) {
 }
 
 function BomTable({ breakdown }: { breakdown: PriceBreakdown }) {
-  const items: { label: string; rub: number; hint?: string }[] = [
-    { label: "Насос(ы)", rub: breakdown.pump_rub, hint: "1 рабочий + 1 резервный по СП 32 §6.2" },
-    { label: "Корпус", rub: breakdown.corpus_rub, hint: "Полимерный (стеклопластик / ПЭ)" },
-    { label: "Автомуфта (АТМ)", rub: breakdown.atm_rub, hint: "Автоматическое сцепление насоса с напорным трубопроводом" },
+  const items: {
+    label: string;
+    rub: number;
+    hint?: string;
+    drawer?: { topic: string; anchor: string };
+  }[] = [
+    {
+      label: "Насос(ы)",
+      rub: breakdown.pump_rub,
+      hint: "1 рабочий + 1 резервный по СП 32 §6.2",
+      drawer: { topic: "hydraulics", anchor: "Q-H насосов" },
+    },
+    {
+      label: "Корпус",
+      rub: breakdown.corpus_rub,
+      hint: "Полимерный (стеклопластик / ПЭ)",
+      drawer: { topic: "structural", anchor: "Корпус КНС" },
+    },
+    {
+      label: "Автомуфта (АТМ)",
+      rub: breakdown.atm_rub,
+      hint: "Автоматическое сцепление насоса с напорным трубопроводом",
+    },
     { label: "Задвижка", rub: breakdown.valve_rub },
-    { label: "Обратный клапан", rub: breakdown.check_valve_rub, hint: "Предотвращает обратный ток жидкости при остановке насоса" },
-    { label: "Направляющие", rub: breakdown.rails_rub, hint: "Трубы для опускания/подъёма насоса (AISI 304)" },
+    {
+      label: "Обратный клапан",
+      rub: breakdown.check_valve_rub,
+      hint: "Предотвращает обратный ток жидкости при остановке насоса",
+      drawer: { topic: "hydraulics", anchor: "Гидроудар" },
+    },
+    {
+      label: "Направляющие",
+      rub: breakdown.rails_rub,
+      hint: "Трубы для опускания/подъёма насоса (AISI 304)",
+    },
     { label: "Цепь подъёма", rub: breakdown.chain_rub },
-    { label: "Поплавки (датчики уровня)", rub: breakdown.floats_rub, hint: "Датчики уровня для пуска/останова насоса" },
-    { label: "Шкаф управления", rub: breakdown.cabinet_rub, hint: "ШУ с пускателями и автоматами защиты" },
+    {
+      label: "Поплавки (датчики уровня)",
+      rub: breakdown.floats_rub,
+      hint: "Датчики уровня для пуска/останова насоса",
+      drawer: { topic: "electrical", anchor: "Логика управления" },
+    },
+    {
+      label: "Шкаф управления",
+      rub: breakdown.cabinet_rub,
+      hint: "ШУ с пускателями и автоматами защиты",
+      drawer: { topic: "electrical", anchor: "Шкафы НКУ" },
+    },
   ].filter((i) => i.rub > 0);
 
   return (
     <div className="mt-4 pt-4 border-t border-ink-200 space-y-1.5">
-      {items.map((item) => (
-        <div
-          key={item.label}
-          className="flex justify-between text-sm"
-          title={item.hint}
-        >
-          <span className="text-ink-600">{item.label}</span>
-          <span className="font-mono tabular-nums text-ink-950">
-            {formatRubFull(item.rub)}
-          </span>
-        </div>
-      ))}
+      {items.map((item) =>
+        item.drawer ? (
+          <button
+            key={item.label}
+            type="button"
+            onClick={() =>
+              openEncyclopediaDrawer({
+                topic: item.drawer!.topic,
+                anchor: item.drawer!.anchor,
+                valueLabel: item.label,
+              })
+            }
+            title={item.hint || "Открыть справку"}
+            className="w-full flex justify-between items-center text-sm hover:bg-ink-100 rounded px-1 -mx-1 py-0.5 transition-colors"
+          >
+            <span className="text-ink-600 underline decoration-dotted decoration-accent-500/40 underline-offset-2">
+              {item.label}
+            </span>
+            <span className="font-mono tabular-nums text-ink-950">
+              {formatRubFull(item.rub)}
+            </span>
+          </button>
+        ) : (
+          <div
+            key={item.label}
+            className="flex justify-between text-sm px-1 -mx-1"
+            title={item.hint}
+          >
+            <span className="text-ink-600">{item.label}</span>
+            <span className="font-mono tabular-nums text-ink-950">
+              {formatRubFull(item.rub)}
+            </span>
+          </div>
+        ),
+      )}
       <div className="pt-2 mt-2 border-t border-ink-200 flex justify-between">
         <span className="text-sm font-medium text-ink-950">Итого с НДС</span>
         <span className="font-mono tabular-nums font-semibold text-ink-950">
