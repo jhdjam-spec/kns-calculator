@@ -33,6 +33,13 @@ secret/
 01_research/
 02_dataset/_inbox/
 
+# Эталоны и аналитика проектов с реальными ФИО/реквизитами — приватны
+02_dataset/_analysis/
+02_dataset/etalons/downloads_*.json
+02_dataset/etalons/pricelist_*.json
+# Обезличенный публичный набор оставлен:
+!02_dataset/etalons/public/
+
 # Logs
 *.log
 logs/
