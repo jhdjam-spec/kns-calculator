@@ -82,7 +82,7 @@ def calculate_fire_scenario(
 
     if q_spr_lps > 0:
         raw_refs.append(
-            ref("SP_5_13130", "табл. 5", "Автоматические установки пожаротушения")
+            ref("SP_485", "табл. 5", "Автоматические установки пожаротушения")
         )
 
     references = [_to_ref_dict(r) for r in raw_refs]
