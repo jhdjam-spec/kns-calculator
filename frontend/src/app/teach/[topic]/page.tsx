@@ -12,9 +12,11 @@ import { MarkdownView } from "@/components/teach/MarkdownView";
 import { SiteNav } from "@/components/premium/SiteNav";
 import { SiteFooter } from "@/components/premium/SiteFooter";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "/api/backend";
+
 /** POST на API endpoint примера и возврат JSON-результата. */
 async function runExample(endpoint: string, payload: unknown): Promise<unknown> {
-  const res = await fetch(`/api/backend${endpoint}`, {
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

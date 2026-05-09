@@ -1,11 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // На Vercel — `/api/*` обрабатывается Python serverless через vercel.json (vercel.json rewrites).
-  // В dev — same-origin, поэтому при VERCEL_ENV=development этот rewrite пробрасывает
-  // запросы к локальному uvicorn на 8000 (избегаем CORS).
+
+  // YC Object Storage static hosting:
+  //   BUILD_TARGET=yc-static → static export (output:'export')
+  //   trailingSlash=true для красивых URL /project/, /tanks/, /teach/fire/
+  //   images.unoptimized — на static нет Next.js Image Optimization
+  // Для Vercel и dev — обычный SSR режим.
+  ...(process.env.BUILD_TARGET === "yc-static"
+    ? {
+        output: "export",
+        trailingSlash: true,
+        images: { unoptimized: true },
+      }
+    : {}),
+
+  // Dev/Vercel rewrites — не применяется при output:'export'
   async rewrites() {
-    // На production Vercel rewrites не нужны (api/index.py обрабатывает /api/* напрямую)
+    if (process.env.BUILD_TARGET === "yc-static") return [];
     if (process.env.VERCEL) return [];
     const apiBase = process.env.NEXT_PUBLIC_API_BASE_DEV || "http://localhost:8000";
     return [

@@ -15,8 +15,10 @@ interface HeroProps {
  * — «Техзадание_КНС.docx» — для заказчика, формулировка через «техническое задание»
  * — «Опросный_лист_КНС.docx» — для инженера, формулировка через «опросный лист»
  */
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "/api/backend";
+
 async function downloadEmptyQuestionnaire(filename: string): Promise<void> {
-  const res = await fetch("/api/backend/handoff/empty-questionnaire-docx", {
+  const res = await fetch(`${API_BASE}/handoff/empty-questionnaire-docx`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({}),

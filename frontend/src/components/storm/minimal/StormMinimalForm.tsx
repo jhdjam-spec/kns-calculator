@@ -83,7 +83,8 @@ export function StormMinimalForm() {
         region_city: form.region_city,
       });
 
-      const response = await fetch("/api/storm/calc", {
+      const apiBase = process.env.NEXT_PUBLIC_API_BASE || "/api/backend";
+      const response = await fetch(`${apiBase}/storm/calc`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(request),

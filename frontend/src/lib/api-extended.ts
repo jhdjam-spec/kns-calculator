@@ -6,7 +6,10 @@
  * Базовый префикс — `/api/backend/*` (см. lib/api.ts).
  */
 
-const API_PREFIX = "/api/backend";
+const API_PREFIX =
+  process.env.NEXT_PUBLIC_API_BASE
+    ? `${process.env.NEXT_PUBLIC_API_BASE}`
+    : "/api/backend";
 
 async function postJSON<T>(endpoint: string, payload: unknown): Promise<T> {
   const res = await fetch(`${API_PREFIX}${endpoint}`, {

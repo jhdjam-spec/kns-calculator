@@ -7,9 +7,14 @@ import { selectionResultSchema, type SelectionResult } from "@/schemas/result";
  * - В production — задаётся через NEXT_PUBLIC_API_BASE
  */
 // Same-origin path: `/api/backend/*` → backend.
-// На Vercel: api/index.py обрабатывает all /api/* через FastAPI mount (см. api/index.py).
-// В dev: next.config.mjs переписывает /api/backend/* → http://localhost:8000/*.
-const API_PREFIX = "/api/backend";
+// - На Vercel: vercel.json rewrites → YC API Gateway.
+// - В dev: next.config.mjs переписывает /api/backend/* → http://localhost:8000/*.
+// - На YC Object Storage static (BUILD_TARGET=yc-static): нужен прямой URL,
+//   задаётся через NEXT_PUBLIC_API_BASE на build time.
+const API_PREFIX =
+  process.env.NEXT_PUBLIC_API_BASE
+    ? `${process.env.NEXT_PUBLIC_API_BASE}`
+    : "/api/backend";
 
 /** /select/quick — только L0, без L1. Backward-compat. */
 export async function selectPumpsQuick(input: L0Input): Promise<SelectionResult> {
