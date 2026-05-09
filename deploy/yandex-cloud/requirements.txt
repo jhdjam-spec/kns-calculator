@@ -5,9 +5,11 @@
 fastapi>=0.110,<0.140
 pydantic>=2.6,<3.0
 starlette>=0.36
+python-multipart>=0.0.9  # для /select/from-file FastAPI endpoint
 
-# YC Functions ASGI-адаптер (event → ASGI scope → FastAPI)
-mangum>=0.17
+# YC Functions handler — кастомный YC event → ASGI scope (см. handler.py)
+# Mangum НЕ работает: YC передаёт event в собственном формате,
+# не совпадающем ни с одним AWS API Gateway вариантом.
 
 # PDF/DOCX отчёты (RPZ ГОСТ Р 21.101, BOM ГОСТ 21.110, опросники)
 reportlab>=4.0
