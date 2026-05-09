@@ -353,6 +353,22 @@ def make_pump_result(
             include_rails=not is_small_kit,
         )
 
+    # Сборка notes из _engineer_note + флаг-предупреждения для пользователя
+    pump_notes: list[str] = []
+    if pump.get("_engineer_note"):
+        pump_notes.append(pump["_engineer_note"])
+    flag = pump.get("_engineer_flag")
+    if flag == "request_quote":
+        pump_notes.insert(0, (
+            "⚠ Цена по запросу. Этот насос распространяется только через B2B-канал "
+            "или официальных дилеров. Цена и наличие подтверждаются звонком."
+        ))
+    elif flag == "needs_review":
+        pump_notes.insert(0, (
+            "⚠ Данные импортированы автоматически (pdfplumber) и не сверены инженером. "
+            "Перед заказом — верифицировать паспорт и цену у поставщика."
+        ))
+
     return PumpResult(
         id=pump["id"],
         brand=pump["brand"],
@@ -368,7 +384,7 @@ def make_pump_result(
         score=round(score, 4),
         score_breakdown=breakdown,
         aor_zone=zone,
-        notes=([pump["_engineer_note"]] if pump.get("_engineer_note") else []),
+        notes=pump_notes,
         price_estimate_rub=price_breakdown.total_rub,
         price_breakdown=price_breakdown,
         price_confidence=confidence,
