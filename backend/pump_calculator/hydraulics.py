@@ -141,8 +141,13 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
     D_si = D_mm / 1000.0
 
     # 2. Скорость и Re
+    # Кинематическая вязкость зависит от температуры стоков (L1.liquid_temp_c).
+    # Для горячих стоков ν меньше → Re выше → λ ниже → H_тр ниже.
+    # Default = 20°C (NU_WATER_20C).
     v_ms = calc_velocity_ms(L0.Q_m3h, D_mm)
-    Re = v_ms * D_si / NU_WATER_20C
+    T_c = (L1.liquid_temp_c if L1 and L1.liquid_temp_c is not None else 20.0)
+    nu = nu_water_at_t(T_c)
+    Re = v_ms * D_si / nu
     eD = (k_e_mm / 1000.0) / D_si
 
     # 3. λ и H_тр
