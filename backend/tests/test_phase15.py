@@ -11,7 +11,7 @@
 from __future__ import annotations
 
 from pump_calculator.hydraulics import auto_select_diameter_mm, calc_velocity_ms
-from pump_calculator.phase15 import (
+from pump_calculator.pump_station_geometry import (
     calc_min_submergence_m,
     calc_npsh_margin_m,
     calc_specific_speed_ns,

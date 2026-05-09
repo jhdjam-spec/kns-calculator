@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
@@ -12,6 +13,8 @@ from pydantic import BaseModel, Field
 from pump_calculator import __version__, catalog
 from pump_calculator.matching import select_pumps as run_selection
 from pump_calculator.schemas import L0Input, SelectionRequest, SelectionResult
+
+logger = logging.getLogger(__name__)
 
 # pump_calculator.handoff (reportlab + python-docx + lxml) импортируется лениво
 # внутри handoff-эндпоинтов — это уменьшает cold-start lambda на ~50 МБ.
@@ -79,6 +82,7 @@ def select(req: SelectionRequest) -> SelectionResult:
     try:
         return run_selection(req.L0, req.L1)
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=500, detail=f"Selection failed: {e}") from e
 
 
@@ -144,6 +148,7 @@ def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
             kp_number=req.kp_number,
         )
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=500, detail=f"PDF generation failed: {e}") from e
 
     return Response(
@@ -161,6 +166,7 @@ def handoff_bom(selection: SelectionResult) -> Response:
     try:
         pdf_bytes = generate_bom_pdf(selection)
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=500, detail=f"PDF generation failed: {e}") from e
 
     return Response(
@@ -193,6 +199,7 @@ def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
             kp_number=req.kp_number,
         )
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=500, detail=f"DOCX generation failed: {e}") from e
 
     return Response(
@@ -210,6 +217,7 @@ def handoff_empty_questionnaire_docx() -> Response:
     try:
         docx_bytes = generate_questionnaire_docx()
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=500, detail=f"DOCX generation failed: {e}") from e
 
     return Response(
@@ -263,6 +271,7 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
     try:
         parsed = parse_questionnaire_docx(file_bytes)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=400,
             detail=f"Не удалось распарсить DOCX: {e}",
@@ -273,6 +282,7 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
         try:
             selection = run_selection(parsed.L0, parsed.L1)
         except Exception as e:  # pragma: no cover
+            logger.exception("unhandled error: %s", e.__class__.__name__)
             raise HTTPException(
                 status_code=500, detail=f"Selection failed: {e}",
             ) from e
@@ -309,6 +319,7 @@ def calculate_storm(payload: dict) -> dict:
     try:
         inputs = StormInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=400,
             detail=f"Некорректный input: {e}",
@@ -319,6 +330,7 @@ def calculate_storm(payload: dict) -> dict:
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=500, detail=f"Storm calculation failed: {e}",
         ) from e
@@ -375,6 +387,7 @@ def calc_sprinklers_endpoint(payload: dict) -> dict:
             coverage_area_m2=payload.get("coverage_area_m2"),
         )
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
         "group": result.group,
@@ -414,6 +427,7 @@ def calculate_fire_water(payload: dict) -> dict:
     try:
         inputs = FireScenarioInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
 
     H_design = float(payload.get("H_design_m", 60.0))
@@ -423,6 +437,7 @@ def calculate_fire_water(payload: dict) -> dict:
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=500, detail=f"Fire water calculation failed: {e}",
         ) from e
@@ -466,6 +481,7 @@ def calculate_water_demand_endpoint(payload: dict) -> dict:
     try:
         inputs = WaterScenarioInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
 
     try:
@@ -474,6 +490,7 @@ def calculate_water_demand_endpoint(payload: dict) -> dict:
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
     except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=500, detail=f"Water calculation failed: {e}",
         ) from e
@@ -564,6 +581,7 @@ def calc_npsh_endpoint(payload: dict) -> dict:
             latitude_deg=payload.get("latitude_deg", 55.0),
         )
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
         "npsha_m": npsha,
@@ -594,6 +612,7 @@ def calc_water_hammer_endpoint(payload: dict) -> dict:
             T_celsius=payload.get("T_celsius", 15.0),
         )
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
         "delta_p_kpa": result.delta_p_kpa,
@@ -628,6 +647,7 @@ def calc_darcy_weisbach_endpoint(payload: dict) -> dict:
             T_celsius=payload.get("T_celsius", 15.0),
         )
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {"h_f_m": h_f, **details}
 
@@ -711,6 +731,7 @@ def calculate_project_endpoint(payload: dict) -> dict:
     try:
         inputs = ProjectInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     return calculate_project(inputs).model_dump()
 
@@ -732,6 +753,7 @@ def calc_burial_depth_endpoint(payload: dict) -> dict:
             has_groundwater=payload.get("has_groundwater", False),
         )
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return result.model_dump()
 
@@ -769,6 +791,7 @@ def calc_ballast_endpoint(payload: dict) -> dict:
     try:
         inputs = StructuralScenarioInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     return calc_ballast_concrete(inputs).model_dump()
 
@@ -780,6 +803,7 @@ def calc_wall_thickness_endpoint(payload: dict) -> dict:
     try:
         inputs = StructuralScenarioInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     return calc_polymer_wall_thickness(inputs).model_dump()
 
@@ -802,6 +826,7 @@ def calc_los_select_endpoint(payload: dict) -> dict:
     try:
         inputs = LOSScenarioInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     return select_los_block(inputs).model_dump()
 
@@ -828,6 +853,7 @@ def generate_rpz_gost_endpoint(payload: dict) -> Response:
     try:
         inputs = RPZGostInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     pdf_bytes = generate_rpz_gost_pdf(inputs)
     return Response(
@@ -851,6 +877,7 @@ def calc_report_pdf_endpoint(payload: dict) -> Response:
     try:
         inputs = CalculationReportInput(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     pdf_bytes = generate_calculation_report_pdf(inputs)
     return Response(
@@ -869,6 +896,7 @@ def calc_complex_summary_endpoint(payload: dict) -> dict:
     try:
         complex_obj = Complex(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     return build_complex_bom_summary(complex_obj).model_dump()
 
@@ -880,6 +908,7 @@ def export_bom_csv_endpoint(payload: dict) -> Response:
     try:
         spec = BOMSpecification(**payload)
     except Exception as e:
+        logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
     csv_text = export_bom_csv(spec)
     return Response(

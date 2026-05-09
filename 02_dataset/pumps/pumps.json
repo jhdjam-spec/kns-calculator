@@ -404,7 +404,7 @@
       "brand": "Wilo",
       "model": "Wilo-EMU FA (большая серия)",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 100,
@@ -433,7 +433,7 @@
         "distributor": "ВИЛО РУС (российская сборка)"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно",
+      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "wilo.com/ru, selectonline.ru"
     },
     {
@@ -587,7 +587,7 @@
       "brand": "KSB",
       "model": "Amarex KRT (большая серия)",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 100,
@@ -615,7 +615,7 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные)",
+      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "ksb.com"
     },
     {
@@ -13553,7 +13553,7 @@
       "brand": "CNP",
       "model": "CHL 8-50",
       "type": "booster_station",
-      "impeller": "multi-stage",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 2,
         "Q_max_m3h": 12,
@@ -13581,7 +13581,7 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый — редкий класс для пром. ливневой/хвостовой подачи Q=7 H=40. Эталон РД №12-НВК (2 насоса 1+1 + резервуар V=20 м³).",
+      "_engineer_note": "Вертикальный многоступенчатый — редкий класс для пром. ливневой/хвостовой подачи Q=7 H=40. Эталон РД №12-НВК (2 насоса 1+1 + резервуар V=20 м³). | impeller multi-stage->closed canonicalized 2026-05-10",
       "_source": "РД №12-НВК",
       "_added": "2026-05-08"
     },
@@ -13590,7 +13590,7 @@
       "brand": "Pedrollo",
       "model": "F 65/200AR",
       "type": "booster_station",
-      "impeller": "single_stage_centrifugal",
+      "impeller": "single-channel",
       "envelope": {
         "Q_min_m3h": 50,
         "Q_max_m3h": 250,
@@ -13616,7 +13616,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "calibration_pending",
-      "_engineer_note": "Крупный консольный одноступенчатый для повысительных I-категории (22-этажный жилой Краснодар). Q=156 H=57. Закрывает gap премиум booster.",
+      "_engineer_note": "Крупный консольный одноступенчатый для повысительных I-категории (22-этажный жилой Краснодар). Q=156 H=57. Закрывает gap премиум booster. | impeller single_stage_centrifugal->single-channel canonicalized 2026-05-10",
       "_source": "Паспорт ПВТ Краснодар (16-20-НВК) + 22-эт.",
       "_added": "2026-05-08"
     },
@@ -13625,7 +13625,7 @@
       "brand": "Wilo",
       "model": "BL 80/200-30/2",
       "type": "fire_protection",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "envelope": {
         "Q_min_m3h": 50,
         "Q_max_m3h": 200,
@@ -13664,7 +13664,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43.",
+      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43. | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "Wilo Spaix datasheet 2022.09.21 + BloPlast SPT-2900/5700",
       "_added": "2026-05-08"
     },
@@ -13673,7 +13673,7 @@
       "brand": "Wilo",
       "model": "Rexa PRO C08DA-415/EAD1X2-T0025",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 80,
       "envelope": {
         "Q_min_m3h": 5,
@@ -13701,7 +13701,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Бытовая мини-КНС, эталон 18-007-ТХ Крым (КОС хоз-быт) — 1+1 рез. Q=10 H=15 в КНС-3 Ø2200.",
+      "_engineer_note": "Бытовая мини-КНС, эталон 18-007-ТХ Крым (КОС хоз-быт) — 1+1 рез. Q=10 H=15 в КНС-3 Ø2200. | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "18-007-ТХ Крым (экспертиза 9102031438)",
       "_added": "2026-05-08"
     },
@@ -14000,7 +14000,7 @@
       "brand": "MAS DAF",
       "model": "NMM 100-160",
       "type": "booster_station",
-      "impeller": "centrifugal_closed",
+      "impeller": "closed",
       "free_passage_mm": null,
       "envelope": {
         "Q_min_m3h": 240,
@@ -14030,7 +14030,7 @@
         "distributor": "MAS DAF (Турция) — официальный дилер РФ"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "End Suction Monoblock — НОВЫЙ для нас турецкий бренд. Проверить по паспорту — кривая Q-H, NPSHr, точные точки BEP. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "End Suction Monoblock — НОВЫЙ для нас турецкий бренд. Проверить по паспорту — кривая Q-H, NPSHr, точные точки BEP. | segment standard→mid (PRR fix 2026-05-10) | impeller centrifugal_closed->closed canonicalized 2026-05-10",
       "_source": "kns3.zip / архив с TANECO либо ПГК Татьянка",
       "_added": "2026-05-08"
     },
@@ -14039,7 +14039,7 @@
       "brand": "Шторм Ф",
       "model": "NES 100-80-260-75-2",
       "type": "booster_station",
-      "impeller": "centrifugal_closed",
+      "impeller": "closed",
       "free_passage_mm": null,
       "envelope": {
         "Q_min_m3h": 100,
@@ -14069,7 +14069,7 @@
         "distributor": "ООО «Шторм Ф» (РФ)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "ПНС повышения давления, комплектный блок. Цена/конкретика не указаны в массиве — ждём паспорт. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "ПНС повышения давления, комплектный блок. Цена/конкретика не указаны в массиве — ждём паспорт. | segment standard→mid (PRR fix 2026-05-10) | impeller centrifugal_closed->closed canonicalized 2026-05-10",
       "_source": "kns3.zip",
       "_added": "2026-05-08"
     },
@@ -14078,7 +14078,7 @@
       "brand": "Grundfos",
       "model": "CDM 10-11",
       "type": "booster_station",
-      "impeller": "centrifugal_closed",
+      "impeller": "closed",
       "free_passage_mm": null,
       "envelope": {
         "Q_min_m3h": 4,
@@ -14109,7 +14109,7 @@
         "distributor": "Grundfos РФ (через дилеров)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт.",
+      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10",
       "_source": "kns3.zip",
       "_added": "2026-05-08"
     },
@@ -14158,7 +14158,7 @@
       "brand": "ГИС",
       "model": "SG.40.075.2.5.0D",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 40,
       "envelope": {
         "Q_min_m3h": 2,
@@ -14188,7 +14188,7 @@
         "distributor": "ООО «ГИС» (Симферополь)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Используется в КНС ГИС ЭКОВЭЛЛ (ж/б футерованных). Малая КНС бытового применения. Точные характеристики уточнить по PDF КНС-6,9.13. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "Используется в КНС ГИС ЭКОВЭЛЛ (ж/б футерованных). Малая КНС бытового применения. Точные характеристики уточнить по PDF КНС-6,9.13. | segment standard→mid (PRR fix 2026-05-10) | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "kns3.zip / GIS-KNS-6-9,13-2-02072025-1",
       "_added": "2026-05-08"
     },
@@ -14197,7 +14197,7 @@
       "brand": "Fancy",
       "model": "350WQ1400-75-6",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 800,
@@ -14228,7 +14228,7 @@
         "distributor": "ГК ГЕОН (Н.Новгород)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Найдено в ГЕОН ВКНС-СП-1159 (Q=1159 м³/ч). Очень крупный насос — DN350. Power 350 кВт. Проверить по паспорту, оценка по табличному обозначению.",
+      "_engineer_note": "Найдено в ГЕОН ВКНС-СП-1159 (Q=1159 м³/ч). Очень крупный насос — DN350. Power 350 кВт. Проверить по паспорту, оценка по табличному обозначению. | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "kns3.zip / GEON_VKNS_SP_1159",
       "_added": "2026-05-08"
     },
@@ -14237,7 +14237,7 @@
       "brand": "ФГПУ",
       "model": "ФГПУ 120/16",
       "type": "vertical_dry_well",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 80,
       "envelope": {
         "Q_min_m3h": 60,
@@ -14268,7 +14268,7 @@
         "distributor": "Завод ФГПУ (РФ)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Российский ПОЛУПОГРУЖНОЙ насос (новый тип `vertical_dry_well` для нашей БД — отличается от submersible тем что мотор сухой над уровнем стоков). Применён в АО «ПГК» Татьянка для песколовушек. Q=120 H=16. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "Российский ПОЛУПОГРУЖНОЙ насос (новый тип `vertical_dry_well` для нашей БД — отличается от submersible тем что мотор сухой над уровнем стоков). Применён в АО «ПГК» Татьянка для песколовушек. Q=120 H=16. | segment standard→mid (PRR fix 2026-05-10) | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "kns3.zip / 1294907_PGK_2025",
       "_added": "2026-05-08"
     },
@@ -14277,7 +14277,7 @@
       "brand": "KAIQUAN",
       "model": "WQ2290-6155-300",
       "type": "submersible_sewage",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "free_passage_mm": 120,
       "envelope": {
         "Q_min_m3h": 400,
@@ -14309,7 +14309,7 @@
         "distributor": "Аркада"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа.",
+      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа. | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "kns3.zip",
       "_added": "2026-05-08"
     },
@@ -14318,7 +14318,7 @@
       "brand": "Wilo",
       "model": "Drain TM 32/7",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-open",
+      "impeller": "open",
       "free_passage_mm": 10,
       "envelope": {
         "Q_min_m3h": 1,
@@ -14349,14 +14349,15 @@
         "distributor": "elit-nasos.ru / wl-russia.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10"
     },
     {
       "id": "wilo-drain-tm-32-8",
       "brand": "Wilo",
       "model": "Drain TM 32/8",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-open",
+      "impeller": "open",
       "free_passage_mm": 10,
       "envelope": {
         "Q_min_m3h": 1,
@@ -14387,14 +14388,15 @@
         "distributor": "wl-russia.ru / lunda.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10"
     },
     {
       "id": "wilo-drain-tmw-32-8",
       "brand": "Wilo",
       "model": "Drain TMW 32/8",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-twister",
+      "impeller": "multi-channel",
       "free_passage_mm": 10,
       "envelope": {
         "Q_min_m3h": 1,
@@ -14425,7 +14427,7 @@
         "distributor": "hvacspareparts.com / wl-russia"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Twister-функция (взрыхление осадка).",
+      "_engineer_note": "Twister-функция (взрыхление осадка). | impeller multi-channel-twister->multi-channel canonicalized 2026-05-10",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -14433,7 +14435,7 @@
       "brand": "Wilo",
       "model": "Drain TMW 32/11",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-twister",
+      "impeller": "multi-channel",
       "free_passage_mm": 10,
       "envelope": {
         "Q_min_m3h": 2,
@@ -14464,14 +14466,15 @@
         "distributor": "wl-russia.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "impeller multi-channel-twister->multi-channel canonicalized 2026-05-10"
     },
     {
       "id": "wilo-drain-tmr-32-8",
       "brand": "Wilo",
       "model": "Drain TMR 32/8",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-suction-down",
+      "impeller": "multi-channel",
       "free_passage_mm": 2,
       "envelope": {
         "Q_min_m3h": 1,
@@ -14502,7 +14505,7 @@
         "distributor": "elit-nasos.ru"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Suction-down to 2 mm — для откачки до сухого.",
+      "_engineer_note": "Suction-down to 2 mm — для откачки до сухого. | impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -14510,7 +14513,7 @@
       "brand": "Wilo",
       "model": "Drain TMR 32/11",
       "type": "submersible_sewage",
-      "impeller": "multi-channel-suction-down",
+      "impeller": "multi-channel",
       "free_passage_mm": 2,
       "envelope": {
         "Q_min_m3h": 2,
@@ -14541,7 +14544,8 @@
         "distributor": "wl-russia.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10"
     },
     {
       "id": "wilo-rexa-cut-gi03-26",
@@ -14820,7 +14824,7 @@
       "brand": "Pedrollo",
       "model": "VXC 15/50",
       "type": "submersible_sewage",
-      "impeller": "vortex-cutter",
+      "impeller": "cutter",
       "free_passage_mm": 50,
       "envelope": {
         "Q_min_m3h": 5,
@@ -14851,7 +14855,7 @@
         "distributor": "pd-shop.ru"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "С режущим механизмом для волокон.",
+      "_engineer_note": "С режущим механизмом для волокон. | impeller vortex-cutter->cutter canonicalized 2026-05-10",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -15204,7 +15208,7 @@
       "brand": "KSB",
       "model": "Amarex KRT F 100-250",
       "type": "submersible_sewage",
-      "impeller": "single-channel-large",
+      "impeller": "single-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 80,
@@ -15236,7 +15240,7 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Серия KRT — крупная канализационная.",
+      "_engineer_note": "Серия KRT — крупная канализационная. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -15244,7 +15248,7 @@
       "brand": "KSB",
       "model": "Amarex KRT D 150-315",
       "type": "submersible_sewage",
-      "impeller": "single-channel-large",
+      "impeller": "single-channel",
       "free_passage_mm": 150,
       "envelope": {
         "Q_min_m3h": 150,
@@ -15276,14 +15280,15 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "impeller single-channel-large->single-channel canonicalized 2026-05-10"
     },
     {
       "id": "ksb-amarex-krt-e200",
       "brand": "KSB",
       "model": "Amarex KRT E 200-400",
       "type": "submersible_sewage",
-      "impeller": "single-channel-large",
+      "impeller": "single-channel",
       "free_passage_mm": 150,
       "envelope": {
         "Q_min_m3h": 300,
@@ -15315,7 +15320,7 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Магистральная КНС крупных городов.",
+      "_engineer_note": "Магистральная КНС крупных городов. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -16472,7 +16477,7 @@
       "brand": "Antarus",
       "model": "НКР-200/50",
       "type": "submersible_sewage",
-      "impeller": "single-channel-large",
+      "impeller": "single-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 150,
@@ -16502,7 +16507,7 @@
         "distributor": "Antarus Краснодар"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Серия НКР — крупная промышленная.",
+      "_engineer_note": "Серия НКР — крупная промышленная. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
       "_source": "Agent E research 2026-05-08"
     },
     {
@@ -16624,7 +16629,7 @@
       "brand": "KAIQUAN",
       "model": "200WQ/S 200-15",
       "type": "submersible_sewage",
-      "impeller": "single-channel-large",
+      "impeller": "single-channel",
       "free_passage_mm": 100,
       "envelope": {
         "Q_min_m3h": 120,
@@ -16656,7 +16661,7 @@
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Магистральная для крупных объектов.",
+      "_engineer_note": "Магистральная для крупных объектов. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
       "_source": "Agent E research 2026-05-08"
     },
     {
@@ -16703,7 +16708,7 @@
       "brand": "Antarus",
       "model": "2 MST65-200/15/DS1-GPRS",
       "type": "fire_protection",
-      "impeller": "channel",
+      "impeller": "multi-channel",
       "envelope": {
         "Q_min_m3h": 30,
         "Q_max_m3h": 100,
@@ -16734,7 +16739,7 @@
         "distributor": "Antarus"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Установка пожаротушения 2-насосная с DS1 (датчик сухого хода) + GPRS. Q=61.3 м³/ч H=45.2 м P=15 кВт. Эталон СКЯ-23/24-НВК (Волноваха). Корпус Ø3200×4400 стеклопластик подземный. Опции: ОПЦ СХ12, СПД.",
+      "_engineer_note": "Установка пожаротушения 2-насосная с DS1 (датчик сухого хода) + GPRS. Q=61.3 м³/ч H=45.2 м P=15 кВт. Эталон СКЯ-23/24-НВК (Волноваха). Корпус Ø3200×4400 стеклопластик подземный. Опции: ОПЦ СХ12, СПД. | impeller channel->multi-channel canonicalized 2026-05-10",
       "_source": "СКЯ-23/24-НВК Волноваха 2026",
       "_added": "2026-05-09"
     },
@@ -16743,7 +16748,7 @@
       "brand": "KSB",
       "model": "Multitec A 65/3-7.1",
       "type": "fire_protection",
-      "impeller": "radial-multistage",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 30,
         "Q_max_m3h": 110,
@@ -16776,7 +16781,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Многоступенчатый горизонтальный для пожаротушения и водоснабжения. 3 ступени, корпус EN-GJL-250 серый чугун. Соответствует EN 12845 для спринклерных систем.",
+      "_engineer_note": "Многоступенчатый горизонтальный для пожаротушения и водоснабжения. 3 ступени, корпус EN-GJL-250 серый чугун. Соответствует EN 12845 для спринклерных систем. | impeller radial-multistage->closed canonicalized 2026-05-10",
       "_source": "KSB Multitec catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16785,7 +16790,7 @@
       "brand": "KSB",
       "model": "Multitec A 100/4-9",
       "type": "fire_protection",
-      "impeller": "radial-multistage",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 60,
         "Q_max_m3h": 200,
@@ -16818,7 +16823,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "4-ступенчатый, для крупных пожарных насосных Q>100 м³/ч. Эталон Бондаревская ВЭС Q=133.2 H=30.",
+      "_engineer_note": "4-ступенчатый, для крупных пожарных насосных Q>100 м³/ч. Эталон Бондаревская ВЭС Q=133.2 H=30. | impeller radial-multistage->closed canonicalized 2026-05-10",
       "_source": "KSB Multitec catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16827,7 +16832,7 @@
       "brand": "KSB",
       "model": "Multitec V 150/3-9.2",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 80,
         "Q_max_m3h": 250,
@@ -16859,7 +16864,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый для пожарной насосной 1 рабочий + 1 резерв.",
+      "_engineer_note": "Вертикальный многоступенчатый для пожарной насосной 1 рабочий + 1 резерв. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "KSB Multitec V catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16868,7 +16873,7 @@
       "brand": "Wilo",
       "model": "Helix V 1606",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 6,
         "Q_max_m3h": 24,
@@ -16899,7 +16904,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов.",
+      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16908,7 +16913,7 @@
       "brand": "Wilo",
       "model": "Helix V 3606",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 18,
         "Q_max_m3h": 60,
@@ -16939,7 +16944,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий.",
+      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16948,7 +16953,7 @@
       "brand": "Wilo",
       "model": "Helix V 5208",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 25,
         "Q_max_m3h": 80,
@@ -16979,7 +16984,7 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма.",
+      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09"
     },
@@ -16988,7 +16993,7 @@
       "brand": "Grundfos",
       "model": "CR 32-4-2",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 12,
         "Q_max_m3h": 40,
@@ -17019,7 +17024,7 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4.",
+      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09"
     },
@@ -17028,7 +17033,7 @@
       "brand": "Grundfos",
       "model": "CR 64-3-2",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 30,
         "Q_max_m3h": 90,
@@ -17059,7 +17064,7 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80.",
+      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09"
     },
@@ -17068,7 +17073,7 @@
       "brand": "Grundfos",
       "model": "CR 95-2-2",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 50,
         "Q_max_m3h": 130,
@@ -17099,7 +17104,7 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с).",
+      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с). | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09"
     },
@@ -17108,7 +17113,7 @@
       "brand": "ИСТРАТЕХ",
       "model": "ИЛТ 95-2",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 50,
         "Q_max_m3h": 140,
@@ -17140,7 +17145,7 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30.",
+      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "ИСТРАТЕХ Групп каталог 2026 (research 2026-05-08)",
       "_added": "2026-05-09"
     },
@@ -17149,7 +17154,7 @@
       "brand": "ИСТРАТЕХ",
       "model": "ИЛТ 64-3",
       "type": "fire_protection",
-      "impeller": "radial-multistage-vertical",
+      "impeller": "closed",
       "envelope": {
         "Q_min_m3h": 30,
         "Q_max_m3h": 90,
@@ -17181,7 +17186,7 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности.",
+      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
       "_source": "ИСТРАТЕХ Групп каталог 2026",
       "_added": "2026-05-09"
     },

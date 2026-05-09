@@ -75,18 +75,7 @@
         "open",
         "semi-open",
         "cutter",
-        "closed",
-        "channel",
-        "radial-multistage-vertical",
-        "single-channel-large",
-        "centrifugal_closed",
-        "multi-channel-open",
-        "multi-channel-twister",
-        "multi-channel-suction-down",
-        "radial-multistage",
-        "multi-stage",
-        "single_stage_centrifugal",
-        "vortex-cutter"
+        "closed"
       ]
     },
     "free_passage_mm": {

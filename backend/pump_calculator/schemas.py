@@ -123,6 +123,16 @@ class L1Input(BaseModel):
             "Если ниже отметки дна корпуса — нужен anti-buoyancy расчёт."
         ),
     )
+    # Барометрия — для NPSHa в горных регионах
+    altitude_m: float | None = Field(
+        None, ge=-500, le=4500,
+        description=(
+            "Высота над уровнем моря, м. Используется для коррекции "
+            "атмосферного давления при расчёте NPSHa (P_atm падает с высотой). "
+            "Default: 0 (уровень моря, P_atm=101.325 кПа). "
+            "Для Архыза (1700 м) → P_atm≈83 кПа, NPSHa ниже на ~1.8 м."
+        ),
+    )
 
 
 class SelectionRequest(BaseModel):
