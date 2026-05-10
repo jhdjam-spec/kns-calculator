@@ -487,19 +487,32 @@ def build_suggestions(
     if L0.Q_m3h < 0.1:
         Q_lpm = L0.Q_m3h * 60   # из л/мин → м³/ч если перепутали
         Q_lps = L0.Q_m3h * 3.6  # из л/с → м³/ч если перепутали
+        eng_text = (
+            f"📏 Единица: Q={L0.Q_m3h} м³/ч = {L0.Q_m3h * 1000:.1f} л/час "
+            f"= {L0.Q_m3h * 1000 / 60:.2f} л/мин — это меньше расхода обычного крана.\n"
+            f"💡 Если в опросном листе указано {L0.Q_m3h} л/мин, "
+            f"в м³/ч это будет {Q_lpm:.1f} (×60).\n"
+            f"💡 Если {L0.Q_m3h} л/с — то {Q_lps:.1f} м³/ч (×3.6).\n"
+            f"📐 Норма СНиП 2.04.01-85 для бытовой канализации: "
+            f"≥ 0.5 м³/ч на 1 человека (с учётом К_неравн = 2.5)."
+        )
+        mgr_text = (
+            f"⚠️ Q={L0.Q_m3h} м³/ч — это меньше расхода одного кухонного крана.\n"
+            f"💧 Если клиент дал расход в л/мин — то в правильных единицах "
+            f"это {Q_lpm:.1f} м³/ч.\n"
+            f"💧 Если в л/с — то {Q_lps:.1f} м³/ч.\n"
+            f"📞 Уточните у клиента в каких единицах присылал данные. "
+            f"Иначе подберём огромный насос на 5+ кВт за 200+ тыс ₽ — "
+            f"для микро-расхода это переплата ×20 и быстрая поломка из-за "
+            f"коротких циклов вкл/выкл (защита двигателя ≤6 циклов/час)."
+        )
         suggestions.append(InputSuggestion(
             field="Q_m3h",
             current_value=f"{L0.Q_m3h}",
             suggested_value=f"{Q_lpm:.1f}",
-            reason=(
-                f"📏 Единица: Q={L0.Q_m3h} м³/ч = {L0.Q_m3h * 1000:.1f} л/час "
-                f"= {L0.Q_m3h * 1000 / 60:.2f} л/мин — это меньше расхода обычного крана.\n"
-                f"💡 Если в опросном листе указано {L0.Q_m3h} л/мин, "
-                f"в м³/ч это будет {Q_lpm:.1f} (×60).\n"
-                f"💡 Если {L0.Q_m3h} л/с — то {Q_lps:.1f} м³/ч (×3.6).\n"
-                f"📐 Норма СНиП 2.04.01-85 для бытовой канализации: "
-                f"≥ 0.5 м³/ч на 1 человека (с учётом К_неравн = 2.5)."
-            ),
+            reason=eng_text,
+            reason_engineer=eng_text,
+            reason_manager=mgr_text,
             severity="critical",
         ))
 
@@ -785,6 +798,11 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         if L0.dH_m is not None and L0.dH_m < 0:
             sc_triggers.append("auto_dh_negative")
         sc_suggestions = build_suggestions(L0, L1, computed, sc_triggers)
+        for s in sc_suggestions:
+            if not s.reason_engineer:
+                s.reason_engineer = s.reason
+            if not s.reason_manager:
+                s.reason_manager = s.reason
         return SelectionResult(
             input=SelectionRequest(L0=L0_filled, L1=L1),
             computed=computed,
@@ -916,6 +934,16 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
 
     # Phase «Did you mean»: мягкие предложения исправить странные значения
     suggestions = build_suggestions(L0, L1, computed, triggers)
+    # Backward-compat: если reason_engineer/reason_manager пустые → копируем reason.
+    # Frontend может рендерить tab "Инженер"/"Менеджер" по этим полям.
+    # NB: на 2026-05-10 build_suggestions заполняет только reason. Расширение
+    # под двухуровневые тексты для каждого case — отдельный backlog item
+    # (часть UX edge cases spec, см. memory reference_kns_ux_edge_cases_2026-05-10).
+    for s in suggestions:
+        if not s.reason_engineer:
+            s.reason_engineer = s.reason
+        if not s.reason_manager:
+            s.reason_manager = s.reason
 
     return SelectionResult(
         input=SelectionRequest(L0=L0_filled, L1=L1),

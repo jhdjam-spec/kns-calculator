@@ -260,15 +260,26 @@ class SelectionResultsBySegment(BaseModel):
 class InputSuggestion(BaseModel):
     """«Возможно вы имели в виду» — мягкое предложение исправить параметр.
 
-    Используется когда калькулятор обнаруживает странное значение и хочет
-    предложить пользователю конкретную правку. Frontend показывает в UI
-    модалку «Применить?» с двумя CTA — [Применить] / [Оставить как есть].
+    2 уровня объяснения для разных аудиторий:
+    - reason_engineer: 👷 инженерный (формулы, СП-цитаты, термины)
+    - reason_manager: 💼 менеджерский ОП (что произойдёт, цена, срок)
+
+    Frontend показывает табы или toggle между уровнями. Поле reason
+    оставлено как fallback (= reason_engineer).
     """
 
     field: str = Field(..., description="Имя поля: Q_m3h, dH_m, L_m, pipe_material, и др.")
     current_value: str = Field(..., description="Текущее значение (как ввёл пользователь)")
     suggested_value: str = Field(..., description="Предлагаемое значение")
-    reason: str = Field(..., description="Почему предлагается (1-2 предложения)")
+    reason: str = Field(..., description="Fallback (= reason_engineer для backward compat)")
+    reason_engineer: str = Field(
+        default="",
+        description="👷 Инженерный: формулы, СП-цитаты, физика/гидравлика/материаловедение",
+    )
+    reason_manager: str = Field(
+        default="",
+        description="💼 Менеджерский ОП: что произойдёт, сколько денег, какой срок",
+    )
     severity: Literal["info", "warning", "critical"] = "warning"
 
 
