@@ -16,6 +16,8 @@ dependencies = [
     "python-docx>=1.1",
     "python-multipart>=0.0.9",
     "numpy>=1.26",
+    # Phase 28 PDF РПЗ: matplotlib для Q-H графиков в reports/qh_chart.py
+    "matplotlib>=3.8",
 ]
 
 # numpy-only friction factor (Swamee-Jain) — fluids/scipy убраны ради размера
