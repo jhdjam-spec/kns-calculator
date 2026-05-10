@@ -1714,6 +1714,8 @@ def _compute_corpus_size(
     - fire_protection (отдельная ёмкость пожарного запаса)
     - очень малые Q<5 + DN<=65 (готовый приямок)
     """
+    import math
+
     from pump_calculator.corpus_sizing import compute_corpus_size as _cs
 
     wt = L0_filled.wastewater_type
@@ -1762,11 +1764,66 @@ def _compute_corpus_size(
                 f"расчётный (большего достаточно для приёма самотёка)."
             )
 
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: weight_estimate_kg + reinforcement_kg
+    # Геометрия стенок: A_walls = π·D·H, A_caps = 2·π·D²/4 (дно+крышка).
+    # ПЭ100 SDR17: δ = D/17, ρ = 950 кг/м³ → W_pe = (A_walls·δ + A_caps·δ)·ρ.
+    # Стеклопластик (glass): эмпирика 130 кг/м² (см. corpus_sizing.py).
+    # Reinforcement по СП 22.13330 (Кулон): σ_x = γ·z·K_a при γ=18 кН/м³,
+    # K_a=tan²(45-φ/2)=0.33 для φ=30°. На z=6м → σ_x=35.6 кПа.
+    # ПЭ100 SDR17 выдерживает ~50 кН/м² → нужна добавка усиления:
+    #   - z=4-5 м: рёбра жёсткости ПЭ (~5% от веса корпуса)
+    #   - z=5-7 м: частичная ж/б обойма (площадь стенок · 100 кг/м²)
+    #   - z>7 м:  полная ж/б обойма (площадь стенок · 250 кг/м²)
+    # ──────────────────────────────────────────────────────────────────
+    D_m = cs.diameter_mm / 1000.0
+    H_m = cs.height_mm / 1000.0
+    A_walls_m2 = math.pi * D_m * H_m
+    A_caps_m2 = 2.0 * math.pi * (D_m / 2.0) ** 2
+    A_total_m2 = A_walls_m2 + A_caps_m2
+
+    weight_estimate_kg: float | None
+    if corpus_material == "pe":
+        # SDR17 → толщина стенки δ = D/17 (м)
+        wall_thickness_m = D_m / 17.0
+        rho_pe100 = 950.0  # кг/м³
+        weight_estimate_kg = round(A_total_m2 * wall_thickness_m * rho_pe100, 1)
+    else:
+        # Стеклопластик: используем эмпирическую оценку (130 кг/м²)
+        weight_estimate_kg = float(cs.weight_estimate_kg)
+
+    # Reinforcement только при глубокой установке (depth_inlet > 4000 мм)
+    reinforcement_kg: float | None = None
+    z_m = (depth_inlet_mm or 0.0) / 1000.0
+    if z_m > 4.0 and weight_estimate_kg is not None:
+        if z_m <= 5.0:
+            # Рёбра жёсткости ПЭ ~5% от веса корпуса
+            reinforcement_kg = round(weight_estimate_kg * 0.05, 1)
+            extra_notes.append(
+                f"Усиление: рёбра жёсткости ПЭ +{reinforcement_kg:.0f} кг "
+                f"(z={z_m:.1f} м, σ_x≈{18.0 * z_m * 0.33:.1f} кПа по СП 22.13330)."
+            )
+        elif z_m <= 7.0:
+            # Частичная ж/б обойма (только стенки) — 100 кг/м²
+            reinforcement_kg = round(A_walls_m2 * 100.0, 1)
+            extra_notes.append(
+                f"Усиление: частичная ж/б обойма +{reinforcement_kg:.0f} кг "
+                f"(z={z_m:.1f} м, σ_x≈{18.0 * z_m * 0.33:.1f} кПа по СП 22.13330)."
+            )
+        else:
+            # Полная ж/б обойма — 250 кг/м²
+            reinforcement_kg = round(A_walls_m2 * 250.0, 1)
+            extra_notes.append(
+                f"Усиление: полная ж/б обойма +{reinforcement_kg:.0f} кг "
+                f"(z={z_m:.1f} м, σ_x≈{18.0 * z_m * 0.33:.1f} кПа по СП 22.13330)."
+            )
+
     return CorpusSize(
         diameter_mm=cs.diameter_mm,
         height_mm=cs.height_mm,
         inlet_DN_mm=inlet_dn,
         outlet_DN_mm=cs.outlet_DN_mm,
-        weight_estimate_kg=cs.weight_estimate_kg,
+        weight_estimate_kg=weight_estimate_kg,
+        reinforcement_kg=reinforcement_kg,
         notes=extra_notes,
     )

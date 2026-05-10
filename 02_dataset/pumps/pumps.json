@@ -508,8 +508,9 @@
         "lead_time": "4-12_weeks"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Параллельный импорт — статус нестабильный. В апр 2025 47 позиций исключены из перечня — уточнять конкретно эту модель.",
-      "_source": "Grundfos Product Center"
+      "_engineer_note": "Параллельный импорт — статус нестабильный. В апр 2025 47 позиций исключены из перечня — уточнять конкретно эту модель. | 320000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 320000
     },
     {
       "id": "grundfos-hydro-mpc",
@@ -543,8 +544,9 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон премиум СПД на базе CR-серии. Аналог — Wilo-COR MVIE.",
-      "_source": "Grundfos Product Center"
+      "_engineer_note": "Эталон премиум СПД на базе CR-серии. Аналог — Wilo-COR MVIE. | 580000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 580000
     },
     {
       "id": "ksb-amarex",
@@ -13773,9 +13775,10 @@
         "distributor": "via Турция/Казахстан"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "AUTOADAPT — самонастраивающаяся характеристика. SmartTrim. Уплотнение SiC/SiC + LIPSEAL. Корпус EN-GJL-200, импеллер PA-I. ISO9906:2012 grade 3B2. Артикул 96075897. Габариты 374×118×216×546 мм.",
+      "_engineer_note": "AUTOADAPT — самонастраивающаяся характеристика. SmartTrim. Уплотнение SiC/SiC + LIPSEAL. Корпус EN-GJL-200, импеллер PA-I. ISO9906:2012 grade 3B2. Артикул 96075897. Габариты 374×118×216×546 мм. | 218000 от subagent Grundfos research 2026-05-10 (high)",
       "_source": "Grundfos SEG4009250B полный паспорт (артикул 96075897)",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 218000
     },
     {
       "id": "cnp-50wq20-15-2.2",
@@ -14135,9 +14138,10 @@
         "distributor": "Grundfos РФ (через дилеров)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10",
+      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10 | 150000 от subagent Grundfos research 2026-05-10 (low)",
       "_source": "kns3.zip",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 150000
     },
     {
       "id": "grundfos-unilift-ap12-40-06-1",
@@ -14174,10 +14178,11 @@
         "status": "imported_eu",
         "distributor": "Grundfos РФ"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Маломощный погружной для бытового применения. Однофазный 220В. Free passage 35 мм — ограниченное применение.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Маломощный погружной для бытового применения. Однофазный 220В. Free passage 35 мм — ограниченное применение. | 91590 от subagent Grundfos research 2026-05-10 (high)",
       "_source": "kns3.zip",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 91590
     },
     {
       "id": "gis-sg-40-075-25-0d",
@@ -17055,9 +17060,10 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 от subagent Grundfos research 2026-05-10 (medium)",
       "_source": "Grundfos CR catalog (parallel)",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 410000
     },
     {
       "id": "grundfos-cr-64-3-2",
@@ -17095,9 +17101,10 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 620000 от subagent Grundfos research 2026-05-10 (medium)",
       "_source": "Grundfos CR catalog (parallel)",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 620000
     },
     {
       "id": "grundfos-cr-95-2-2",
@@ -17135,9 +17142,10 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с). | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с). | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 775000 от subagent Grundfos research 2026-05-10 (high)",
       "_source": "Grundfos CR catalog (parallel)",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 775000
     },
     {
       "id": "istratech-ilt-95-2",

@@ -333,3 +333,87 @@ class TestGroundwaterAntiBuoyancy:
                     "пригруз" in n.lower() or "anti-buoyancy" in n.lower()
                     for n in pr_flood.notes
                 ), f"{seg}: note про пригруз отсутствует"
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 10. weight_estimate_kg + reinforcement_kg для CorpusSize (СП 22.13330)
+# ─────────────────────────────────────────────────────────────────────
+
+class TestCorpusWeight:
+    """Проверка расчёта веса корпуса КНС и усиления при глубокой установке.
+
+    Физика:
+    - ПЭ100 SDR17: δ=D/17, ρ=950 кг/м³ → W = (π·D·H + 2·π·D²/4)·δ·ρ
+    - Усиление при z>4 м (auto_lateral_earth_pressure):
+      * z=4-5: рёбра ПЭ ~5% веса
+      * z=5-7: частичная ж/б обойма ~100 кг/м² стенок
+      * z>7:   полная ж/б обойма ~250 кг/м² стенок
+    """
+
+    def test_weight_estimate_for_typical_kns(self, base_l0: L0Input) -> None:
+        """Q=21.2, depth=2000 → weight_estimate_kg оценён, > 0, в разумном диапазоне."""
+        r = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=2000))
+        assert r.corpus_size is not None
+        assert r.corpus_size.weight_estimate_kg is not None
+        # Для Ø1800×~3000 ПЭ100 SDR17: δ≈0.106 м, A≈22 м², W≈2200 кг порядка
+        assert 500 < r.corpus_size.weight_estimate_kg < 5000
+
+    def test_no_reinforcement_for_shallow_install(self, base_l0: L0Input) -> None:
+        """depth ≤ 4000 → reinforcement_kg = None (усиление не требуется)."""
+        r_default = select_pumps(base_l0, L1=None)
+        r_3000 = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=3000))
+        r_4000 = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=4000))
+        for r in (r_default, r_3000, r_4000):
+            assert r.corpus_size is not None
+            assert r.corpus_size.reinforcement_kg is None, (
+                f"reinforcement должен быть None при depth≤4000, got "
+                f"{r.corpus_size.reinforcement_kg}"
+            )
+
+    def test_reinforcement_appears_at_depth_5000(self, base_l0: L0Input) -> None:
+        """depth=5000 (z=5 м) → reinforcement_kg > 0 (рёбра ПЭ)."""
+        r = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=5000))
+        assert r.corpus_size is not None
+        assert r.corpus_size.reinforcement_kg is not None
+        assert r.corpus_size.reinforcement_kg > 0
+
+    def test_reinforcement_grows_with_depth(self, base_l0: L0Input) -> None:
+        """Усиление монотонно растёт от 4000 → 6000 → 8000 мм."""
+        # depth=5000 (рёбра ~5%) < depth=6000 (частичная ж/б 100 кг/м²)
+        # < depth=8000 (полная ж/б 250 кг/м²)
+        r5 = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=5000))
+        r6 = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=6000))
+        r8 = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=8000))
+        assert r5.corpus_size and r5.corpus_size.reinforcement_kg is not None
+        assert r6.corpus_size and r6.corpus_size.reinforcement_kg is not None
+        assert r8.corpus_size and r8.corpus_size.reinforcement_kg is not None
+        # Частичная обойма (100 кг/м²) должна быть тяжелее рёбер (~5% веса корпуса)
+        assert r6.corpus_size.reinforcement_kg > r5.corpus_size.reinforcement_kg
+        # Полная обойма (250 кг/м²) > частичной (100 кг/м²)
+        assert r8.corpus_size.reinforcement_kg > r6.corpus_size.reinforcement_kg
+
+    def test_lateral_earth_pressure_trigger_yields_reinforcement(
+        self, base_l0: L0Input,
+    ) -> None:
+        """Интеграционный: при auto_lateral_earth_pressure (depth>5000)
+        корпус ОБЯЗАТЕЛЬНО имеет reinforcement_kg.
+        """
+        r = select_pumps(base_l0, L1=L1Input(install_depth_inlet_mm=6000))
+        assert "auto_lateral_earth_pressure" in r.trigger_reasons
+        assert r.corpus_size is not None
+        assert r.corpus_size.reinforcement_kg is not None
+        assert r.corpus_size.reinforcement_kg > 0
+        # Note про усиление должна быть в corpus_size.notes
+        assert any(
+            "усиление" in n.lower() or "обойма" in n.lower() or "рёбр" in n.lower()
+            for n in r.corpus_size.notes
+        ), f"note про усиление отсутствует: {r.corpus_size.notes}"
+
+    def test_weight_grows_with_pump_size(self) -> None:
+        """Q=500 (большой КНС Ø3500) тяжелее чем Q=20 (Ø1800)."""
+        from pump_calculator.schemas import L0Input as _L0
+        r_small = select_pumps(_L0(Q_m3h=20, dH_m=10, L_m=50, wastewater_type="domestic"))
+        r_big = select_pumps(_L0(Q_m3h=500, dH_m=20, L_m=100, wastewater_type="industrial"))
+        assert r_small.corpus_size and r_small.corpus_size.weight_estimate_kg is not None
+        assert r_big.corpus_size and r_big.corpus_size.weight_estimate_kg is not None
+        assert r_big.corpus_size.weight_estimate_kg > r_small.corpus_size.weight_estimate_kg

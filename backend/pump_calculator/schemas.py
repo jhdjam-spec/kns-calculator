@@ -362,7 +362,27 @@ class CorpusSize(BaseModel):
     height_mm: float = Field(..., description="Полная высота корпуса от дна до крышки, мм")
     inlet_DN_mm: float = Field(..., description="DN подводящего самотёчного трубопровода")
     outlet_DN_mm: float = Field(..., description="DN напорного выходного трубопровода")
-    weight_estimate_kg: int = Field(..., description="Ориентировочный вес корпуса (без насосов)")
+    weight_estimate_kg: float | None = Field(
+        default=None,
+        description=(
+            "Ориентировочный вес корпуса без насосов и арматуры (кг). "
+            "Считается по геометрии стенок (π·D·H + 2·π·D²/4) и плотности материала: "
+            "ПЭ100 SDR17 (δ=D/17, ρ=950 кг/м³) или стеклопластик (130 кг/м²). "
+            "None если данных недостаточно (Q<5 без корпуса, нет sample_pump)."
+        ),
+    )
+    reinforcement_kg: float | None = Field(
+        default=None,
+        description=(
+            "Дополнительный вес усиления стенок (кг) при auto_lateral_earth_pressure "
+            "(install_depth_inlet_mm > 4000 мм). Считается по СП 22.13330 + Кулону: "
+            "σ_x = γ·z·K_a (γ=18 кН/м³, K_a=0.33 для песка φ=30°). "
+            "z=4-5 м — рёбра жёсткости ПЭ (~5% от веса корпуса); "
+            "z=5-7 м — частичная ж/б обойма (площадь стенок · 100 кг/м²); "
+            "z>7 м — полная ж/б обойма (площадь стенок · 250 кг/м²). "
+            "None если усиление не требуется (depth ≤ 4000 мм или вес корпуса не оценён)."
+        ),
+    )
     notes: list[str] = Field(default_factory=list)
 
 
