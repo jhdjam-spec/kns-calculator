@@ -481,6 +481,19 @@ def evaluate_handoff_triggers(
     if computed.H_full_m > 80:
         triggers.append("auto_h_high")
 
+    # TRIG-1b: Q микро (< 0.1 м³/ч = ~1.6 л/мин) — нереалистично малая нагрузка
+    # для КНС. Скорее всего опечатка ввода или неподходящий объект (нужен
+    # бытовой грязевой насос, не КНС). Подбор может вернуть "слишком большой"
+    # насос, который будет работать в pulsed-mode с потерей ресурса.
+    if L0.Q_m3h < 0.1:
+        triggers.append("auto_q_micro")
+
+    # TRIG-1c: dH < 0 — отрицательный геометрический перепад (точка сброса
+    # ниже точки забора). Физически возможен (напорный сбор с уровня моря
+    # на дно), но крайне необычен для КНС. Требует ручной верификации.
+    if L0.dH_m is not None and L0.dH_m < 0:
+        triggers.append("auto_dh_negative")
+
     # TRIG-2: промстоки
     if L0.wastewater_type == "industrial":
         triggers.append("auto_industrial")
@@ -569,6 +582,26 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     completeness_pct = calculate_completeness_pct(L0, L1)
     fill_price_ranges(results, completeness_pct)
     handoff_required = bool(triggers)
+
+    # Edge-case warnings: дополняем warnings человекочитаемыми пояснениями
+    # для критичных triggers (микро-Q, отриц-dH, аномально большой Q).
+    if "auto_q_micro" in triggers:
+        warnings.insert(0, (
+            f"⚠ Q={L0.Q_m3h} м³/ч — нереалистично малый расход для КНС "
+            f"(норма от 0.5 м³/ч). Возможна опечатка ввода. Подбор может "
+            f"вернуть переразмеренный насос — обязательна верификация инженером."
+        ))
+    if "auto_dh_negative" in triggers:
+        warnings.insert(0, (
+            f"⚠ dH={L0.dH_m} м (отрицательный геометрический перепад). "
+            f"Точка сброса ниже точки забора — необычная конфигурация. "
+            f"Перепроверьте знак и схему трассы."
+        ))
+    if "auto_q_high" in triggers:
+        warnings.insert(0, (
+            f"⚠ Q={L0.Q_m3h} м³/ч превышает 500 м³/ч — рекомендуется "
+            f"индивидуальное проектирование магистральной КНС инженером."
+        ))
     summary_text = build_summary_text(
         L0=L0_filled,
         L1=L1,
