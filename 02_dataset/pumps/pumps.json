@@ -24987,6 +24987,41 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok"
+    },
+    {
+      "id": "enduro-50-160-p",
+      "brand": "Enduro",
+      "model": "50-160 P",
+      "type": "submersible_sewage",
+      "envelope": {
+        "Q_min_m3h": 10,
+        "Q_max_m3h": 35,
+        "H_min_m": 5,
+        "H_max_m": 14,
+        "Q_BEP_m3h": 21.6,
+        "H_BEP_m": 9
+      },
+      "power": {
+        "P_kW": null,
+        "voltage_v": 380,
+        "phase": 3,
+        "frequency_hz": 50
+      },
+      "discharge": {
+        "DN_mm": 65,
+        "flange_type": "PN10"
+      },
+      "wastewater_compat": [
+        "domestic"
+      ],
+      "price_segment": "mid",
+      "available_ru": {
+        "status": "needs_verification",
+        "distributor": "Курск (поставщик из ТКП КНС К2 08.04.2024)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Извлечено из Технико-коммерческое предложение КНС К2 08.04.2024 (1).pdf: 'Насосный агрегат Enduro 50-160 P в комплекте с автоматической трубной муфтой и верхними держателями направляющих, 2 шт'. Дано Q=21,6 м³/ч, H=9 м для бытовой КНС D=2000 H=8100 (армированный стеклопластик). Калибр 50-160 — это DN50 / Ø колеса 160 мм. Мощность не указана в ТКП — оценить по характеристике; envelope ориентировочный. Производитель Enduro требует уточнения (нет в действующей БД, возможно частная марка дилера или китайский ОЕМ). Распространение в РФ требует проверки.",
+      "_source": "Mail extracted catalog 2026-05-10 — Технико-коммерческое предложение КНС К2 08.04.2024 (1).pdf"
     }
   ],
   "_NOT_RECOMMENDED": [
