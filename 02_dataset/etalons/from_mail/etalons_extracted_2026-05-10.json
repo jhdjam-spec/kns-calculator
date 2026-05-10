@@ -1,0 +1,2330 @@
+[
+  {
+    "code": "02-09-24-П-НВК",
+    "client": null,
+    "object_type": "канализация/водопровод",
+    "city": "Краснодар",
+    "year": 2025,
+    "source_file": "02-09-24-П-НВК.pdf",
+    "source_path": "кнс\\02-09-24-П-НВК.pdf",
+    "vns_hozpit": {
+      "model": "Pedrollo F 65/200AR",
+      "Q_m3h": 156.0,
+      "H_m": 57.0,
+      "P_kW": 22.0
+    },
+    "housing": {
+      "diameter_mm": 250,
+      "height_mm": null
+    },
+    "_duplicate_of": "02-09-24-П-НВК.pdf"
+  },
+  {
+    "code": "1101-24-НВК",
+    "client": "Администрация Нововеличковского",
+    "object_type": "канализация/водопровод",
+    "city": "Краснодар",
+    "year": 2025,
+    "source_file": "1101-24-НВК (1).pdf",
+    "source_path": "кнс\\1101-24-НВК (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 54.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "_duplicate_of": "1101-24-НВК"
+  },
+  {
+    "code": "16-20-НВК",
+    "client": null,
+    "object_type": null,
+    "city": null,
+    "year": null,
+    "source_file": "16-20-НВК (1).pdf",
+    "source_path": "кнс\\16-20-НВК (1).pdf",
+    "vns_hozpit": {
+      "model": "см",
+      "Q_m3h": 1312.92,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 69.62,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 36.0,
+        "H_m": 15.0,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "16-25/РД",
+    "client": "ООО \"Тополь",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Краснодар",
+    "year": 2022,
+    "source_file": "16_25_РД_НВК (новый).pdf",
+    "source_path": "кнс\\16_25_РД_НВК (новый).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 180.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "_duplicate_of": "16_25_РД_НВК (новый).pdf"
+  },
+  {
+    "code": "18-007-ТХ",
+    "client": "ООО «СПЛАЙН» Провер. Поддубняк",
+    "object_type": "ливневая КНС/ЛОС/канализация",
+    "city": "Симферополь",
+    "year": 2018,
+    "source_file": "18-007-ТХ.pdf",
+    "source_path": "кнс\\18-007-ТХ.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1530.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 1530.0,
+        "H_m": 15.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 39.6,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 36.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "ГИС",
+        "Q_m3h": 36.0,
+        "H_m": 8.5,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 1000,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ЛОС/канализация",
+    "city": null,
+    "year": null,
+    "source_file": "2.pdf",
+    "source_path": "кнс\\2.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 36.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": "20-05-24-НВК",
+    "client": "ООО «СиЭнПи Рус»",
+    "object_type": "КНС/канализация",
+    "city": "Москва",
+    "year": 2024,
+    "source_file": "20-05-24-НВК с КНС от 02.10.24.pdf",
+    "source_path": "кнс\\20-05-24-НВК с КНС от 02.10.24.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 397.29,
+      "H_m": 26.11,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 352.0,
+        "H_m": 22.0,
+        "P_kW": null
+      },
+      {
+        "model": "Antarus 2",
+        "Q_m3h": 352.0,
+        "H_m": 22.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 352.0,
+        "H_m": 4.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 3000,
+      "height_mm": 700
+    },
+    "_duplicate_of": "20-05-24-НВК"
+  },
+  {
+    "code": null,
+    "client": "АО Ремстрой-Алексс (3).doc (41472 B)",
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Москва",
+    "year": 2025,
+    "source_file": "22-07-2025_11-46-07.zip",
+    "source_path": "кнс\\22-07-2025_11-46-07.zip",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 360.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 216.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 11.7,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 3.2,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "41/22-30-ИОС2",
+    "client": "ФКП «УЗКС Минобороны России",
+    "object_type": "ЛОС",
+    "city": "Москва",
+    "year": 2021,
+    "source_file": "5.2 Ю-41_22-30 _ИОС2 .pdf",
+    "source_path": "кнс\\5.2 Ю-41_22-30 _ИОС2 .pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 91.44,
+      "H_m": 23.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "сности С1",
+        "Q_m3h": 54.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 54.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 37.44,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "сности С1",
+        "Q_m3h": 36.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "R-GRR-20-0063-ИОС",
+    "client": "МАУ «Спортивная школа «Победа",
+    "object_type": "ливневая КНС/канализация",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "5.3. R-GRR-20-0063-ИОС3 НК (П).pdf",
+    "source_path": "кнс\\5.3. R-GRR-20-0063-ИОС3 НК (П).pdf",
+    "vns_hozpit": {
+      "model": "см",
+      "Q_m3h": 194.4,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 175.57,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 165.42,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 114.16,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 99.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "822005890-ОК-НВК",
+    "client": "Государственное казённое учреждение « Главное управление",
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Краснодар",
+    "year": 2023,
+    "source_file": "_РД 6.4 822005890-ОК-НВК (1).pdf",
+    "source_path": "кнс\\_РД 6.4 822005890-ОК-НВК (1).pdf",
+    "vns_hozpit": {
+      "model": "CNP  250WQ600-10-22",
+      "Q_m3h": 918.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "CNP",
+        "Q_m3h": 918.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 918.0,
+        "H_m": 5.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 600.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 11.0,
+        "H_m": 6.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 1600,
+      "height_mm": 6370
+    },
+    "_duplicate_of": "822005890-ОК-НВК"
+  },
+  {
+    "code": null,
+    "client": "ПАО АКБ «АВАНГАРД» кор/с 30101810000000000201 БИК 044525201",
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": "Краснодар",
+    "year": 2019,
+    "source_file": "Plastek-пальмида.pdf",
+    "source_path": "кнс\\Plastek-пальмида.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 540.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 10.8,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 7.2,
+        "H_m": 8.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 3600,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": null,
+    "city": null,
+    "year": 2019,
+    "source_file": "SEG4009250B.PDF",
+    "source_path": "кнс\\SEG4009250B.PDF",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 15.98,
+      "H_m": 8.705,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 7.85,
+        "H_m": 8.705,
+        "P_kW": null
+      },
+      {
+        "model": "Grundfos CAPS",
+        "Q_m3h": 7.85,
+        "H_m": 8.705,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС",
+    "city": null,
+    "year": null,
+    "source_file": "для подбора КНС отметки (1).pdf",
+    "source_path": "кнс\\для подбора КНС отметки (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 34.67,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 19.05,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": null,
+    "city": null,
+    "year": 2024,
+    "source_file": "Запрос цен НВК_от 13.11.2024.pdf",
+    "source_path": "кнс\\Запрос цен НВК_от 13.11.2024.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 43.2,
+      "H_m": 12.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 18.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 10.0,
+        "H_m": 31.0,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 15.0,
+        "model": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 1900,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "29-19-ИОС3",
+    "client": null,
+    "object_type": "КНС/канализация",
+    "city": "Новороссийск",
+    "year": null,
+    "source_file": "ИОС3-ОЛ.1 л.1-4 (1).pdf",
+    "source_path": "кнс\\ИОС3-ОЛ.1 л.1-4 (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 34.92,
+      "H_m": 10.0,
+      "P_kW": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ЛОС/пожарная насосная/канализация",
+    "city": "Краснодар",
+    "year": 2024,
+    "source_file": "Кислород НВК ЛОС.pdf",
+    "source_path": "кнс\\Кислород НВК ЛОС.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 11.3,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 8.28,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 7.54,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 7.54,
+        "H_m": 4.0,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 30.26,
+        "model": null
+      },
+      {
+        "Q_pe": null,
+        "Q_m3day": 30.26,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "year": 2025,
+    "source_file": "Конъюнктурный анализ - НВК, Электрика, вентиляция (1).pdf",
+    "source_path": "кнс\\Конъюнктурный анализ - НВК, Электрика, вентиляция (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1100.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "Смета",
+        "Q_m3h": 630.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 630.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 25.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "Смета",
+        "Q_m3h": 14.4,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 400,
+      "height_mm": 310
+    }
+  },
+  {
+    "code": "371/23-НВК",
+    "client": null,
+    "object_type": "канализация",
+    "city": "Симферополь",
+    "year": 2024,
+    "source_file": "Приложение №1. ВОР №25 НВК (В1, К2, НВ, обратная засыпка) (1).xlsx",
+    "source_path": "кнс\\Приложение №1. ВОР №25 НВК (В1, К2, НВ, обратная засыпка) (1).xlsx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 396.0,
+      "H_m": 11.3,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 250,
+      "height_mm": 100
+    }
+  },
+  {
+    "code": "263-00-ИОС3",
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Ростов",
+    "year": 2018,
+    "source_file": "Проект ЛОС и КНС.pdf",
+    "source_path": "кнс\\Проект ЛОС и КНС.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 54.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": "262/06-2024-НК",
+    "client": "ООО «Айрон» по адресу:Ростовская область",
+    "object_type": "КНС/канализация",
+    "city": "Ростов",
+    "year": 2024,
+    "source_file": "Проект наружной канализации.pdf",
+    "source_path": "кнс\\Проект наружной канализации.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 6.34,
+      "H_m": 6.62,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 6.33,
+        "H_m": 16.0,
+        "P_kW": null
+      }
+    ],
+    "_duplicate_of": "262/06-2024-НК"
+  },
+  {
+    "code": "2019-164-НВК",
+    "client": "Муниципальное казенное учреждение",
+    "object_type": "пожарная насосная/канализация",
+    "city": "Краснодар",
+    "year": 2019,
+    "source_file": "Раздел РД НВК(2019-164-НВК).pdf",
+    "source_path": "кнс\\Раздел РД НВК(2019-164-НВК).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 72.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 10.26,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 9.36,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "2021.ОК-221-НВК",
+    "client": "ООО «ПРОМЫШЛЕННЫЕ ВОДНЫЕ ТЕХНОЛОГИИ»",
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "Страницы из 2021.ОК-221-НВК_изм.pdf",
+    "source_path": "кнс\\Страницы из 2021.ОК-221-НВК_изм.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 2.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1200,
+      "height_mm": 2800
+    },
+    "_duplicate_of": "2021.ОК-221-НВК"
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": null,
+    "city": null,
+    "year": null,
+    "source_file": "Страницы из Раздел РД №12 - НВК (1).pdf",
+    "source_path": "кнс\\Страницы из Раздел РД №12 - НВК (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 7.16,
+      "H_m": 40.0,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 2000,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "ООО «ПРОМЫШЛЕННЫЕ ВОДНЫЕ ТЕХНОЛОГИИ»",
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "year": 2024,
+    "source_file": "тех характеристики.pdf",
+    "source_path": "кнс\\тех характеристики.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 2.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1200,
+      "height_mm": 3500
+    }
+  },
+  {
+    "code": "03/21-НВК",
+    "client": "ООО \"Югпроектстрой\"",
+    "object_type": "ливневая КНС/ЛОС/пожарная насосная",
+    "city": "Сочи",
+    "year": 2024,
+    "source_file": "Том 116-ЛК. от 06.06.2024.pdf",
+    "source_path": "кнс\\Том 116-ЛК. от 06.06.2024.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 360.47,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 252.32,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 54.07,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 7.2,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 400,
+      "height_mm": null
+    },
+    "_duplicate_of": "Том 116-ЛК. от 06.06.2024.pdf"
+  },
+  {
+    "code": null,
+    "client": "ООО «ТЕХНОЛОГИИ АЭК»",
+    "object_type": null,
+    "city": null,
+    "year": 2022,
+    "source_file": "07-11-2022_13-09-03.zip",
+    "source_path": "кнс 2\\07-11-2022_13-09-03.zip",
+    "vns_hozpit": {
+      "model": "Grundfos 132 кВт",
+      "Q_m3h": 1111.0,
+      "H_m": 60.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 700.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 5.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "year": 2022,
+    "source_file": "08-09-2022_15-58-27.zip",
+    "source_path": "кнс 2\\08-09-2022_15-58-27.zip",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": null,
+        "model": "ЮНИЛОС 2022"
+      },
+      {
+        "Q_pe": null,
+        "Q_m3day": null,
+        "model": "ЮНИЛОС-ТРИУМФ"
+      },
+      {
+        "Q_pe": null,
+        "Q_m3day": null,
+        "model": "ЮНИЛОС"
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ООО ФАЛЬКОН.pdf (276081 B)",
+    "object_type": "КНС",
+    "city": "Сочи",
+    "year": 2022,
+    "source_file": "15-03-2022_12-09-05.zip",
+    "source_path": "кнс 2\\15-03-2022_12-09-05.zip",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1245.6,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 171.97,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 19.15,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 315,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "ООО \"НПЦ Перспектива\"  Н. контр. Трямкин",
+    "object_type": "ливневая КНС/ЛОС/канализация",
+    "city": "Москва",
+    "year": 2018,
+    "source_file": "15-121-ИЛО 2 (ЛОС) (2) (1).pdf",
+    "source_path": "кнс 2\\15-121-ИЛО 2 (ЛОС) (2) (1).pdf",
+    "vns_hozpit": {
+      "model": "Helyx",
+      "Q_m3h": 72.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 72.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "20-033-ИОС",
+    "client": "ООО \"СПЛАЙН\"",
+    "object_type": "канализация",
+    "city": "Симферополь",
+    "year": 2018,
+    "source_file": "20-033-ИОС3.1 (1).pdf",
+    "source_path": "кнс 2\\20-033-ИОС3.1 (1).pdf",
+    "vns_hozpit": {
+      "model": "Wilo FA 10.78Z-370",
+      "Q_m3h": 615.2,
+      "H_m": 38.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 496.22,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 450.32,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 388.8,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "АО ФПК",
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": "Новороссийск",
+    "year": 2021,
+    "source_file": "2021.189868- Ливневая канализация РД изм.1 (1).pdf",
+    "source_path": "кнс 2\\2021.189868- Ливневая канализация РД изм.1 (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 288.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 180.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 72.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 18.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 180,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "ООО  «НТЦЭЭ»",
+    "object_type": "КНС/пожарная насосная/канализация",
+    "city": "Ростов",
+    "year": 2022,
+    "source_file": "2022.06.29 К Семикар.pdf",
+    "source_path": "кнс 2\\2022.06.29 К Семикар.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 20.52,
+      "H_m": 0.75,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 20.52,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 20.52,
+        "H_m": 11.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1.71,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 160,
+      "height_mm": 300
+    }
+  },
+  {
+    "code": null,
+    "client": "ООО Торговый дом «Средневолжский Машиностроительный Завод»",
+    "object_type": "канализация",
+    "city": null,
+    "year": null,
+    "source_file": "250-18.150.18,5.380.1K.pdf",
+    "source_path": "кнс 2\\250-18.150.18,5.380.1K.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 350.0,
+      "H_m": 18.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 250.0,
+        "H_m": 18.0,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ООО «ЭкоПромОборудование»",
+    "object_type": "ЛОС",
+    "city": null,
+    "year": 2024,
+    "source_file": "30-07-2024_15-38-28.zip",
+    "source_path": "кнс 2\\30-07-2024_15-38-28.zip",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 300.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 180.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 100.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "01-07-20-ИОС2",
+    "client": "ООО «РСХБ Управление Активами» Д.У. Закрытым комбинированным",
+    "object_type": null,
+    "city": "Краснодар",
+    "year": 2020,
+    "source_file": "5.3__01-07-20_ИОС 2.2-3.2 Изм.1.pdf",
+    "source_path": "кнс 2\\5.3__01-07-20_ИОС 2.2-3.2 Изм.1.pdf",
+    "vns_hozpit": {
+      "model": "См. приложение к проекту. \nДалее после про",
+      "Q_m3h": 5219.9,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "сматривается устройство КНС в ж/б \nисполне",
+        "Q_m3h": 1531.5,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "сматривается устройство КНС в ж/б \nисполне",
+        "Q_m3h": 1219.3,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "Wilo \nIL 250/405-110/4 Q",
+        "Q_m3h": 684.0,
+        "H_m": 43.0,
+        "P_kW": 98.59
+      },
+      {
+        "model": null,
+        "Q_m3h": 432.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "23-27-1-ИОС",
+    "client": "I ОЧЕРЕДЬ",
+    "object_type": "ливневая КНС",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "c_ИОС3.2 (2.08).pdf",
+    "source_path": "кнс 2\\c_ИОС3.2 (2.08).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1490.76,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "снеготаяния по годам и в\nтечение суток",
+        "Q_m3h": 1103.18,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1100.0,
+        "H_m": 35.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1042.92,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 630.0,
+        "H_m": 12.0,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 200.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/канализация",
+    "city": "Сочи",
+    "year": 2023,
+    "source_file": "opros_list_KNS (3).docx",
+    "source_path": "кнс 2\\opros_list_KNS (3).docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 270.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ЛОС",
+    "city": "Краснодар",
+    "year": 2020,
+    "source_file": "PS.1387.3-1387.ОP КП от 08.09.20 — копия.docx",
+    "source_path": "кнс 2\\PS.1387.3-1387.ОP КП от 08.09.20 — копия.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 36.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1100,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "Д-2023-001-ИОС",
+    "client": "Общество с ограниченной ответственностью «МОБИЛГАЗ",
+    "object_type": "ливневая КНС/канализация",
+    "city": null,
+    "year": 2023,
+    "source_file": "Д-2023-001-ИОС3.pdf",
+    "source_path": "кнс 2\\Д-2023-001-ИОС3.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 267.37,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 252.25,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 228.96,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 171.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 81.25,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 500,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "кнс (1).docx",
+    "source_path": "кнс 2\\кнс (1).docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1245.6,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 171.97,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 19.15,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 315,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "year": null,
+    "source_file": "КНС 5 000 хоз-быто второй этап.pdf",
+    "source_path": "кнс 2\\КНС 5 000 хоз-быто второй этап.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 15.0,
+      "H_m": 15.0,
+      "P_kW": 1.5
+    },
+    "housing": {
+      "diameter_mm": 1400,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/ЛОС",
+    "city": "Ростов",
+    "year": null,
+    "source_file": "ЛОС.pdf",
+    "source_path": "кнс 2\\ЛОС.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 108.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1000,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/ЛОС/пожарная насосная",
+    "city": null,
+    "year": null,
+    "source_file": "Лист Microsoft Excel.xlsx",
+    "source_path": "кнс 2\\Лист Microsoft Excel.xlsx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 5219.9,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "WIloHelix V 1606-1/16/E/S/400-50 Q",
+        "Q_m3h": 1531.5,
+        "H_m": 48.7,
+        "P_kW": 4.09
+      },
+      {
+        "model": "WIloHelix V 1606-1/16/E/S/400-50 Q",
+        "Q_m3h": 1219.3,
+        "H_m": 48.7,
+        "P_kW": null
+      },
+      {
+        "model": "WIloHelix V 1606-1/16/E/S/400-50 Q",
+        "Q_m3h": 684.0,
+        "H_m": 43.0,
+        "P_kW": 4.09
+      },
+      {
+        "model": null,
+        "Q_m3h": 432.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 50.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": "МХЧ05-143-ИОС",
+    "client": "Федеральное государственное казенное учреждение",
+    "object_type": null,
+    "city": "Санкт-Петербург",
+    "year": 2024,
+    "source_file": "МХЧ05-143-ИОС3.4_24.04.2024.pdf",
+    "source_path": "кнс 2\\МХЧ05-143-ИОС3.4_24.04.2024.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 151.2,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ВЗиС/ЛОС",
+    "city": null,
+    "year": 2023,
+    "source_file": "Опросник_на_КОС_ВЗиС_1_на_6816_чел_БГПЗ (1).pdf",
+    "source_path": "кнс 2\\Опросник_на_КОС_ВЗиС_1_на_6816_чел_БГПЗ (1).pdf",
+    "los": [
+      {
+        "Q_pe": 3000,
+        "Q_m3day": null,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ООО «Промышленная экология»",
+    "object_type": "КНС",
+    "city": null,
+    "year": null,
+    "source_file": "Опросный лист _КНС_.docx",
+    "source_path": "кнс 2\\Опросный лист _КНС_.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 33.12,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 20.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 200,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "Телефон",
+    "object_type": "ливневая КНС/КНС",
+    "city": null,
+    "year": null,
+    "source_file": "Опросный лист КНС (1).pdf",
+    "source_path": "кнс 2\\Опросный лист КНС (1).pdf",
+    "vns_hozpit": {
+      "model": "Antarus Хозяйственно-бытовые\nЛюбой Ливневые сто",
+      "Q_m3h": 3.6,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС",
+    "city": null,
+    "year": null,
+    "source_file": "Опросный лист КНС1_50W 22-10.docx",
+    "source_path": "кнс 2\\Опросный лист КНС1_50W 22-10.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 22.0,
+      "H_m": 10.0,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1550,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС",
+    "city": null,
+    "year": null,
+    "source_file": "Опросный лист КНС2_80W 58-11.docx",
+    "source_path": "кнс 2\\Опросный лист КНС2_80W 58-11.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 58.0,
+      "H_m": 11.0,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1800,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/ЛОС",
+    "city": "Сочи",
+    "year": null,
+    "source_file": "Перечень работ лос.docx",
+    "source_path": "кнс 2\\Перечень работ лос.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 288.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Волгоград",
+    "year": 2022,
+    "source_file": "Приложение 1 к ТЗ Ливневка (003).xlsx",
+    "source_path": "кнс 2\\Приложение 1 к ТЗ Ливневка (003).xlsx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 450.0,
+      "H_m": 3.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 72.0,
+        "H_m": 8.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 200,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "197/22-НК",
+    "client": "МГГ Скейтинг\"Изм.Кол. уч.Лист№ док.Подп.Дата",
+    "object_type": "ЛОС/канализация",
+    "city": null,
+    "year": null,
+    "source_file": "Проект Водоотв-е Каток-11.pdf",
+    "source_path": "кнс 2\\Проект Водоотв-е Каток-11.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 240.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": "197/22-НК",
+    "client": "МГГ Скейтинг\"Изм.Кол.Лист№ док.ПодписьДата",
+    "object_type": "КНС/канализация/водопровод",
+    "city": null,
+    "year": null,
+    "source_file": "Проект Водоотв-е Каток-5.pdf",
+    "source_path": "кнс 2\\Проект Водоотв-е Каток-5.pdf",
+    "vns_hozpit": {
+      "model": "PEDROLLO\nНапорные сети из полиэтиленовых напорны",
+      "Q_m3h": 10.2,
+      "H_m": 16.0,
+      "P_kW": null
+    }
+  },
+  {
+    "code": "101-20-ТХ",
+    "client": "МКУ г. Шахты «Шахтыстройзаказчик",
+    "object_type": "КНС",
+    "city": "Ростов",
+    "year": 2023,
+    "source_file": "Раздел ПД № 6 (101-20-ТХ)-1-20.pdf",
+    "source_path": "кнс 2\\Раздел ПД № 6 (101-20-ТХ)-1-20.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 2939.83,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 2500.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 2100.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 2099.88,
+        "H_m": 29.54,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 2099.88,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": 6,
+        "Q_m3day": null,
+        "model": null
+      },
+      {
+        "Q_pe": 1,
+        "Q_m3day": null,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": "101-20-ТХ",
+    "client": null,
+    "object_type": null,
+    "city": null,
+    "year": 2023,
+    "source_file": "Раздел ПД № 6 (101-20-ТХ)-106-127.pdf",
+    "source_path": "кнс 2\\Раздел ПД № 6 (101-20-ТХ)-106-127.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1050.0,
+      "H_m": 60.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 16.0,
+        "H_m": 12.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 2900,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "МХЧ05-143-ИОС",
+    "client": "Федеральное государственное казенное учреждение",
+    "object_type": "ЛОС",
+    "city": "Санкт-Петербург",
+    "year": 2024,
+    "source_file": "МХЧ05-143-ИОС3.3_24.04.2024.pdf",
+    "source_path": "кнс 2\\МХЧ05-143-ИОС3.3_24.04.2024.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 162.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 151.2,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": "снижение скорости движения потока и выделе",
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 108.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 100.0,
+        "model": null
+      },
+      {
+        "Q_pe": null,
+        "Q_m3day": null,
+        "model": "Bio103 в Контейнерах из сэндвичпа"
+      }
+    ]
+  },
+  {
+    "code": "МИ.2021.008-Э1.3-1.7-П-ИОС",
+    "client": "ООО «Морской Порт Геленджик",
+    "object_type": "пожарная насосная",
+    "city": "Москва",
+    "year": 2021,
+    "source_file": "МИ.2021.008-Э1.3-1.7-П-ИОС2.7.pdf",
+    "source_path": "кнс 2\\МИ.2021.008-Э1.3-1.7-П-ИОС2.7.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 325.0,
+      "H_m": 73.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 318.0,
+        "H_m": 53.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 216.0,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 10.8,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1.44,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "076-20-ИОС3",
+    "client": "ООО «ГеоСтройПроект» Н.контр. Морозова  08.20",
+    "object_type": "канализация",
+    "city": null,
+    "year": 2020,
+    "source_file": "Раздел ПД №5 Подраздел №3.pdf",
+    "source_path": "кнс 2\\Раздел ПД №5 Подраздел №3.pdf",
+    "vns_hozpit": {
+      "model": "см. А.076-20-ИОС3.РР. \nЗначения концентрац",
+      "Q_m3h": 601.2,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 148.21,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 17.28,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 2.2,
+        "H_m": 8.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 2.14,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "101-20-ТХ",
+    "client": null,
+    "object_type": "канализация",
+    "city": null,
+    "year": null,
+    "source_file": "Раздел ПД № 6 (101-20-ТХ)-21-45.pdf",
+    "source_path": "кнс 2\\Раздел ПД № 6 (101-20-ТХ)-21-45.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 2150.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 1050.0,
+        "H_m": 60.0,
+        "P_kW": null
+      },
+      {
+        "model": "Wilo",
+        "Q_m3h": 550.9,
+        "H_m": 50.2,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 16.0,
+        "H_m": 12.0,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ИП Брынза А.В",
+    "object_type": "ЛОС/канализация",
+    "city": "Краснодар",
+    "year": 2022,
+    "source_file": "Референц-лист проектирование 24.01.2022.pdf",
+    "source_path": "кнс 2\\Референц-лист проектирование 24.01.2022.pdf",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 3500.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ИП Брынза А.В",
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Ростов",
+    "year": 2015,
+    "source_file": "Референц-лист изыскания.pdf",
+    "source_path": "кнс 2\\Референц-лист изыскания.pdf",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 3500.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "year": null,
+    "source_file": "Спецификация.xlsx",
+    "source_path": "кнс 2\\Спецификация.xlsx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 10.0,
+      "H_m": 80.0,
+      "P_kW": null
+    }
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС",
+    "city": "Сочи",
+    "year": null,
+    "source_file": "Тех. характеристики.xlsx",
+    "source_path": "кнс 2\\Тех. характеристики.xlsx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 10.0,
+      "H_m": 10.0,
+      "P_kW": 0.75
+    },
+    "additional_pumps": [
+      {
+        "model": "LEO",
+        "Q_m3h": 10.0,
+        "H_m": 10.0,
+        "P_kW": 0.75
+      }
+    ],
+    "housing": {
+      "diameter_mm": 22,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "АО кВладимировский карьер тугоплавких глинD",
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Ростов",
+    "year": null,
+    "source_file": "ТЗ (1).pdf",
+    "source_path": "кнс 2\\ТЗ (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 55.0,
+      "H_m": 3.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 2.0,
+        "H_m": 8.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1.0,
+        "H_m": 8.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 1.0,
+        "H_m": 25.0,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "year": null,
+    "source_file": "ТЗ (2).pdf",
+    "source_path": "кнс 2\\ТЗ (2).pdf",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 90.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ООО «СБСВ-КЛЮЧАВТО ВОСТОК»",
+    "object_type": "ливневая КНС/ЛОС",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "ТЗ 2021.docx",
+    "source_path": "кнс 2\\ТЗ 2021.docx",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 162.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 126.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": "ООО «Сергиево-Посадский МПК",
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "year": 2022,
+    "source_file": "ТЗ на обследование ЛОС.docx",
+    "source_path": "кнс 2\\ТЗ на обследование ЛОС.docx",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 7.2,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "year": null,
+    "source_file": "ТЗ ЛОС КНС.PDF",
+    "source_path": "кнс 2\\ТЗ ЛОС КНС.PDF",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 285.0,
+      "H_m": 8.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 141.0,
+        "H_m": 8.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 94.0,
+        "H_m": 8.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 54.0,
+        "H_m": 7.0,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 54.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "09/22-05-ВК",
+    "client": "ООО  « Пантеон »",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Ставрополь",
+    "year": 2022,
+    "source_file": "РД. Внутренние сети водоснабжения и водоотведения.pdf",
+    "source_path": "кнс 2\\РД. Внутренние сети водоснабжения и водоотведения.pdf",
+    "vns_hozpit": {
+      "model": "ANTARUS 2 MST65-125/4/DS1-GPRS",
+      "Q_m3h": 72.0,
+      "H_m": 14.1,
+      "P_kW": 4.0
+    },
+    "additional_pumps": [
+      {
+        "model": "ANTARUS MULTI DRIVE 3 MLH10-40",
+        "Q_m3h": 19.48,
+        "H_m": 26.8,
+        "P_kW": 1.5
+      },
+      {
+        "model": "ANTARUS MULTI DRIVE \n3 MLH10-40\nартикул",
+        "Q_m3h": 19.48,
+        "H_m": 26.8,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 10.0,
+        "H_m": 6.0,
+        "P_kW": 0.6
+      },
+      {
+        "model": null,
+        "Q_m3h": 9.0,
+        "H_m": 1.35,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ЛОС/канализация",
+    "city": "Краснодар",
+    "year": 2021,
+    "source_file": "ТП КОС-ПП 100.pdf",
+    "source_path": "кнс 2\\ТП КОС-ПП 100.pdf",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": null,
+        "model": "BIO -100 UV"
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Краснодар",
+    "year": 2022,
+    "source_file": "№ 1106.1-1106. UO ККЛ П 50 ОСФ-У +ККЛ П 80 Ф-У и КНС.pdf",
+    "source_path": "кнс 2\\№ 1106.1-1106. UO ККЛ П 50 ОСФ-У +ККЛ П 80 Ф-У и КНС.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 180.0,
+      "H_m": 28.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 180.0,
+        "H_m": 10.0,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/канализация",
+    "city": "Симферополь",
+    "year": 2025,
+    "source_file": "03-10-2025_11-18-39.zip",
+    "source_path": "кнс 3\\03-10-2025_11-18-39.zip",
+    "vns_hozpit": {
+      "model": "Grundfos",
+      "Q_m3h": 42.48,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 2000,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "Федеральное Казенное Учреждение",
+    "object_type": "ЛОС",
+    "city": "Пятигорск",
+    "year": null,
+    "source_file": "Том 4. Локальные очистные сооружения. Рабочие чертежи.pdf",
+    "source_path": "кнс 2\\Том 4. Локальные очистные сооружения. Рабочие чертежи.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 360.0,
+      "H_m": null,
+      "P_kW": null
+    }
+  },
+  {
+    "code": "09/22-05-НВК",
+    "client": "ООО  « Пантеон »",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Ставрополь",
+    "year": 2022,
+    "source_file": "РД. Наружные сети водоснабжения и водоотведения.pdf",
+    "source_path": "кнс 2\\РД. Наружные сети водоснабжения и водоотведения.pdf",
+    "vns_hozpit": {
+      "model": "см. прилагаемые документы",
+      "Q_m3h": 72.0,
+      "H_m": 14.1,
+      "P_kW": 4.0
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 54.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "_duplicate_of": "РД. Наружные сети водоснабжения и водоотведения.pdf"
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "КНС/канализация",
+    "city": "Симферополь",
+    "year": 2025,
+    "source_file": "17-08-2025_12-17-55.zip",
+    "source_path": "кнс 3\\17-08-2025_12-17-55.zip",
+    "vns_hozpit": {
+      "model": "Grundfos",
+      "Q_m3h": 42.48,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 2000,
+      "height_mm": null
+    }
+  },
+  {
+    "code": null,
+    "client": "ООО «СЗ «ИНСИТИ-СТРОЙ",
+    "object_type": "ЛОС/канализация",
+    "city": "Краснодар",
+    "year": 2023,
+    "source_file": "Раздел ПД №2 Г2335-ПЗУ (1).pdf",
+    "source_path": "кнс 2\\Раздел ПД №2 Г2335-ПЗУ (1).pdf",
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 999.0,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": null,
+    "client": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "year": 2025,
+    "source_file": "23-04-2025_13-44-55.zip",
+    "source_path": "кнс 3\\23-04-2025_13-44-55.zip",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 1159.0,
+      "H_m": 11.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 25.2,
+        "H_m": null,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 25.2,
+        "H_m": 11.0,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 800,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "РК-ДП-632-21-Р-НВК",
+    "client": "ООО «Ромекс-Кубань»",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Москва",
+    "year": 2018,
+    "source_file": "РК-ДП-632-21-Р-НВК4_26.12.22.pdf",
+    "source_path": "кнс 2\\РК-ДП-632-21-Р-НВК4_26.12.22.pdf",
+    "vns_hozpit": {
+      "model": "см. раздел РК-ДП-632-21-Р-1-3-АПТ",
+      "Q_m3h": 630.72,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": "см. раздел РК-ДП-632-21-Р-1-3-АПТ",
+        "Q_m3h": 216.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ]
+  },
+  {
+    "code": "822005890-ОК-НВК",
+    "client": "Государственное казённое учреждение « Главное управление",
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Краснодар",
+    "year": 2023,
+    "source_file": "_РД 6.4 822005890-ОК-НВК.pdf",
+    "source_path": "кнс 3\\_РД 6.4 822005890-ОК-НВК.pdf",
+    "vns_hozpit": {
+      "model": "CNP  50WQ12-10-0.75",
+      "Q_m3h": 9.0,
+      "H_m": null,
+      "P_kW": null
+    },
+    "housing": {
+      "diameter_mm": 1600,
+      "height_mm": 6370
+    },
+    "_duplicate_of": "822005890-ОК-НВК"
+  },
+  {
+    "code": null,
+    "client": "ГКУ РК \"ГлавУКС РК",
+    "object_type": null,
+    "city": "Симферополь",
+    "year": 2018,
+    "source_file": "3.1. Внутриплощадочное водоотведение.pdf",
+    "source_path": "кнс 3\\3.1. Внутриплощадочное водоотведение.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 10.66,
+      "H_m": null,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 3.6,
+        "H_m": 12.782,
+        "P_kW": null
+      },
+      {
+        "model": null,
+        "Q_m3h": 3.6,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "los": [
+      {
+        "Q_pe": null,
+        "Q_m3day": 14.96,
+        "model": null
+      },
+      {
+        "Q_pe": null,
+        "Q_m3day": 4.96,
+        "model": null
+      }
+    ]
+  },
+  {
+    "code": "221-23-НВК",
+    "client": "ООО \"ВСПК\"СтадияГИПРазработалПроверилН.контрольЛемеховЕгоров Р\"Комплекс зданий по рем",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": null,
+    "year": 2020,
+    "source_file": "ПРОЕКТ.pdf",
+    "source_path": "кнс 3\\ПРОЕКТ.pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 170.0,
+      "H_m": 60.0,
+      "P_kW": 55.0
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 144.0,
+        "H_m": null,
+        "P_kW": 55.0
+      },
+      {
+        "model": null,
+        "Q_m3h": 18.0,
+        "H_m": null,
+        "P_kW": null
+      }
+    ],
+    "housing": {
+      "diameter_mm": 110,
+      "height_mm": null
+    }
+  },
+  {
+    "code": "1578-22-НК",
+    "client": "ООО «ГИС»",
+    "object_type": "КНС/канализация",
+    "city": "Симферополь",
+    "year": 2025,
+    "source_file": "КНС - 1578-22-НК изм.5 (1).pdf",
+    "source_path": "кнс 3\\КНС - 1578-22-НК изм.5 (1).pdf",
+    "vns_hozpit": {
+      "model": null,
+      "Q_m3h": 12.0,
+      "H_m": 15.0,
+      "P_kW": null
+    },
+    "additional_pumps": [
+      {
+        "model": null,
+        "Q_m3h": 8.0,
+        "H_m": 9.8,
+        "P_kW": null
+      }
+    ]
+  }
+]

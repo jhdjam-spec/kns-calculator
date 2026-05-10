@@ -1,0 +1,1034 @@
+[
+  {
+    "name": "01-27-2023-НВК  временная схема подключения через КНС.pdf",
+    "code_guess": "01-27-2023-НВК",
+    "object_type": "КНС",
+    "city": null,
+    "size": 565359,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "2021.ОК-221-НВК_изм_31.10.2024-1.pdf",
+    "code_guess": "2021.ОК-221-НВК",
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": "Краснодар",
+    "size": 17038331,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "22-10-2024_16-06-17.zip",
+    "code_guess": null,
+    "object_type": "пожарная насосная",
+    "city": "Анапа",
+    "size": 900683,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "73281024_4151_1-96010200-NVK.OL-960-E-04.pdf",
+    "code_guess": null,
+    "object_type": null,
+    "city": "Ростов",
+    "size": 703163,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "C__Users_User_Documents_крым_Воинка_воинка_11-11-2018-НЭС-Р.pdf",
+    "code_guess": "11/11-2018-ИОС",
+    "object_type": "пожарная насосная",
+    "city": "Симферополь",
+    "size": 2416907,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Бескудниково8-9_К6_08_Снос 5 м НВК демонтаж.pdf",
+    "code_guess": "9461-23-ИГДИ",
+    "object_type": "ЛОС/канализация/водопровод",
+    "city": "Москва",
+    "size": 1459535,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ВТ840-190.01-НВК (1).pdf",
+    "code_guess": "ВТ840-190.01-НВК",
+    "object_type": "канализация",
+    "city": "Краснодар",
+    "size": 3749671,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ИОС-7.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": "Ростов",
+    "size": 2864866,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС врем школа без СМР.docx.pdf",
+    "code_guess": null,
+    "object_type": "КНС/пожарная насосная/канализация",
+    "city": null,
+    "size": 986671,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС школа лист 4.pdf",
+    "code_guess": "02-19/1-НК",
+    "object_type": "КНС/канализация",
+    "city": "Симферополь",
+    "size": 285899,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Копия 2 Приложение 1 - В.О.Р..XLSX",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 20026,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП №11112019_5 Servo-KNS (1).pdf",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "size": 198875,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП №11112019_5 Servo-KNS.pdf",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "size": 198661,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Наружные сети.zip",
+    "code_guess": null,
+    "object_type": "ливневая КНС/канализация",
+    "city": "Краснодар",
+    "size": 20905356,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "План посадки КНС с двумя напорными нитками (1).pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 810111,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "План посадки КНС с двумя напорными нитками.pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 810111,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Приложение №1_ ТЗ.docx",
+    "code_guess": "11/25-НВК",
+    "object_type": "ЛОС/канализация",
+    "city": "Луганск",
+    "size": 3795836,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Профиль КНС (1).pdf",
+    "code_guess": "11348/23-НВК",
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 31228,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Раздел РД НВК (2019-165-НВК).PDF",
+    "code_guess": "2019-165-НВК",
+    "object_type": "канализация",
+    "city": "Краснодар",
+    "size": 4748818,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "СПИС_Бескудниково8-9_K6_Строительство_НВК демонтаж (1).pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": "Москва",
+    "size": 1710900,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "СПИС_Бескудниково8-9_K6_Строительство_НВК демонтаж.pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": "Москва",
+    "size": 1710900,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Счет на оплату № 69 от 12 марта 2026 г (2).pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": "Краснодар",
+    "size": 909298,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ 170  Устройство ливневой канализации под навесом.docx",
+    "code_guess": null,
+    "object_type": "ливневая КНС/пожарная насосная/канализация",
+    "city": "Ростов",
+    "size": 38802,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "+12ТЗ+Очистные(М)+(2)+(1) (2).docx",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 102634,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "01-12-2020_15-21-35.zip",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 18123144,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "02-01-01Водоотведение - Дефектная ведомость по смете1.xlsx",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 42943,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "03-06-2021_08-57-37.zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Ставрополь",
+    "size": 155000,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "04-09-2024_07-47-11.zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 15862958,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "09-01-01 ПНР - Дефектная ведомость по смете1 (1).xlsx",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 11629,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "09-01-01 ПНР - Дефектная ведомость по смете1.xlsx",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 11629,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "11-3_20-НК (1).pdf",
+    "code_guess": "11-3_20-НК",
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 1989572,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "12-05-2022_20-51-13 (1).zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "size": 226813,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "12-05-2022_20-51-13.zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Краснодар",
+    "size": 226813,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "15-121-1-ИЛО4  (ТС).pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/канализация",
+    "city": "Москва",
+    "size": 680964,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "15-121-ИЛО 1 КНС.pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 2207627,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "22-08-2024_15-18-24.zip",
+    "code_guess": "262/06-2024-НК",
+    "object_type": "КНС/канализация",
+    "city": "Ростов",
+    "size": 5870676,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "221025 ТЗ  Дренаж с НВК без подпорной стены - финал.docx",
+    "code_guess": null,
+    "object_type": "канализация/водопровод",
+    "city": "Симферополь",
+    "size": 62022,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "23-11-2021_11-28-07.zip",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 653530,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "27-05-2024_15-36-08.zip",
+    "code_guess": null,
+    "object_type": null,
+    "city": "Краснодар",
+    "size": 7215798,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "28-10-2024_16-21-00.zip",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "size": 2246451,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "29-36-RD-700_2-ONHP-WS-KN15-DSH-0001 (опросный лист).pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 1321800,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "29-36-RD-700_2-ONHP-WS-KN15-SOI-0001 (спецификация).pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 466729,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "3.ПР-118-10-19-НК.корр1.pdf",
+    "code_guess": "3.ПР-118-10-19-НК",
+    "object_type": "канализация",
+    "city": "Краснодар",
+    "size": 2185840,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "50WQ20-15-2.2(I)  CNP.pdf",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 2482027,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "65WQ50-55-15(I) CNP.pdf",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 2502069,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "75-02-21-РД-3-НК1 Изм.1 от 25.01.22.pdf",
+    "code_guess": "75-02-21-РД",
+    "object_type": "КНС/канализация",
+    "city": "Москва",
+    "size": 6930896,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "75-02-21-РД-3-НК2 Изм.1 от 25.01.22.pdf",
+    "code_guess": "75-02-21-РД",
+    "object_type": "ливневая КНС/канализация",
+    "city": "Москва",
+    "size": 7590750,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "75-02-21-РД-3-НК3 Изм.1 от 25.01.22.pdf",
+    "code_guess": "75-02-21-РД",
+    "object_type": "ливневая КНС/канализация",
+    "city": "Москва",
+    "size": 6848161,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "76-ЕП-ПИР-01-2021-ИЛО .ЭС ОБЩ (4) (1).pdf",
+    "code_guess": "76-ЕП-ПИР/01-2021-ИЛО.ЭС",
+    "object_type": null,
+    "city": "Керчь",
+    "size": 19738147,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "76-ЕП-ПИР-01-2021-ИЛО .ЭС ОБЩ (4).pdf",
+    "code_guess": "76-ЕП-ПИР/01-2021-ИЛО.ЭС",
+    "object_type": null,
+    "city": "Керчь",
+    "size": 19738147,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "opros_list_KNS.docx",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": null,
+    "size": 78409,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "SchUN_07.04.23.pdf",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Москва",
+    "size": 5842521,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "А.098-20-НВК.pdf",
+    "code_guess": "А.098-20-НВК",
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Краснодар",
+    "size": 5841320,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ВНД 05-12 КОТР Г2335 (6).docx",
+    "code_guess": null,
+    "object_type": "ЛОС/канализация",
+    "city": "Краснодар",
+    "size": 54803,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Е350-0312-8000499534-РД-01-03.04.035-НК_0_0_RU_IFC.pdf",
+    "code_guess": "Е350-0312-8000499534-РД",
+    "object_type": "пожарная насосная/канализация",
+    "city": null,
+    "size": 2875120,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Запрос закупка КНС.DOCX",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": "Москва",
+    "size": 59634,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Запрос на оборудование НВК.docx",
+    "code_guess": null,
+    "object_type": "ЛОС/канализация",
+    "city": "Алматы",
+    "size": 30471,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Заявка.docx",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Севастополь",
+    "size": 17981,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ИОС2.2 (1).pdf",
+    "code_guess": "23-27-1-ИОС",
+    "object_type": "пожарная насосная/водопровод",
+    "city": "Краснодар",
+    "size": 23649077,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ИОС2.2.pdf",
+    "code_guess": "23-27-1-ИОС",
+    "object_type": "пожарная насосная/водопровод",
+    "city": "Краснодар",
+    "size": 23649077,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС 1400х4600.pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 205168,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС (1).pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 542314,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС.docx",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 26974,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС.xlsx",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": null,
+    "size": 11799,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Корзина с лестницей.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 97015,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Корпус Ком-т КНС.docx",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 14663,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП_КНС (23.05.2024).pdf",
+    "code_guess": null,
+    "object_type": "КНС/пожарная насосная",
+    "city": "Сочи",
+    "size": 1699882,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП  ООО Блорэй Краснодар КОС.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": "Краснодар",
+    "size": 2349289,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "кнс.pdf",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 626524,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ОЛ - НВК -7 ЛОС 3.pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "size": 3230985,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "НК.pdf",
+    "code_guess": null,
+    "object_type": "пожарная насосная/канализация/водопровод",
+    "city": "Краснодар",
+    "size": 1552000,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Опросник_на_КОС_ВЗиС_3_на_2700 офис_чел_БГПЗ (1).pdf",
+    "code_guess": null,
+    "object_type": "ВЗиС/ЛОС",
+    "city": null,
+    "size": 342844,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Опросный лист для проектирования.pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "size": 203133,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "опросный лист для установки лос муп ктту - ивесс.docx",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "size": 155729,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Опросник_на_КОС_ВЗиС_4_на_3025_чел_БГПЗ (1).pdf",
+    "code_guess": null,
+    "object_type": "ВЗиС/ЛОС",
+    "city": null,
+    "size": 341931,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "опросный лист КНС.docx",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 60771,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Опросный лист ЛОС.PDF",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 393952,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Опросный лист СОВа  для заполнения.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": null,
+    "size": 224914,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ОПРОСНЫЙ ЛИСТ.docx",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 42061,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "первомайская 103 ОБЩИЙ водоотведения.pdf",
+    "code_guess": null,
+    "object_type": "канализация/водопровод",
+    "city": "Джанкой",
+    "size": 8804294,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "перечень работ кнс.docx",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Сочи",
+    "size": 451525,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Перечень работ. ВК.xlsx",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": "Минеральные Воды",
+    "size": 38840,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КЖ2.pdf",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 3300379,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Проект Водоотв-е Каток-12.pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 488874,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Проект Водоотв-е Каток-9.pdf",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": null,
+    "size": 501601,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "опросный лист КНС.PDF",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": null,
+    "size": 785782,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "РД ЛОСы Онкология 02-17ПИР-44-НВК изм.3.pdf",
+    "code_guess": "02-17ПИР-44-НВК",
+    "object_type": "ЛОС/канализация/водопровод",
+    "city": "Севастополь",
+    "size": 22320009,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "РД-Конструктивные решения ниже отм.0,000.pdf",
+    "code_guess": null,
+    "object_type": "пожарная насосная",
+    "city": "Ставрополь",
+    "size": 2398742,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Техническое задание - ВК.docx",
+    "code_guess": null,
+    "object_type": null,
+    "city": "Москва",
+    "size": 41429,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Техническое задание на прочистку систем канализации_2.pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": "Краснодар",
+    "size": 311828,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ КНС ППТ2-5.docx",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Москва",
+    "size": 34605,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ ЛОС ХБК 1  ППТ8-1 (1).docx",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Москва",
+    "size": 45851,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ ЛОС ХБК 1  ППТ8-1.docx",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Москва",
+    "size": 45851,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ модернизация КНС.docx",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 17328,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ на прокладку трубопровода до Чибия-2.docx",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": "Краснодар",
+    "size": 42719,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ СМР ЛОС Постниково.docx",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": "Москва",
+    "size": 29509,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ СМР КНС Постниково.docx",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": "Москва",
+    "size": 40713,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ_Невинномысск_2оч_Устройство_водоснабжения_и_канализации_22_12_2023_Изм_5 (1).xlsx",
+    "code_guess": null,
+    "object_type": "канализация",
+    "city": "Ставрополь",
+    "size": 17837,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Форма КП_очистка КНС.xlsx",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/канализация",
+    "city": "Краснодар",
+    "size": 13406,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Цены ПЕГАС ИНЖИНИРИНГ.xlsx",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 7354266,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "07-11-2025_15-52-17.zip",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 3219748,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "10-09-2025_09-07-58.zip",
+    "code_guess": null,
+    "object_type": "пожарная насосная",
+    "city": "Москва",
+    "size": 2340656,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "17-07-2025_11-33-12.zip",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 810435,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "18-12-2025_15-21-24.zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": "Ставрополь",
+    "size": 5241742,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "23-12-2025_13-31-13.zip",
+    "code_guess": null,
+    "object_type": "КНС/пожарная насосная/канализация",
+    "city": null,
+    "size": 65268,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ_Невинномысск_2оч_Устройство_водоснабжения_и_канализации_22_12_2023_Изм_5.pdf",
+    "code_guess": null,
+    "object_type": "пожарная насосная/канализация",
+    "city": "Ставрополь",
+    "size": 13172456,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "03-ЗЛП-МСК-ЛОС-Р-ЭС.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС/пожарная насосная",
+    "city": "Москва",
+    "size": 4424993,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "24-09-2025_08-48-04.zip",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": null,
+    "size": 2145528,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "NOL100276296.PDF",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": null,
+    "size": 477735,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "17-07-2025_10-15-20.zip",
+    "code_guess": null,
+    "object_type": null,
+    "city": null,
+    "size": 5810053,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "2021.ОК-221-НВК_изм_31.10.2024-1.pdf",
+    "code_guess": "2021.ОК-221-НВК",
+    "object_type": "КНС/ЛОС/канализация",
+    "city": "Краснодар",
+    "size": 17038331,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Колодец композитный D2000 паспорт.pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/ЛОС",
+    "city": null,
+    "size": 328331,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП 2024 септик КИТ от 14.11.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 1347107,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП по МИР-К Завод ЛОС-КНС.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "size": 4128436,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КНС ТЗ.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "size": 402345,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "КП_28052025КНС.pdf",
+    "code_guess": null,
+    "object_type": "КНС/пожарная насосная",
+    "city": "Сочи",
+    "size": 2109875,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Перечень работ по КНС.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС",
+    "city": null,
+    "size": 114923,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Презентация ООО БиоПроект.pdf",
+    "code_guess": null,
+    "object_type": "ливневая КНС/КНС/ЛОС",
+    "city": null,
+    "size": 3854675,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Портфолио водоканалы и КНС 2025 ПДФ.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "size": 2389326,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Раздел_ПД_№4_Подраздел_ПД_№2_ИЛО2.2.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": "Москва",
+    "size": 16699493,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Паспорт на КНС.pdf",
+    "code_guess": null,
+    "object_type": "КНС/ЛОС/канализация",
+    "city": null,
+    "size": 663076,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Раздел_ПД_№4_Подраздел_ПД_№3_ИЛО3.2.pdf",
+    "code_guess": "2022-53-ИГДИ",
+    "object_type": "ЛОС",
+    "city": "Москва",
+    "size": 17998748,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "СС Ливнесборы (32).xlsx",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 48722,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Приложение 2. План размещения емкостей транспортной безопасности.pdf",
+    "code_guess": null,
+    "object_type": "КНС",
+    "city": "Краснодар",
+    "size": 700386,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "ТЗ КНС 2026.docx",
+    "code_guess": null,
+    "object_type": "КНС/канализация/водопровод",
+    "city": null,
+    "size": 146317,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Форма Коммерческого предложения.xlsx",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 109013,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "28-04-2025_11-20-13.zip",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 7474567,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Шкаф_управления_автоматикой_КНС_Runline.pdf",
+    "code_guess": null,
+    "object_type": "КНС/канализация",
+    "city": null,
+    "size": 2450240,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  },
+  {
+    "name": "Технический паспорт СБО КИТ 2024.pdf",
+    "code_guess": null,
+    "object_type": "ЛОС",
+    "city": null,
+    "size": 4125535,
+    "reason": "no Q/H/LOS/fire_tank parsed"
+  }
+]
