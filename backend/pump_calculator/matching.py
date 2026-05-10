@@ -469,6 +469,139 @@ def pick_top_per_segment(
 
 # ----------------------- Шаг 7: триггеры hand-off -----------------------
 
+def build_suggestions(
+    L0: L0Input, L1: L1Input | None, computed: ComputedHydraulics, triggers: list[str]
+) -> list:
+    """«Возможно вы имели в виду...» — мягкие предложения исправить вход.
+
+    Анализирует подозрительные значения и предлагает конкретные правки.
+    Frontend может рендерить модалку "Применить?" с этими предложениями.
+
+    Возвращает list[InputSuggestion]. Никогда не модифицирует L0/L1 — только
+    предлагает.
+    """
+    from pump_calculator.schemas import InputSuggestion
+    suggestions = []
+
+    # 1. Q < 0.1 м³/ч — возможно опечатка. Часто 0.05 → 5 (л/мин→м³/ч?)
+    if L0.Q_m3h < 0.1:
+        suggestions.append(InputSuggestion(
+            field="Q_m3h",
+            current_value=f"{L0.Q_m3h}",
+            suggested_value=f"{L0.Q_m3h * 60:.1f}",  # л/мин → м³/ч если перепутали
+            reason=(
+                f"Q={L0.Q_m3h} м³/ч ≈ {L0.Q_m3h * 1000:.0f} л/час — это очень мало. "
+                f"Если вы имели в виду л/мин, то в м³/ч это {L0.Q_m3h * 60:.1f}. "
+                f"Если л/с — то {L0.Q_m3h * 3.6:.1f}."
+            ),
+            severity="critical",
+        ))
+
+    # 2. dH отрицательный — возможно знак неверный
+    if L0.dH_m is not None and L0.dH_m < 0:
+        suggestions.append(InputSuggestion(
+            field="dH_m",
+            current_value=f"{L0.dH_m}",
+            suggested_value=f"{abs(L0.dH_m)}",
+            reason=(
+                f"dH={L0.dH_m} м (отрицательный) — точка сброса ниже точки забора. "
+                f"Возможно, вы имели в виду {abs(L0.dH_m)} м (положительный подъём)? "
+                f"Отрицательный dH = самотёк, насос обычно не нужен."
+            ),
+            severity="critical",
+        ))
+
+    # 3. L < 5 м для серьёзного Q — может быть опечатка (10 вместо 100, и т.д.)
+    if L0.L_m is not None and L0.L_m < 5 and L0.Q_m3h > 50:
+        suggestions.append(InputSuggestion(
+            field="L_m",
+            current_value=f"{L0.L_m}",
+            suggested_value=f"{L0.L_m * 10}",
+            reason=(
+                f"L={L0.L_m} м для Q={L0.Q_m3h} м³/ч — почти отсутствие трассы. "
+                f"Возможно вы имели в виду {L0.L_m * 10} м? "
+                f"При Q ≥ 50 м³/ч обычно нужна напорная трасса от 50 м."
+            ),
+            severity="warning",
+        ))
+
+    # 4. Скорость v < 0.5 м/с (намного ниже минимума) — pipe_D_mm слишком велик
+    if L1 and L1.pipe_D_mm and computed.v_ms < 0.5:
+        # Подберём D для v=1.2
+        import math
+        Q_m3s = L0.Q_m3h / 3600
+        # v = Q / (π D² / 4) → D = sqrt(4 Q / (π v))
+        D_optimal = math.sqrt(4 * Q_m3s / (math.pi * 1.2)) * 1000
+        # Округлим до стандартного DN
+        for std in [50, 65, 80, 100, 125, 150, 200, 250, 300]:
+            if std >= D_optimal:
+                D_optimal = std
+                break
+        suggestions.append(InputSuggestion(
+            field="L1.pipe_D_mm",
+            current_value=f"{L1.pipe_D_mm}",
+            suggested_value=f"{D_optimal}",
+            reason=(
+                f"При D={L1.pipe_D_mm} мм скорость v={computed.v_ms:.2f} м/с (заиливание). "
+                f"Для Q={L0.Q_m3h} м³/ч оптимальный D ≈ {D_optimal} мм (v ~1.2 м/с)."
+            ),
+            severity="warning",
+        ))
+
+    # 5. Скорость v > 3 м/с — pipe_D_mm слишком мал
+    if L1 and L1.pipe_D_mm and computed.v_ms > 3.0:
+        import math
+        Q_m3s = L0.Q_m3h / 3600
+        D_optimal = math.sqrt(4 * Q_m3s / (math.pi * 1.2)) * 1000
+        for std in [50, 65, 80, 100, 125, 150, 200, 250, 300]:
+            if std >= D_optimal:
+                D_optimal = std
+                break
+        suggestions.append(InputSuggestion(
+            field="L1.pipe_D_mm",
+            current_value=f"{L1.pipe_D_mm}",
+            suggested_value=f"{D_optimal}",
+            reason=(
+                f"При D={L1.pipe_D_mm} мм скорость v={computed.v_ms:.2f} м/с (эрозия). "
+                f"Для Q={L0.Q_m3h} м³/ч оптимальный D ≈ {D_optimal} мм (v ~1.2 м/с)."
+            ),
+            severity="warning",
+        ))
+
+    # 6. PE100 + горячая жидкость → предложить сталь
+    pipe_mat = L1.pipe_material if L1 else None
+    temp_c = L1.liquid_temp_c if L1 else None
+    if pipe_mat in ("pe100_sdr17", "pp", "pvc") and temp_c is not None and temp_c > 60:
+        suggestions.append(InputSuggestion(
+            field="L1.pipe_material",
+            current_value=f"{pipe_mat}",
+            suggested_value="steel_seamless_new",
+            reason=(
+                f"{pipe_mat} не рассчитан на T={temp_c}°C (max 60°C). "
+                f"Сталь бесшовная допускает до 200°C при PN ≤ 16 бар."
+            ),
+            severity="critical",
+        ))
+
+    # 7. inflow > Q насоса в 1.5+ раза — предложить увеличить Q или насосы
+    if L1 and L1.inflow_per_hour_m3 and L1.inflow_per_hour_m3 > L0.Q_m3h * 1.5:
+        # Предлагаем Q = inflow * 1.2 (с запасом)
+        suggested_Q = round(L1.inflow_per_hour_m3 * 1.2, 1)
+        suggestions.append(InputSuggestion(
+            field="Q_m3h",
+            current_value=f"{L0.Q_m3h}",
+            suggested_value=f"{suggested_Q}",
+            reason=(
+                f"Приток {L1.inflow_per_hour_m3} м³/ч превышает Q насоса "
+                f"({L0.Q_m3h} м³/ч). Чтобы система справилась, "
+                f"увеличьте Q до {suggested_Q} м³/ч (+20% запас)."
+            ),
+            severity="critical",
+        ))
+
+    return suggestions
+
+
 def evaluate_handoff_triggers(
     L0: L0Input, L1: L1Input | None, computed: ComputedHydraulics, candidates_count: int
 ) -> list[str]:
@@ -493,6 +626,38 @@ def evaluate_handoff_triggers(
     # на дно), но крайне необычен для КНС. Требует ручной верификации.
     if L0.dH_m is not None and L0.dH_m < 0:
         triggers.append("auto_dh_negative")
+
+    # TRIG-1d: скорость в трубе вне допустимого диапазона СП 32 §5.4
+    # (v_min=0.7 м/с — заиливание; v_max=2.5 м/с — эрозия).
+    # Срабатывает когда pipe_D_mm задан вручную и не попадает в диапазон.
+    if L1 and L1.pipe_D_mm and computed.v_ms < 0.7:
+        triggers.append("auto_velocity_low")
+    if L1 and L1.pipe_D_mm and computed.v_ms > 2.5:
+        triggers.append("auto_velocity_high")
+
+    # TRIG-1e: высота над уровнем моря > 1500 м или < -200 м
+    # P_atm падает с высотой (Эльбрус 4500м → 57 кПа vs 101.3 кПа на уровне моря) —
+    # NPSHa резко падает, может потребоваться насос с низким NPSHr.
+    if L1 and L1.altitude_m is not None and (L1.altitude_m > 1500 or L1.altitude_m < -200):
+        triggers.append("auto_altitude_extreme")
+
+    # TRIG-1f: УГВ выше поверхности — насосная будет работать в затопленной
+    # площадке, нужна особая защита (IP68, anti-buoyancy расчёт корпуса).
+    if L1 and L1.groundwater_level_m is not None and L1.groundwater_level_m > 0:
+        triggers.append("auto_groundwater_above_surface")
+
+    # TRIG-1g: приток > Q насоса в 1.5 раза — система не справится,
+    # нужно либо увеличить Q, либо несколько насосов в параллель.
+    if L1 and L1.inflow_per_hour_m3 and L1.inflow_per_hour_m3 > L0.Q_m3h * 1.5:
+        triggers.append("auto_inflow_exceeds_pump")
+
+    # TRIG-1h: PE100/PP/PVC + горячая жидкость > 60°C — деградация трубы.
+    # Паспорт ПЭ100: max T = 60°C для длительной эксплуатации (PE100 RC до 80°C
+    # при пониженном давлении). Для горячих стоков нужна сталь / ВЧШГ.
+    pipe_mat = L1.pipe_material if L1 else None
+    temp_c = L1.liquid_temp_c if L1 else None
+    if pipe_mat in ("pe100_sdr17", "pp", "pvc") and temp_c is not None and temp_c > 60:
+        triggers.append("auto_pipe_temp_incompatible")
 
     # TRIG-2: промстоки
     if L0.wastewater_type == "industrial":
@@ -546,6 +711,35 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
 
     # Шаги 1-2
     computed = compute_hydraulics(L0_filled, L1)
+
+    # Short-circuit: H_full_m <= 0 — насос физически не нужен (самотёк).
+    # Без этой проверки фильтр envelope пропускает все насосы (H_max > 0
+    # всегда удовлетворяет H_full_m <= H_max * 1.05), и calculator
+    # «успешно» подбирает Fancy/CNP для отрицательного напора. См. PRR
+    # subagent edge-experiments 2026-05-10 (negative-dH issue).
+    if computed.H_full_m <= 0:
+        sc_triggers = ["auto_no_head_required"]
+        if L0.dH_m is not None and L0.dH_m < 0:
+            sc_triggers.append("auto_dh_negative")
+        sc_suggestions = build_suggestions(L0, L1, computed, sc_triggers)
+        return SelectionResult(
+            input=SelectionRequest(L0=L0_filled, L1=L1),
+            computed=computed,
+            results=SelectionResultsBySegment(),
+            candidates_total=0,
+            warnings=[
+                f"⚠ Итоговый напор H_full={computed.H_full_m:.2f} м ≤ 0 — "
+                f"насос физически не нужен, возможен самотёк. Перепроверьте "
+                f"знак dH (сейчас {L0.dH_m if L0.dH_m is not None else 'default'}) "
+                f"и схему трассы.",
+            ],
+            engineer_handoff_required=True,
+            trigger_reasons=sc_triggers,
+            suggestions=sc_suggestions,
+            assumptions=assumptions,
+            completeness_pct=calculate_completeness_pct(L0, L1),
+            summary_text="Расчёт остановлен: при текущих параметрах насос не требуется.",
+        )
 
     # Шаг 3
     pumps_all = catalog.load_pumps()
@@ -602,6 +796,48 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             f"⚠ Q={L0.Q_m3h} м³/ч превышает 500 м³/ч — рекомендуется "
             f"индивидуальное проектирование магистральной КНС инженером."
         ))
+    if "auto_velocity_low" in triggers:
+        warnings.insert(0, (
+            f"⚠ Скорость в трубе v={computed.v_ms:.2f} м/с < 0.7 м/с (СП 32 §5.4). "
+            f"Риск заиливания осадком. Рассмотрите меньший pipe_D_mm "
+            f"(сейчас {L1.pipe_D_mm} мм) или увеличьте Q."
+        ))
+    if "auto_velocity_high" in triggers:
+        warnings.insert(0, (
+            f"⚠ Скорость в трубе v={computed.v_ms:.2f} м/с > 2.5 м/с (СП 32 §5.4). "
+            f"Эрозия трубы и арматуры. Увеличьте pipe_D_mm "
+            f"(сейчас {L1.pipe_D_mm} мм) или уменьшите Q."
+        ))
+    if "auto_altitude_extreme" in triggers:
+        alt = L1.altitude_m if L1 else None
+        warnings.insert(0, (
+            f"⚠ Высота над уровнем моря {alt} м — атмосферное давление "
+            f"существенно отличается от стандартного. NPSHa может оказаться "
+            f"ниже NPSHr выбранного насоса. Требуется проверка кавитации."
+        ))
+    if "auto_groundwater_above_surface" in triggers:
+        gw = L1.groundwater_level_m if L1 else None
+        warnings.insert(0, (
+            f"⚠ УГВ {gw} м (выше поверхности земли) — площадка затоплена. "
+            f"Требуется: IP68 для всего электрооборудования, расчёт "
+            f"anti-buoyancy для корпуса КНС."
+        ))
+    if "auto_inflow_exceeds_pump" in triggers:
+        inflow = L1.inflow_per_hour_m3 if L1 else None
+        warnings.insert(0, (
+            f"⚠ Приток {inflow} м³/ч превышает производительность насоса "
+            f"({L0.Q_m3h} м³/ч) в 1.5+ раза. Система не успеет откачать — "
+            f"уровень в приёмной камере будет расти. Увеличьте Q или "
+            f"количество насосов в параллель."
+        ))
+    if "auto_pipe_temp_incompatible" in triggers:
+        pipe_mat = L1.pipe_material if L1 else None
+        temp_c = L1.liquid_temp_c if L1 else None
+        warnings.insert(0, (
+            f"⚠ Материал трубы {pipe_mat} не допустим при температуре жидкости "
+            f"{temp_c}°C (max 60°C). Грозит деградацией трубы за месяцы. "
+            f"Замените pipe_material на 'steel_seamless_new' или 'cast_iron_new'."
+        ))
     summary_text = build_summary_text(
         L0=L0_filled,
         L1=L1,
@@ -615,6 +851,9 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     # индустриальных, кроме малых Q<5 + DN<=65 в готовом приямке).
     corpus_size = _compute_corpus_size(L0_filled, L1, results, computed)
 
+    # Phase «Did you mean»: мягкие предложения исправить странные значения
+    suggestions = build_suggestions(L0, L1, computed, triggers)
+
     return SelectionResult(
         input=SelectionRequest(L0=L0_filled, L1=L1),
         computed=computed,
@@ -623,6 +862,7 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
         warnings=warnings,
         engineer_handoff_required=handoff_required,
         trigger_reasons=triggers,
+        suggestions=suggestions,
         assumptions=assumptions,
         completeness_pct=completeness_pct,
         summary_text=summary_text,

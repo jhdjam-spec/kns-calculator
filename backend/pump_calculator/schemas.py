@@ -72,12 +72,12 @@ class L1Input(BaseModel):
     # Кол-во насосов — переопределяет дефолт redundancy
     pumps_total_override: int | None = Field(
         None,
-        ge=1,
+        ge=2,  # СП 32.13330 п.6.2: минимум 1 раб + 1 рез
         le=10,
         description=(
             "Точное количество насосов в станции (рабочие + резерв). "
             "Если задано — переопределяет redundancy. По СП 32.13330 п.6.2 "
-            "минимум 1 раб + 1 рез (=2)"
+            "минимум 1 раб + 1 рез (=2). Pydantic отбивает значения <2."
         ),
     )
 
@@ -257,6 +257,21 @@ class SelectionResultsBySegment(BaseModel):
     premium: PumpResult | None = None
 
 
+class InputSuggestion(BaseModel):
+    """«Возможно вы имели в виду» — мягкое предложение исправить параметр.
+
+    Используется когда калькулятор обнаруживает странное значение и хочет
+    предложить пользователю конкретную правку. Frontend показывает в UI
+    модалку «Применить?» с двумя CTA — [Применить] / [Оставить как есть].
+    """
+
+    field: str = Field(..., description="Имя поля: Q_m3h, dH_m, L_m, pipe_material, и др.")
+    current_value: str = Field(..., description="Текущее значение (как ввёл пользователь)")
+    suggested_value: str = Field(..., description="Предлагаемое значение")
+    reason: str = Field(..., description="Почему предлагается (1-2 предложения)")
+    severity: Literal["info", "warning", "critical"] = "warning"
+
+
 class SelectionResult(BaseModel):
     """Финальный ответ калькулятора."""
 
@@ -268,6 +283,14 @@ class SelectionResult(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     engineer_handoff_required: bool = False
     trigger_reasons: list[str] = Field(default_factory=list)
+    suggestions: list[InputSuggestion] = Field(
+        default_factory=list,
+        description=(
+            "«Возможно вы имели в виду...» — конкретные предложения исправить "
+            "входные параметры. Frontend может показать модалку 'Применить?' "
+            "до повторного запроса. См. backend/pump_calculator/matching.py:build_suggestions."
+        ),
+    )
     assumptions: list[str] = Field(
         default_factory=list,
         description="Дефолты, подставленные при отсутствии данных (например, 'dH_m не указан, использован 5.0 м')",

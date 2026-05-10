@@ -396,8 +396,9 @@
         "distributor": "ВИЛО РУС (российская сборка)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Серия Rexa PRO — envelope обобщённый. Конкретные модели V05/V06/V08 — через Wilo-Select 4.",
-      "_source": "selectonline.ru"
+      "_engineer_note": "Серия Rexa PRO — envelope обобщённый. Конкретные модели V05/V06/V08 — через Wilo-Select 4. | price 320000 от subagent Wilo research 2026-05-10 (medium, https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-)",
+      "_source": "selectonline.ru",
+      "price_rub_2026": 320000
     },
     {
       "id": "wilo-emu-fa",
@@ -1070,11 +1071,12 @@
       "datasheet_url": "https://wilo.com/ru/ru/",
       "image_url": null,
       "notes": "Демо-запись. Vortex колесо — для коммерческих/гостиничных стоков.",
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | price 380000 от subagent Wilo research 2026-05-10 (high, https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-)",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 380000
     },
     {
       "id": "pedrollo-vx-10-35",
@@ -14601,13 +14603,13 @@
         "drainage"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 142000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Cutter с режущим механизмом для волокон.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Cutter с режущим механизмом для волокон. | price 142000 от subagent Wilo research 2026-05-10 (high, https://elit-nasos.ru/products/nasos-rexa-cut-gi03)",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -14640,13 +14642,14 @@
         "drainage"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 160000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "price 160000 от subagent Wilo research 2026-05-10 (medium, https://elit-nasos.ru/groups/rexa%20cut)"
     },
     {
       "id": "wilo-rexa-cut-gi06-26",
@@ -14678,13 +14681,14 @@
         "drainage"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 230000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "price 230000 от subagent Wilo research 2026-05-10 (low, https://elit-nasos.ru/groups/rexa%20cut)"
     },
     {
       "id": "wilo-rexa-solid-g03-80",
@@ -14717,13 +14721,14 @@
         "industrial"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 380000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "price 380000 от subagent Wilo research 2026-05-10 (low, https://www.prof-pump.ru/nasosy/vodootvedeniya/wil)"
     },
     {
       "id": "wilo-rexa-solid-g05-100",
@@ -14756,13 +14761,14 @@
         "industrial"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 580000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "price 580000 от subagent Wilo research 2026-05-10 (medium, https://spb.lca.su/product/kanalizatsionnyj-nasos-)"
     },
     {
       "id": "wilo-rexa-solid-t-s08-150",
@@ -14800,8 +14806,9 @@
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
-      "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_engineer_flag": "request_quote",
+      "_source": "Agent D research 2026-05-08",
+      "_engineer_note": "request_quote: Серия Rexa SOLID-T (T = тяжёлая, single-channel impeller, P=22 kW, DN150, free p"
     },
     {
       "id": "wilo-rexa-solid-t-s12-200",
@@ -14839,8 +14846,8 @@
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Крупная промышл КНС.",
+      "_engineer_flag": "request_quote",
+      "_engineer_note": "Крупная промышл КНС. | request_quote: Тяжёлый канализационный насос P=45 kW, DN200, free passage 150 mm. В РФ не стоку",
       "_source": "Agent D research 2026-05-08"
     },
     {

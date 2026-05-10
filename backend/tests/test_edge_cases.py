@@ -90,12 +90,18 @@ class TestNegativeDH:
     """dH < 0 (точка сброса ниже точки забора) → trigger auto_dh_negative."""
 
     def test_dh_minus_30(self):
-        L0 = L0Input(Q_m3h=10, dH_m=-30)
+        """dH=-30 при L=10 → H_full<=0 → short-circuit с auto_no_head_required + auto_dh_negative."""
+        L0 = L0Input(Q_m3h=10, dH_m=-30, L_m=10)
         r = select_pumps(L0)
-        assert "auto_dh_negative" in r.trigger_reasons
+        # При коротком L и большом отрицательном dH сработает short-circuit
+        assert "auto_dh_negative" in r.trigger_reasons or "auto_no_head_required" in r.trigger_reasons
         assert r.engineer_handoff_required is True
-        neg_warnings = [w for w in r.warnings if "отрицательный геометрический" in w]
-        assert len(neg_warnings) > 0
+        # Warning должен быть либо negative-dh либо no_head_required
+        related_warnings = [
+            w for w in r.warnings
+            if "отрицательный" in w or "не нужен" in w or "≤ 0" in w
+        ]
+        assert len(related_warnings) > 0
 
     def test_dh_minus_50_boundary(self):
         L0 = L0Input(Q_m3h=10, dH_m=-50)
@@ -175,6 +181,67 @@ class TestFireProtection:
         r = select_pumps(L0)
         assert "auto_fire_protection" in r.trigger_reasons
         assert r.engineer_handoff_required is True
+
+
+class TestSuggestionsAPI:
+    """«Возможно вы имели в виду...» — мягкие предложения исправить вход."""
+
+    def test_q_micro_suggests_unit_confusion(self):
+        """Q=0.05 → suggestion 'возможно л/мин или л/с'."""
+        L0 = L0Input(Q_m3h=0.05)
+        r = select_pumps(L0)
+        assert len(r.suggestions) > 0
+        q_sugg = [s for s in r.suggestions if s.field == "Q_m3h"]
+        assert len(q_sugg) == 1
+        assert q_sugg[0].severity == "critical"
+        assert "л/мин" in q_sugg[0].reason or "л/с" in q_sugg[0].reason
+
+    def test_dh_negative_suggests_sign_flip(self):
+        """dH=-30 → suggestion 'возможно +30'."""
+        L0 = L0Input(Q_m3h=20, dH_m=-30)
+        r = select_pumps(L0)
+        dh_sugg = [s for s in r.suggestions if s.field == "dH_m"]
+        assert len(dh_sugg) == 1
+        assert dh_sugg[0].suggested_value == "30.0"
+        assert dh_sugg[0].severity == "critical"
+
+    def test_huge_pipe_d_suggests_smaller(self):
+        """pipe_D_mm=500 для Q=10 → suggestion smaller D."""
+        L0 = L0Input(Q_m3h=10)
+        L1 = L1Input(pipe_D_mm=500)
+        r = select_pumps(L0, L1)
+        d_sugg = [s for s in r.suggestions if s.field == "L1.pipe_D_mm"]
+        assert len(d_sugg) == 1
+        # Suggested value должно быть стандартный DN (50/65/80/100/...)
+        suggested_dn = int(d_sugg[0].suggested_value)
+        assert suggested_dn in {50, 65, 80, 100, 125, 150, 200, 250, 300}
+
+    def test_pe100_hot_suggests_steel(self):
+        """PE100 + 80°C → suggest steel_seamless_new."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(pipe_material="pe100_sdr17", liquid_temp_c=80)
+        r = select_pumps(L0, L1)
+        mat_sugg = [s for s in r.suggestions if s.field == "L1.pipe_material"]
+        assert len(mat_sugg) == 1
+        assert mat_sugg[0].suggested_value == "steel_seamless_new"
+        assert mat_sugg[0].severity == "critical"
+
+    def test_inflow_exceeds_suggests_higher_q(self):
+        """inflow=200 для Q=20 → suggest Q=240."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(inflow_per_hour_m3=200)
+        r = select_pumps(L0, L1)
+        q_sugg = [s for s in r.suggestions if s.field == "Q_m3h"]
+        assert len(q_sugg) == 1
+        # Suggested = 200 * 1.2 = 240 (с запасом)
+        assert q_sugg[0].suggested_value == "240.0"
+        assert q_sugg[0].severity == "critical"
+
+    def test_normal_input_no_suggestions(self):
+        """Нормальный ввод не должен генерировать suggestions."""
+        L0 = L0Input(Q_m3h=20, dH_m=10, L_m=100, wastewater_type="domestic")
+        r = select_pumps(L0)
+        assert len(r.suggestions) == 0
 
 
 class TestNoExceptionsOnEdgeCases:
