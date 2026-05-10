@@ -154,8 +154,18 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
     fd = calc_friction_factor(Re, eD)
     H_tr = fd * (L0.L_m / D_si) * (v_ms**2) / (2 * G) if L0.L_m > 0 else 0.0
 
-    # 4. Σζ для типовой обвязки + H_м
-    sum_zeta = catalog.get_typical_obvyazka_sum_zeta()
+    # 4. Σζ для местных потерь
+    # Если задан n_bends/n_valves в L1 — используем их (по Идельчик):
+    #   ζ_отвод90° ≈ 0.3, ζ_задвижка_открытая ≈ 0.15, ζ_обр_клапан ≈ 1.5
+    # Иначе — типовая обвязка КНС (готовый коэффициент из catalog).
+    if L1 and (L1.n_bends or L1.n_valves):
+        n_bends = L1.n_bends or 0
+        n_valves = L1.n_valves or 0
+        # Базовая обвязка КНС: 1 обр.клапан (1.5) + 1 ввод (1.0) + 1 выход (1.0) = 3.5
+        base_kns_zeta = 3.5
+        sum_zeta = base_kns_zeta + n_bends * 0.3 + n_valves * 0.15
+    else:
+        sum_zeta = catalog.get_typical_obvyazka_sum_zeta()
     H_m = sum_zeta * (v_ms**2) / (2 * G)
 
     # 5. Запас
