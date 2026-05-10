@@ -246,6 +246,43 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
     return score, breakdown, zone
 
 
+# Иерархия защиты IP — ключ для сравнения "не ниже". Используется в filter_by_ip_motor.
+_IP_RANK: dict[str, int] = {"IP54": 1, "IP55": 2, "IP58": 3, "IP68": 4}
+
+
+def filter_by_ip_motor(
+    pumps: list[dict[str, Any]], required_ip: str | None
+) -> list[dict[str, Any]]:
+    """Фильтр по IP-рейтингу двигателя (L1.ip_motor).
+
+    Если required_ip=None — фильтр не применяется (backward compat).
+    Иначе оставляем только насосы с pump.power.ip_rating >= required_ip.
+
+    NB: Если у насоса ip_rating не задан — пропускаем (НЕ отсекаем),
+    чтобы не «обрубать» БД с неполной паспортизацией. Это
+    консервативное поведение для текущего состояния каталога (~70% насосов
+    без IP-поля), но в будущем может стать строгим (deprecation warning
+    в notes).
+    """
+    if not required_ip or required_ip not in _IP_RANK:
+        return pumps
+    threshold = _IP_RANK[required_ip]
+    out = []
+    for p in pumps:
+        pump_ip = (p.get("power") or {}).get("ip_rating")
+        if not pump_ip:
+            # Поле не задано — оставляем (консервативно, чтобы не вырезать пол-БД).
+            out.append(p)
+            continue
+        if pump_ip not in _IP_RANK:
+            # Странный формат IP — оставляем
+            out.append(p)
+            continue
+        if _IP_RANK[pump_ip] >= threshold:
+            out.append(p)
+    return out
+
+
 def filter_by_aor(pumps: list[dict[str, Any]], Q_m3h: float) -> list[dict[str, Any]]:
     """Шаг 5а: отсечь кандидатов вне AOR (40-150% Q_BEP).
 
@@ -291,8 +328,13 @@ def make_pump_result(
     wastewater_type: str = "domestic",
     ex_required: bool = False,
     n_pumps_override: int | None = None,
+    L1: L1Input | None = None,
 ) -> PumpResult:
-    """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта."""
+    """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта.
+
+    L1 пробрасывается опционально для применения uplift'ов:
+    level_sensor_type, modbus_rtu_required, above_ground_pavilion.
+    """
     e = pump["envelope"]
     P_kW = (pump.get("power") or {}).get("P_kW", 0)
     DN_mm = (pump.get("discharge") or {}).get("DN_mm")
@@ -353,8 +395,61 @@ def make_pump_result(
             include_rails=not is_small_kit,
         )
 
-    # Сборка notes из _engineer_note + флаг-предупреждения для пользователя
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: uplift'ы по L1-полям (level_sensor / modbus / pavilion).
+    # Применяем к цене ПОСЛЕ расчёта основного BOM, чтобы держать
+    # estimate_*_kit_price чистыми (без знания о new L1 fields).
+    # ──────────────────────────────────────────────────────────────────
     pump_notes: list[str] = []
+    if L1 is not None:
+        # n_pumps для расчёта поплавков/датчиков уровня
+        n_actual = max(2, n_pumps_override) if n_pumps_override else 2
+
+        # 1. level_sensor_type — заменяем floats на выбранный тип уровня.
+        #    Цены за насос: floats=5k, ultrasonic=15k, capacitive=10k, pneumatic=8k.
+        #    floats — стандартный default, поэтому только не-floats добавляют дельту.
+        if L1.level_sensor_type and L1.level_sensor_type != "floats":
+            sensor_prices = {"ultrasonic": 15_000, "capacitive": 10_000, "pneumatic": 8_000}
+            new_sensor = sensor_prices[L1.level_sensor_type] * n_actual
+            old_floats = price_breakdown.floats_rub
+            delta = new_sensor - old_floats
+            price_breakdown.floats_rub = new_sensor
+            price_breakdown.total_rub += delta
+            price_breakdown.total_dealer_rub = int(round(price_breakdown.total_rub * 0.75))
+            pump_notes.append(
+                f"💡 Датчик уровня: {L1.level_sensor_type} "
+                f"({new_sensor:,} ₽ за {n_actual} шт)".replace(",", " ")
+            )
+        elif L1.level_sensor_type == "floats":
+            # Явно поплавки — ничего не меняем (default), но фиксируем в notes.
+            pump_notes.append("💡 Датчик уровня: поплавки (default, 5 000 ₽ × 4 шт)")
+
+        # 2. modbus_rtu_required — uplift на шкаф +50k за модуль связи.
+        if L1.modbus_rtu_required:
+            uplift = 50_000
+            price_breakdown.cabinet_rub += uplift
+            price_breakdown.total_rub += uplift
+            price_breakdown.total_dealer_rub = int(round(price_breakdown.total_rub * 0.75))
+            pump_notes.append(f"📡 Modbus RTU модуль для SCADA: +{uplift:,} ₽".replace(",", " "))
+
+        # 3. above_ground_pavilion — добавить павильон 200-500k в зависимости от Q.
+        if L1.above_ground_pavilion:
+            # Ориентир: малая КНС (Q≤30) → ~200k, средняя (Q≤100) → ~350k, крупная → ~500k.
+            if Q_m3h <= 30:
+                pavilion = 200_000
+            elif Q_m3h <= 100:
+                pavilion = 350_000
+            else:
+                pavilion = 500_000
+            # Кладём в corpus_rub (павильон как часть строительной части).
+            price_breakdown.corpus_rub += pavilion
+            price_breakdown.total_rub += pavilion
+            price_breakdown.total_dealer_rub = int(round(price_breakdown.total_rub * 0.75))
+            pump_notes.append(
+                f"🏠 Наземный павильон над КНС: +{pavilion:,} ₽".replace(",", " ")
+            )
+
+    # Сборка notes из _engineer_note + флаг-предупреждения для пользователя
     if pump.get("_engineer_note"):
         pump_notes.append(pump["_engineer_note"])
     flag = pump.get("_engineer_flag")
@@ -368,6 +463,20 @@ def make_pump_result(
             "⚠ Данные импортированы автоматически (pdfplumber) и не сверены инженером. "
             "Перед заказом — верифицировать паспорт и цену у поставщика."
         ))
+
+    # 4. dry_run_protection=False — note о риске (warning формируется в select_pumps).
+    if L1 is not None and L1.dry_run_protection is False:
+        pump_notes.insert(0, (
+            "⚠ Защита от сухого хода ОТКЛЮЧЕНА. Насос может перегреться и сгореть "
+            "при пустой камере. По СП 32 §6.2 защита от сухого хода обязательна."
+        ))
+
+    # 5. inlet_pipe_diam_mm — фиксируем выбранный диаметр подвода в notes.
+    if L1 is not None and L1.inlet_pipe_diam_mm:
+        pump_notes.append(
+            f"🔧 Диаметр подвода (input): DN{int(L1.inlet_pipe_diam_mm)} "
+            f"мм — учтён в выборе DN корпуса."
+        )
 
     return PumpResult(
         id=pump["id"],
@@ -399,6 +508,7 @@ def pick_top_per_segment(
     wastewater_type: str = "domestic",
     ex_required: bool = False,
     n_pumps_override: int | None = None,
+    L1: L1Input | None = None,
 ) -> tuple[SelectionResultsBySegment, int, list[str], list[Any]]:
     """Шаг 6: топ-1 в каждом из {budget, mid, premium} + alternatives с другими брендами.
 
@@ -426,9 +536,12 @@ def pick_top_per_segment(
             Q_m3h=Q_m3h, corpus_material=corpus_material,
             wastewater_type=wastewater_type, ex_required=ex_required,
             n_pumps_override=n_pumps_override,
+            L1=L1,
         )
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
+        # Sync price_estimate_rub после возможных uplift'ов в make_pump_result.
+        pr.price_estimate_rub = pr.price_breakdown.total_rub
         setattr(results, segment, pr)
         selected_brands.add(best[0].get("brand", ""))
         selected_ids.add(best[0].get("id", ""))
@@ -460,8 +573,10 @@ def pick_top_per_segment(
             Q_m3h=Q_m3h, corpus_material=corpus_material,
             wastewater_type=wastewater_type, ex_required=ex_required,
             n_pumps_override=n_pumps_override,
+            L1=L1,
         )
         alt.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
+        alt.price_estimate_rub = alt.price_breakdown.total_rub
         alternatives.append(alt)
 
     return results, len(scored), warnings, alternatives
@@ -675,6 +790,360 @@ def build_suggestions(
             severity="critical",
         ))
 
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: 10 научных расширений — suggestions с 2-level reasons
+    # ──────────────────────────────────────────────────────────────────
+
+    # EXT-1: боковое давление грунта (СП 22.13330)
+    if "auto_lateral_earth_pressure" in triggers and L1 and L1.install_depth_inlet_mm:
+        z_m = L1.install_depth_inlet_mm / 1000
+        gamma = 18.0  # кН/м³, объёмный вес грунта
+        K_a = 0.33    # активное давление при φ=30°
+        sigma_x_kpa = gamma * z_m * K_a
+        eng = (
+            f"🪨 СП 22.13330 «Основания зданий и сооружений», п.5.4 — "
+            f"расчёт горизонтального давления грунта по теории Кулона.\n"
+            f"📐 Формула: σ_x = γ·z·K_a, где K_a = tan²(45°-φ/2) — коэф. "
+            f"активного давления.\n"
+            f"При z={z_m:.1f} м, γ=18 кН/м³, φ=30° → K_a=0.33:\n"
+            f"σ_x = 18·{z_m:.1f}·0.33 ≈ {sigma_x_kpa:.1f} кПа на стенку корпуса.\n"
+            f"⚠ При z>5 м стандартный гладкий ПЭ-корпус деформируется — "
+            f"требуются продольные рёбра жёсткости и/или ж/б обойма."
+        )
+        mgr = (
+            f"🏗 Глубина монтажа {z_m:.1f} м — это глубокий заглубленный корпус.\n"
+            f"💰 Стандартный ПЭ-корпус не справится с давлением грунта "
+            f"({sigma_x_kpa:.0f} кПа) — нужны рёбра жёсткости (+150-300 тыс ₽) "
+            f"или ж/б обойма (+800 тыс — 1.5 млн ₽).\n"
+            f"⏱ Срок изготовления усиленного корпуса +3-5 недель.\n"
+            f"📞 Передайте инженеру для расчёта по СП 22.13330."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.install_depth_inlet_mm",
+            current_value=f"{L1.install_depth_inlet_mm}",
+            suggested_value=f"{L1.install_depth_inlet_mm}",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # EXT-2: класс нагрузки крышки (СП 35.13330)
+    if "auto_traffic_load_class" in triggers and L1:
+        eng = (
+            f"🚛 СП 35.13330 «Мосты и трубы», табл.6.4 — классы нагрузки крышек "
+            f"по EN 124:\n"
+            f"  • A15 (15 кН) — пешеходные зоны\n"
+            f"  • B125 (125 кН) — паркинги легковых\n"
+            f"  • C250 (250 кН) — заездные карманы\n"
+            f"  • D400 (400 кН) — проезжие части дорог\n"
+            f"📐 При install_depth={L1.install_depth_inlet_mm} мм без павильона "
+            f"крышка находится на уровне земли — высокий риск наезда транспорта.\n"
+            f"⚠ Чугунная D400 обязательна если возможен заезд авто."
+        )
+        mgr = (
+            f"🚧 Корпус КНС без павильона на малой глубине — крышка на уровне земли.\n"
+            f"💰 Стоимость крышки по классам:\n"
+            f"  • A15 (тротуар) — 8-15 тыс ₽\n"
+            f"  • B125 (паркинг) — 25-40 тыс ₽\n"
+            f"  • D400 (дорога) — 60-120 тыс ₽\n"
+            f"⏱ Уточните у клиента: возможен ли заезд авто над КНС? "
+            f"Если да — закладывайте D400, иначе риск разрушения за 1 сезон."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.cover_load_class",
+            current_value="не задано",
+            suggested_value="D400",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # EXT-3: заземление (ПУЭ 1.7)
+    if "auto_grounding_required" in triggers and L1:
+        why = "взрывозащита" if L1.Ex_required else "I категория надёжности"
+        eng = (
+            f"⚡ ПУЭ 1.7 «Заземление и защитные меры», п.1.7.103 — "
+            f"требование к заземляющему устройству для {why}.\n"
+            f"📐 R_зазем ≤ 4 Ом для системы TN-S; ≤ 10 Ом для повторного "
+            f"заземления (ПУЭ 1.7.62).\n"
+            f"🔬 Расчёт по СО 153-34.21.122: R = ρ_грунта/(2π·L)·ln(2L/d), "
+            f"где ρ — удельное сопротивление грунта (Ом·м), L — длина "
+            f"электрода, d — диаметр.\n"
+            f"⚠ Для Ex-зон обязательно: уравнивание потенциалов всех "
+            f"металлических корпусов + контур ≤ 4 Ом."
+        )
+        mgr = (
+            f"⚡ Для объекта с {why} требуется отдельный контур заземления.\n"
+            f"💰 Стоимость:\n"
+            f"  • Базовый контур (3-5 электродов) — 35-60 тыс ₽\n"
+            f"  • Молниеотвод + уравнивание — 80-150 тыс ₽\n"
+            f"  • Замер сопротивления + протокол — 12-18 тыс ₽\n"
+            f"⏱ Монтаж 2-4 дня. Без протокола замера ввод в эксплуатацию "
+            f"запрещён (Ростехнадзор)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.grounding_required",
+            current_value="не учтено",
+            suggested_value="контур ≤ 4 Ом",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # EXT-4: молниезащита (СО 153-34.21.122)
+    if "auto_lightning_protection_required" in triggers:
+        eng = (
+            f"🌩 СО 153-34.21.122-2003 «Молниезащита зданий и сооружений», "
+            f"п.2.2 — наземное здание подлежит классификации по уровню защиты:\n"
+            f"  • I уровень — взрывоопасные зоны (Ex)\n"
+            f"  • II уровень — пожароопасные / I категория надёжности\n"
+            f"  • III-IV уровень — обычные здания\n"
+            f"📐 Зона защиты молниеотвода (одиночный стержень): "
+            f"R_зоны = 1.5·h_стержня (тип А).\n"
+            f"⚠ Для электрооборудования внутри павильона — обязательны УЗИП "
+            f"класса I (ГОСТ Р 51992-2011), I_имп ≥ 25 кА."
+        )
+        mgr = (
+            f"🌩 Наземный павильон требует молниезащиты (СО 153-34.21.122).\n"
+            f"💰 Комплект:\n"
+            f"  • Молниеотвод-стержень с креплением — 25-45 тыс ₽\n"
+            f"  • УЗИП класса I в ШУ — 18-30 тыс ₽\n"
+            f"  • Контур + спуск + протокол — 60-90 тыс ₽\n"
+            f"📞 Один удар молнии без защиты убивает ШУ + ЧРП "
+            f"(~400 тыс ₽ замены) и приводит к пожару павильона."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.lightning_protection",
+            current_value="не учтено",
+            suggested_value="молниеотвод + УЗИП",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # EXT-5: утепление труб (СП 41-103)
+    if "auto_pipe_insulation_required" in triggers and L1:
+        reason_short = (
+            "горячая жидкость (>40°C)"
+            if (L1.liquid_temp_c and L1.liquid_temp_c > 40)
+            else "холодный регион (горы)"
+        )
+        eng = (
+            f"🧊 СП 41-103-2000 «Тепловая изоляция оборудования и "
+            f"трубопроводов», табл.7.1 — требования к толщине изоляции.\n"
+            f"📐 Тепловой поток через стенку: q = 2πλΔT/ln(D₂/D₁) Вт/м, "
+            f"где λ — коэф. теплопроводности изоляции (Вт/м·К).\n"
+            f"Для пеноПЭ λ=0.04, при ΔT=50°C, D₁=110, D₂=160 мм: "
+            f"q ≈ 33 Вт/м.\n"
+            f"Причина: {reason_short}.\n"
+            f"⚠ Без изоляции в холодных регионах — замерзание за 4-8 ч "
+            f"простоя; для горячих стоков — потери температуры > 5°C/100 м."
+        )
+        mgr = (
+            f"🧊 Требуется утепление напорной трассы ({reason_short}).\n"
+            f"💰 Стоимость:\n"
+            f"  • Трубчатая ПЭ-изоляция (Energoflex) — 250-450 ₽/п.м\n"
+            f"  • Минвата с фольгой (для горячих) — 500-800 ₽/п.м\n"
+            f"  • Кожух из оцинковки — +600-900 ₽/п.м\n"
+            f"  • Монтаж — 200-300 ₽/п.м\n"
+            f"⏱ Для трассы 100 м: ориентир 130-200 тыс ₽ под ключ."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.pipe_insulation",
+            current_value="не учтено",
+            suggested_value="требуется изоляция",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-6: греющий кабель
+    if "auto_heating_cable_required" in triggers and L1 and L1.altitude_m is not None:
+        # Бытовая мощность саморегулирующегося кабеля ~30 Вт/м
+        eng = (
+            f"🔥 Греющий кабель для напорной трассы — высота "
+            f"{L1.altitude_m:.0f} м (горный регион, минимальная T_зимы < -25°C).\n"
+            f"📐 Расчёт мощности: P = K·π·D·(T_внутр - T_окр)/R_изол, "
+            f"где K — коэф. теплопередачи (Вт/м²·К).\n"
+            f"Для DN50-150 без изоляции: P ≈ 30 Вт/м (саморегулирующийся "
+            f"кабель типа FROSTOP-Black, Raychem или Lavita).\n"
+            f"⚠ Запитка через УЗО 30 мА (ПУЭ 7.1.79). При длине трассы L "
+            f"общая мощность P_total = 30·L Вт."
+        )
+        mgr = (
+            f"🔥 Объект на высоте {L1.altitude_m:.0f} м (горы) — "
+            f"в зимние морозы трубы замёрзнут за часы простоя.\n"
+            f"💰 Греющий кабель саморегулирующийся 30 Вт/м:\n"
+            f"  • Кабель — 850-1200 ₽/п.м\n"
+            f"  • Терморегулятор + датчик — 8-15 тыс ₽\n"
+            f"  • УЗО 30 мА + автомат — 4-7 тыс ₽\n"
+            f"  • Монтаж + запенивание — 400-600 ₽/п.м\n"
+            f"⏱ Для трассы 100 м: 150-200 тыс ₽ комплект + монтаж."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.heating_cable",
+            current_value="не учтено",
+            suggested_value="30 Вт/м саморегулирующийся",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-7: седиментация Stokes
+    if "auto_sedimentation_check" in triggers:
+        # v_осаж по Стоксу для песчинки 0.5 мм, ρ=2650 кг/м³
+        rho_p = 2650
+        rho_w = 1000
+        g = 9.81
+        d_m = 0.5e-3
+        mu = 1e-3
+        v_sed = (rho_p - rho_w) * g * d_m**2 / (18 * mu)  # м/с
+        eng = (
+            f"⚗ Закон Стокса для седиментации частиц в промстоках:\n"
+            f"📐 v_осаж = (ρ_частицы - ρ_воды)·g·d²/(18·μ)\n"
+            f"Для песчинки d=0.5 мм, ρ_p=2650 кг/м³, μ=1e-3 Па·с:\n"
+            f"v_осаж = (2650-1000)·9.81·(5e-4)²/(18·1e-3) ≈ {v_sed*1000:.1f} мм/с "
+            f"= {v_sed*60*100:.1f} см/мин.\n"
+            f"⚠ При Q={L0.Q_m3h} м³/ч (industrial) поток в DN150 v≈{L0.Q_m3h*4/3600/3.14/0.15**2:.2f} м/с — "
+            f"крупные частицы (>0.5 мм) оседают в трубе и приёмной камере.\n"
+            f"💡 Решение: песколовка / гидроциклон до КНС "
+            f"(СП 32 §7.4 — обязательна для содержания песка >100 мг/л)."
+        )
+        mgr = (
+            f"⚗ Промстоки с малым расходом Q={L0.Q_m3h} м³/ч — поток "
+            f"медленный, песок оседает в трубах и насосе.\n"
+            f"💰 Песколовка тангенциальная DN300:\n"
+            f"  • Корпус ПЭ — 85-140 тыс ₽\n"
+            f"  • Гидроциклон чугунный — 180-320 тыс ₽\n"
+            f"  • Монтаж + обвязка — 40-70 тыс ₽\n"
+            f"⏱ Без песколовки замена рабочего колеса насоса каждые "
+            f"6-12 мес (1 колесо = 80-200 тыс ₽)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.sand_separator",
+            current_value="не учтено",
+            suggested_value="песколовка/гидроциклон",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-8: УФ/озон обеззараживание
+    if "auto_disinfection_required" in triggers:
+        eng = (
+            f"🦠 СанПиН 2.1.5.980-00 «Гигиенические требования к охране "
+            f"поверхностных вод», п.4.1.5 — обеззараживание стоков "
+            f"перед сбросом в водоём (хоз-бытовые Q={L0.Q_m3h} > 100 м³/ч).\n"
+            f"📐 УФ-доза по МУК 4.3.2030-05: D = I·t ≥ 30 мДж/см² "
+            f"для инактивации E.coli (3 lg) и колифагов (2 lg).\n"
+            f"📐 Озон по СанПиН: C·t ≥ 5 мг·мин/л (5 мг/л при t=1 мин).\n"
+            f"⚠ Хлорирование запрещено для сброса в рыбохозяйственные "
+            f"водоёмы (Приказ Росрыболовства №20)."
+        )
+        mgr = (
+            f"🦠 Q={L0.Q_m3h} м³/ч хоз-бытовых — по СанПиН обязательно "
+            f"обеззараживание перед сбросом.\n"
+            f"💰 Варианты:\n"
+            f"  • УФ-стерилизатор Sita / Wedeco на Q=100-200 — 380-650 тыс ₽\n"
+            f"  • Озонатор 50-100 г/ч — 850 тыс — 1.5 млн ₽\n"
+            f"  • Контактная камера + смеситель — 120-220 тыс ₽\n"
+            f"  • Лампы УФ замена раз в год — 35-60 тыс ₽/год OPEX\n"
+            f"⏱ Без обеззараживания штраф Росприроднадзора 250-500 тыс ₽ "
+            f"(ст.8.13 КоАП) + остановка сброса."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.disinfection",
+            current_value="не учтено",
+            suggested_value="УФ или озон",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-9: нитри/денитрификация
+    if "auto_nitrification_check" in triggers:
+        eng = (
+            f"🧪 Нитри/денитрификация в ЛОС промстоков (СП 32.13330 §9.2.5).\n"
+            f"📐 Кинетика по Monod: μ = μ_max·S/(K_s+S), где для "
+            f"Nitrosomonas μ_max=0.8 сут⁻¹, K_s≈1 мг/л NH4-N.\n"
+            f"⚠ Условия:\n"
+            f"  • Возраст ила θ_c ≥ 10 сут (бактерии медленно растут)\n"
+            f"  • Аэрация ≥ 6 ч (DO ≥ 2 мг/л в зоне нитрификации)\n"
+            f"  • T ≥ 12°C (при <10°C нитрификация останавливается)\n"
+            f"  • pH 7.5-8.5 (оптимум для аммоний-окисляющих)\n"
+            f"  • Рециркуляция нитратов 200-400% для денитри (аноксидная зона).\n"
+            f"📐 Объём аэротенка: V = Q·θ_аэр + Q·θ_денитр."
+        )
+        mgr = (
+            f"🧪 Промстоки с азотом — нужна полноценная биологическая "
+            f"очистка (нитри + денитрификация).\n"
+            f"💰 ЛОС на Q={L0.Q_m3h} м³/ч с нитри/денитри:\n"
+            f"  • Аэротенк ж/б 50-150 м³ — 1.5-3.5 млн ₽\n"
+            f"  • Воздуходувка + аэраторы — 450-850 тыс ₽\n"
+            f"  • Вторичный отстойник — 380-720 тыс ₽\n"
+            f"  • Автоматика DO/pH/NH4 — 280-450 тыс ₽\n"
+            f"⏱ Запуск ила (наработка биоценоза) — 4-8 недель.\n"
+            f"📞 Передайте инженеру-технологу для расчёта по реальным "
+            f"показателям сточных вод (БПК, ХПК, NH4, P)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.nitrification_required",
+            current_value="не учтено",
+            suggested_value="аэротенк θ_c≥10 сут",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-10: гидробак ВНС (СП 30.13330)
+    if "auto_hydrobak_required" in triggers:
+        # V_бака = (Q_max - Q_min)·t_цикл/4, типовое t_цикл=6 мин (10 пусков/час)
+        Q_min = L0.Q_m3h * 0.2  # типовое 20% от номинала
+        Q_max = L0.Q_m3h
+        t_cycle_min = 6.0
+        V_bak_l = (Q_max - Q_min) * 1000 * (t_cycle_min / 60) / 4
+        eng = (
+            f"💧 СП 30.13330.2020 «Внутренний водопровод», п.11.7 — "
+            f"гидроаккумулятор для повысительной насосной с переменным расходом.\n"
+            f"📐 Расчёт ёмкости: V_бака = (Q_max - Q_min)·t_цикл / 4·a, "
+            f"где a — число включений/час (обычно ≤ 10), t_цикл — "
+            f"длительность одного цикла.\n"
+            f"Для Q_max={Q_max:.1f}, Q_min={Q_min:.1f} м³/ч, t=6 мин:\n"
+            f"V = ({Q_max:.1f} - {Q_min:.1f}) · 1000 · (6/60) / 4 ≈ "
+            f"{V_bak_l:.0f} литров.\n"
+            f"⚠ Без гидробака ЧРП работает в режиме «дёрганья» — "
+            f"частые пуски, гидроудары, износ обратного клапана."
+        )
+        mgr = (
+            f"💧 Q={L0.Q_m3h} м³/ч ВНС чистой воды — нужен гидроаккумулятор "
+            f"для сглаживания пиков (СП 30.13330).\n"
+            f"💰 Мембранный гидробак ~{V_bak_l:.0f} л:\n"
+            f"  • Reflex / Wester / Джилекс 500-1000 л — 45-95 тыс ₽\n"
+            f"  • Большой 2000-5000 л — 180-380 тыс ₽\n"
+            f"  • Манометр + предохранительный клапан — 8-15 тыс ₽\n"
+            f"  • Подключение + мембраны замена раз в 5 лет — 12-25 тыс ₽\n"
+            f"⏱ Без гидробака — частые пуски ЧРП (ресурс ЧРП -50%, "
+            f"замена 280-450 тыс ₽ через 2-3 года вместо 6-8)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.hydrobak_volume_l",
+            current_value="не учтено",
+            suggested_value=f"{V_bak_l:.0f} л",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
     return suggestions
 
 
@@ -768,6 +1237,104 @@ def evaluate_handoff_triggers(
     if L1 and L1.Ex_required:
         triggers.append("auto_ex")
 
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: триггеры из 8 активированных L1-полей
+    # ──────────────────────────────────────────────────────────────────
+
+    # TRIG-DRY-RUN: защита от сухого хода отключена. Может сжечь насос
+    # при пустой камере (типичная причина выхода из строя за 1-3 цикла).
+    # СП 32 §6.2 — обязательная защита.
+    if L1 and L1.dry_run_protection is False:
+        triggers.append("auto_no_dry_run_protection")
+
+    # TRIG-NPSHA-LOW: NPSHa < 5 м (горный регион). Если altitude_m задан и
+    # рассчитанный NPSHa упал ниже 5 м — большинство насосов с NPSHr ~2-4
+    # будут в пограничной зоне. Нужна верификация конкретной NPSHr-кривой.
+    if (
+        L1 and L1.altitude_m is not None
+        and L1.altitude_m > 2000
+        and computed.npsha_m is not None
+        and computed.npsha_m < 5.0
+    ):
+        triggers.append("auto_npsha_low")
+
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: 10 научных расширений (СП/ПУЭ/материаловедение/биология)
+    # ──────────────────────────────────────────────────────────────────
+
+    # EXT-1: СП 22.13330 «Основания зданий». Глубокий заглубленный корпус
+    # испытывает боковое давление грунта по Кулону: σ_x = γ·z·K_a, где
+    # γ=18 кН/м³ (типовой грунт), K_a = tan²(45°-φ/2) = 0.33 при φ=30°.
+    # При z=5+ м σ_x достигает 30 кПа — нужны рёбра жёсткости / спец-расчёт.
+    if L1 and L1.install_depth_inlet_mm is not None and L1.install_depth_inlet_mm > 5000:
+        triggers.append("auto_lateral_earth_pressure")
+
+    # EXT-2: СП 35.13330 «Мосты и трубы». При подземном корпусе крышка
+    # должна выдержать класс нагрузки А15 (тротуары, < 1.5 т), B125 (паркинги,
+    # 12.5 т), C250 (зоны заезда, 25 т) или D400 (магистрали, 40 т).
+    # Без павильона + малая глубина → высокая вероятность транспорта над крышкой.
+    if (
+        L1 and L1.above_ground_pavilion is False
+        and L1.install_depth_inlet_mm is not None
+        and L1.install_depth_inlet_mm < 1000
+    ):
+        triggers.append("auto_traffic_load_class")
+
+    # EXT-3: ПУЭ 1.7 «Заземление». Для взрывозащиты или I категории надёжности
+    # требуется отдельный расчёт заземляющего устройства. R_зазем ≤ 4 Ом
+    # для TN-S (ПУЭ 1.7.103), ≤ 10 Ом для повторного заземления.
+    if L1 and (L1.Ex_required or L1.reliability_category == "I"):
+        triggers.append("auto_grounding_required")
+
+    # EXT-4: СО 153-34.21.122 «Молниезащита». Наземный павильон —
+    # отдельное здание выше 10 м или в зоне молниевой активности →
+    # молниеотвод обязателен, II категория защиты для электрооборудования.
+    if L1 and L1.above_ground_pavilion:
+        triggers.append("auto_lightning_protection_required")
+
+    # EXT-5: СП 41-103-2000 «Тепловая изоляция». Горячие стоки (>40°C)
+    # ИЛИ горные / холодные регионы (altitude>1500 м — климат суровый):
+    # без утепления труба теряет тепло (h_loss = 2πλΔT/ln(D₂/D₁)),
+    # риск замерзания / конденсата.
+    if L1 and (
+        (L1.liquid_temp_c is not None and L1.liquid_temp_c > 40)
+        or (L1.altitude_m is not None and L1.altitude_m > 1500)
+    ):
+        triggers.append("auto_pipe_insulation_required")
+
+    # EXT-6: Греющий кабель для напорной трассы. В горных регионах
+    # (altitude>1500 м) минимальная зимняя T часто < -25°C, замерзание
+    # за часы простоя. Бытовая мощность кабеля ~30 Вт/м для DN50-150.
+    if L1 and L1.altitude_m is not None and L1.altitude_m > 1500:
+        triggers.append("auto_heating_cable_required")
+
+    # EXT-7: Седиментация Stokes для промстоков с малым Q (<50 м³/ч):
+    # v_осаж = (ρ_частицы - ρ_воды)·g·d²/(18·μ). При Q<50 скорость потока
+    # низкая → крупные частицы (>0.5 мм) оседают в трубе или приёмной камере,
+    # требуется песколовка / гидроциклон до КНС.
+    if L0.wastewater_type == "industrial" and L0.Q_m3h < 50:
+        triggers.append("auto_sedimentation_check")
+
+    # EXT-8: УФ/озон обеззараживание (СанПиН 2.1.5.980-00 §4.1.5).
+    # При Q>100 м³/ч хоз-бытовых стоков обязателен сброс через ЛОС с
+    # обеззараживанием перед выпуском в водоём. УФ-доза ≥30 мДж/см² или
+    # озон 5 мг/л.
+    if L0.wastewater_type == "domestic" and L0.Q_m3h > 100:
+        triggers.append("auto_disinfection_required")
+
+    # EXT-9: Нитри/денитрификация для промстоков (СП 32 §9). При наличии
+    # азота аммонийного (NH4+ > 20 мг/л) необходим аэротенк с возрастом ила
+    # ≥10 суток, аэрация ≥6 ч, рециркуляция нитратов 200-400%.
+    if L0.wastewater_type == "industrial":
+        triggers.append("auto_nitrification_check")
+
+    # EXT-10: Гидробак ВНС (СП 30.13330 §11). Для повысительных насосных
+    # станций чистой воды Q>50 м³/ч переменный расход компенсируется
+    # гидроаккумулятором: V_бака = (Q_max - Q_min)·t_цикл/4. Без бака —
+    # частые пуски ЧРП / гидроудары.
+    if L0.wastewater_type == "clean_water" and L0.Q_m3h > 50:
+        triggers.append("auto_hydrobak_required")
+
     return triggers
 
 
@@ -832,15 +1399,26 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     # Шаг 5а: AOR
     f3 = filter_by_aor(f2, L0_filled.Q_m3h)
 
+    # Шаг 5b: IP-фильтр двигателя (если L1.ip_motor задан).
+    f3 = filter_by_ip_motor(f3, L1.ip_motor if L1 else None)
+
     # Шаг 6
     corpus_material = (L1.corpus_material if L1 and L1.corpus_material else "pe")
     ex_required = bool(L1 and L1.Ex_required)
-    n_pumps_override = L1.pumps_total_override if L1 and L1.pumps_total_override else None
+    # n_pumps: единый резолвер (override > redundancy > 2).
+    # Передаём в pricing именно эффективное число — чтобы redundancy="2+1" (=3)
+    # и pumps_total_override=3 давали одинаковый BOM.
+    if L1 is not None and (L1.pumps_total_override or L1.redundancy):
+        from pump_calculator.hydraulics import _resolve_n_pumps  # избежать цикла на верхнем уровне
+        n_pumps_override = _resolve_n_pumps(L1)
+    else:
+        n_pumps_override = None
     results, candidates_total, warnings, alternatives = pick_top_per_segment(
         f3, L0_filled.Q_m3h, computed.H_full_m, corpus_material=corpus_material,
         wastewater_type=L0_filled.wastewater_type,
         ex_required=ex_required,
         n_pumps_override=n_pumps_override,
+        L1=L1,
     )
 
     # Шаг 7
@@ -918,6 +1496,86 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             f"⚠ Материал трубы {pipe_mat} не допустим при температуре жидкости "
             f"{temp_c}°C (max 60°C). Грозит деградацией трубы за месяцы. "
             f"Замените pipe_material на 'steel_seamless_new' или 'cast_iron_new'."
+        ))
+    if "auto_no_dry_run_protection" in triggers:
+        warnings.insert(0, (
+            "⚠ Защита от сухого хода отключена (dry_run_protection=False). "
+            "По СП 32 §6.2 защита обязательна — без неё насос может перегореть "
+            "при опорожнении приёмной камеры (один цикл = выход из строя)."
+        ))
+    if "auto_npsha_low" in triggers and L1 and L1.altitude_m and computed.npsha_m is not None:
+        warnings.insert(0, (
+            f"⚠ NPSHa = {computed.npsha_m:.2f} м (на высоте {L1.altitude_m:.0f} м "
+            f"над уровнем моря) < 5 м. Большинство насосов имеют NPSHr 2-4 м — "
+            f"риск кавитации. Проверьте NPSHr-кривую конкретной модели и "
+            f"рассмотрите снижение T или подпора."
+        ))
+
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-10: warnings для 10 научных расширений
+    # ──────────────────────────────────────────────────────────────────
+    if "auto_lateral_earth_pressure" in triggers and L1 and L1.install_depth_inlet_mm:
+        z = L1.install_depth_inlet_mm / 1000
+        warnings.insert(0, (
+            f"⚠ Глубина монтажа {z:.1f} м > 5 м — боковое давление грунта "
+            f"по СП 22.13330 (Кулон) ≈ {18*z*0.33:.0f} кПа. Стандартный ПЭ-корпус "
+            f"может деформироваться. Требуются рёбра жёсткости / ж/б обойма + "
+            f"расчёт инженером-конструктором."
+        ))
+    if "auto_traffic_load_class" in triggers:
+        warnings.insert(0, (
+            f"⚠ Подземный корпус без павильона на малой глубине — крышка "
+            f"находится на уровне земли. По СП 35.13330 при возможном заезде "
+            f"транспорта требуется чугунная крышка класса D400 (40 т)."
+        ))
+    if "auto_grounding_required" in triggers:
+        why = "Ex-зона" if (L1 and L1.Ex_required) else "I категория надёжности"
+        warnings.insert(0, (
+            f"⚠ Для {why} обязателен расчёт заземляющего устройства "
+            f"по ПУЭ 1.7.103: R_зазем ≤ 4 Ом (TN-S). Требуется протокол замера "
+            f"перед вводом в эксплуатацию (Ростехнадзор)."
+        ))
+    if "auto_lightning_protection_required" in triggers:
+        warnings.insert(0, (
+            f"⚠ Наземный павильон — обязательна молниезащита по СО 153-34.21.122 "
+            f"(II категория для электрооборудования) + УЗИП класса I на вводе ШУ."
+        ))
+    if "auto_pipe_insulation_required" in triggers:
+        warnings.insert(0, (
+            f"⚠ Требуется тепловая изоляция напорной трассы по СП 41-103 "
+            f"(горячая жидкость > 40°C либо холодный регион). Без изоляции — "
+            f"замерзание/конденсат и потери тепла."
+        ))
+    if "auto_heating_cable_required" in triggers and L1 and L1.altitude_m:
+        warnings.insert(0, (
+            f"⚠ Высота {L1.altitude_m:.0f} м (горный регион) — рекомендован "
+            f"греющий саморегулирующийся кабель ~30 Вт/м на напорную трассу "
+            f"для предотвращения замерзания зимой."
+        ))
+    if "auto_sedimentation_check" in triggers:
+        warnings.insert(0, (
+            f"⚠ Промстоки с малым Q={L0.Q_m3h} м³/ч — низкая скорость "
+            f"потока, крупные частицы оседают (закон Стокса). "
+            f"Рекомендуется песколовка/гидроциклон до КНС (СП 32 §7.4)."
+        ))
+    if "auto_disinfection_required" in triggers:
+        warnings.insert(0, (
+            f"⚠ Q={L0.Q_m3h} м³/ч хоз-бытовых — по СанПиН 2.1.5.980-00 "
+            f"обязательно обеззараживание (УФ ≥30 мДж/см² или озон ≥5 мг/л) "
+            f"перед сбросом в водоём. Иначе штраф 250-500 тыс ₽ (КоАП 8.13)."
+        ))
+    if "auto_nitrification_check" in triggers:
+        warnings.insert(0, (
+            f"⚠ Промстоки — требуется проверка необходимости нитри/денитрификации "
+            f"(СП 32 §9). Возраст ила ≥10 сут, аэрация ≥6 ч, T ≥12°C. "
+            f"Передайте инженеру-технологу."
+        ))
+    if "auto_hydrobak_required" in triggers:
+        V_bak_l = (L0.Q_m3h - L0.Q_m3h * 0.2) * 1000 * 0.1 / 4
+        warnings.insert(0, (
+            f"⚠ ВНС чистой воды Q={L0.Q_m3h} м³/ч — нужен гидроаккумулятор "
+            f"~{V_bak_l:.0f} л (СП 30.13330 §11). Без него ЧРП работает в режиме "
+            f"частых пусков, ресурс падает в 2 раза."
         ))
     summary_text = build_summary_text(
         L0=L0_filled,

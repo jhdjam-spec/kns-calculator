@@ -342,4 +342,160 @@ class TestNoExceptionsOnEdgeCases:
         assert r is not None
         # Никаких 500: SelectionResult всегда возвращён
         assert hasattr(r, "results")
+
+
+# ──────────────────────────────────────────────────────────────────
+# 2026-05-10: 10 научных расширений (СП/ПУЭ/материаловедение/биология)
+# ──────────────────────────────────────────────────────────────────
+
+
+class TestScientificExtensions:
+    """10 новых triggers + suggestions с 2-level reasons."""
+
+    def _has_suggestion(self, r, field_substr: str) -> bool:
+        return any(field_substr in s.field for s in r.suggestions)
+
+    def _suggestion(self, r, field_substr: str):
+        for s in r.suggestions:
+            if field_substr in s.field:
+                return s
+        return None
+
+    def test_ext1_lateral_earth_pressure(self):
+        """EXT-1: install_depth>5000 мм → trigger + suggestion + 2-level reason."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(install_depth_inlet_mm=6000)
+        r = select_pumps(L0, L1)
+        assert "auto_lateral_earth_pressure" in r.trigger_reasons
+        assert any("Кулон" in w or "грунта" in w for w in r.warnings)
+        s = self._suggestion(r, "install_depth_inlet_mm")
+        assert s is not None
+        assert s.severity == "critical"
+        assert "СП 22.13330" in s.reason_engineer
+        assert "тыс ₽" in s.reason_manager or "млн ₽" in s.reason_manager
+
+    def test_ext2_traffic_load_class(self):
+        """EXT-2: подземный без павильона + малая глубина → класс крышки."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(above_ground_pavilion=False, install_depth_inlet_mm=500)
+        r = select_pumps(L0, L1)
+        assert "auto_traffic_load_class" in r.trigger_reasons
+        s = self._suggestion(r, "cover_load_class")
+        assert s is not None
+        assert s.severity == "critical"
+        assert "D400" in s.reason_engineer
+        assert "тыс ₽" in s.reason_manager
+
+    def test_ext3_grounding_required_ex(self):
+        """EXT-3: Ex_required=True → grounding."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(Ex_required=True)
+        r = select_pumps(L0, L1)
+        assert "auto_grounding_required" in r.trigger_reasons
+        s = self._suggestion(r, "grounding_required")
+        assert s is not None
+        assert s.severity == "critical"
+        assert "ПУЭ" in s.reason_engineer
+        assert "4 Ом" in s.reason_engineer
+
+    def test_ext3_grounding_required_category_i(self):
+        """EXT-3: I категория надёжности → grounding."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(reliability_category="I")
+        r = select_pumps(L0, L1)
+        assert "auto_grounding_required" in r.trigger_reasons
+
+    def test_ext4_lightning_protection(self):
+        """EXT-4: above_ground_pavilion=True → молниезащита."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(above_ground_pavilion=True)
+        r = select_pumps(L0, L1)
+        assert "auto_lightning_protection_required" in r.trigger_reasons
+        s = self._suggestion(r, "lightning_protection")
+        assert s is not None
+        assert s.severity == "critical"
+        assert "СО 153-34.21.122" in s.reason_engineer
+        assert "УЗИП" in s.reason_engineer
+
+    def test_ext5_pipe_insulation_hot(self):
+        """EXT-5: горячая жидкость > 40°C → утепление."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(liquid_temp_c=55)
+        r = select_pumps(L0, L1)
+        assert "auto_pipe_insulation_required" in r.trigger_reasons
+        s = self._suggestion(r, "pipe_insulation")
+        assert s is not None
+        assert "СП 41-103" in s.reason_engineer
+
+    def test_ext5_pipe_insulation_cold_altitude(self):
+        """EXT-5: высота > 1500 м → утепление (холодный регион)."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(altitude_m=2000)
+        r = select_pumps(L0, L1)
+        assert "auto_pipe_insulation_required" in r.trigger_reasons
+
+    def test_ext6_heating_cable(self):
+        """EXT-6: altitude > 1500 м → греющий кабель 30 Вт/м."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(altitude_m=1800)
+        r = select_pumps(L0, L1)
+        assert "auto_heating_cable_required" in r.trigger_reasons
+        s = self._suggestion(r, "heating_cable")
+        assert s is not None
+        assert "30 Вт/м" in s.reason_engineer or "30 Вт/м" in s.reason_manager
+        assert "₽/п.м" in s.reason_manager
+
+    def test_ext7_sedimentation_industrial(self):
+        """EXT-7: industrial + Q < 50 → седиментация Стокса."""
+        L0 = L0Input(Q_m3h=20, wastewater_type="industrial")
+        r = select_pumps(L0)
+        assert "auto_sedimentation_check" in r.trigger_reasons
+        s = self._suggestion(r, "sand_separator")
+        assert s is not None
+        assert "Стокс" in s.reason_engineer
+        assert "песколовка" in s.reason_manager.lower()
+
+    def test_ext8_disinfection_domestic_high_q(self):
+        """EXT-8: domestic + Q > 100 → УФ/озон."""
+        L0 = L0Input(Q_m3h=150, wastewater_type="domestic")
+        r = select_pumps(L0)
+        assert "auto_disinfection_required" in r.trigger_reasons
+        s = self._suggestion(r, "disinfection")
+        assert s is not None
+        assert "СанПиН" in s.reason_engineer
+        assert "30 мДж/см²" in s.reason_engineer or "30 мДж/см" in s.reason_engineer
+
+    def test_ext9_nitrification_industrial(self):
+        """EXT-9: industrial → нитри/денитрификация."""
+        L0 = L0Input(Q_m3h=80, wastewater_type="industrial")
+        r = select_pumps(L0)
+        assert "auto_nitrification_check" in r.trigger_reasons
+        s = self._suggestion(r, "nitrification_required")
+        assert s is not None
+        assert "Monod" in s.reason_engineer or "10 сут" in s.reason_engineer
+        assert "аэротенк" in s.reason_manager.lower()
+
+    def test_ext10_hydrobak_clean_water(self):
+        """EXT-10: clean_water + Q > 50 → гидроаккумулятор."""
+        L0 = L0Input(Q_m3h=80, wastewater_type="clean_water")
+        r = select_pumps(L0)
+        assert "auto_hydrobak_required" in r.trigger_reasons
+        s = self._suggestion(r, "hydrobak_volume_l")
+        assert s is not None
+        assert "СП 30.13330" in s.reason_engineer
+        assert "л" in s.suggested_value
+
+    def test_extensions_dont_break_default(self):
+        """Без специфичных условий новые triggers не срабатывают."""
+        L0 = L0Input(Q_m3h=20, dH_m=10, L_m=50)
+        r = select_pumps(L0)
+        new_triggers = {
+            "auto_lateral_earth_pressure", "auto_traffic_load_class",
+            "auto_grounding_required", "auto_lightning_protection_required",
+            "auto_pipe_insulation_required", "auto_heating_cable_required",
+            "auto_sedimentation_check", "auto_disinfection_required",
+            "auto_nitrification_check", "auto_hydrobak_required",
+        }
+        for t in new_triggers:
+            assert t not in r.trigger_reasons, f"{t} не должен срабатывать на дефолтных значениях"
         assert hasattr(r, "trigger_reasons")

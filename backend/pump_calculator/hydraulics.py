@@ -179,8 +179,17 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
         operating_mode=(L1.operating_mode if L1 and L1.operating_mode else None),
     )
 
-    # 7. Количество насосов (1+1 по СП 32 §6.2 если override не задан)
-    n_pumps = (L1.pumps_total_override if L1 and L1.pumps_total_override else 2)
+    # 7. Количество насосов: приоритет pumps_total_override > redundancy > default (2).
+    # redundancy "1+0" → 1 (без резерва, нарушение СП 32 §6.2 — но клиент так хочет),
+    # "1+1" → 2 (default), "2+1" → 3, "3+1" → 4, "N+0" → 2 (=2 рабочих, без резерва).
+    # NB: pumps_total_override (число) перебивает redundancy если задан.
+    n_pumps = _resolve_n_pumps(L1)
+
+    # 8. NPSHa с поправкой на высоту (L1.altitude_m).
+    # Только если altitude_m задан явно — иначе оставляем None (backward compat).
+    npsha_m: float | None = None
+    if L1 and L1.altitude_m is not None:
+        npsha_m = _compute_npsha_m(altitude_m=L1.altitude_m, T_celsius=T_c)
 
     return ComputedHydraulics(
         D_mm=D_mm,
@@ -196,7 +205,58 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
         cycles_per_hour_estimate=cycles,
         operating_mode_effective=mode_eff,
         n_pumps_total=n_pumps,
+        npsha_m=npsha_m,
     )
+
+
+def _resolve_n_pumps(L1: L1Input | None) -> int:
+    """Разрешить количество насосов: pumps_total_override > redundancy > 2.
+
+    Маппинг redundancy → N:
+        "1+0" → 1 (нарушает СП 32 §6.2 п. о резерве, но допускается по запросу)
+        "1+1" → 2 (default — 1 раб + 1 рез)
+        "2+1" → 3
+        "3+1" → 4
+        "N+0" → 2 (специально для пользовательских конфигов «без резерва»; трактуем как 2 раб)
+    """
+    if L1 is None:
+        return 2
+    if L1.pumps_total_override:
+        return L1.pumps_total_override
+    if L1.redundancy:
+        mapping = {"1+0": 1, "1+1": 2, "2+1": 3, "3+1": 4, "N+0": 2}
+        return mapping.get(L1.redundancy, 2)
+    return 2
+
+
+def _compute_npsha_m(altitude_m: float, T_celsius: float = 20.0) -> float:
+    """NPSHa с поправкой на высоту над уровнем моря.
+
+    Формула: NPSHa = (P_atm − P_vap) / (ρ·g)
+    где P_atm падает с высотой по барометрической формуле (см.
+    physics_advanced.atmospheric_pressure_kpa).
+
+    Допущения:
+        - H_suction = 0 (затопленный погружной насос, типичный для КНС)
+        - h_friction_suction = 0 (короткий патрубок)
+        - g = 9.80665 (уровень моря, без поправки на широту)
+    """
+    # Локальный импорт чтобы избежать циклов и оставить hydraulics автономной
+    # для модулей, которые не используют physics_advanced.
+    from pump_calculator.physics import (
+        density_water_kg_m3,
+        vapor_pressure_water_kpa,
+    )
+    from pump_calculator.physics_advanced import G_STANDARD, atmospheric_pressure_kpa
+
+    P_atm_kpa = atmospheric_pressure_kpa(altitude_m, T_celsius)
+    rho = density_water_kg_m3(T_celsius)
+    p_vap_kpa = vapor_pressure_water_kpa(T_celsius)
+    g = G_STANDARD
+    h_atm_m = (P_atm_kpa * 1000.0) / (rho * g)
+    h_vap_m = (p_vap_kpa * 1000.0) / (rho * g)
+    npsha = h_atm_m - h_vap_m  # H_suction=0, h_friction_suction=0
+    return round(npsha, 3)
 
 
 def _compute_sump_and_cycles(
