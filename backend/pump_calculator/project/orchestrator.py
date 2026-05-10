@@ -10,8 +10,6 @@ import logging
 
 from pump_calculator.regulations import ref as _reg_ref
 
-logger = logging.getLogger(__name__)
-
 from .models import (
     ProjectInput,
     ProjectPreset,
@@ -19,6 +17,8 @@ from .models import (
     ProjectSubsystems,
     SubsystemResult,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def _ref_dict(reg_key: str, section: str, purpose: str, quote: str = "") -> dict:

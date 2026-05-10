@@ -1,8 +1,6 @@
 """Тесты Q-H графика для PDF РПЗ (Phase 28)."""
 from __future__ import annotations
 
-import pytest
-
 
 def test_qh_chart_returns_png_bytes():
     """Базовая проверка: функция возвращает PNG-байты валидного размера."""

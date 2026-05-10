@@ -8,20 +8,20 @@ from __future__ import annotations
 from typing import Any
 
 from pump_calculator import catalog
-from pump_calculator.result_enrichment import (
-    build_summary_text,
-    calculate_completeness_pct,
-    fill_price_ranges,
-)
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
-from pump_calculator.pump_station_geometry import (
-    calc_specific_speed_ns,
-    score_ns_compatibility,
-)
 from pump_calculator.pricing import (
     estimate_fire_kit_price,
     estimate_kns_kit_price,
     estimate_spd_kit_price,
+)
+from pump_calculator.pump_station_geometry import (
+    calc_specific_speed_ns,
+    score_ns_compatibility,
+)
+from pump_calculator.result_enrichment import (
+    build_summary_text,
+    calculate_completeness_pct,
+    fill_price_ranges,
 )
 from pump_calculator.schemas import (
     ComputedHydraulics,

@@ -9,11 +9,11 @@
 
 from __future__ import annotations
 
+from pump_calculator.matching import select_pumps
 from pump_calculator.result_enrichment import (
     calculate_completeness_pct,
     calculate_price_range,
 )
-from pump_calculator.matching import select_pumps
 from pump_calculator.schemas import L0Input, L1Input
 
 

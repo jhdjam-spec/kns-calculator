@@ -16,7 +16,6 @@ import pytest
 from pump_calculator.matching import select_pumps
 from pump_calculator.schemas import L0Input, L1Input
 
-
 # ─── 4-цифр: только Q (минимум обязательного) ───────────────────────────
 
 
