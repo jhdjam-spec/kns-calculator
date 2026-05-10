@@ -244,6 +244,83 @@ class TestSuggestionsAPI:
         assert len(r.suggestions) == 0
 
 
+class TestSuggestionsDeepReasons:
+    """Reasons в suggestions содержат физическое/гидравлическое обоснование."""
+
+    def test_q_micro_reason_includes_units_and_norm(self):
+        """Q-suggestion упоминает СНиП норму ≥ 0.5 и единицы л/мин/л/с."""
+        L0 = L0Input(Q_m3h=0.05)
+        r = select_pumps(L0)
+        q_sugg = [s for s in r.suggestions if s.field == "Q_m3h"][0]
+        assert "л/мин" in q_sugg.reason
+        assert "л/с" in q_sugg.reason
+        assert "СНиП" in q_sugg.reason or "0.5" in q_sugg.reason
+
+    def test_dh_negative_reason_includes_bernoulli(self):
+        """dH-suggestion упоминает уравнение Бернулли + СП 32."""
+        L0 = L0Input(Q_m3h=20, dH_m=-30)
+        r = select_pumps(L0)
+        dh_sugg = [s for s in r.suggestions if s.field == "dH_m"][0]
+        assert "Бернулли" in dh_sugg.reason
+        assert "z₁" in dh_sugg.reason or "z₂" in dh_sugg.reason
+
+    def test_velocity_high_reason_includes_zhukovsky(self):
+        """Скорость > 3 м/с → reason содержит расчёт Жуковского + давление."""
+        L0 = L0Input(Q_m3h=10)
+        L1 = L1Input(pipe_D_mm=20)
+        r = select_pumps(L0, L1)
+        d_sugg = [s for s in r.suggestions if s.field == "L1.pipe_D_mm"][0]
+        assert "Жуковский" in d_sugg.reason
+        assert "Δp" in d_sugg.reason or "бар" in d_sugg.reason
+
+    def test_pe100_hot_reason_includes_arrhenius(self):
+        """PE100 + горячая → reason содержит закон Аррениуса (ползучесть)."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(pipe_material="pe100_sdr17", liquid_temp_c=80)
+        r = select_pumps(L0, L1)
+        mat_sugg = [s for s in r.suggestions if s.field == "L1.pipe_material"][0]
+        assert "Аррениус" in mat_sugg.reason
+        assert "ползучесть" in mat_sugg.reason or "50 лет" in mat_sugg.reason
+
+    def test_inflow_exceeds_reason_includes_mass_balance(self):
+        """Inflow > Q → reason содержит закон сохранения массы dV/dt."""
+        L0 = L0Input(Q_m3h=20)
+        L1 = L1Input(inflow_per_hour_m3=200)
+        r = select_pumps(L0, L1)
+        q_sugg = [s for s in r.suggestions if s.field == "Q_m3h"][0]
+        assert "масс" in q_sugg.reason
+        assert "dV/dt" in q_sugg.reason
+
+
+class TestNBendsActivation:
+    """n_bends/n_valves в L1 теперь влияют на расчёт sum_zeta (раньше игнорировалось)."""
+
+    def test_zero_bends_uses_typical(self):
+        """Без n_bends — fallback на typical_obvyazka."""
+        L0 = L0Input(Q_m3h=20, dH_m=10, L_m=50)
+        r = select_pumps(L0)
+        # typical sum_zeta из catalog (обычно 6.0-8.0)
+        assert r.computed.sum_zeta > 0
+
+    def test_explicit_bends_changes_zeta(self):
+        """Задание n_bends=10 → sum_zeta растёт."""
+        L0 = L0Input(Q_m3h=20, dH_m=10, L_m=50)
+        r0 = select_pumps(L0)
+        r10 = select_pumps(L0, L1Input(n_bends=10))
+        # 10 отводов × 0.3 + base 3.5 = 6.5
+        # Раньше игнорировалось, теперь sum_zeta меняется
+        assert r10.computed.sum_zeta != r0.computed.sum_zeta
+
+    def test_many_bends_increases_h_m(self):
+        """50 отводов → H_м больше чем 5 отводов."""
+        L0 = L0Input(Q_m3h=20, dH_m=10, L_m=50)
+        r5 = select_pumps(L0, L1Input(n_bends=5))
+        r50 = select_pumps(L0, L1Input(n_bends=50))
+        assert r50.computed.H_m_m > r5.computed.H_m_m
+        # 50 vs 5 отводов: разница (50-5)*0.3 = 13.5 ζ
+        assert r50.computed.sum_zeta > r5.computed.sum_zeta + 10
+
+
 class TestNoExceptionsOnEdgeCases:
     """Никакой edge-case, прошедший Pydantic, не должен ронять select_pumps."""
 
