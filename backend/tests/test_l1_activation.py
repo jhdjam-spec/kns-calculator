@@ -233,3 +233,103 @@ class TestAltitudeNpsha:
         # Ожидаем auto_npsha_low (если NPSHa < 5)
         if r.computed.npsha_m < 5.0:
             assert "auto_npsha_low" in r.trigger_reasons
+
+
+# ─────────────────────────────────────────────────────────────────────
+# 9. groundwater_level_m → anti-buoyancy uplift в pricing
+# ─────────────────────────────────────────────────────────────────────
+
+class TestGroundwaterAntiBuoyancy:
+    """Проверка, что L1.groundwater_level_m влияет на цену корпуса
+    (бетонный пригруз против всплытия по СП 32 §6.3 + Архимед).
+    """
+
+    def test_deep_groundwater_no_uplift(self, base_l0: L0Input) -> None:
+        """УГВ -5 м (глубоко) → uplift = 0, цена как без поля."""
+        from pump_calculator.pricing import estimate_anti_buoyancy_uplift_rub
+        # Прямой unit-test: УГВ -5 → 0 для всех сегментов.
+        for seg in ("budget", "mid", "premium"):
+            assert estimate_anti_buoyancy_uplift_rub(-5.0, 5.7, seg) == 0  # type: ignore[arg-type]
+        # Интеграционно: select_pumps с УГВ -5 = select_pumps без УГВ.
+        r_none = select_pumps(base_l0, L1=None)
+        r_deep = select_pumps(base_l0, L1=L1Input(groundwater_level_m=-5.0))
+        if r_none.results.budget and r_deep.results.budget:
+            assert (
+                r_deep.results.budget.price_breakdown.corpus_rub
+                == r_none.results.budget.price_breakdown.corpus_rub
+            )
+
+    def test_groundwater_at_surface_adds_uplift(self, base_l0: L0Input) -> None:
+        """УГВ = 0 м (на уровне земли) → uplift > 0 (бетонный пригруз 1-3 тонны)."""
+        from pump_calculator.pricing import estimate_anti_buoyancy_uplift_rub
+        for seg in ("budget", "mid", "premium"):
+            assert estimate_anti_buoyancy_uplift_rub(0.0, 5.7, seg) > 0  # type: ignore[arg-type]
+        # Интеграционно: цена corpus_rub растёт по сравнению с None.
+        r_none = select_pumps(base_l0, L1=None)
+        r_at0 = select_pumps(base_l0, L1=L1Input(groundwater_level_m=0.0))
+        if r_none.results.budget and r_at0.results.budget:
+            assert (
+                r_at0.results.budget.price_breakdown.corpus_rub
+                > r_none.results.budget.price_breakdown.corpus_rub
+            )
+
+    def test_higher_groundwater_higher_uplift(self) -> None:
+        """УГВ +5 м (затопленная площадка) → uplift > чем при УГВ 0."""
+        from pump_calculator.pricing import estimate_anti_buoyancy_uplift_rub
+        # При УГВ 0 — диапазон 50-150 тыс; при УГВ +5 — 200-500 тыс.
+        for seg in ("budget", "mid", "premium"):
+            uplift_at0 = estimate_anti_buoyancy_uplift_rub(0.0, 5.7, seg)  # type: ignore[arg-type]
+            uplift_at5 = estimate_anti_buoyancy_uplift_rub(5.0, 5.7, seg)  # type: ignore[arg-type]
+            assert uplift_at5 > uplift_at0, f"segment={seg}: {uplift_at5} <= {uplift_at0}"
+
+    def test_premium_uplift_higher_than_budget(self) -> None:
+        """premium множитель 1.7× → uplift_premium > uplift_budget при тех же условиях."""
+        from pump_calculator.pricing import estimate_anti_buoyancy_uplift_rub
+        # Тестируем для УГВ 0 м и для УГВ +3 м.
+        for gw in (0.0, -1.0, 3.0):
+            u_budget = estimate_anti_buoyancy_uplift_rub(gw, 12.6, "budget")
+            u_premium = estimate_anti_buoyancy_uplift_rub(gw, 12.6, "premium")
+            assert u_premium > u_budget, (
+                f"УГВ={gw}: premium={u_premium} <= budget={u_budget}"
+            )
+
+    def test_groundwater_above_surface_creates_suggestion(
+        self, base_l0: L0Input,
+    ) -> None:
+        """УГВ > 0 → suggestion с field=L1.groundwater_level_m + severity=critical."""
+        r = select_pumps(base_l0, L1=L1Input(groundwater_level_m=2.0))
+        # Trigger обязан быть
+        assert "auto_groundwater_above_surface" in r.trigger_reasons
+        # Suggestion с этим полем должна появиться
+        gw_suggs = [s for s in r.suggestions if s.field == "L1.groundwater_level_m"]
+        assert len(gw_suggs) >= 1, "suggestion для УГВ > 0 не сгенерирована"
+        s = gw_suggs[0]
+        assert s.severity == "critical"
+        assert s.reason_engineer is not None and "Архимед" in s.reason_engineer
+        assert s.reason_manager is not None and "пригруз" in s.reason_manager.lower()
+
+    def test_real_pump_kit_includes_uplift(self, base_l0: L0Input) -> None:
+        """Интеграционный: select_pumps с УГВ +3 м даёт total_rub больше,
+        чем без УГВ — за счёт пригруза в corpus_rub.
+        """
+        r_none = select_pumps(base_l0, L1=None)
+        r_flood = select_pumps(base_l0, L1=L1Input(groundwater_level_m=3.0))
+        for seg in ("budget", "mid", "premium"):
+            pr_none = getattr(r_none.results, seg)
+            pr_flood = getattr(r_flood.results, seg)
+            if pr_none and pr_flood:
+                # corpus_rub должен вырасти
+                assert (
+                    pr_flood.price_breakdown.corpus_rub
+                    > pr_none.price_breakdown.corpus_rub
+                ), f"{seg}: corpus_rub не выросла при УГВ +3"
+                # total_rub тоже
+                assert (
+                    pr_flood.price_breakdown.total_rub
+                    > pr_none.price_breakdown.total_rub
+                ), f"{seg}: total_rub не выросла при УГВ +3"
+                # Note про пригруз должна быть в pump.notes
+                assert any(
+                    "пригруз" in n.lower() or "anti-buoyancy" in n.lower()
+                    for n in pr_flood.notes
+                ), f"{seg}: note про пригруз отсутствует"

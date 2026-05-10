@@ -383,6 +383,8 @@ def make_pump_result(
 
         # КНС бытовая/дренаж/индустрия: дефолт 1+1=2; клиент может задать override.
         n_kns = max(2, n_pumps_override) if n_pumps_override else 2
+        # 2026-05-10: anti-buoyancy uplift из L1.groundwater_level_m (СП 32 §6.3).
+        gw_level = L1.groundwater_level_m if L1 is not None else None
         price_breakdown, confidence = estimate_kns_kit_price(
             P_kW=P_kW,
             Q_m3h=Q_m3h,
@@ -393,6 +395,7 @@ def make_pump_result(
             explicit_pump_price_rub=explicit_pump_price,
             include_corpus=not is_small_kit,
             include_rails=not is_small_kit,
+            groundwater_level_m=gw_level,
         )
 
     # ──────────────────────────────────────────────────────────────────
@@ -431,6 +434,23 @@ def make_pump_result(
             price_breakdown.total_rub += uplift
             price_breakdown.total_dealer_rub = int(round(price_breakdown.total_rub * 0.75))
             pump_notes.append(f"📡 Modbus RTU модуль для SCADA: +{uplift:,} ₽".replace(",", " "))
+
+        # 3a. groundwater_level_m — anti-buoyancy uplift уже учтён в corpus_rub
+        # внутри estimate_kns_kit_price; здесь добавляем инженерный note для UX.
+        if L1.groundwater_level_m is not None and L1.groundwater_level_m > -2.0:
+            from pump_calculator.pricing import (
+                _estimate_corpus_volume_m3,
+                estimate_anti_buoyancy_uplift_rub,
+            )
+            v_m3 = _estimate_corpus_volume_m3(Q_m3h)
+            uplift = estimate_anti_buoyancy_uplift_rub(
+                L1.groundwater_level_m, v_m3, segment,
+            )
+            if uplift > 0:
+                pump_notes.append(
+                    f"⚓ Anti-buoyancy ж/б пригруз (СП 32 §6.3, УГВ "
+                    f"{L1.groundwater_level_m:+.1f} м): +{uplift:,} ₽".replace(",", " ")
+                )
 
         # 3. above_ground_pavilion — добавить павильон 200-500k в зависимости от Q.
         if L1.above_ground_pavilion:
@@ -1142,6 +1162,67 @@ def build_suggestions(
             reason_engineer=eng,
             reason_manager=mgr,
             severity="warning",
+        ))
+
+    # EXT-11: anti-buoyancy при УГВ > 0 (СП 32 §6.3 + Архимед).
+    # Если УГВ выше отметки земли, площадка затоплена — корпус КНС всплывёт
+    # без бетонного пригруза. Critical, suggestion с ценой пригруза.
+    if (
+        "auto_groundwater_above_surface" in triggers
+        and L1
+        and L1.groundwater_level_m is not None
+    ):
+        gw = L1.groundwater_level_m
+        # Грубая оценка V_корпуса по Q (см. _estimate_corpus_volume_m3).
+        if L0.Q_m3h <= 30:
+            V_corpus = 5.7
+        elif L0.Q_m3h <= 60:
+            V_corpus = 6.8
+        elif L0.Q_m3h <= 130:
+            V_corpus = 12.6
+        elif L0.Q_m3h <= 252:
+            V_corpus = 28.3
+        else:
+            V_corpus = 55.4
+        # F_Архимеда = ρ·g·V (ρ=1000, g=9.81)
+        F_arch_kn = 1000 * 9.81 * V_corpus / 1000.0  # кН
+        F_arch_t = F_arch_kn / 9.81  # тонн (масса эквивалента)
+        # V_бетона ≥ F / (ρ_бет_эфф · g), ρ_эфф_подвода = 1400
+        V_concrete_m3 = F_arch_kn * 1000.0 / (1400.0 * 9.81)
+        eng = (
+            f"⚓ Закон Архимеда + СП 32.13330.2018 §6.3 — расчёт пригруза.\n"
+            f"📐 Подъёмная сила: F = ρ_воды · g · V_корпуса = "
+            f"1000 · 9.81 · {V_corpus:.1f} = {F_arch_kn:.0f} кН ({F_arch_t:.1f} тонн).\n"
+            f"📐 Удержание ж/б пригрузом: V_бетон ≥ F / (ρ_бет_эфф · g), "
+            f"где ρ_бет_эфф = ρ_бет − ρ_воды = 2400 − 1000 = 1400 кг/м³ "
+            f"(бетон сам в воде).\n"
+            f"V_бетон = {F_arch_kn:.0f} · 1000 / (1400 · 9.81) ≈ "
+            f"{V_concrete_m3:.1f} м³ ж/б класса B20-B25.\n"
+            f"При УГВ = {gw:+.1f} м (выше уровня земли) площадка постоянно "
+            f"затоплена — без пригруза корпус всплывёт за 1-3 года при паводке.\n"
+            f"⚠ K_запаса = 1.1 (СП 32 §6.3); для Ex-зон и I категории — 1.5."
+        )
+        mgr = (
+            f"⚓ УГВ выше земли на {gw:+.1f} м — площадка затоплена. "
+            f"Без бетонного пригруза корпус КНС всплывёт через 2-3 года "
+            f"при первом паводке.\n"
+            f"💰 Стоимость:\n"
+            f"  • Ж/б пригруз ({V_concrete_m3:.1f} м³ ≈ {F_arch_t:.0f} тонн) — "
+            f"200-500 тыс ₽ сразу (бетон + арматура + опалубка).\n"
+            f"  • Усиление обоймы корпуса по СП 22 §5.4 — +50-150 тыс ₽.\n"
+            f"⚠ Если не учесть: аварийный ремонт (откопка + монтаж пригруза + "
+            f"замена корпуса) — 500-1500 тыс ₽ + остановка КНС на 2 недели.\n"
+            f"📞 Передайте инженеру для детального расчёта по СП 32 §6.3 "
+            f"(structural/ballast.py)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.groundwater_level_m",
+            current_value=f"{gw:+.1f}",
+            suggested_value=f"ж/б пригруз {V_concrete_m3:.1f} м³",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
         ))
 
     return suggestions

@@ -145,6 +145,79 @@ def estimate_corpus_price_rub(Q_m3h: float, material: CorpusMaterial = "pe") -> 
     return 1_700_000
 
 
+# ---------- Anti-buoyancy uplift (УГВ → бетонный пригруз) ----------
+#
+# Архимед + СП 32.13330.2018 §6.3:
+#   F_подъёма = ρ_воды · g · V_корпуса_подводой   (ρ=1000 кг/м³, g=9.81)
+#   Удержание ж/б пригрузом: V_бетон ≥ F / (ρ_бет · g),  ρ_бет = 2400 кг/м³.
+#
+# Цена ж/б пригруза = бетон (B20-B25 ~6-8 тыс ₽/м³) + арматура + опалубка +
+# усиление обоймы корпуса при затоплении площадки. По эталонам Серво-Юг:
+#   • V≈1-3 тонн (УГВ от -2 до 0 м) → 50-150 тыс ₽
+#   • V≈10+ тонн (УГВ выше поверхности) → 200-500 тыс ₽
+#
+# Сегментные множители — учитывают рост качества арматуры/опалубки/обоймы
+# (budget=ж/б самосвал + опалубка из доски, premium=арматура А500С + металлическая
+# опалубка + ж/б обойма по СП 22 §5.4).
+
+ANTI_BUOYANCY_SEGMENT_MULT: dict[str, float] = {
+    "budget": 1.0,
+    "mid": 1.3,
+    "premium": 1.7,
+}
+
+
+def estimate_anti_buoyancy_uplift_rub(
+    groundwater_level_m: float | None,
+    corpus_volume_m3: float,
+    segment: PriceSegment,
+) -> int:
+    """Доплата за бетонный пригруз против всплытия КНС при высоком УГВ.
+
+    Параметры:
+      groundwater_level_m — отметка УГВ относительно земли, м.
+        None → 0 (поле не заполнено, backward compat).
+        ≤ -2 м → 0 (УГВ глубоко, корпус выше воды, пригруз не нужен).
+        -2…0 м → среднее затопление (ж/б пригруз 1-3 тонны).
+        > 0 м → площадка затоплена (большой пригруз + усиление обоймы).
+      corpus_volume_m3 — объём корпуса для оценки силы Архимеда (используется
+        при УГВ > 0 для масштабирования по реальному объёму).
+      segment — budget/mid/premium (множитель ANTI_BUOYANCY_SEGMENT_MULT).
+
+    Возвращает: доплата в ₽ (округлено до тыс).
+
+    Источник: СП 32.13330.2018 §6.3, расчёт из structural/ballast.py.
+    """
+    if groundwater_level_m is None:
+        return 0
+
+    if groundwater_level_m <= -2.0:
+        # УГВ глубокий — корпус сухой, пригруз не нужен.
+        return 0
+
+    mult = ANTI_BUOYANCY_SEGMENT_MULT.get(segment, 1.0)
+
+    if groundwater_level_m <= 0.0:
+        # От -2 до 0: линейная интерполяция в диапазоне 50-150 тыс ₽
+        # (бетонный пригруз 1-3 тонны).
+        # Чем выше УГВ (ближе к 0) — тем больше затопление.
+        frac = (groundwater_level_m + 2.0) / 2.0  # 0…1
+        base = 50_000 + frac * 100_000  # 50k…150k
+        raw = base * mult
+        return int(round(raw / 1000.0) * 1000)
+
+    # УГВ > 0 — площадка затоплена. Большой пригруз + усиление обоймы.
+    # Базовая стоимость 200 тыс ₽ при V_корпуса ≈ 5 м³ (малая КНС);
+    # масштабируется до 500 тыс ₽ для V ≈ 50 м³ (большая КНС Q≥250).
+    # Дополнительный фактор — насколько УГВ выше поверхности (доп. напор воды).
+    v_factor = max(0.0, min(1.0, (corpus_volume_m3 - 5.0) / 45.0))  # 0…1
+    h_factor = min(1.0, groundwater_level_m / 5.0)  # 0…1 (cap при +5 м)
+    combined = 0.5 * v_factor + 0.5 * h_factor  # 0…1
+    base = 200_000 + combined * 300_000  # 200k…500k
+    raw = base * mult
+    return int(round(raw / 1000.0) * 1000)
+
+
 # ---------- Шкаф управления ----------
 
 def estimate_cabinet_price_rub(P_kW: float, segment: PriceSegment) -> int:
@@ -164,6 +237,27 @@ def estimate_cabinet_price_rub(P_kW: float, segment: PriceSegment) -> int:
 
 # ---------- Главная функция оценки BOM ----------
 
+def _estimate_corpus_volume_m3(Q_m3h: float) -> float:
+    """Грубая оценка объёма КНС-корпуса по производительности (для anti-buoyancy).
+
+    Эталоны Серво-Юг ПЭ-корпусов:
+      Q≤30 → D1.5 × H3.2 ≈ 5.7 м³
+      Q≤60 → D1.6 × H3.4 ≈ 6.8 м³
+      Q≤130 → D2.0 × H4.0 ≈ 12.6 м³
+      Q≤252 → D3.0 × H4.0 ≈ 28.3 м³
+      Q>252 → D4.2 × H4.0 ≈ 55.4 м³
+    """
+    if Q_m3h <= 30:
+        return 5.7
+    if Q_m3h <= 60:
+        return 6.8
+    if Q_m3h <= 130:
+        return 12.6
+    if Q_m3h <= 252:
+        return 28.3
+    return 55.4
+
+
 def estimate_kns_kit_price(
     P_kW: float,
     Q_m3h: float,
@@ -174,6 +268,7 @@ def estimate_kns_kit_price(
     explicit_pump_price_rub: int | None = None,
     include_corpus: bool = True,
     include_rails: bool = True,
+    groundwater_level_m: float | None = None,
 ) -> tuple[PriceBreakdown, str]:
     """Полная оценка цены КНС-комплекта.
 
@@ -242,10 +337,27 @@ def estimate_kns_kit_price(
     chain_rub = 4_000 * n_pumps if include_rails else 0
 
     # 8. Корпус КНС (опционально — для готовых приямков выключить)
-    corpus_rub = (
+    corpus_base_rub = (
         estimate_corpus_price_rub(Q_m3h, material=corpus_material)
         if include_corpus else 0
     )
+
+    # 8b. Anti-buoyancy uplift (СП 32 §6.3): если УГВ выше дна корпуса,
+    # требуется бетонный пригруз против всплытия. Прибавляем к corpus_rub
+    # с пометкой в poll_notes (дальше matching.py добавит инженерный note).
+    # Работает только если корпус включён (для готовых приямков пригруз
+    # делается отдельным проектным решением).
+    if include_corpus:
+        corpus_volume_m3 = _estimate_corpus_volume_m3(Q_m3h)
+        anti_buoyancy_rub = estimate_anti_buoyancy_uplift_rub(
+            groundwater_level_m=groundwater_level_m,
+            corpus_volume_m3=corpus_volume_m3,
+            segment=segment,
+        )
+    else:
+        anti_buoyancy_rub = 0
+
+    corpus_rub = corpus_base_rub + anti_buoyancy_rub
 
     total = (
         pump_total + atm_rub + valve_rub + check_valve_rub
