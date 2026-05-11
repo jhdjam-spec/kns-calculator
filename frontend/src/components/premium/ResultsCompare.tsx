@@ -7,6 +7,7 @@ import type { SelectionResult, PumpResult, PriceBreakdown } from "@/schemas/resu
 import { triggerReasonLabels } from "@/schemas/result";
 import { formatRubFull, calcMatchPct } from "@/lib/units";
 import { openEncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
+import { SuggestionList } from "@/components/wizard/SuggestionCard";
 import {
   downloadCalculationPdf,
   downloadBomCsv,
@@ -106,6 +107,12 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
 
         {result.engineer_handoff_required && (
           <HandoffBanner reasons={result.trigger_reasons} />
+        )}
+
+        {result.suggestions && result.suggestions.length > 0 && (
+          <div className="mb-8">
+            <SuggestionList suggestions={result.suggestions} variant="light" />
+          </div>
         )}
 
         <div className="grid md:grid-cols-3 gap-4 md:gap-6">

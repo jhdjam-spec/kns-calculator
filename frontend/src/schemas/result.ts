@@ -78,6 +78,24 @@ export const computedHydraulicsSchema = z.object({
 
 export type ComputedHydraulics = z.infer<typeof computedHydraulicsSchema>;
 
+/**
+ * Зеркало backend `InputSuggestion` (commit afcea84 / 2beab6a).
+ * Backend советует поправить ввод когда видит подозрительные значения.
+ * - reason — старое поле, оставляем для backward compat.
+ * - reason_engineer/reason_manager — расширенные тексты (2beab6a) для tab toggle.
+ */
+export const inputSuggestionSchema = z.object({
+  field: z.string(),
+  current_value: z.string(),
+  suggested_value: z.string(),
+  reason: z.string().default(""),
+  reason_engineer: z.string().optional(),
+  reason_manager: z.string().optional(),
+  severity: z.enum(["info", "warning", "critical"]).default("info"),
+});
+
+export type InputSuggestion = z.infer<typeof inputSuggestionSchema>;
+
 export const selectionResultSchema = z.object({
   schema_version: z.string(),
   input: z.unknown(), // не парсим строго — это копия input
@@ -98,6 +116,8 @@ export const selectionResultSchema = z.object({
   summary_text: z.string().default(""),
   // 2026-05-09 P2.3 — альтернативные кандидаты по другим брендам
   alternatives: z.array(pumpResultSchema).default([]),
+  // 2026-05-10 — backend советует поправить ввод (afcea84 / 2beab6a)
+  suggestions: z.array(inputSuggestionSchema).default([]),
 });
 
 export type SelectionResult = z.infer<typeof selectionResultSchema>;

@@ -83,8 +83,9 @@
         "distributor": "АСО (acorussia.ru)"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталонная точка верификации (АртВинд Мысхако)",
-      "_source": "Паспорт АВ.1382.08.23-М-НК"
+      "_engineer_note": "Эталонная точка верификации (АртВинд Мысхако) | 78595 ₽ tender_research 2026-05-11 (medium)",
+      "_source": "Паспорт АВ.1382.08.23-М-НК",
+      "price_rub_2026": 78595
     },
     {
       "id": "kaiquan-65wqs215-185",
@@ -131,8 +132,9 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Cutter с режущими лопастями и клыками для длинноволокнистых стоков. Q_BEP=53.7 м³/ч @ H=46 м, КПД 41.8%. Q_min постоянный 20 м³/ч. Электродвигатель 18.5 кВт (модель WQ/SE18.5-2P-00, 35 А, cosφ=0.91), мощность на валу 15.3 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен кривой производительности (60 м³/ч).",
-      "_source": "Паспорт 65WQS215-18.5.pdf от 2026.02.25 (inbox 2026-05-04)"
+      "_engineer_note": "Cutter с режущими лопастями и клыками для длинноволокнистых стоков. Q_BEP=53.7 м³/ч @ H=46 м, КПД 41.8%. Q_min постоянный 20 м³/ч. Электродвигатель 18.5 кВт (модель WQ/SE18.5-2P-00, 35 А, cosφ=0.91), мощность на валу 15.3 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен кривой производительности (60 м³/ч). | 195000 ₽ tender_research 2026-05-11 (low)",
+      "_source": "Паспорт 65WQS215-18.5.pdf от 2026.02.25 (inbox 2026-05-04)",
+      "price_rub_2026": 195000
     },
     {
       "id": "kaiquan-wq2290-2136-80",
@@ -179,8 +181,9 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7 м, КПД 57.2%. Q_min постоянный 24 м³/ч. Электродвигатель 37 кВт (модель WQ/Z37-2P-00, 68 А, cosφ=0.89), мощность на валу 27.5 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен графиком производительности (~120 м³/ч).",
-      "_source": "Паспорт WQ2290-2136-80.pdf от 2026.02.25 (inbox 2026-05-04)"
+      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7 м, КПД 57.2%. Q_min постоянный 24 м³/ч. Электродвигатель 37 кВт (модель WQ/Z37-2P-00, 68 А, cosφ=0.89), мощность на валу 27.5 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен графиком производительности (~120 м³/ч). | 850000 ₽ tender_research 2026-05-11 (low)",
+      "_source": "Паспорт WQ2290-2136-80.pdf от 2026.02.25 (inbox 2026-05-04)",
+      "price_rub_2026": 850000
     },
     {
       "id": "antarus-nk1-50",
@@ -219,8 +222,9 @@
         "distributor": "Antarus прямой"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Серия НК1 — envelope обобщённый, нужны точные модели (НК1-50/22-15-1.1, НК1-65/...) | eta=48% sub_E_research (low)",
-      "_source": "search.antarus.su"
+      "_engineer_note": "Серия НК1 — envelope обобщённый, нужны точные модели (НК1-50/22-15-1.1, НК1-65/...) | eta=48% sub_E_research (low) | 95000 ₽ tender_research 2026-05-11 (low)",
+      "_source": "search.antarus.su",
+      "price_rub_2026": 95000
     },
     {
       "id": "antarus-nk2-150",
@@ -258,8 +262,9 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Соответствует кейсу 'Большая КНС 70 л/с' из MATERIALS_INVENTORY (HK2-150-28-150-22-TB-10M) | eta=48% sub_E_research (low)",
-      "_source": "MATERIALS_INVENTORY.md + producers_dataset.json"
+      "_engineer_note": "Соответствует кейсу 'Большая КНС 70 л/с' из MATERIALS_INVENTORY (HK2-150-28-150-22-TB-10M) | eta=48% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low)",
+      "_source": "MATERIALS_INVENTORY.md + producers_dataset.json",
+      "price_rub_2026": 1850000
     },
     {
       "id": "antarus-3mlv20-5",
@@ -580,8 +585,9 @@
         "distributor": "ООО КСБ Москва"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Конкретная модель внутри серии — через KSB EasySelect | eta=58% sub_E_research (low)",
-      "_source": "ksb.com"
+      "_engineer_note": "Конкретная модель внутри серии — через KSB EasySelect | eta=58% sub_E_research (low) | 360000 ₽ tender_research 2026-05-11 (low)",
+      "_source": "ksb.com",
+      "price_rub_2026": 360000
     },
     {
       "id": "ksb-amarex-krt",
@@ -619,9 +625,10 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (low)",
+      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low)",
       "_source": "ksb.com",
-      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
+      "price_rub_2026": 1850000
     },
     {
       "id": "pedrollo-vxm-15-50",
@@ -744,10 +751,11 @@
       "image_url": null,
       "notes": "Демо-запись для Phase 5 ETL. Точные точки Q-H требуют верификации по официальному паспорту KAIQUAN.",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 95510 ₽ tender_research 2026-05-11 (medium)",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 95510
     },
     {
       "id": "kaiquan-80wq-s-50-22-7-5",
@@ -829,10 +837,11 @@
       "image_url": null,
       "notes": "Демо-запись. Точные точки Q-H требуют верификации.",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 124955 ₽ tender_research 2026-05-11 (medium)",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 124955
     },
     {
       "id": "kaiquan-100wq-s-100-22-15",
@@ -914,10 +923,11 @@
       "image_url": null,
       "notes": "Демо-запись. Подходит для городских КНС средней мощности.",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 314381 ₽ tender_research 2026-05-11 (medium)",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 314381
     },
     {
       "id": "antarus-нк2-100-22",
@@ -999,10 +1009,11 @@
       "image_url": null,
       "notes": "Демо-запись. Российский конкурент Wilo/Grundfos в среднем сегменте.",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования.",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 850000 ₽ tender_research 2026-05-11 (low)",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 850000
     },
     {
       "id": "wilo-wilo-rexa-pro-v08da",
@@ -2480,10 +2491,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=50% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=50% sub_E_research (medium) | 314102 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 314102
     },
     {
       "id": "ksb-krt-f-40-252",
@@ -2697,10 +2709,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=50% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=50% sub_E_research (medium) | 375176 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 375176
     },
     {
       "id": "ksb-krt-s-50-216",
@@ -2912,10 +2925,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=53% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=53% sub_E_research (medium) | 464311 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 464311
     },
     {
       "id": "ksb-krt-e-65-216",
@@ -2983,10 +2997,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=58% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=58% sub_E_research (medium) | 474781 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 474781
     },
     {
       "id": "ksb-krt-f-65-217",
@@ -3417,10 +3432,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=55% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=55% sub_E_research (medium) | 480365 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 480365
     },
     {
       "id": "ksb-krt-e-80-253",
@@ -3488,10 +3504,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=60% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=60% sub_E_research (medium) | 491534 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 491534
     },
     {
       "id": "ksb-krt-k-80-253",
@@ -4347,10 +4364,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=58% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=58% sub_E_research (medium) | 552971 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 552971
     },
     {
       "id": "ksb-krt-e-100-315",
@@ -4489,10 +4507,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=54% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=54% sub_E_research (medium) | 586203 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 586203
     },
     {
       "id": "ksb-krt-k-100-315",
@@ -4916,10 +4935,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=66% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=66% sub_E_research (medium) | 644076 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 644076
     },
     {
       "id": "ksb-krt-d-100-403",
@@ -5344,10 +5364,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=62% sub_E_research (medium)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | KSB ушёл из РФ — request quote через дилера (subagent research 2026-05-10) | eta=62% sub_E_research (medium) | 656857 ₽ tender_research 2026-05-11 (medium)",
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 656857
     },
     {
       "id": "ksb-krt-d-150-315",
@@ -8467,10 +8488,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low)",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 295000
     },
     {
       "id": "antarus-нк1-100-15-7-5-квт-10м-tb",
@@ -8537,10 +8559,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low)",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 295000
     },
     {
       "id": "antarus-нк1-50-10-0-75-квт-10м",
@@ -9022,10 +9045,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=53% sub_E_research (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=53% sub_E_research (low) | 145000 ₽ tender_research 2026-05-11 (low)",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 145000
     },
     {
       "id": "antarus-нк1-50-45-7-5-квт-10м-tb",
@@ -9091,10 +9115,11 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 320000 ₽ tender_research 2026-05-11 (low)",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
-      "_updated": "2026-05-03"
+      "_updated": "2026-05-03",
+      "price_rub_2026": 320000
     },
     {
       "id": "antarus-нк1-65-10-1-1-квт-10м",
@@ -13738,8 +13763,9 @@
         "distributor": "ГМС-Ливенские насосы"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российский эконом-вариант для пожарных СПД (СП 10.13130). Применяется с пожарным ШУ. Цены — индивидуально под объект.",
-      "_source": "hms-livny.ru (placeholder)"
+      "_engineer_note": "Российский эконом-вариант для пожарных СПД (СП 10.13130). Применяется с пожарным ШУ. Цены — индивидуально под объект. | 145434 ₽ tender_research 2026-05-11 (medium)",
+      "_source": "hms-livny.ru (placeholder)",
+      "price_rub_2026": 145434
     },
     {
       "id": "vandjord-sg-50-75-25-0d",
@@ -13869,9 +13895,10 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон ЛОС Свирь-15 (СЗ-РФ): 4 насоса в ливневой КНС Ø2300×2000 для Q=15 л/с (54 м³/ч). Малый ливневый. EC = epoxy coated. | eta=56% sub_E_research (low)",
+      "_engineer_note": "Эталон ЛОС Свирь-15 (СЗ-РФ): 4 насоса в ливневой КНС Ø2300×2000 для Q=15 л/с (54 м³/ч). Малый ливневый. EC = epoxy coated. | eta=56% sub_E_research (low) | 78595 ₽ tender_research 2026-05-11 (medium)",
       "_source": "Проект ЛОС Свирь-15 263-НВК",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 78595
     },
     {
       "id": "cnp-50wq12-10-075",
@@ -13951,9 +13978,10 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон ПВТ Краснодар КНС-2: Q=600 м³/ч (255 л/с) H=10. Установлено в Ø4000×6540 ПВТ-корпусе. Крупный ливневый. | eta=68% sub_E_research (medium)",
+      "_engineer_note": "Эталон ПВТ Краснодар КНС-2: Q=600 м³/ч (255 л/с) H=10. Установлено в Ø4000×6540 ПВТ-корпусе. Крупный ливневый. | eta=68% sub_E_research (medium) | 850000 ₽ tender_research 2026-05-11 (low)",
       "_source": "ТКП ПВТ 822005890-ОК-НВК-6.4",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 850000
     },
     {
       "id": "cnp-chl-8-50",
@@ -14080,9 +14108,10 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43. | impeller channel->multi-channel canonicalized 2026-05-10",
+      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43. | impeller channel->multi-channel canonicalized 2026-05-10 | 680000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Wilo Spaix datasheet 2022.09.21 + BloPlast SPT-2900/5700",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 680000
     },
     {
       "id": "wilo-rexa-pro-c08da-415",
@@ -14120,10 +14149,11 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Бытовая мини-КНС, эталон 18-007-ТХ Крым (КОС хоз-быт) — 1+1 рез. Q=10 H=15 в КНС-3 Ø2200. | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (medium)",
+      "_engineer_note": "Бытовая мини-КНС, эталон 18-007-ТХ Крым (КОС хоз-быт) — 1+1 рез. Q=10 H=15 в КНС-3 Ø2200. | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (medium) | 247663 ₽ tender_research 2026-05-11 (medium)",
       "_source": "18-007-ТХ Крым (экспертиза 9102031438)",
       "_added": "2026-05-08",
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_rub_2026": 247663
     },
     {
       "id": "grundfos-seg-40-09-2-50b",
@@ -14210,10 +14240,11 @@
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков. | segment standard→mid (PRR fix 2026-05-10) | 61623 ₽ tender_research 2026-05-11 (high)",
       "_source": "kns2.zip 50WQ20-15-2.2(I)  CNP.pdf (KP инженер Серво-Юг)",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 61623
     },
     {
       "id": "cnp-50wq25-10-2.2",
@@ -14252,9 +14283,10 @@
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN. | segment standard→mid (PRR fix 2026-05-10) | 61623 ₽ tender_research 2026-05-11 (medium)",
       "_source": "kns2.zip CNP паспорт",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 61623
     },
     {
       "id": "cnp-65wq50-55-15",
@@ -14294,9 +14326,10 @@
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км. | segment standard→mid (PRR fix 2026-05-10) | 280000 ₽ tender_research 2026-05-11 (low)",
       "_source": "kns2.zip CNP паспорт",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 280000
     },
     {
       "id": "cnp-80wq60-11-4",
@@ -14335,10 +14368,11 @@
         "status": "official",
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный. | segment standard→mid (PRR fix 2026-05-10)",
+      "_engineer_flag": "ok",
+      "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный. | segment standard→mid (PRR fix 2026-05-10) | 108806 ₽ tender_research 2026-05-11 (high)",
       "_source": "kns2.zip CNP паспорт",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 108806
     },
     {
       "id": "smz-kit-kpa-250-18-150-18.5",
@@ -14421,9 +14455,10 @@
         "distributor": "Аркада"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Найдено в КП #28052025_1 ООО «Серво-Полимер» — наша КНС D1600 H8500 для Симферополя. Q=40 H=12 P=3кВт DN80 муфта QG. Эталон собственной сделки.",
+      "_engineer_note": "Найдено в КП #28052025_1 ООО «Серво-Полимер» — наша КНС D1600 H8500 для Симферополя. Q=40 H=12 P=3кВт DN80 муфта QG. Эталон собственной сделки. | 95000 ₽ tender_research 2026-05-11 (medium)",
       "_source": "kns3.zip / KP_28052025.txt",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 95000
     },
     {
       "id": "masdaf-nmm-100-160",
@@ -14714,9 +14749,10 @@
         "distributor": "Аркада"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа. | impeller channel->multi-channel canonicalized 2026-05-10",
+      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа. | impeller channel->multi-channel canonicalized 2026-05-10 | 290000 ₽ tender_research 2026-05-11 (low)",
       "_source": "kns3.zip",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 290000
     },
     {
       "id": "wilo-drain-tm-32-7",
@@ -15207,14 +15243,14 @@
         "industrial"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 580000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "request_quote: Серия Rexa SOLID-T (T = тяжёлая, single-channel impeller, P=22 kW, DN150, free p"
+      "_engineer_note": "request_quote: Серия Rexa SOLID-T (T = тяжёлая, single-channel impeller, P=22 kW, DN150, free p | 580000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "wilo-rexa-solid-t-s12-200",
@@ -15249,13 +15285,13 @@
         "industrial"
       ],
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 1250000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Крупная промышл КНС. | request_quote: Тяжёлый канализационный насос P=45 kW, DN200, free passage 150 mm. В РФ не стоку",
+      "_engineer_note": "Крупная промышл КНС. | request_quote: Тяжёлый канализационный насос P=45 kW, DN200, free passage 150 mm. В РФ не стоку | 1250000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Agent D research 2026-05-08"
     },
     {
@@ -16833,13 +16869,13 @@
         "industrial"
       ],
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 360000,
       "available_ru": {
         "status": "official",
         "distributor": "завод Взлёт, Омск"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Взрывозащищённое исполнение Ex для нефтегаза.",
+      "_engineer_note": "Взрывозащищённое исполнение Ex для нефтегаза. | 360000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Agent E research 2026-05-08",
       "ex_rating": "1Ex d IIB T4 Gb X"
     },
@@ -16874,13 +16910,13 @@
         "industrial"
       ],
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 720000,
       "available_ru": {
         "status": "official",
         "distributor": "завод Взлёт, Омск"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "ATEX для нефтехимии.",
+      "_engineer_note": "ATEX для нефтехимии. | 720000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Agent E research 2026-05-08",
       "ex_rating": "1Ex d IIB T4 Gb X"
     },
@@ -17077,13 +17113,13 @@
         "industrial"
       ],
       "price_segment": "budget",
-      "price_rub_2026": null,
+      "price_rub_2026": 165000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "WQ/E серия — Ex-исполнение для нефтегаза.",
+      "_engineer_note": "WQ/E серия — Ex-исполнение для нефтегаза. | 165000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Agent E research 2026-05-08",
       "ex_rating": "1Ex d IIB T3 Gb"
     },
@@ -17118,14 +17154,15 @@
         "industrial"
       ],
       "price_segment": "budget",
-      "price_rub_2026": null,
+      "price_rub_2026": 245000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent E research 2026-05-08",
-      "ex_rating": "1Ex d IIB T3 Gb"
+      "ex_rating": "1Ex d IIB T3 Gb",
+      "_engineer_note": "245000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "kaiquan-150wqs-100-30",
@@ -17160,13 +17197,14 @@
         "industrial"
       ],
       "price_segment": "budget",
-      "price_rub_2026": null,
+      "price_rub_2026": 380000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "_engineer_note": "380000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "kaiquan-200wqs-200-15",
@@ -17201,13 +17239,13 @@
         "industrial"
       ],
       "price_segment": "budget",
-      "price_rub_2026": null,
+      "price_rub_2026": 520000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Магистральная для крупных объектов. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
+      "_engineer_note": "Магистральная для крупных объектов. | impeller single-channel-large->single-channel canonicalized 2026-05-10 | 520000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Agent E research 2026-05-08"
     },
     {
@@ -17456,9 +17494,10 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Wilo Helix V catalog 2024",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 410000
     },
     {
       "id": "wilo-helix-v-3606",
@@ -17497,9 +17536,10 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 720000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Wilo Helix V catalog 2024",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 720000
     },
     {
       "id": "wilo-helix-v-5208",
@@ -17538,9 +17578,10 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 1150000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Wilo Helix V catalog 2024",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 1150000
     },
     {
       "id": "grundfos-cr-32-4-2",
@@ -17706,9 +17747,10 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 580000 ₽ tender_research 2026-05-11 (low)",
       "_source": "ИСТРАТЕХ Групп каталог 2026 (research 2026-05-08)",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 580000
     },
     {
       "id": "istratech-ilt-64-3",
@@ -17748,9 +17790,10 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10",
+      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 440000 ₽ tender_research 2026-05-11 (low)",
       "_source": "ИСТРАТЕХ Групп каталог 2026",
-      "_added": "2026-05-09"
+      "_added": "2026-05-09",
+      "price_rub_2026": 440000
     },
     {
       "id": "istratech-bm-1-4",
@@ -20516,7 +20559,8 @@
       "_added": "2026-05-10",
       "datasheet_url": "https://wtpump.ru/catalog/detail/699762/",
       "notes": "Установка пожаротушения 1+1 (рабочий+резерв)",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": "eta=72% sub_E_research (medium) | 1850000 ₽ tender_research 2026-05-11 (low)",
+      "price_rub_2026": 1850000
     },
     {
       "id": "cns-13-70",
@@ -22868,7 +22912,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: ппд. СПЕЦЗАКАЗ"
+      "notes": "Применения: ппд. СПЕЦЗАКАЗ",
+      "price_rub_2026": 11200000,
+      "_engineer_note": "11200000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-180-1422",
@@ -22915,7 +22961,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: ппд. СПЕЦЗАКАЗ"
+      "notes": "Применения: ппд. СПЕЦЗАКАЗ",
+      "price_rub_2026": 13500000,
+      "_engineer_note": "13500000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-300-120",
@@ -23776,7 +23824,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: ппд"
+      "notes": "Применения: ппд",
+      "price_rub_2026": 24000000,
+      "_engineer_note": "24000000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-500-880",
@@ -23823,7 +23873,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: ппд"
+      "notes": "Применения: ппд",
+      "price_rub_2026": 26500000,
+      "_engineer_note": "26500000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-500-1000",
@@ -23870,7 +23922,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: ппд. СПЕЦЗАКАЗ"
+      "notes": "Применения: ппд. СПЕЦЗАКАЗ",
+      "price_rub_2026": 30000000,
+      "_engineer_note": "30000000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-850-240",
@@ -24106,7 +24160,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: шахтный-водоотлив, ппд"
+      "notes": "Применения: шахтный-водоотлив, ппд",
+      "price_rub_2026": 35000000,
+      "_engineer_note": "35000000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-850-840",
@@ -24153,7 +24209,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: шахтный-водоотлив, ппд"
+      "notes": "Применения: шахтный-водоотлив, ппд",
+      "price_rub_2026": 40500000,
+      "_engineer_note": "40500000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cns-850-960",
@@ -24200,7 +24258,9 @@
       "_source": "Agent B research 2026-05-08, ГОСТ 10407-88, реестр Минпромторг ПП 719",
       "_added": "2026-05-10",
       "free_passage_mm": 0,
-      "notes": "Применения: шахтный-водоотлив, ппд"
+      "notes": "Применения: шахтный-водоотлив, ппд",
+      "price_rub_2026": 46000000,
+      "_engineer_note": "46000000 ₽ tender_research 2026-05-11 (low)"
     },
     {
       "id": "cnp-50wq10-7-0.55",
@@ -26580,13 +26640,13 @@
         "casing": "cast_iron"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 240396,
       "available_ru": {
         "status": "official",
         "distributor": "ГМС Ливгидромаш"
       },
-      "_engineer_flag": "request_quote",
-      "_engineer_note": "Q=40 H=25 — типовой Promlivnevka. Цена в открытых источниках не публикуется (КП от завода). Источник: agregat-nasos.spb.ru.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Q=40 H=25 — типовой Promlivnevka. Цена в открытых источниках не публикуется (КП от завода). Источник: agregat-nasos.spb.ru. | 240396 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
     },
@@ -26629,13 +26689,13 @@
         "casing": "cast_iron"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 227056,
       "available_ru": {
         "status": "official",
         "distributor": "ГМС Ливгидромаш"
       },
-      "_engineer_flag": "request_quote",
-      "_engineer_note": "Большие расход + низкий напор для шахт и подтоплений. Высокая эффективность для откачки промливневок.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Большие расход + низкий напор для шахт и подтоплений. Высокая эффективность для откачки промливневок. | 227056 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
     },
@@ -26678,13 +26738,13 @@
         "casing": "cast_iron"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 267076,
       "available_ru": {
         "status": "official",
         "distributor": "ГМС Ливгидромаш"
       },
-      "_engineer_flag": "request_quote",
-      "_engineer_note": "Топовая модель ГНОМ Ex. Для крупных промливневок Q=100 H=25. Замена импорту в Ex-зонах.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Топовая модель ГНОМ Ex. Для крупных промливневок Q=100 H=25. Замена импорту в Ex-зонах. | 267076 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
     },
@@ -26729,13 +26789,13 @@
         "seal": "silicon_carbide"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 410000,
       "available_ru": {
         "status": "official",
         "distributor": "Завод Взлёт (Омск)"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Подтверждено vzlet-omsk.ru. Ресурс 7000ч до отказа, 20 лет срока службы.",
+      "_engineer_note": "Подтверждено vzlet-omsk.ru. Ресурс 7000ч до отказа, 20 лет срока службы. | 410000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://www.vzlet-omsk.ru/catalog/nasosy/pf2-50-150-125-3-2ekh-016-detail"
     },
@@ -26777,13 +26837,13 @@
         "casing": "cast_iron_SCh20"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 425000,
       "available_ru": {
         "status": "official",
         "distributor": "Завод Взлёт"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Ex-вариант стандартного ПФС 65/160. Маркировка 1Ex d IIB T4 Gb X (общая для серии).",
+      "_engineer_note": "Ex-вариант стандартного ПФС 65/160. Маркировка 1Ex d IIB T4 Gb X (общая для серии). | 425000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://ptexport.ru/tehirtish.html"
     },
@@ -26825,13 +26885,13 @@
         "casing": "cast_iron_SCh20"
       },
       "price_segment": "mid",
-      "price_rub_2026": null,
+      "price_rub_2026": 580000,
       "available_ru": {
         "status": "official",
         "distributor": "Завод Взлёт"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Промежуточный вариант между ПФ 50/30 и ПФ 100/50 — закрывает Q=50 H=28 для нефтехимии.",
+      "_engineer_note": "Промежуточный вариант между ПФ 50/30 и ПФ 100/50 — закрывает Q=50 H=28 для нефтехимии. | 580000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://ptexport.ru/tehirtish.html"
     },
@@ -26925,13 +26985,13 @@
         "coating": "cataphoretic"
       },
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 380000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Подтверждено wl-russia.ru: Qmax=147.6, Qopt=76.1, Hmax=20.1, Hopt=14.5, P2=6.5 кВт. Single-channel impeller — стандартная фекальная.",
+      "_engineer_note": "Подтверждено wl-russia.ru: Qmax=147.6, Qopt=76.1, Hmax=20.1, Hopt=14.5, P2=6.5 кВт. Single-channel impeller — стандартная фекальная. | 380000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://wl-russia.ru/fekalnyj-nasos-wilo-emu-fa-08-64-246e-plus-t-17-4-16hex"
     },
@@ -26974,13 +27034,13 @@
         "casing": "cast_iron"
       },
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 720000,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Крупная КНС: Q=180 м3/ч при H=14 м. Артикул 6049225. DN150 — фланцевое подключение.",
+      "_engineer_note": "Крупная КНС: Q=180 м3/ч при H=14 м. Артикул 6049225. DN150 — фланцевое подключение. | 720000 ₽ tender_research 2026-05-11 (low)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://nasosclub.ru/catalog/kanalizatsionnye/wilo_kanalization/emu-fa/nasos-kanalizatsionnyy-wilo-emu-fa-15-52-230e-t17-2-4-16h-ex-artikul-6049225/"
     },

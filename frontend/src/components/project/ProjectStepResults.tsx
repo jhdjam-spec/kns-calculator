@@ -7,6 +7,8 @@ import {
   downloadBomCsv,
 } from "@/lib/api-extended";
 import { openEncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
+import { SuggestionList } from "@/components/wizard/SuggestionCard";
+import type { InputSuggestion } from "@/schemas/result";
 
 /** Маппинг кода норматива → топик энциклопедии для drawer'а. */
 const REGULATION_TO_TOPIC: Array<{ pattern: RegExp; topic: string }> = [
@@ -35,6 +37,32 @@ function downloadBlob(blob: Blob, filename: string) {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+/**
+ * Извлечение `suggestions[]` из любой подсистемы — backend кладёт их в
+ * `subsystem.data.selection.suggestions` (KNS) либо напрямую в
+ * `subsystem.data.suggestions` (другие подсистемы). Узкий помощник без
+ * жёсткой типизации — schema проверится ниже на runtime.
+ */
+function extractSuggestions(
+  subsystemData: Record<string, unknown> | undefined,
+): InputSuggestion[] {
+  if (!subsystemData) return [];
+  const sel = subsystemData.selection as Record<string, unknown> | undefined;
+  const raw =
+    (sel?.suggestions as unknown[]) ||
+    (subsystemData.suggestions as unknown[]) ||
+    [];
+  if (!Array.isArray(raw)) return [];
+  // Лёгкая sanity-проверка: должен быть объект с field+severity.
+  return raw.filter(
+    (s): s is InputSuggestion =>
+      typeof s === "object" &&
+      s !== null &&
+      typeof (s as { field?: unknown }).field === "string" &&
+      typeof (s as { severity?: unknown }).severity === "string",
+  );
 }
 
 /** Извлечение price_breakdown подобранного насоса из subsystem.data.selection. */
@@ -387,6 +415,12 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
 
   const active = subsystems.filter(([, r]) => r !== null);
 
+  // Phase ux-edge-cases — собираем suggestions из всех активных подсистем
+  // (в первую очередь — KNS, но другие тоже могут отдавать).
+  const allSuggestions: InputSuggestion[] = active.flatMap(([, sub]) =>
+    sub ? extractSuggestions(sub.data) : [],
+  );
+
   return (
     <div>
       <div className="flex items-start justify-between mb-6">
@@ -411,6 +445,13 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
           Новый проект
         </button>
       </div>
+
+      {/* UX edge-cases — backend советует поправить ввод */}
+      {allSuggestions.length > 0 && (
+        <div className="mb-6">
+          <SuggestionList suggestions={allSuggestions} variant="dark" />
+        </div>
+      )}
 
       {/* Карточки подсистем */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">

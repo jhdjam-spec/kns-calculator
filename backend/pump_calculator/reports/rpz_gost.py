@@ -100,6 +100,27 @@ class RPZGostInput(BaseModel):
     # Раздел 13. Нормативы
     references: list[dict[str, str]] = Field(default_factory=list)
 
+    # ──────────────────────────────────────────────────────────────────
+    # Раздел 13 Приложения (Phase 28+, P2 расширение 2026-05-11)
+    # ──────────────────────────────────────────────────────────────────
+    pump_for_chart: dict[str, Any] | None = Field(
+        default=None,
+        description=(
+            "Запись насоса (с envelope, опц. qh_curve) для генерации Q-H графика "
+            "в приложении 1. Требуются также duty_Q_m3h и duty_H_m. "
+            "Совместимо по полям с CalculationReportInput.pump_for_chart."
+        ),
+    )
+    duty_Q_m3h: float | None = None
+    duty_H_m: float | None = None
+    encyclopedia_citations: list[dict[str, str]] = Field(
+        default_factory=list,
+        description=(
+            "Цитаты из encyclopedia/*.md в формате {topic, section, text} — "
+            "вставляются в приложение 2 как обоснование расчётных подходов."
+        ),
+    )
+
 
 def generate_rpz_gost_pdf(inputs: RPZGostInput) -> bytes:
     """Генерация РПЗ по ГОСТ Р 21.101-2020 (13-разделовая структура).
@@ -219,6 +240,7 @@ def generate_rpz_gost_pdf(inputs: RPZGostInput) -> bytes:
         ("10.", "Заключение", "13"),
         ("11.", "Спецификация оборудования (BOM)", "14"),
         ("12.", "Список использованных нормативов", "16"),
+        ("13.", "Приложения (Q-H, обоснования)", "17"),
     ]
     rows = [["№", "Раздел", "Стр."]] + [list(item) for item in toc_items]
     t = Table(rows, colWidths=[1.2 * cm, 12.8 * cm, 2 * cm])
@@ -396,6 +418,76 @@ def generate_rpz_gost_pdf(inputs: RPZGostInput) -> bytes:
             "<i>Список нормативов не предоставлен.</i>", styles["GostMono"],
         ))
 
+    # ════════════════════════════════════════════════════════════════════
+    # 13. Приложения (Phase 28+ / P2 2026-05-11)
+    # ════════════════════════════════════════════════════════════════════
+    has_chart = (
+        inputs.pump_for_chart
+        and inputs.duty_Q_m3h is not None
+        and inputs.duty_H_m is not None
+    )
+    has_citations = bool(inputs.encyclopedia_citations)
+    if has_chart or has_citations:
+        story.append(PageBreak())
+        story.append(Paragraph(
+            "13. ПРИЛОЖЕНИЯ",
+            styles["GostH1"],
+        ))
+        story.append(Paragraph(
+            "<i>Графические материалы, обоснования расчётных подходов и "
+            "выписки из нормативов в виде цитат с гиперссылками на источники.</i>",
+            styles["GostMono"],
+        ))
+        story.append(Spacer(1, 0.3 * cm))
+
+    if has_chart:
+        story.append(Paragraph(
+            "Приложение 1. Q-H характеристика рабочего насоса",
+            styles["GostH2"],
+        ))
+        try:
+            from reportlab.platypus import Image as RLImage
+
+            from pump_calculator.reports.qh_chart import render_qh_chart_png
+            png = render_qh_chart_png(
+                inputs.pump_for_chart,  # type: ignore[arg-type]
+                duty_Q_m3h=float(inputs.duty_Q_m3h),  # type: ignore[arg-type]
+                duty_H_m=float(inputs.duty_H_m),  # type: ignore[arg-type]
+                width_inch=6.0,
+                height_inch=4.0,
+                dpi=100,
+            )
+            img = RLImage(BytesIO(png), width=15 * cm, height=10 * cm)
+            story.append(img)
+            story.append(Paragraph(
+                "<i>Зона AOR (Allowable Operating Range) ±15% от Q_BEP — по ANSI/HI 9.6.3-2017. "
+                "Зона POR (Preferred Operating Range) ±10% — рекомендуемая по ANSI/HI 14.3.</i>",
+                styles["GostMono"],
+            ))
+            story.append(Spacer(1, 0.3 * cm))
+        except Exception:  # pragma: no cover
+            story.append(Paragraph(
+                "<i>Q-H график недоступен (matplotlib не установлен в lite-deploy).</i>",
+                styles["GostMono"],
+            ))
+
+    if has_citations:
+        story.append(Paragraph(
+            "Приложение 2. Обоснование расчётных подходов",
+            styles["GostH2"],
+        ))
+        for cit in inputs.encyclopedia_citations:
+            topic = cit.get("topic", "")
+            section = cit.get("section", "")
+            text = cit.get("text", "")
+            header = f"<b>{topic}</b>"
+            if section:
+                header += f" / {section}"
+            story.append(Paragraph(header, styles["GostMono"]))
+            story.append(Paragraph(text, styles["GostBody"]))
+            story.append(Spacer(1, 0.15 * cm))
+        story.append(Spacer(1, 0.3 * cm))
+
     story.append(Spacer(1, 1 * cm))
     story.append(Paragraph(
         "INSERVO Studio · Студия интеграции умных решений Константина Морозова · "
@@ -405,3 +497,185 @@ def generate_rpz_gost_pdf(inputs: RPZGostInput) -> bytes:
 
     doc.build(story)
     return buffer.getvalue()
+
+
+# ════════════════════════════════════════════════════════════════════════
+# Convenience builder (P2 2026-05-11):
+# build_rpz_gost_pdf(L0, L1, computed, result, output_path=None) -> bytes
+# ════════════════════════════════════════════════════════════════════════
+
+def build_rpz_gost_pdf(
+    L0: Any,
+    L1: Any | None,
+    computed: Any,
+    result: Any,
+    output_path: str | None = None,
+    *,
+    project_name: str = "КНС — подбор оборудования",
+    project_code: str = "",
+    customer: str = "",
+    object_address: str = "",
+    chief_engineer: str = "",
+    citations_topics: list[tuple[str, str]] | None = None,
+) -> bytes:
+    """Builder: собрать РПЗ ГОСТ напрямую из доменных объектов калькулятора.
+
+    Args:
+        L0, L1: входы (`pump_calculator.schemas.L0Input`, `L1Input | None`)
+        computed: `ComputedHydraulics` (результат `hydraulics.compute_hydraulics`)
+        result: `SelectionResult` (результат `matching.select_pumps`)
+        output_path: если задан — сохранить PDF на диск (для удобства CLI/тестов)
+        project_name, project_code, customer, object_address, chief_engineer:
+            метаданные титульного листа (по умолчанию — заглушки беты)
+        citations_topics: список пар (topic_key, section_anchor) для
+            подмешивания цитат из encyclopedia/registry. Default — гидравлика +
+            энергоэффективность.
+
+    Returns:
+        bytes готового PDF (всегда возвращается; output_path — опциональный sink).
+    """
+    # 1. Водопотребление / стоки — берём минимум из L0
+    sewage_demand = {
+        "Q расчётный, м³/ч": L0.Q_m3h,
+        "Тип стоков": getattr(L0, "wastewater_type", None) or "domestic",
+        "L напорной трассы, м": L0.L_m if L0.L_m is not None else "default 50",
+        "Геометрический dH, м": L0.dH_m if L0.dH_m is not None else "default 5",
+    }
+
+    # 2. Гидравлический расчёт — раскладываем computed
+    hydraulics_data = {
+        "D трубы (DN), мм": f"{computed.D_mm:.0f}",
+        "v скорость, м/с": f"{computed.v_ms:.2f}",
+        "Re число Рейнольдса": f"{computed.Re:.0f}",
+        "λ Дарси-Альтшуль": f"{computed.friction_factor:.4f}",
+        "H_тр потери по длине, м": f"{computed.H_tr_m:.2f}",
+        "Σζ местные сопротивления": f"{computed.sum_zeta:.2f}",
+        "H_м потери местные, м": f"{computed.H_m_m:.2f}",
+        "H полный (с запасом), м": f"{computed.H_full_m:.2f}",
+        "Запас (safety factor)": f"×{computed.safety_factor:.2f}",
+    }
+    if computed.npsha_m is not None:
+        hydraulics_data["NPSHa расчётный, м"] = f"{computed.npsha_m:.2f}"
+    if computed.sump_volume_min_m3 is not None:
+        hydraulics_data["V_min приёмной камеры, м³"] = (
+            f"{computed.sump_volume_min_m3:.2f}"
+        )
+    hydraulics_data["n_pumps_total"] = computed.n_pumps_total
+
+    # 3. Подбор насосов — 3 сегмента
+    segments = result.results
+    pumps_data: dict[str, Any] = {}
+    spec_items: list[dict[str, Any]] = []
+    pump_for_chart: dict[str, Any] | None = None
+    for segment_name, label in [
+        ("budget", "Эконом"), ("mid", "Стандарт"), ("premium", "Премиум"),
+    ]:
+        p = getattr(segments, segment_name, None)
+        if not p:
+            continue
+        pumps_data[f"{label} — модель"] = f"{p.brand} {p.model}"
+        pumps_data[f"{label} — P, кВт"] = p.P_kW
+        pumps_data[f"{label} — AOR/POR"] = p.aor_zone or "n/a"
+        pumps_data[f"{label} — цена, ₽"] = f"{p.price_estimate_rub:,}".replace(",", " ")
+        # BOM: насос — одна позиция
+        spec_items.append({
+            "name": "Насос (рабочий + резерв)",
+            "type": f"{p.brand} {p.model}",
+            "doc": "ГОСТ 6134-2007",
+            "okpd": "28.13.14.140",
+            "supplier": p.brand,
+            "quantity": computed.n_pumps_total,
+            "units": "шт",
+            "mass_kg": 0,  # неизвестно из PumpResult — заполняется в L1
+            "note": f"сегмент {label}, AOR={p.aor_zone or '—'}",
+        })
+        # Берём первый доступный насос для Q-H графика (предпочтение mid → premium → budget)
+        if pump_for_chart is None or segment_name == "mid":
+            pump_for_chart = p.model_dump() if hasattr(p, "model_dump") else dict(p)
+
+    # 4. Корпус (если есть в result)
+    corpus = getattr(result, "corpus_size", None)
+    if corpus is not None:
+        spec_items.append({
+            "name": "Корпус КНС",
+            "type": f"Ø{corpus.diameter_mm:.0f}×{corpus.height_mm:.0f} мм",
+            "doc": "ТУ 22.21.21-001-2024",
+            "okpd": "22.21.21.000",
+            "supplier": "BloPlast / СПД",
+            "quantity": 1,
+            "units": "шт",
+            "mass_kg": corpus.weight_estimate_kg or 0,
+            "note": f"DN вход {corpus.inlet_DN_mm}, выход {corpus.outlet_DN_mm}",
+        })
+
+    # 5. Нормативы — из result.warnings/trigger_reasons по топикам энциклопедии
+    references = [
+        {"regulation_code": "СП 32.13330.2018", "section": "§6",
+         "purpose": "Канализация наружная — параметры приёмных камер, насосы"},
+        {"regulation_code": "СП 31.13330.2021", "section": "§11",
+         "purpose": "Водоснабжение — гидравлический расчёт напорных линий"},
+        {"regulation_code": "ГОСТ 6134-2007", "section": "общ.",
+         "purpose": "Насосы динамические — методика подбора и испытаний (ISO 9906)"},
+        {"regulation_code": "ГОСТ Р 21.101-2020", "section": "общ.",
+         "purpose": "СПДС — основные требования к рабочей документации"},
+        {"regulation_code": "ПУЭ 7-е изд.", "section": "гл.7.3",
+         "purpose": "Электрооборудование во взрывоопасных зонах"},
+    ]
+
+    # 6. Цитаты из энциклопедии (Phase 28: обоснования)
+    citations: list[dict[str, str]] = []
+    if citations_topics is None:
+        citations_topics = [
+            ("hydraulics", "Уравнение неразрывности"),
+            ("hydraulics", "Закон Дарси-Вейсбаха"),
+        ]
+    try:
+        from pump_calculator.encyclopedia.registry import build_pdf_citation
+        for topic_key, anchor in citations_topics:
+            cit = build_pdf_citation(topic_key, anchor, max_chars=500)
+            if cit:
+                citations.append(cit)
+    except Exception:  # pragma: no cover
+        pass
+
+    inputs = RPZGostInput(
+        project_name=project_name,
+        project_code=project_code,
+        customer=customer,
+        object_address=object_address,
+        chief_engineer=chief_engineer,
+        object_description=(
+            result.summary_text
+            or "Канализационная насосная станция (КНС) по результатам подбора."
+        ),
+        technical_conditions=(
+            "ТУ выдаются заказчиком отдельно. "
+            "Категория надёжности — по СП 32.13330 §6.2 (мин. 1 раб + 1 рез)."
+        ),
+        sewage_demand=sewage_demand,
+        hydraulics=hydraulics_data,
+        pumps=pumps_data,
+        electrical={
+            "n_pumps_total": computed.n_pumps_total,
+            "Ex_required": bool(getattr(L1, "Ex_required", False)) if L1 else False,
+        },
+        additional={
+            "completeness_pct": result.completeness_pct,
+            "candidates_total": result.candidates_total,
+            "engineer_handoff_required": result.engineer_handoff_required,
+        },
+        specification_items=spec_items,
+        references=references,
+        # Приложение 1
+        pump_for_chart=pump_for_chart,
+        duty_Q_m3h=L0.Q_m3h,
+        duty_H_m=computed.H_full_m,
+        # Приложение 2
+        encyclopedia_citations=citations,
+    )
+
+    pdf_bytes = generate_rpz_gost_pdf(inputs)
+    if output_path:
+        from pathlib import Path
+        Path(output_path).write_bytes(pdf_bytes)
+    return pdf_bytes

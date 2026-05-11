@@ -12,7 +12,13 @@ from pydantic import BaseModel, Field
 
 from pump_calculator import __version__, catalog
 from pump_calculator.matching import select_pumps as run_selection
-from pump_calculator.schemas import L0Input, SelectionRequest, SelectionResult
+from pump_calculator.schemas import (
+    ClassifyRequest,
+    ClassifyResponse,
+    L0Input,
+    SelectionRequest,
+    SelectionResult,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -173,6 +179,40 @@ def handoff_bom(selection: SelectionResult) -> Response:
         content=pdf_bytes,
         media_type="application/pdf",
         headers={"Content-Disposition": 'attachment; filename="kns_bom_draft.pdf"'},
+    )
+
+
+@app.post("/handoff/rpz-gost", tags=["handoff"], response_class=Response)
+def handoff_rpz_gost(req: SelectionRequest) -> Response:
+    """РПЗ по ГОСТ Р 21.101-2020 (13 разделов) — full pipeline endpoint.
+
+    Принимает SelectionRequest (L0+L1), внутри запускает compute_hydraulics
+    + select_pumps + build_rpz_gost_pdf и возвращает готовый PDF.
+
+    В отличие от /reports/rpz-gost-pdf (который принимает уже собранный
+    RPZGostInput), этот endpoint всё считает сам — удобно для KP-сценария
+    «1 клик от опросника до РПЗ».
+    """
+    from pump_calculator.hydraulics import compute_hydraulics
+    from pump_calculator.matching import select_pumps
+    from pump_calculator.reports import build_rpz_gost_pdf
+
+    try:
+        computed = compute_hydraulics(req.L0, req.L1)
+        result = select_pumps(req.L0, req.L1)
+        pdf_bytes = build_rpz_gost_pdf(req.L0, req.L1, computed, result)
+    except Exception as e:  # pragma: no cover
+        logger.exception("unhandled error: %s", e.__class__.__name__)
+        raise HTTPException(
+            status_code=500, detail=f"РПЗ generation failed: {e}"
+        ) from e
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": 'attachment; filename="kns_rpz_gost.pdf"',
+        },
     )
 
 
@@ -917,6 +957,85 @@ def export_bom_csv_endpoint(payload: dict) -> Response:
         headers={
             "Content-Disposition": f'attachment; filename="BOM_{spec.project_code or "kns"}.csv"',
         },
+    )
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# P5 mail integration: CRM-light классификатор входящих
+# ──────────────────────────────────────────────────────────────────────────
+
+
+# Список доверенных доменов (часть из 511 в learned_profile.json).
+# Только реально проверенные на массиве zakaz@inservo.ru.
+# При необходимости можно вынести в JSON-файл и подгружать лениво.
+_TRUSTED_DOMAINS: frozenset[str] = frozenset(
+    {
+        "inservo.ru",
+        "servo-yug.ru",
+        "servopolimer.ru",
+        "mail.ru",
+        "yandex.ru",
+        "ya.ru",
+        "gmail.com",
+        "rambler.ru",
+        "list.ru",
+        "bk.ru",
+        "inbox.ru",
+        "rosatom.ru",
+        "gazprom.ru",
+        "rosneft.ru",
+        "lukoil.com",
+        "tatneft.ru",
+        "kaztransgas.kz",
+    }
+)
+
+
+@app.post("/etl/classify", response_model=ClassifyResponse, tags=["etl"])
+def classify_incoming(req: ClassifyRequest) -> ClassifyResponse:
+    """Классификация входящего письма (CRM-light, P5 mail integration).
+
+    Возвращает тип запроса (ОЛ/КП/ТЗ), объект (КНС/ЛОС/ВНС), производителя
+    (если упомянут), список извлечённых шифров проектов и флаг доверия
+    к домену отправителя.
+
+    Без БД, без auth — чистая функция над текстом. См.
+    `pump_calculator.etl.incoming_classifier` для деталей паттернов.
+    """
+    from pump_calculator.etl.incoming_classifier import (
+        classify_subject_marker,
+        extract_project_codes,
+        is_trusted_sender,
+    )
+
+    # 400 если все три поля пустые/только whitespace
+    if not (req.subject.strip() or req.body.strip() or req.from_email.strip()):
+        raise HTTPException(
+            status_code=400,
+            detail="Все поля пусты — нечего классифицировать",
+        )
+
+    markers = classify_subject_marker(req.subject)
+
+    # Если в subject не нашли — пробуем body (только тип/объект/производитель).
+    # Шифры всегда ищем в combined-тексте (subject + body).
+    if markers["type"] is None or markers["object"] is None or markers["manufacturer"] is None:
+        body_markers = classify_subject_marker(req.body)
+        for key in ("type", "object", "manufacturer"):
+            if markers[key] is None and body_markers[key] is not None:
+                markers[key] = body_markers[key]
+
+    combined_text = f"{req.subject}\n{req.body}".strip()
+    project_codes = extract_project_codes(combined_text) if combined_text else []
+
+    trusted = is_trusted_sender(req.from_email, set(_TRUSTED_DOMAINS)) if req.from_email else False
+
+    return ClassifyResponse(
+        type=markers["type"],
+        object=markers["object"],
+        manufacturer=markers["manufacturer"],
+        project_codes=project_codes,
+        is_trusted_sender=trusted,
     )
 
 

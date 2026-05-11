@@ -390,6 +390,44 @@ class CorpusSize(BaseModel):
 SelectionResult.model_rebuild()
 
 
+# ----------------------- CRM-light: классификация входящих писем -----------------------
+
+
+class ClassifyRequest(BaseModel):
+    """Запрос на классификацию входящего письма (CRM-light, P5 mail integration).
+
+    Принимает три текстовых поля; все опциональны (для гибкости UI), но при
+    полностью пустом теле возвращается 400. Subject + body конкатенируются
+    для извлечения шифров; subject отдельно идёт в marker-классификатор.
+    """
+
+    subject: str = Field("", description="Тема письма")
+    body: str = Field("", description="Тело письма (plain text или HTML без тегов)")
+    from_email: str = Field(
+        "",
+        description="Адрес отправителя (формат `user@domain` или `Имя <user@domain>`)",
+    )
+
+
+class ClassifyResponse(BaseModel):
+    """Ответ /etl/classify: тип запроса, объект, производитель, шифры, флаг доверия."""
+
+    type: str | None = Field(None, description="ОЛ | КП | ТЗ | ЗАЯВКА | ЗАПРОС | ТЕНДЕР | null")
+    object: str | None = Field(None, description="КНС | ЛОС | ВНС | ВЗиС | ПОЖАРКА | ... | null")
+    manufacturer: str | None = Field(
+        None,
+        description="GRUNDFOS | KSB | WILO | PEDROLLO | SCHWARTZ | ANTARUS | KAIQUAN | CNP | СМЗ | ГНОМ | null",
+    )
+    project_codes: list[str] = Field(
+        default_factory=list,
+        description="Извлечённые шифры (проектные/буквенно-цифровые/тендерные)",
+    )
+    is_trusted_sender: bool = Field(
+        False,
+        description="True если домен отправителя в списке доверенных (inservo.ru, mail.ru, yandex.ru и др.)",
+    )
+
+
 # ----------------------- Unit conversion -----------------------
 
 def to_m3h(value: float, unit: QUnit) -> float:

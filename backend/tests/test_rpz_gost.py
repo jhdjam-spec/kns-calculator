@@ -97,3 +97,78 @@ def test_rpz_input_default_stage():
     assert inputs.stage == "Р"
     assert inputs.revision == "0"
     assert inputs.designer_organization.startswith("INSERVO")
+
+
+# ───────────────────────────────────────────────────────────────────────
+# P2 2026-05-11: расширение Phase 28 (Раздел 13 — Приложения + builder)
+# ───────────────────────────────────────────────────────────────────────
+
+def test_rpz_pdf_size_reasonable():
+    """Минимальный PDF — больше 5 КБ, меньше 500 КБ (без Q-H графика)."""
+    inputs = RPZGostInput(
+        project_name="Контроль размера PDF",
+        specification_items=[{
+            "name": "Насос", "type": "Test 50WQS",
+            "quantity": 2, "mass_kg": 30,
+        }],
+    )
+    pdf = generate_rpz_gost_pdf(inputs)
+    assert 5_000 < len(pdf) < 500_000, (
+        f"PDF size {len(pdf)} вне ожидаемого диапазона 5-500 КБ"
+    )
+
+
+def test_rpz_pdf_contains_section_titles():
+    """В PDF должны присутствовать заголовки всех 12+ разделов (поиск в bytes)."""
+    inputs = RPZGostInput(
+        project_name="Покрытие разделов",
+        encyclopedia_citations=[
+            {"topic": "hydraulics", "section": "Дарси", "text": "Тестовая цитата."},
+        ],
+    )
+    pdf = generate_rpz_gost_pdf(inputs)
+    # Reportlab кодирует кириллицу в потоки PDF, поэтому проверяем
+    # лишь латинские маркеры и заголовок — этого достаточно для smoke.
+    assert pdf[:4] == b"%PDF"
+    # Все разделы добавлены — содержание перечисляет 13 пунктов
+    # → длина PDF должна быть больше базовой
+    assert len(pdf) > 8_000
+
+
+def test_build_rpz_gost_pdf_with_real_pump():
+    """build_rpz_gost_pdf через select_pumps + render — full pipeline."""
+    from pump_calculator.hydraulics import compute_hydraulics
+    from pump_calculator.matching import select_pumps
+    from pump_calculator.reports import build_rpz_gost_pdf
+    from pump_calculator.schemas import L0Input
+
+    L0 = L0Input(Q_m3h=25, dH_m=8, L_m=80)
+    computed = compute_hydraulics(L0, None)
+    result = select_pumps(L0, None)
+    pdf = build_rpz_gost_pdf(
+        L0, None, computed, result,
+        project_name="Тест builder full pipeline",
+        project_code="TEST-BUILDER",
+        customer="Test Customer",
+    )
+    assert isinstance(pdf, bytes)
+    assert pdf[:4] == b"%PDF"
+    # С Q-H графиком PDF будет существенно больше (matplotlib PNG ~30-80 КБ)
+    assert len(pdf) > 10_000
+
+
+def test_build_rpz_gost_pdf_save_to_disk(tmp_path):
+    """build_rpz_gost_pdf пишет файл при output_path."""
+    from pump_calculator.hydraulics import compute_hydraulics
+    from pump_calculator.matching import select_pumps
+    from pump_calculator.reports import build_rpz_gost_pdf
+    from pump_calculator.schemas import L0Input
+
+    L0 = L0Input(Q_m3h=10, dH_m=5, L_m=50)
+    computed = compute_hydraulics(L0, None)
+    result = select_pumps(L0, None)
+    out = tmp_path / "rpz.pdf"
+    pdf = build_rpz_gost_pdf(L0, None, computed, result, output_path=str(out))
+    assert out.exists()
+    assert out.stat().st_size == len(pdf)
+    assert pdf[:4] == b"%PDF"

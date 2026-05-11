@@ -10,6 +10,7 @@ const NAV_LINKS: Array<{ href: string; label: string; primary?: boolean }> = [
   { href: "/storm/minimal", label: "Ливнёвка" },
   { href: "/tanks", label: "Резервуары" },
   { href: "/teach", label: "Энциклопедия" },
+  { href: "/crm", label: "CRM" },
   { href: "#calculator", label: "Быстрый подбор" },
   { href: "#faq", label: "FAQ" },
 ];

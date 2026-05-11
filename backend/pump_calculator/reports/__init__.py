@@ -37,12 +37,14 @@ from .calculation_report import (
 )
 from .rpz_gost import (
     RPZGostInput,
+    build_rpz_gost_pdf,
     generate_rpz_gost_pdf,
 )
 
 __all__ = [
     "CalculationReportInput",
     "RPZGostInput",
+    "build_rpz_gost_pdf",
     "generate_calculation_report_pdf",
     "generate_rpz_gost_pdf",
 ]
