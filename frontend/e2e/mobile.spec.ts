@@ -51,7 +51,8 @@ test.describe("Mobile (375×667)", () => {
 
   test("Mobile phone link visible (tel:)", async ({ page }) => {
     await page.goto(ROUTES.home);
-    const tel = page.locator('a[href^="tel:"]').first();
+    // На mobile breakpoint виден иконочный tel-link (md:hidden), desktop full-format скрыт (hidden md:flex)
+    const tel = page.locator('a[href^="tel:"]:visible').first();
     await expect(tel).toBeVisible();
   });
 
