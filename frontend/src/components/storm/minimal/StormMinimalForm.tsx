@@ -148,7 +148,7 @@ export function StormMinimalForm() {
         {upgradeNotice && (
           <div
             role="status"
-            className="p-3 rounded-md bg-amber-500/10 border border-amber-500/30 text-sm text-amber-200"
+            className="p-3 rounded-md bg-amber-50 border border-amber-300 dark:bg-amber-500/10 dark:border-amber-500/30 text-sm text-amber-800 dark:text-amber-200"
           >
             {upgradeNotice}
           </div>
@@ -160,17 +160,17 @@ export function StormMinimalForm() {
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
-        <h2 className="text-2xl font-display font-semibold text-ink-100 mb-1">
+        <h2 className="text-2xl font-display font-semibold text-ink-900 dark:text-ink-100 mb-1">
           🌧 Расчёт ливневой канализации — за 1 минуту
         </h2>
-        <p className="text-sm text-ink-400">
+        <p className="text-sm text-ink-700 dark:text-ink-400">
           Метод предельных интенсивностей по СП 32.13330.2018 §6.2.4. Введите 3 параметра —
           получите пиковый расход Q<sub className="font-mono">r</sub> (л/с) и оценку
           стоимости комплекта.
         </p>
       </div>
 
-      <div className="space-y-4 p-5 rounded-lg border border-white/10 bg-white/[0.02]">
+      <div className="space-y-4 p-5 rounded-lg border border-ink-200 bg-white dark:border-white/10 dark:bg-white/[0.02] shadow-premium-sm">
         <ObjectTypeSelector
           selected={form.objectTypeId}
           onSelect={(id) => update({ objectTypeId: id })}
@@ -190,17 +190,17 @@ export function StormMinimalForm() {
           type="button"
           onClick={handleCalculate}
           disabled={!isValid || isLoading}
-          className="px-5 py-3 rounded-md bg-accent-500 text-ink-950 font-medium hover:bg-accent-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-5 py-3 rounded-md bg-brand-600 hover:bg-brand-700 text-white dark:bg-accent-500 dark:hover:bg-accent-400 dark:text-ink-950 font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isLoading ? "Считаем..." : "Рассчитать пиковый расход →"}
         </button>
         {!isValid && (
-          <p className="text-xs text-ink-500">Заполните все три поля</p>
+          <p className="text-xs text-ink-600 dark:text-ink-500">Заполните все три поля</p>
         )}
       </div>
 
       {error && (
-        <div className="p-3 rounded-md bg-red-500/10 border border-red-500/30 text-sm text-red-300">
+        <div className="p-3 rounded-md bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30 text-sm text-red-700 dark:text-red-300">
           Ошибка расчёта: {error}
         </div>
       )}

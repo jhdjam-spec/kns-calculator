@@ -77,10 +77,10 @@ export function ProjectStepSubsystems({
 
   return (
     <div>
-      <h2 className="text-2xl font-display font-semibold text-ink-50 mb-2">
+      <h2 className="text-2xl font-display font-semibold text-ink-900 dark:text-ink-50 mb-2">
         Подсистемы для расчёта
       </h2>
-      <p className="text-ink-400 mb-6 text-sm">
+      <p className="text-ink-700 dark:text-ink-400 mb-6 text-sm">
         Калькулятор автоматически выбрал подсистемы для пресета «{data.preset}».
         Можете включить/отключить вручную.
       </p>
@@ -95,21 +95,21 @@ export function ProjectStepSubsystems({
               onClick={() => toggle(key)}
               className={`text-left p-4 rounded-lg border transition-all ${
                 isOn
-                  ? "bg-accent-500/10 border-accent-500"
-                  : "bg-ink-950 border-ink-800 hover:border-ink-600"
+                  ? "bg-green-50 border-green-300 dark:bg-accent-500/10 dark:border-accent-500"
+                  : "bg-ink-50 border-ink-200 hover:border-brand-400 dark:bg-ink-950 dark:border-ink-800 dark:hover:border-ink-600"
               }`}
             >
               <div className="flex items-start gap-3">
                 <div
                   className={`mt-0.5 size-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                    isOn ? "bg-accent-500 border-accent-500" : "border-ink-600"
+                    isOn ? "bg-brand-600 border-brand-600 dark:bg-accent-500 dark:border-accent-500" : "border-ink-300 dark:border-ink-600"
                   }`}
                 >
-                  {isOn && <span className="text-ink-950 text-xs">✓</span>}
+                  {isOn && <span className="text-white dark:text-ink-950 text-xs">✓</span>}
                 </div>
                 <div>
-                  <div className="font-display font-semibold text-ink-50">{label.title}</div>
-                  <div className="text-xs text-ink-400 mt-0.5">{label.description}</div>
+                  <div className="font-display font-semibold text-ink-900 dark:text-ink-50">{label.title}</div>
+                  <div className="text-xs text-ink-700 dark:text-ink-400 mt-0.5">{label.description}</div>
                 </div>
               </div>
             </button>
@@ -118,9 +118,9 @@ export function ProjectStepSubsystems({
       </div>
 
       {error && (
-        <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-md">
-          <div className="text-red-400 font-medium">Ошибка расчёта</div>
-          <div className="text-red-300 text-sm mt-1">{error}</div>
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30 rounded-md">
+          <div className="text-red-700 dark:text-red-400 font-medium">Ошибка расчёта</div>
+          <div className="text-red-700 dark:text-red-300 text-sm mt-1">{error}</div>
         </div>
       )}
 
@@ -128,7 +128,7 @@ export function ProjectStepSubsystems({
         <button
           type="button"
           onClick={onBack}
-          className="text-ink-400 hover:text-ink-200 px-4 py-2 transition-colors"
+          className="text-ink-700 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-200 px-4 py-2 transition-colors"
         >
           ← Назад
         </button>
@@ -136,7 +136,7 @@ export function ProjectStepSubsystems({
           type="button"
           onClick={onCalculate}
           disabled={isCalculating}
-          className="bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 text-ink-950 px-6 py-2.5 rounded-md font-medium transition-colors"
+          className="bg-brand-600 hover:bg-brand-700 disabled:bg-ink-300 text-white dark:bg-accent-500 dark:hover:bg-accent-400 dark:disabled:bg-ink-700 dark:text-ink-950 px-6 py-2.5 rounded-md font-medium transition-colors"
         >
           {isCalculating ? "Расчёт…" : "Рассчитать проект →"}
         </button>

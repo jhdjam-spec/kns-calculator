@@ -50,9 +50,9 @@ export function CityAutocomplete({ selected, onSelect }: Props) {
 
   return (
     <div className="space-y-2 relative">
-      <label className="block text-sm font-medium text-ink-200">
+      <label className="block text-sm font-medium text-ink-800 dark:text-ink-200">
         3. В каком городе объект?{" "}
-        <span className="text-ink-500" title="Город нужен для климатических параметров (количество дождей, интенсивность). Если ваш город не в списке — выберите ближайший крупный.">
+        <span className="text-ink-600 dark:text-ink-500" title="Город нужен для климатических параметров (количество дождей, интенсивность). Если ваш город не в списке — выберите ближайший крупный.">
           ❓
         </span>
       </label>
@@ -69,16 +69,16 @@ export function CityAutocomplete({ selected, onSelect }: Props) {
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
         placeholder="Начните печатать название..."
-        className="w-full px-3 py-2 rounded-md bg-white/[0.04] border border-white/10 text-ink-100 focus:border-accent-500 focus:outline-none"
+        className="w-full px-3 py-2 rounded-md bg-white border border-ink-200 text-ink-900 dark:bg-white/[0.04] dark:border-white/10 dark:text-ink-100 focus:border-brand-500 dark:focus:border-accent-500 focus:outline-none"
       />
       {showSuggestions && filtered.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-ink-900 border border-white/10 rounded-md shadow-lg max-h-60 overflow-auto">
+        <ul className="absolute z-10 w-full mt-1 bg-white border border-ink-200 dark:bg-ink-900 dark:border-white/10 rounded-md shadow-premium-md max-h-60 overflow-auto">
           {filtered.map((city) => (
             <li key={city}>
               <button
                 type="button"
                 onClick={() => handleSelect(city)}
-                className="w-full text-left px-3 py-2 text-sm text-ink-200 hover:bg-accent-500/10 hover:text-accent-500"
+                className="w-full text-left px-3 py-2 text-sm text-ink-800 dark:text-ink-200 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-accent-500/10 dark:hover:text-accent-500"
               >
                 {city}
               </button>
@@ -89,7 +89,7 @@ export function CityAutocomplete({ selected, onSelect }: Props) {
       <button
         type="button"
         onClick={handleDontKnow}
-        className="text-xs text-amber-400 hover:text-amber-300 underline-offset-2 hover:underline"
+        className="text-xs text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 underline-offset-2 hover:underline"
       >
         не знаю — Москва (по умолчанию)
       </button>

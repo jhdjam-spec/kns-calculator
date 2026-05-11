@@ -35,8 +35,8 @@ export function SmartDefaultsPreview({ objectTypeId }: Props) {
     .join(" + ");
 
   return (
-    <div className="text-xs text-ink-400 space-y-1 p-3 rounded-md bg-white/[0.02] border border-white/[0.06]">
-      <p className="text-ink-300 font-medium">
+    <div className="text-xs text-ink-700 dark:text-ink-400 space-y-1 p-3 rounded-md bg-ink-50 border border-ink-200 dark:bg-white/[0.02] dark:border-white/[0.06]">
+      <p className="text-ink-800 dark:text-ink-300 font-medium">
         Что мы подставим автоматически (видно в отчёте):
       </p>
       <ul className="space-y-0.5 ml-2">
@@ -45,7 +45,7 @@ export function SmartDefaultsPreview({ objectTypeId }: Props) {
         <li>• Время добегания — {preset.t_concentration_min} мин</li>
         <li>• Период повторяемости — P={preset.period_P_year} {preset.period_P_year === 1 ? "год" : "года"}</li>
       </ul>
-      <p className="text-ink-500 italic mt-1">{preset.rationale}</p>
+      <p className="text-ink-600 dark:text-ink-500 italic mt-1">{preset.rationale}</p>
     </div>
   );
 }

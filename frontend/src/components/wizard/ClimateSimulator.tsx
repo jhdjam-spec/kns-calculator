@@ -115,7 +115,7 @@ export function ClimateSimulator({ value, onChange, limit }: ClimateSimulatorPro
   return (
     <div data-testid="climate-simulator" className="space-y-3">
       <div>
-        <label htmlFor="climate-city-input" className="block text-sm text-ink-300 mb-1.5">
+        <label htmlFor="climate-city-input" className="block text-sm text-ink-700 dark:text-ink-300 mb-1.5">
           Город (для climate-рекомендаций)
         </label>
         <input
@@ -139,20 +139,20 @@ export function ClimateSimulator({ value, onChange, limit }: ClimateSimulatorPro
             </option>
           ))}
         </datalist>
-        <div id="climate-city-hint" className="text-xs text-ink-500 mt-1">
+        <div id="climate-city-hint" className="text-xs text-ink-600 dark:text-ink-500 mt-1">
           Источник: СП 131.13330.2020, {cities.length} городов в БД
         </div>
       </div>
 
       {citiesError && (
-        <div className="text-xs text-red-600">Не удалось загрузить список городов: {citiesError}</div>
+        <div className="text-xs text-red-700 dark:text-red-400">Не удалось загрузить список городов: {citiesError}</div>
       )}
 
       {cardLoading && (
-        <div className="text-sm text-ink-500" data-testid="climate-loading">Загрузка карточки климата…</div>
+        <div className="text-sm text-ink-600 dark:text-ink-500" data-testid="climate-loading">Загрузка карточки климата…</div>
       )}
       {cardError && (
-        <div className="text-xs text-red-600" data-testid="climate-error">
+        <div className="text-xs text-red-700 dark:text-red-400" data-testid="climate-error">
           {cardError}
         </div>
       )}
@@ -169,15 +169,15 @@ function ClimateCard({ card, isEngineer }: { card: ClimateCardResponse; isEngine
   return (
     <div
       data-testid="climate-card"
-      className="rounded-card bg-ink-900 border border-ink-800 p-4 space-y-3"
+      className="rounded-card bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 p-4 space-y-3 shadow-premium-sm"
     >
       <div className="flex items-baseline justify-between">
-        <h4 className="font-display font-semibold text-ink-50">{c.city}</h4>
-        <span className="text-xs font-mono text-ink-500 uppercase tracking-wider">
+        <h4 className="font-display font-semibold text-ink-900 dark:text-ink-50">{c.city}</h4>
+        <span className="text-xs font-mono text-ink-600 dark:text-ink-500 uppercase tracking-wider">
           {c.climate_zone}
         </span>
       </div>
-      <div className="text-xs text-ink-400">{c.region}</div>
+      <div className="text-xs text-ink-700 dark:text-ink-400">{c.region}</div>
 
       <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
         <Datum label="Высота над УМ" value={`${c.altitude_m} м`} engineer={isEngineer} />
@@ -198,7 +198,7 @@ function ClimateCard({ card, isEngineer }: { card: ClimateCardResponse; isEngine
 
       {card.recommendations.length > 0 && (
         <div data-testid="climate-recommendations">
-          <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-1.5">
+          <div className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-1.5">
             Рекомендации
           </div>
           <ul className="space-y-1.5">
@@ -208,10 +208,10 @@ function ClimateCard({ card, isEngineer }: { card: ClimateCardResponse; isEngine
                 data-severity={r.severity}
                 className={
                   r.severity === "critical"
-                    ? "text-sm text-red-300 border-l-2 border-red-500 pl-3"
+                    ? "text-sm text-red-700 dark:text-red-300 border-l-2 border-red-500 pl-3"
                     : r.severity === "warning"
-                    ? "text-sm text-amber-300 border-l-2 border-amber-500 pl-3"
-                    : "text-sm text-ink-300 border-l-2 border-ink-700 pl-3"
+                    ? "text-sm text-amber-800 dark:text-amber-300 border-l-2 border-amber-500 pl-3"
+                    : "text-sm text-ink-700 dark:text-ink-300 border-l-2 border-ink-300 dark:border-ink-700 pl-3"
                 }
               >
                 <strong>{r.title}</strong>: {r.text}
@@ -235,10 +235,10 @@ function Datum({
 }) {
   return (
     <>
-      <dt className="text-ink-500" title={engineer ? undefined : "Технический параметр"}>
+      <dt className="text-ink-600 dark:text-ink-500" title={engineer ? undefined : "Технический параметр"}>
         {label}
       </dt>
-      <dd className="text-ink-100 font-mono tabular-nums">{value}</dd>
+      <dd className="text-ink-900 dark:text-ink-100 font-mono tabular-nums">{value}</dd>
     </>
   );
 }

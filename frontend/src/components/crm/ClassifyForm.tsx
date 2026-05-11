@@ -123,18 +123,18 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
       {/* Левая колонка — форма */}
       <section
         aria-labelledby="classify-form-heading"
-        className="bg-ink-900/40 border border-white/10 rounded-lg p-5 md:p-6"
+        className="bg-white border border-ink-200 dark:bg-ink-900/40 dark:border-white/10 rounded-lg p-5 md:p-6 shadow-premium-sm"
       >
         <h2
           id="classify-form-heading"
-          className="text-base font-semibold text-ink-50 mb-4"
+          className="text-base font-semibold text-ink-900 dark:text-ink-50 mb-4"
         >
           Входящее письмо
         </h2>
 
         <label
           htmlFor="classify-subject"
-          className="block text-sm text-ink-300 mb-1"
+          className="block text-sm text-ink-700 dark:text-ink-300 mb-1"
         >
           Тема письма
         </label>
@@ -147,13 +147,13 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
             persist({ subject: e.target.value });
           }}
           placeholder="Например: ОЛ на КНС-2 для жилого комплекса"
-          className="w-full bg-ink-950 border border-white/10 rounded-md px-3 h-11 text-ink-50 placeholder:text-ink-500 focus:border-accent-500/60 focus:outline-none"
+          className="w-full bg-ink-50 border border-ink-200 text-ink-900 dark:bg-ink-950 dark:border-white/10 dark:text-ink-50 rounded-md px-3 h-11 placeholder:text-ink-500 focus:border-brand-500 dark:focus:border-accent-500/60 focus:outline-none"
           autoComplete="off"
         />
 
         <label
           htmlFor="classify-body"
-          className="block text-sm text-ink-300 mt-4 mb-1"
+          className="block text-sm text-ink-700 dark:text-ink-300 mt-4 mb-1"
         >
           Тело письма
         </label>
@@ -166,12 +166,12 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
           }}
           rows={8}
           placeholder="Прошу подобрать оборудование по шифру 2799289…"
-          className="w-full bg-ink-950 border border-white/10 rounded-md px-3 py-2 text-ink-50 placeholder:text-ink-500 focus:border-accent-500/60 focus:outline-none font-sans text-sm"
+          className="w-full bg-ink-50 border border-ink-200 text-ink-900 dark:bg-ink-950 dark:border-white/10 dark:text-ink-50 rounded-md px-3 py-2 placeholder:text-ink-500 focus:border-brand-500 dark:focus:border-accent-500/60 focus:outline-none font-sans text-sm"
         />
 
         <label
           htmlFor="classify-email"
-          className="block text-sm text-ink-300 mt-4 mb-1"
+          className="block text-sm text-ink-700 dark:text-ink-300 mt-4 mb-1"
         >
           Email отправителя
         </label>
@@ -184,7 +184,7 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
             persist({ fromEmail: e.target.value });
           }}
           placeholder="user@example.com или ООО Ромашка <info@romashka.ru>"
-          className="w-full bg-ink-950 border border-white/10 rounded-md px-3 h-11 text-ink-50 placeholder:text-ink-500 focus:border-accent-500/60 focus:outline-none font-mono text-sm"
+          className="w-full bg-ink-50 border border-ink-200 text-ink-900 dark:bg-ink-950 dark:border-white/10 dark:text-ink-50 rounded-md px-3 h-11 placeholder:text-ink-500 focus:border-brand-500 dark:focus:border-accent-500/60 focus:outline-none font-mono text-sm"
           autoComplete="off"
           inputMode="email"
         />
@@ -196,8 +196,8 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
             disabled={isLoading || isEmpty}
             className={clsx(
               "inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md text-sm font-medium transition-colors",
-              "bg-accent-500 text-ink-950 hover:bg-accent-400",
-              "disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-accent-500/60",
+              "bg-brand-600 hover:bg-brand-700 text-white dark:bg-accent-500 dark:text-ink-950 dark:hover:bg-accent-400",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
             )}
           >
             {isLoading && <Loader2 size={16} className="animate-spin" />}
@@ -207,7 +207,7 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
             type="button"
             onClick={handleClear}
             disabled={isLoading}
-            className="inline-flex items-center justify-center h-11 px-4 rounded-md text-sm text-ink-300 hover:text-ink-50 hover:bg-white/5 transition-colors"
+            className="inline-flex items-center justify-center h-11 px-4 rounded-md text-sm text-ink-700 dark:text-ink-300 hover:text-ink-900 dark:hover:text-ink-50 hover:bg-ink-100 dark:hover:bg-white/5 transition-colors"
           >
             Очистить
           </button>
@@ -216,7 +216,7 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
         {error && (
           <div
             role="alert"
-            className="mt-4 flex items-start gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-md p-3"
+            className="mt-4 flex items-start gap-2 text-sm text-red-700 dark:text-red-400 bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30 rounded-md p-3"
           >
             <AlertCircle size={16} className="shrink-0 mt-0.5" />
             <span>{error}</span>
@@ -228,17 +228,17 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
       <section
         aria-labelledby="classify-result-heading"
         aria-live="polite"
-        className="bg-ink-900/40 border border-white/10 rounded-lg p-5 md:p-6"
+        className="bg-white border border-ink-200 dark:bg-ink-900/40 dark:border-white/10 rounded-lg p-5 md:p-6 shadow-premium-sm"
       >
         <h2
           id="classify-result-heading"
-          className="text-base font-semibold text-ink-50 mb-4"
+          className="text-base font-semibold text-ink-900 dark:text-ink-50 mb-4"
         >
           Распознано
         </h2>
 
         {!result && !isLoading && (
-          <p className="text-sm text-ink-500">
+          <p className="text-sm text-ink-600 dark:text-ink-500">
             Заполните форму слева и нажмите «Распознать». Калькулятор
             выделит тип запроса (ОЛ/КП/ТЗ), объект (КНС/ЛОС/ВНС),
             производителя и шифры проектов.
@@ -264,11 +264,11 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
             />
 
             <div>
-              <div className="text-xs uppercase tracking-wider text-ink-500 mb-1.5">
+              <div className="text-xs uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-1.5">
                 Шифры проектов
               </div>
               {result.project_codes.length === 0 ? (
-                <span className="text-sm text-ink-500">— не найдены</span>
+                <span className="text-sm text-ink-600 dark:text-ink-500">— не найдены</span>
               ) : (
                 <ul
                   className="flex flex-wrap gap-2"
@@ -277,7 +277,7 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
                   {result.project_codes.map((code) => (
                     <li
                       key={code}
-                      className="inline-flex items-center px-2.5 h-7 rounded-md bg-accent-500/15 border border-accent-500/40 text-accent-500 text-xs font-mono"
+                      className="inline-flex items-center px-2.5 h-7 rounded-md bg-brand-50 border border-brand-200 text-brand-700 dark:bg-accent-500/15 dark:border-accent-500/40 dark:text-accent-500 text-xs font-mono"
                     >
                       {code}
                     </li>
@@ -286,10 +286,10 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
               )}
             </div>
 
-            <div className="pt-3 border-t border-white/10">
+            <div className="pt-3 border-t border-ink-200 dark:border-white/10">
               {result.is_trusted_sender ? (
                 <div
-                  className="inline-flex items-center gap-2 text-sm text-emerald-400"
+                  className="inline-flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400"
                   data-testid="trusted-indicator"
                 >
                   <ShieldCheck size={16} strokeWidth={1.75} />
@@ -297,7 +297,7 @@ export function ClassifyForm({ fetchImpl }: ClassifyFormProps = {}) {
                 </div>
               ) : (
                 <div
-                  className="inline-flex items-center gap-2 text-sm text-amber-400"
+                  className="inline-flex items-center gap-2 text-sm text-amber-700 dark:text-amber-400"
                   data-testid="untrusted-indicator"
                 >
                   <ShieldAlert size={16} strokeWidth={1.75} />
@@ -323,20 +323,20 @@ function ResultField({
 }) {
   return (
     <div>
-      <div className="text-xs uppercase tracking-wider text-ink-500 mb-1">
+      <div className="text-xs uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-1">
         {label}
       </div>
       {value ? (
         <span
           data-testid={testId}
-          className="inline-flex items-center px-2.5 h-7 rounded-md bg-ink-50/5 border border-white/10 text-ink-50 text-sm font-medium"
+          className="inline-flex items-center px-2.5 h-7 rounded-md bg-ink-100 border border-ink-200 text-ink-900 dark:bg-ink-50/5 dark:border-white/10 dark:text-ink-50 text-sm font-medium"
         >
           {value}
         </span>
       ) : (
         <span
           data-testid={testId}
-          className="text-sm text-ink-500"
+          className="text-sm text-ink-600 dark:text-ink-500"
         >
           — не определено
         </span>

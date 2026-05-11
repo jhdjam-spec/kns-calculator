@@ -227,7 +227,7 @@ def _resolve_q_for_kns(inputs: ProjectInput) -> tuple[float, str]:
 def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
     """Подсистема КНС — вызывает /select с правильным wastewater_type и Q."""
     from pump_calculator.matching import select_pumps as run_selection
-    from pump_calculator.schemas import L0Input, L1Input, SelectionRequest
+    from pump_calculator.schemas import L0Input, L1Input
 
     wastewater = _PRESET_WASTEWATER_TYPE.get(inputs.preset, "domestic")
     q_max_m3h, q_explanation = _resolve_q_for_kns(inputs)
@@ -242,8 +242,9 @@ def _calc_kns_subsystem(inputs: ProjectInput) -> SubsystemResult:
         l1: L1Input | None = None
         if inputs.is_atex_zone:
             l1 = L1Input(Ex_required=True)
-        request = SelectionRequest(L0=l0, L1=l1)
-        result = run_selection(request)
+        # NB: select_pumps принимает (L0, L1=None) — не SelectionRequest.
+        # Передаём L0/L1 отдельными аргументами как в api.py /select.
+        result = run_selection(l0, l1)
 
         atex_note = " (ATEX)" if inputs.is_atex_zone else ""
         return SubsystemResult(
@@ -557,12 +558,14 @@ def _calc_storm_subsystem(inputs: ProjectInput) -> SubsystemResult:
         )
         result = calculate_full_storm(storm_input)
 
+        q_r_l_s = result.peak.Q_r_l_s
+        q_r_m3h = q_r_l_s * 3.6
         return SubsystemResult(
             name="Ливневая канализация",
             status="ok",
             summary=(
-                f"Q_r = {result.peak_flow.Q_r_l_s:.1f} л/с "
-                f"({result.peak_flow.Q_r_m3h:.0f} м³/ч), F={area_ha:.2f} га"
+                f"Q_r = {q_r_l_s:.1f} л/с "
+                f"({q_r_m3h:.0f} м³/ч), F={area_ha:.2f} га"
             ),
             data=result.model_dump(),
             references=[
@@ -649,7 +652,7 @@ def _calc_electrical_subsystem(inputs: ProjectInput, kns_result: SubsystemResult
                 "motor": motor_calc.__dict__,
                 "cable": cable.__dict__,
                 "breaker": breaker.__dict__,
-                "panel": panel.model_dump(),
+                "panel": panel.__dict__,
             },
             references=[
                 _ref_dict("PUE_7", "гл. 1.3, 7.3", "Подбор кабеля и защиты"),

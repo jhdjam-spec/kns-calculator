@@ -10,12 +10,20 @@
 from __future__ import annotations
 
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 
-# Путь к JSON БД (на 1 уровень выше backend/)
-_REPO_ROOT = Path(__file__).resolve().parents[3]
-_DB_PATH = _REPO_ROOT / "02_dataset" / "storm_research_raw" / "02_climate_db_36_cities.json"
+# Путь к JSON БД через единый KNS_DATASET_ROOT env var (как в catalog.py).
+# В serverless (YC Functions) задаётся KNS_DATASET_ROOT=./02_dataset, в dev —
+# 02_dataset/ лежит на 1 уровень выше backend/ (== parents[3] от storm/regions.py).
+_env_root = os.environ.get("KNS_DATASET_ROOT")
+if _env_root:
+    _DATASET_ROOT = Path(_env_root).resolve()
+else:
+    # backend/pump_calculator/storm/regions.py → ../../../02_dataset/
+    _DATASET_ROOT = Path(__file__).resolve().parents[3] / "02_dataset"
+_DB_PATH = _DATASET_ROOT / "storm_research_raw" / "02_climate_db_36_cities.json"
 
 
 @lru_cache(maxsize=1)

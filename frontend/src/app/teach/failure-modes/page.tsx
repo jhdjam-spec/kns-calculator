@@ -83,26 +83,26 @@ export default function FailureModesPage() {
       <SiteNav />
       <main
         id="main"
-        className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10"
+        className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-500">
+            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500">
               INSERVO · Энциклопедия / Типовые отказы
             </h1>
             <a
               href="/teach"
-              className="text-sm text-ink-400 hover:text-accent-500 transition-colors"
+              className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
             >
               ← К темам
             </a>
           </div>
 
           <div className="mb-8 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-50 mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-900 dark:text-ink-50 mb-4">
               Типовые отказы КНС/НС
             </h2>
-            <p className="text-ink-400 leading-relaxed">
+            <p className="text-ink-700 dark:text-ink-400 leading-relaxed">
               Образовательный каталог 26 режимов отказа: симптомы, причины,
               профилактика, стоимость устранения, downtime. Основан на СП 32,
               СП 30, ГОСТ Р 53674, ПУЭ, IEC 60079 + 30-летний опыт INSERVO.
@@ -114,12 +114,12 @@ export default function FailureModesPage() {
             className="mb-6 flex flex-wrap items-center gap-3"
             data-testid="failure-filters"
           >
-            <label className="text-xs font-mono uppercase tracking-wider text-ink-500">
+            <label className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500">
               Категория:
             </label>
             <select
               aria-label="Категория"
-              className="form-input bg-ink-900 border-ink-800 text-ink-100 text-sm"
+              className="form-input bg-white border-ink-200 text-ink-900 dark:bg-ink-900 dark:border-ink-800 dark:text-ink-100 text-sm"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -131,7 +131,7 @@ export default function FailureModesPage() {
               ))}
             </select>
 
-            <label className="text-xs font-mono uppercase tracking-wider text-ink-500 ml-3">
+            <label className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 ml-3">
               Severity:
             </label>
             <div className="flex flex-wrap gap-1.5">
@@ -140,8 +140,8 @@ export default function FailureModesPage() {
                 onClick={() => setSeverity("")}
                 className={
                   severity === ""
-                    ? "px-3 py-1 text-xs rounded-md bg-ink-50 text-ink-950 font-medium"
-                    : "px-3 py-1 text-xs rounded-md bg-ink-900 text-ink-300 border border-ink-800 hover:border-ink-700"
+                    ? "px-3 py-1 text-xs rounded-md bg-brand-700 text-white dark:bg-ink-50 dark:text-ink-950 font-medium"
+                    : "px-3 py-1 text-xs rounded-md bg-white text-ink-700 border border-ink-200 hover:border-brand-400 dark:bg-ink-900 dark:text-ink-300 dark:border-ink-800 dark:hover:border-ink-700"
                 }
               >
                 Все
@@ -155,7 +155,7 @@ export default function FailureModesPage() {
                   className={
                     severity === s.key
                       ? `px-3 py-1 text-xs rounded-md border ${s.cls}`
-                      : "px-3 py-1 text-xs rounded-md bg-ink-900 text-ink-300 border border-ink-800 hover:border-ink-700"
+                      : "px-3 py-1 text-xs rounded-md bg-white text-ink-700 border border-ink-200 hover:border-brand-400 dark:bg-ink-900 dark:text-ink-300 dark:border-ink-800 dark:hover:border-ink-700"
                   }
                 >
                   {s.label}
@@ -165,19 +165,19 @@ export default function FailureModesPage() {
           </div>
 
           {loading && (
-            <div className="text-ink-400" data-testid="failure-loading">
+            <div className="text-ink-700 dark:text-ink-400" data-testid="failure-loading">
               Загрузка каталога…
             </div>
           )}
           {error && (
-            <div className="rounded-md bg-red-950/40 border border-red-700 p-3 text-red-300 text-sm">
+            <div className="rounded-md bg-red-50 border border-red-200 dark:bg-red-950/40 dark:border-red-700 p-3 text-red-700 dark:text-red-300 text-sm">
               Ошибка: {error}
             </div>
           )}
 
           {list && !loading && (
             <>
-              <div className="text-xs text-ink-500 mb-3">
+              <div className="text-xs text-ink-600 dark:text-ink-500 mb-3">
                 Найдено: {list.count} режимов
               </div>
               <div
@@ -189,7 +189,7 @@ export default function FailureModesPage() {
                 ))}
               </div>
               {list.modes.length === 0 && (
-                <div className="text-ink-500 italic">
+                <div className="text-ink-600 dark:text-ink-500 italic">
                   Нет отказов под текущие фильтры.
                 </div>
               )}
@@ -211,7 +211,7 @@ function ModeCard({ mode, onOpen }: { mode: FailureMode; onOpen: () => void }) {
       type="button"
       onClick={onOpen}
       data-testid={`mode-card-${mode.id}`}
-      className="text-left flex flex-col p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
+      className="text-left flex flex-col p-5 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group shadow-premium-sm"
     >
       <div className="flex items-baseline justify-between mb-3">
         <span className="text-lg" aria-hidden>
@@ -223,23 +223,23 @@ function ModeCard({ mode, onOpen }: { mode: FailureMode; onOpen: () => void }) {
           {sev.label}
         </span>
       </div>
-      <div className="font-display font-semibold text-ink-50 group-hover:text-accent-500 transition-colors mb-2">
+      <div className="font-display font-semibold text-ink-900 dark:text-ink-50 group-hover:text-brand-700 dark:group-hover:text-accent-500 transition-colors mb-2">
         {mode.name}
       </div>
-      <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-2">
+      <div className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-2">
         {CATEGORY_LABEL[mode.category] || mode.category}
       </div>
-      <ul className="text-sm text-ink-400 space-y-0.5 mt-1">
+      <ul className="text-sm text-ink-700 dark:text-ink-400 space-y-0.5 mt-1">
         {mode.symptoms.slice(0, 3).map((s, i) => (
           <li key={i} className="flex gap-1.5">
-            <span className="text-accent-500/70 shrink-0">·</span>
+            <span className="text-brand-600 dark:text-accent-500/70 shrink-0">·</span>
             <span className="line-clamp-2">{s}</span>
           </li>
         ))}
       </ul>
       {mode.trigger_in_calculator && (
-        <div className="mt-3 pt-3 border-t border-ink-800 text-xs text-ink-500">
-          Связан с триггером: <code className="text-accent-500/80">{mode.trigger_in_calculator}</code>
+        <div className="mt-3 pt-3 border-t border-ink-200 dark:border-ink-800 text-xs text-ink-600 dark:text-ink-500">
+          Связан с триггером: <code className="text-brand-700 dark:text-accent-500/80">{mode.trigger_in_calculator}</code>
         </div>
       )}
     </button>

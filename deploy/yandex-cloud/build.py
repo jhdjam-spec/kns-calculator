@@ -31,6 +31,7 @@ PUBLIC_DATASET_SUBS = [
     "etl_seed",
     "failure_modes",  # Sub P: каталог типовых отказов (26 модов) — endpoint /failure-modes
     "regulations",  # Sub N: climate_cities_2026.json (76 городов СП 131) — endpoint /climate/*
+    "storm_research_raw",  # Phase 18: climate_db_36_cities.json + surfaces — endpoint /project (ливнёвка)
 ]
 
 EXCLUDE_PATTERNS = ["__pycache__", ".ruff_cache", ".pytest_cache", "*.pyc", "*.pyo"]

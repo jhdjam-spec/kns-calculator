@@ -18,7 +18,7 @@ export function ObjectTypeSelector({ selected, onSelect }: Props) {
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-ink-200">
+      <label className="block text-sm font-medium text-ink-800 dark:text-ink-200">
         1. Что у вас за объект?
       </label>
       <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
@@ -32,16 +32,16 @@ export function ObjectTypeSelector({ selected, onSelect }: Props) {
               title={preset.short_description}
               className={[
                 "p-3 rounded-lg border text-center transition-all",
-                "hover:border-accent-500 hover:bg-accent-500/5",
+                "hover:border-brand-400 hover:bg-brand-50 dark:hover:border-accent-500 dark:hover:bg-accent-500/5",
                 isSelected
-                  ? "border-accent-500 bg-accent-500/10 ring-2 ring-accent-500/30"
-                  : "border-white/10 bg-white/[0.02]",
+                  ? "border-brand-600 bg-brand-50 ring-2 ring-brand-200 dark:border-accent-500 dark:bg-accent-500/10 dark:ring-accent-500/30"
+                  : "border-ink-200 bg-ink-50 dark:border-white/10 dark:bg-white/[0.02]",
               ].join(" ")}
             >
               <div className="text-2xl mb-1" aria-hidden="true">
                 {preset.icon}
               </div>
-              <div className="text-xs leading-tight text-ink-300">
+              <div className="text-xs leading-tight text-ink-700 dark:text-ink-300">
                 {preset.label}
               </div>
             </button>
@@ -49,9 +49,9 @@ export function ObjectTypeSelector({ selected, onSelect }: Props) {
         })}
       </div>
       {selected && (
-        <p className="text-xs text-ink-400 mt-2">
+        <p className="text-xs text-ink-700 dark:text-ink-400 mt-2">
           Выбрано:{" "}
-          <span className="text-ink-200 font-medium">
+          <span className="text-ink-900 dark:text-ink-200 font-medium">
             {presets.find((p) => p.id === selected)?.label}
           </span>
         </p>

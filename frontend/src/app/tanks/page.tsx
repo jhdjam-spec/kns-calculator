@@ -21,33 +21,33 @@ export default function TanksPage() {
   return (
     <>
       <SiteNav />
-      <main id="main" className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
+      <main id="main" className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-5xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-500">
+            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500">
               INSERVO · Калькулятор ёмкостей
             </h1>
             <a
               href="/"
-              className="text-sm text-ink-400 hover:text-accent-500 transition-colors"
+              className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
             >
               ← На главную
             </a>
           </div>
 
           <div className="mb-10 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-50 mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-900 dark:text-ink-50 mb-4">
               Расчёт ёмкостей и корпусов КНС
             </h2>
-            <p className="text-ink-400 leading-relaxed">
+            <p className="text-ink-700 dark:text-ink-400 leading-relaxed">
               Расчёт массы, объёма и ориентировочной стоимости горизонтальных
               полипропиленовых (ПП) ёмкостей и вертикальных корпусов{" "}
-              <strong className="text-ink-200">КНС</strong> (канализационных насосных станций).
+              <strong className="text-ink-900 dark:text-ink-200">КНС</strong> (канализационных насосных станций).
               Формулы основаны на технологическом калькуляторе Серво-Юг.
             </p>
           </div>
 
-          <div role="tablist" className="flex border-b border-ink-800 gap-1 mb-6">
+          <div role="tablist" className="flex border-b border-ink-200 dark:border-ink-800 gap-1 mb-6">
             {TABS.map((t) => (
               <button
                 key={t.id}
@@ -58,12 +58,12 @@ export default function TanksPage() {
                 className={clsx(
                   "px-4 py-2 text-sm font-medium border-b-2 transition-colors text-left",
                   tab === t.id
-                    ? "border-accent-500 text-accent-500"
-                    : "border-transparent text-ink-400 hover:text-ink-200"
+                    ? "border-brand-600 text-brand-700 dark:border-accent-500 dark:text-accent-500"
+                    : "border-transparent text-ink-700 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-200"
                 )}
               >
                 {t.label}
-                <span className="block text-xs font-normal text-ink-500">{t.subtitle}</span>
+                <span className="block text-xs font-normal text-ink-600 dark:text-ink-500">{t.subtitle}</span>
               </button>
             ))}
           </div>

@@ -62,28 +62,28 @@ export function ProjectWizard() {
         {STEPS.map((s, idx) => (
           <div
             key={s.key}
-            className={`flex-1 ${idx < STEPS.length - 1 ? "border-r border-ink-800" : ""}`}
+            className={`flex-1 ${idx < STEPS.length - 1 ? "border-r border-ink-200 dark:border-ink-800" : ""}`}
           >
             <div className="px-2 md:px-4">
               <div
                 className={`text-xs font-mono uppercase tracking-wider ${
                   idx === currentStepIdx
-                    ? "text-accent-500"
+                    ? "text-brand-700 dark:text-accent-500"
                     : idx < currentStepIdx
-                    ? "text-ink-300"
-                    : "text-ink-600"
+                    ? "text-ink-700 dark:text-ink-300"
+                    : "text-ink-400 dark:text-ink-600"
                 }`}
               >
                 {idx + 1}. {s.title}
               </div>
-              <div className="text-sm text-ink-500 mt-1">{s.description}</div>
+              <div className="text-sm text-ink-600 dark:text-ink-500 mt-1">{s.description}</div>
             </div>
           </div>
         ))}
       </div>
 
       {/* Контент шага */}
-      <div className="bg-ink-900 border border-ink-800 rounded-lg p-6 md:p-8 min-h-[400px]">
+      <div className="bg-white dark:bg-ink-900 border border-ink-200 dark:border-ink-800 rounded-lg p-6 md:p-8 min-h-[400px] shadow-premium-sm">
         {step === "preset" && (
           <ProjectStepPreset
             data={data}

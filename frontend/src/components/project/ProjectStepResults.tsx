@@ -425,13 +425,13 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
     <div>
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-display font-semibold text-ink-50 mb-1">
+          <h2 className="text-2xl font-display font-semibold text-ink-900 dark:text-ink-50 mb-1">
             {result.project_name}
           </h2>
-          <p className="text-ink-400 text-sm">
+          <p className="text-ink-700 dark:text-ink-400 text-sm">
             Пресет: {result.preset} · Подсистем: {active.length}
             {result.total_warnings > 0 && (
-              <span className="ml-3 text-yellow-400">
+              <span className="ml-3 text-warning dark:text-yellow-400">
                 ⚠ {result.total_warnings} предупреждений
               </span>
             )}
@@ -440,7 +440,7 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
         <button
           type="button"
           onClick={onRestart}
-          className="text-sm text-ink-400 hover:text-accent-500 transition-colors"
+          className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
         >
           Новый проект
         </button>
@@ -462,14 +462,14 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
 
       {/* Ссылки на нормативы */}
       {result.references_consolidated.length > 0 && (
-        <div className="bg-ink-950 border border-ink-800 rounded-lg p-5 mb-6">
+        <div className="bg-brand-50 border border-brand-200 dark:bg-ink-950 dark:border-ink-800 rounded-lg p-5 mb-6">
           <div className="flex items-center justify-between mb-3">
-            <div className="font-display font-semibold text-ink-50">
+            <div className="font-display font-semibold text-ink-900 dark:text-ink-50">
               Нормативная база
             </div>
-            <div className="text-xs text-ink-500">Кликните на пункт — откроется справка</div>
+            <div className="text-xs text-ink-600 dark:text-ink-500">Кликните на пункт — откроется справка</div>
           </div>
-          <ul className="text-sm text-ink-300 space-y-1.5">
+          <ul className="text-sm text-ink-700 dark:text-ink-300 space-y-1.5">
             {result.references_consolidated.map((ref, i) => {
               const topic = topicForRegulation(ref.regulation_code || "");
               const anchor = ref.purpose || ref.section || ref.regulation_code || "";
@@ -485,11 +485,11 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
                         regulation: ref.regulation_code,
                       })
                     }
-                    className="text-left hover:bg-ink-900 rounded px-1.5 py-0.5 -mx-1.5 transition-colors w-full"
+                    className="text-left hover:bg-white dark:hover:bg-ink-900 rounded px-1.5 py-0.5 -mx-1.5 transition-colors w-full"
                   >
-                    <span className="text-accent-500 font-mono">{ref.regulation_code}</span>
-                    {ref.section && <span className="text-ink-500"> · {ref.section}</span>}
-                    {ref.purpose && <span className="text-ink-400"> — {ref.purpose}</span>}
+                    <span className="text-brand-700 dark:text-accent-500 font-mono">{ref.regulation_code}</span>
+                    {ref.section && <span className="text-ink-600 dark:text-ink-500"> · {ref.section}</span>}
+                    {ref.purpose && <span className="text-ink-700 dark:text-ink-400"> — {ref.purpose}</span>}
                   </button>
                 </li>
               );
@@ -504,7 +504,7 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
           type="button"
           onClick={handleDownloadPdf}
           disabled={pdfStatus === "loading"}
-          className="bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors"
+          className="bg-brand-600 hover:bg-brand-700 disabled:bg-ink-300 disabled:text-ink-500 text-white dark:bg-accent-500 dark:hover:bg-accent-400 dark:disabled:bg-ink-700 dark:text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors"
         >
           {pdfStatus === "loading"
             ? "Генерация PDF…"
@@ -514,20 +514,20 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
           type="button"
           onClick={handleDownloadCsv}
           disabled={csvStatus === "loading"}
-          className="bg-ink-100 hover:bg-ink-50 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors"
+          className="bg-ink-100 hover:bg-ink-200 disabled:bg-ink-300 disabled:text-ink-500 text-ink-900 dark:bg-ink-100 dark:hover:bg-ink-50 dark:disabled:bg-ink-700 dark:text-ink-950 px-4 py-2.5 rounded-md font-medium transition-colors border border-ink-200 dark:border-transparent"
         >
           {csvStatus === "loading"
             ? "Сборка CSV…"
             : "📊 BOM — список оборудования / спецификация (CSV / Excel)"}
         </button>
       </div>
-      <div className="text-xs text-ink-500 mb-6">
+      <div className="text-xs text-ink-600 dark:text-ink-500 mb-6">
         PDF — пятисекционный отчёт для защиты проекта (ОЛ → методика → результаты →
         BOM → выводы). CSV — список оборудования для импорта в ГРАНД-Смету или Excel.
       </div>
 
       {exportError && (
-        <div className="mb-6 p-3 bg-red-500/10 border border-red-500/30 rounded text-sm text-red-300">
+        <div className="mb-6 p-3 bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30 rounded text-sm text-red-700 dark:text-red-300">
           Ошибка экспорта: {exportError}
         </div>
       )}
@@ -540,9 +540,9 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
 
 
       {/* Beta предупреждение */}
-      <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-md text-sm">
-        <span className="text-yellow-400 font-medium">Бета-версия. </span>
-        <span className="text-yellow-200">
+      <div className="p-4 bg-yellow-50 border border-yellow-300 dark:bg-yellow-500/10 dark:border-yellow-500/30 rounded-md text-sm">
+        <span className="text-yellow-800 dark:text-yellow-400 font-medium">Бета-версия. </span>
+        <span className="text-yellow-900 dark:text-yellow-200">
           Результаты являются информационными. Перед применением в проекте обязательна
           верификация инженером-проектировщиком ВК. Допуск ±15% от реальной документации.
         </span>
@@ -552,7 +552,7 @@ export function ProjectStepResults({ result, onBack, onRestart }: Props) {
         <button
           type="button"
           onClick={onBack}
-          className="text-ink-400 hover:text-ink-200 px-4 py-2 transition-colors"
+          className="text-ink-700 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-200 px-4 py-2 transition-colors"
         >
           ← Изменить параметры
         </button>
@@ -597,13 +597,13 @@ function DeepCalculationsLinks() {
   ];
 
   return (
-    <div className="bg-ink-950 border border-ink-800 rounded-lg p-5 mb-6">
+    <div className="bg-ink-50 border border-ink-200 dark:bg-ink-950 dark:border-ink-800 rounded-lg p-5 mb-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="font-display font-semibold text-ink-50">
+          <div className="font-display font-semibold text-ink-900 dark:text-ink-50">
             Углубиться в теорию
           </div>
-          <div className="text-xs text-ink-500 mt-0.5">
+          <div className="text-xs text-ink-600 dark:text-ink-500 mt-0.5">
             6 разделов гидравлики и физики (~2300 строк по СП/ГОСТ/Karassik)
           </div>
         </div>
@@ -611,7 +611,7 @@ function DeepCalculationsLinks() {
           href="/teach/hydraulics"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs text-accent-500 hover:text-accent-400"
+          className="text-xs text-brand-700 hover:text-brand-800 dark:text-accent-500 dark:hover:text-accent-400"
         >
           Открыть полную статью →
         </a>
@@ -628,12 +628,12 @@ function DeepCalculationsLinks() {
                 valueLabel: it.title,
               })
             }
-            className="text-left p-3 bg-ink-900 border border-ink-800 rounded-md hover:border-accent-500/50 transition-colors group"
+            className="text-left p-3 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-md hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group"
           >
-            <div className="text-sm font-display font-medium text-ink-100 group-hover:text-accent-500 transition-colors">
+            <div className="text-sm font-display font-medium text-ink-900 dark:text-ink-100 group-hover:text-brand-700 dark:group-hover:text-accent-500 transition-colors">
               {it.title}
             </div>
-            <div className="text-xs text-ink-400 mt-1">{it.description}</div>
+            <div className="text-xs text-ink-700 dark:text-ink-400 mt-1">{it.description}</div>
           </button>
         ))}
       </div>
@@ -664,19 +664,19 @@ function BomTable({ items }: { items: BOMItem[] }) {
   };
 
   return (
-    <div className="bg-ink-950 border border-ink-800 rounded-lg p-5 mb-6">
+    <div className="bg-white border border-ink-200 dark:bg-ink-950 dark:border-ink-800 rounded-lg p-5 mb-6 shadow-premium-sm">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="font-display font-semibold text-ink-50">
+          <div className="font-display font-semibold text-ink-900 dark:text-ink-50">
             BOM — список оборудования / спецификация
           </div>
-          <div className="text-xs text-ink-500 mt-0.5">
+          <div className="text-xs text-ink-600 dark:text-ink-500 mt-0.5">
             {items.length} позиций · ориентировочные цены 2026
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-ink-500">Итого ориентировочно</div>
-          <div className="font-mono text-xl text-accent-500">
+          <div className="text-xs text-ink-600 dark:text-ink-500">Итого ориентировочно</div>
+          <div className="font-mono text-xl text-brand-700 dark:text-accent-500">
             {total.toLocaleString("ru-RU")} ₽
           </div>
         </div>
@@ -685,7 +685,7 @@ function BomTable({ items }: { items: BOMItem[] }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-xs font-mono uppercase tracking-wider text-ink-500 border-b border-ink-800">
+            <tr className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 border-b border-ink-200 dark:border-ink-800">
               <th className="text-left py-2 px-3 w-10">№</th>
               <th className="text-left py-2 px-3">Наименование</th>
               <th className="text-left py-2 px-3 hidden md:table-cell">Раздел</th>
@@ -700,27 +700,27 @@ function BomTable({ items }: { items: BOMItem[] }) {
               return (
                 <tr
                   key={i}
-                  className="border-b border-ink-900 hover:bg-ink-900/50 transition-colors"
+                  className="border-b border-ink-100 dark:border-ink-900 hover:bg-ink-50 dark:hover:bg-ink-900/50 transition-colors"
                 >
-                  <td className="py-2 px-3 text-ink-500 font-mono text-xs">{i + 1}</td>
+                  <td className="py-2 px-3 text-ink-600 dark:text-ink-500 font-mono text-xs">{i + 1}</td>
                   <td className="py-2 px-3">
-                    <div className="text-ink-100">{it.name}</div>
+                    <div className="text-ink-900 dark:text-ink-100">{it.name}</div>
                     {it.note && (
-                      <div className="text-xs text-ink-500 mt-0.5">{it.note}</div>
+                      <div className="text-xs text-ink-600 dark:text-ink-500 mt-0.5">{it.note}</div>
                     )}
                   </td>
                   <td className="py-2 px-3 hidden md:table-cell">
-                    <span className="text-xs px-1.5 py-0.5 bg-ink-900 text-ink-400 rounded">
+                    <span className="text-xs px-1.5 py-0.5 bg-ink-100 text-ink-700 dark:bg-ink-900 dark:text-ink-400 rounded">
                       {sectionLabels[it.section] || it.section}
                     </span>
                   </td>
-                  <td className="py-2 px-3 text-right text-ink-200 font-mono">
+                  <td className="py-2 px-3 text-right text-ink-800 dark:text-ink-200 font-mono">
                     {it.quantity ?? 1} {it.units || "шт"}
                   </td>
-                  <td className="py-2 px-3 text-right text-ink-300 font-mono hidden md:table-cell">
+                  <td className="py-2 px-3 text-right text-ink-700 dark:text-ink-300 font-mono hidden md:table-cell">
                     {(it.price_rub_2026 ?? 0).toLocaleString("ru-RU")}
                   </td>
-                  <td className="py-2 px-3 text-right text-ink-50 font-mono">
+                  <td className="py-2 px-3 text-right text-ink-900 dark:text-ink-50 font-mono">
                     {sum.toLocaleString("ru-RU")}
                   </td>
                 </tr>
@@ -729,10 +729,10 @@ function BomTable({ items }: { items: BOMItem[] }) {
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={5} className="py-3 px-3 text-right text-sm text-ink-300 font-medium">
+              <td colSpan={5} className="py-3 px-3 text-right text-sm text-ink-700 dark:text-ink-300 font-medium">
                 ИТОГО
               </td>
-              <td className="py-3 px-3 text-right font-mono text-lg text-accent-500 font-semibold">
+              <td className="py-3 px-3 text-right font-mono text-lg text-brand-700 dark:text-accent-500 font-semibold">
                 {total.toLocaleString("ru-RU")} ₽
               </td>
             </tr>
@@ -740,7 +740,7 @@ function BomTable({ items }: { items: BOMItem[] }) {
         </table>
       </div>
 
-      <div className="mt-4 text-xs text-ink-500">
+      <div className="mt-4 text-xs text-ink-600 dark:text-ink-500">
         ⚠ Цены ориентировочные на 2026 г. Точные цифры — после запроса дилерам.
         Используйте экспорт CSV для импорта в Excel или ГРАНД-Смету.
       </div>
@@ -762,10 +762,10 @@ const SUBSYSTEM_TOPIC: Record<string, string> = {
 
 function SubsystemCard({ label, result }: { label: string; result: SubsystemResult }) {
   const statusColor: Record<string, string> = {
-    ok: "text-green-400 border-green-500/30 bg-green-500/5",
-    warning: "text-yellow-400 border-yellow-500/30 bg-yellow-500/5",
-    error: "text-red-400 border-red-500/30 bg-red-500/5",
-    skipped: "text-ink-500 border-ink-700 bg-ink-900",
+    ok: "text-green-700 border-green-200 bg-green-50 dark:text-green-400 dark:border-green-500/30 dark:bg-green-500/5",
+    warning: "text-yellow-800 border-yellow-200 bg-yellow-50 dark:text-yellow-400 dark:border-yellow-500/30 dark:bg-yellow-500/5",
+    error: "text-red-700 border-red-200 bg-red-50 dark:text-red-400 dark:border-red-500/30 dark:bg-red-500/5",
+    skipped: "text-ink-600 border-ink-200 bg-ink-50 dark:text-ink-500 dark:border-ink-700 dark:bg-ink-900",
   };
   const statusIcon: Record<string, string> = {
     ok: "✓",
@@ -790,18 +790,18 @@ function SubsystemCard({ label, result }: { label: string; result: SubsystemResu
               valueLabel: label,
             })
           }
-          className="font-display font-semibold text-ink-50 hover:text-accent-500 transition-colors text-left underline decoration-dotted decoration-accent-500/30 underline-offset-4 hover:decoration-accent-500"
+          className="font-display font-semibold text-ink-900 dark:text-ink-50 hover:text-brand-700 dark:hover:text-accent-500 transition-colors text-left underline decoration-dotted decoration-brand-400 dark:decoration-accent-500/30 underline-offset-4 hover:decoration-brand-700 dark:hover:decoration-accent-500"
           title="Открыть справку из энциклопедии"
         >
           {label}
         </button>
         <span className="font-mono text-lg">{statusIcon[result.status]}</span>
       </div>
-      <div className="text-sm text-ink-300 mb-2">{result.summary}</div>
+      <div className="text-sm text-ink-700 dark:text-ink-300 mb-2">{result.summary}</div>
       {result.warnings && result.warnings.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-ink-800/50">
-          <div className="text-xs text-yellow-400 font-medium mb-1">Предупреждения:</div>
-          <ul className="text-xs text-ink-400 space-y-0.5">
+        <div className="mt-3 pt-3 border-t border-ink-200 dark:border-ink-800/50">
+          <div className="text-xs text-yellow-800 dark:text-yellow-400 font-medium mb-1">Предупреждения:</div>
+          <ul className="text-xs text-ink-700 dark:text-ink-400 space-y-0.5">
             {result.warnings.map((w, i) => (
               <li key={i}>• {w}</li>
             ))}

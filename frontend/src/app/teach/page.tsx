@@ -15,25 +15,25 @@ export default function TeachPage() {
   return (
     <>
       <SiteNav />
-      <main id="main" className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
+      <main id="main" className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-500">
+            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500">
               INSERVO · Энциклопедия инженера ВК
             </h1>
             <a
               href="/"
-              className="text-sm text-ink-400 hover:text-accent-500 transition-colors"
+              className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
             >
               ← На главную
             </a>
           </div>
 
           <div className="mb-12 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-50 mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-900 dark:text-ink-50 mb-4">
               Учебник по инженерным расчётам ВК
             </h2>
-            <p className="text-ink-400 leading-relaxed">
+            <p className="text-ink-700 dark:text-ink-400 leading-relaxed">
               6 тематических справочников по гидравлике, пожарной защите, водоснабжению,
               электрике, корпусу и ЛОС. Каждая статья основана на актуальных редакциях
               СП и ГОСТ. Можно запустить эталонные примеры из реальных проектов.
@@ -42,38 +42,38 @@ export default function TeachPage() {
 
           {/* 6 топиков */}
           <section className="mb-16">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-4">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
               Тематические разделы
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {topics.isLoading && <div className="text-ink-400">Загрузка тем…</div>}
+              {topics.isLoading && <div className="text-ink-700 dark:text-ink-400">Загрузка тем…</div>}
               {topics.data?.topics.map((t) => (
                 <a
                   key={t.key}
                   href={`/teach/${t.key}`}
-                  className="flex flex-col p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
+                  className="flex flex-col p-5 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group shadow-premium-sm"
                 >
-                  <div className="font-display font-semibold text-ink-50 group-hover:text-accent-500 transition-colors mb-2">
+                  <div className="font-display font-semibold text-ink-900 dark:text-ink-50 group-hover:text-brand-700 dark:group-hover:text-accent-500 transition-colors mb-2">
                     {t.title}
                   </div>
-                  <div className="text-sm text-ink-400 mb-3">{t.short_description}</div>
+                  <div className="text-sm text-ink-700 dark:text-ink-400 mb-3">{t.short_description}</div>
 
                   {/* Полные названия норм, на которых основан раздел */}
                   {t.regulations_full && t.regulations_full.length > 0 && (
-                    <div className="mt-2 mb-3 pt-3 border-t border-ink-800/60">
-                      <div className="text-[10px] font-mono uppercase tracking-wider text-ink-500 mb-2">
+                    <div className="mt-2 mb-3 pt-3 border-t border-ink-200 dark:border-ink-800/60">
+                      <div className="text-[10px] font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-2">
                         Основано на нормах
                       </div>
                       <ul className="space-y-1.5">
                         {t.regulations_full.slice(0, 4).map((r) => (
                           <li key={r.code} className="text-xs leading-snug">
-                            <span className="text-accent-500/90 font-mono">{r.code}</span>
-                            <span className="text-ink-500"> — </span>
-                            <span className="text-ink-400">{r.name}</span>
+                            <span className="text-brand-700 dark:text-accent-500/90 font-mono">{r.code}</span>
+                            <span className="text-ink-600 dark:text-ink-500"> — </span>
+                            <span className="text-ink-700 dark:text-ink-400">{r.name}</span>
                           </li>
                         ))}
                         {t.regulations_full.length > 4 && (
-                          <li className="text-[11px] text-ink-500 italic">
+                          <li className="text-[11px] text-ink-600 dark:text-ink-500 italic">
                             и ещё {t.regulations_full.length - 4} ↗
                           </li>
                         )}
@@ -81,7 +81,7 @@ export default function TeachPage() {
                     </div>
                   )}
 
-                  <div className="mt-auto text-xs font-mono text-ink-500">
+                  <div className="mt-auto text-xs font-mono text-ink-600 dark:text-ink-500">
                     {t.sections_count} разделов
                   </div>
                 </a>
@@ -93,45 +93,45 @@ export default function TeachPage() {
           <section className="mb-16">
             <a
               href="/teach/failure-modes"
-              className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
+              className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group shadow-premium-sm"
             >
               <div>
-                <div className="font-display font-semibold text-ink-50 group-hover:text-accent-500 transition-colors mb-1">
+                <div className="font-display font-semibold text-ink-900 dark:text-ink-50 group-hover:text-brand-700 dark:group-hover:text-accent-500 transition-colors mb-1">
                   📚 Библиотека типовых отказов
                 </div>
-                <div className="text-sm text-ink-400">
+                <div className="text-sm text-ink-700 dark:text-ink-400">
                   26 режимов отказа КНС/НС: симптомы · причины · профилактика · стоимость ремонта · downtime.
                 </div>
               </div>
-              <span className="text-accent-500 group-hover:translate-x-1 transition-transform">→</span>
+              <span className="text-brand-700 dark:text-accent-500 group-hover:translate-x-1 transition-transform">→</span>
             </a>
           </section>
 
           {/* Эталонные примеры */}
           <section>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-4">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
               Эталонные примеры из реальных проектов
             </h3>
-            <p className="text-ink-400 text-sm mb-6">
+            <p className="text-ink-700 dark:text-ink-400 text-sm mb-6">
               Каждый пример запускает калькулятор с реальными параметрами.
               Используйте для сравнения и обучения.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {examples.isLoading && <div className="text-ink-400">Загрузка примеров…</div>}
+              {examples.isLoading && <div className="text-ink-700 dark:text-ink-400">Загрузка примеров…</div>}
               {examples.data?.examples.map((ex) => (
                 <a
                   key={ex.id}
                   href={`/teach/${ex.topic}#${ex.id}`}
-                  className="block p-4 bg-ink-900 border border-ink-800 rounded-lg hover:border-ink-600 transition-colors"
+                  className="block p-4 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-ink-600 transition-colors shadow-premium-sm"
                 >
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">📐</div>
                     <div className="flex-1">
-                      <div className="font-display font-semibold text-ink-100 mb-1">
+                      <div className="font-display font-semibold text-ink-900 dark:text-ink-100 mb-1">
                         {ex.title}
                       </div>
-                      <div className="text-sm text-ink-400 mb-2">{ex.description}</div>
-                      <div className="text-xs text-accent-500 font-mono">
+                      <div className="text-sm text-ink-700 dark:text-ink-400 mb-2">{ex.description}</div>
+                      <div className="text-xs text-brand-700 dark:text-accent-500 font-mono">
                         Ожидается: {ex.expected_outcome}
                       </div>
                     </div>

@@ -131,7 +131,7 @@ export function CostSankey({ pump, segment, open, onClose, selection }: CostSank
                 onClick={() => setHorizon(y as 1 | 5 | 10)}
                 className={
                   horizon === y
-                    ? "px-4 py-1.5 text-sm font-medium rounded-md bg-ink-950 text-ink-50"
+                    ? "px-4 py-1.5 text-sm font-medium rounded-md bg-brand-700 text-white"
                     : "px-4 py-1.5 text-sm font-medium rounded-md bg-ink-100 text-ink-700 hover:bg-ink-200"
                 }
                 type="button"

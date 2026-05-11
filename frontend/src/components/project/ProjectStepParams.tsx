@@ -26,10 +26,10 @@ const SOILS = [
 export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
   return (
     <div>
-      <h2 className="text-2xl font-display font-semibold text-ink-50 mb-2">
+      <h2 className="text-2xl font-display font-semibold text-ink-900 dark:text-ink-50 mb-2">
         Базовые параметры
       </h2>
-      <p className="text-ink-400 mb-6 text-sm">
+      <p className="text-ink-700 dark:text-ink-400 mb-6 text-sm">
         Эти данные автоматически подставятся во все расчёты.
         Точность калькулятора ±15% от реального проекта.
       </p>
@@ -159,7 +159,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
               onChange={(e) => setData({ ...data, has_groundwater: e.target.checked })}
               className="size-4 accent-accent-500"
             />
-            <span className="text-sm text-ink-300">
+            <span className="text-sm text-ink-700 dark:text-ink-300">
               Высокий УГВ (ниже 1 м от поверхности)
             </span>
           </label>
@@ -177,7 +177,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
               onChange={(e) => setData({ ...data, is_atex_zone: e.target.checked })}
               className="size-4 accent-accent-500"
             />
-            <span className="text-sm text-ink-300">
+            <span className="text-sm text-ink-700 dark:text-ink-300">
               Объект во взрывоопасной зоне
             </span>
           </label>
@@ -188,14 +188,14 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
         <button
           type="button"
           onClick={onBack}
-          className="text-ink-400 hover:text-ink-200 px-4 py-2 transition-colors"
+          className="text-ink-700 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-200 px-4 py-2 transition-colors"
         >
           ← Назад
         </button>
         <button
           type="button"
           onClick={onNext}
-          className="bg-accent-500 hover:bg-accent-400 text-ink-950 px-6 py-2.5 rounded-md font-medium transition-colors"
+          className="bg-brand-600 hover:bg-brand-700 text-white dark:bg-accent-500 dark:hover:bg-accent-400 dark:text-ink-950 px-6 py-2.5 rounded-md font-medium transition-colors"
         >
           Далее →
         </button>
@@ -215,9 +215,9 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm text-ink-300 mb-1.5">{label}</label>
+      <label className="block text-sm text-ink-700 dark:text-ink-300 mb-1.5">{label}</label>
       {children}
-      {hint && <div className="text-xs text-ink-500 mt-1">{hint}</div>}
+      {hint && <div className="text-xs text-ink-600 dark:text-ink-500 mt-1">{hint}</div>}
     </div>
   );
 }
