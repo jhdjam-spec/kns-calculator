@@ -17,14 +17,13 @@
   - cli.py        — запуск как `python -m pump_calculator.etl.cli ...`
 """
 
-from pump_calculator.etl.curve_fitter import QHCurve, fit_qh_curve
-from pump_calculator.etl.importer import import_raw_pump
-from pump_calculator.etl.schemas import QHPoint, RawPumpRecord
+"""NB: НЕТ eager-импортов модулей curve_fitter/importer на уровне пакета.
+Эти модули требуют numpy (dev-dep для ETL), которая не входит в YC Functions zip.
+Если нужен curve_fitter — импортируй напрямую:
+    from pump_calculator.etl.curve_fitter import QHCurve, fit_qh_curve
 
-__all__ = [
-    "QHCurve",
-    "QHPoint",
-    "RawPumpRecord",
-    "fit_qh_curve",
-    "import_raw_pump",
-]
+Это позволяет incoming_classifier (P5 CRM) работать в YC Functions runtime
+без numpy. См. commit 5ea50ab + 502 fix в YC backend.
+"""
+
+__all__: list[str] = []
