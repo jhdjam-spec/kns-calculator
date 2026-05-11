@@ -13,6 +13,7 @@ import {
   downloadBomCsv,
   type BOMItem,
 } from "@/lib/api-extended";
+import { useMode } from "@/components/providers/ModeProvider";
 
 /** Скачивание Blob через временный <a download>. */
 function triggerBlobDownload(blob: Blob, filename: string) {
@@ -88,6 +89,11 @@ const segmentMeta = {
 
 export function ResultsCompare({ result }: ResultsCompareProps) {
   const segments = ["budget", "mid", "premium"] as const;
+  const { mode } = useMode();
+  // Engineer-first порядок: сначала handoff/triggers/suggestions (где
+  // BEP/η/AOR/zone), потом карточки. Manager-first: карточки с ценой/
+  // сроком первыми, инженерные предупреждения — после.
+  const isEngineer = mode === "engineer";
 
   return (
     <section id="results" className="py-20 md:py-24 bg-ink-50 border-t border-ink-200">
@@ -105,11 +111,22 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
           )}
         </div>
 
-        {result.engineer_handoff_required && (
+        {/* Engineer-first: handoff banner + suggestions ПЕРЕД карточками,
+            чтобы проектировщик сразу видел BEP/AOR/zone/триггеры. */}
+        {isEngineer && result.engineer_handoff_required && (
           <HandoffBanner reasons={result.trigger_reasons} />
         )}
+        {isEngineer && result.suggestions && result.suggestions.length > 0 && (
+          <div className="mb-8">
+            <SuggestionList suggestions={result.suggestions} variant="light" />
+          </div>
+        )}
 
-        {result.suggestions && result.suggestions.length > 0 && (
+        {/* Manager-first: handoff после карточек (предупреждение, не блокер). */}
+        {!isEngineer && result.engineer_handoff_required && (
+          <HandoffBanner reasons={result.trigger_reasons} />
+        )}
+        {!isEngineer && result.suggestions && result.suggestions.length > 0 && (
           <div className="mb-8">
             <SuggestionList suggestions={result.suggestions} variant="light" />
           </div>

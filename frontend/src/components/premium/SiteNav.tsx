@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Phone, Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ModeToggle } from "@/components/providers/ModeToggle";
 
 const NAV_LINKS: Array<{ href: string; label: string; primary?: boolean }> = [
   { href: "/project", label: "Проект целиком", primary: true },
@@ -101,6 +102,8 @@ export function SiteNav() {
             <Phone size={16} strokeWidth={1.75} />
             <span>8-800</span>
           </a>
+          {/* Mode toggle — Менеджер / Инженер. На < sm рисует М / И. */}
+          <ModeToggle compact />
           <ThemeToggle />
           <a
             href="/project"

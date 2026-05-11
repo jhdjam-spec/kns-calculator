@@ -12,6 +12,7 @@ import {
 import { toM3h } from "@/lib/units";
 import type { SelectionResult } from "@/schemas/result";
 import { QHelper } from "@/components/QHelper";
+import { useMode } from "@/components/providers/ModeProvider";
 
 interface CalculatorPanelProps {
   onSubmit: (params: {
@@ -47,6 +48,17 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
   const [corpus, setCorpus] = useState<CorpusMaterial>("pe");
   const [advanced, setAdvanced] = useState(false);
   const [helperOpen, setHelperOpen] = useState(false);
+  const { mode } = useMode();
+
+  // Mode-aware labels: менеджер видит человеческие подписи,
+  // инженер — компактные формулы из СП.
+  const qLabelText = mode === "engineer" ? "Q, м³/ч" : "Расход (м³/час)";
+  const qTooltipText =
+    mode === "engineer"
+      ? "Расход Q, формула Q = V/t (СП 32.13330 §6.2)"
+      : "Сколько воды в час нужно перекачивать";
+  const dHLabelText = mode === "engineer" ? "dH, м" : "Перепад высот (м)";
+  const lLabelText = mode === "engineer" ? "L, м" : "Длина трубы (м)";
 
   const handleSubmit = () => {
     const Q_num = parseFloat(qValue);
@@ -123,9 +135,10 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
                 <div className="flex items-center justify-between mb-3">
                   <label
                     htmlFor="calc-q"
+                    title={qTooltipText}
                     className="text-[10px] font-mono uppercase tracking-wider text-ink-400"
                   >
-                    Расход Q
+                    {qLabelText}
                   </label>
                   <button
                     type="button"
@@ -184,7 +197,7 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
                         htmlFor="calc-dh"
                         className="block text-[10px] font-mono uppercase tracking-wider text-ink-400 mb-2"
                       >
-                        Перепад dH, м
+                        {dHLabelText}
                       </label>
                       <input
                         id="calc-dh"
@@ -200,7 +213,7 @@ export function CalculatorPanel({ onSubmit, isPending, result }: CalculatorPanel
                         htmlFor="calc-l"
                         className="block text-[10px] font-mono uppercase tracking-wider text-ink-400 mb-2"
                       >
-                        Длина L, м
+                        {lLabelText}
                       </label>
                       <input
                         id="calc-l"

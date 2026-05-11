@@ -69,12 +69,18 @@ def test_select_pumps_no_corpus_for_clean_water() -> None:
 
 
 def test_select_pumps_no_corpus_for_micro_kns() -> None:
-    """Для Q<5 + DN<=65 (готовый приямок) корпус не нужен."""
+    """Для Q<5 + DN<=65 (готовый приямок) корпус с предупредительной note."""
     result = select_pumps(L0Input(Q_m3h=2, dH_m=3, wastewater_type="domestic"))
-    # Если есть кандидат с DN<=65 — корпус не нужен
+    # Sub'ы 2026-05-11 изменили логику: вместо None возвращается CorpusSize
+    # с информативной note «обычно не нужен, достаточно готового приямка».
     sample = result.results.budget or result.results.mid or result.results.premium
     if sample and (sample.discharge_DN_mm or 65) <= 65:
-        assert result.corpus_size is None
+        # Либо None (старое поведение), либо CorpusSize с note про приямок
+        if result.corpus_size is not None:
+            assert any(
+                "приямк" in n.lower() or "не нужен" in n.lower()
+                for n in (result.corpus_size.notes or [])
+            )
 
 
 def test_corpus_for_industrial_q150_diameter_3000() -> None:

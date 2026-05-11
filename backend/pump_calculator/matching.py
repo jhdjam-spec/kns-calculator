@@ -246,6 +246,193 @@ def composite_score(pump: dict[str, Any], Q_m3h: float, H_full_m: float) -> tupl
     return score, breakdown, zone
 
 
+# ----------------------- «Why this pump?» explainer -----------------------
+
+# Цитаты СП/HI — кликабельные ссылки рендерит фронтенд. URL — на encyclopedia
+# страницы или официальные ГОСТ/СП.
+_CITATIONS_BEP = {
+    "text": "СП 32.13330 §6.5 — допустимое отклонение рабочей точки от BEP ±20%",
+    "url": "/teach/bep",
+}
+_CITATIONS_AOR = {
+    "text": "ANSI/HI 9.6.3 — POR (0.7…1.2)·Q_BEP, AOR (0.4…1.5)·Q_BEP",
+    "url": "/teach/aor-por",
+}
+_CITATIONS_NPSH = {
+    "text": "СП 32.13330 §6.4 — расчёт NPSH и кавитации",
+    "url": "/teach/npsh",
+}
+_CITATIONS_FREE_PASSAGE = {
+    "text": "СП 32.13330 п.6.2 — свободный проход насоса для бытовых стоков ≥40 мм",
+    "url": "/teach/free-passage",
+}
+
+
+def build_score_explanation(
+    pump: dict[str, Any],
+    breakdown: dict,
+    zone: str | None,
+    Q_m3h: float,
+    H_full_m: float,
+    wastewater_type: str = "domestic",
+) -> dict:
+    """Структурированное «Why this pump?» — для UI explainer panel.
+
+    Поля step_5_segment и rank проставляются позже в pick_top_per_segment(),
+    когда известна позиция в сегменте.
+
+    Возвращает dict с шагами 1-4 + citations. Используется в make_pump_result.
+    Не меняет core-логику matching — только обогащает PumpResult.
+    """
+    e = pump["envelope"]
+    Q_min, Q_max = e["Q_min_m3h"], e["Q_max_m3h"]
+    H_min, H_max = e["H_min_m"], e["H_max_m"]
+    Q_BEP = e.get("Q_BEP_m3h") or (Q_min + Q_max) / 2
+
+    # Шаг 1: фильтр по типу стоков + free_passage
+    fp = pump.get("free_passage_mm") or 0
+    fp_min, _ = catalog.get_free_passage_required_mm(wastewater_type)
+    step_1 = (
+        f"Прошёл фильтр: wastewater_type={wastewater_type}, "
+        f"free_passage={fp:g} мм ≥ {fp_min:g} мм требуемых"
+    )
+
+    # Шаг 2: Q-H envelope
+    step_2 = (
+        f"Q={Q_m3h:g} м³/ч в диапазоне [{Q_min:g}, {Q_max:g}]; "
+        f"H_full={H_full_m:g} м ≤ H_max={H_max:g} м "
+        f"(допуск +5%); H_min насоса {H_min:g} м"
+    )
+
+    # Шаг 3: AOR/POR
+    if pump.get("type") == "submersible_sewage":
+        step_3 = (
+            f"Работа в pulsed-режиме (циклы вкл/выкл по поплавкам) — "
+            f"формальная AOR-проверка не применяется. Q/Q_BEP = "
+            f"{(Q_m3h / Q_BEP * 100) if Q_BEP else 0:.0f}%."
+        )
+    else:
+        zone_label = {
+            "POR": "POR (Preferred Operating Region, 0.7…1.2 Q_BEP) — оптимум",
+            "AOR": "AOR (Allowable Operating Region, 0.4…1.5 Q_BEP) — допустимо",
+            "outside": "outside AOR — повышенный износ",
+        }.get(zone or "", "неизвестно")
+        step_3 = (
+            f"Точка работы: Q/Q_BEP = {(Q_m3h / Q_BEP * 100) if Q_BEP else 0:.0f}% "
+            f"→ {zone_label}"
+        )
+
+    # Шаг 4: композит-скор — value × weight = contribution
+    bep_v = breakdown.get("bep_proximity", 0.0)
+    eta_v = breakdown.get("eta", 0.0)
+    h_v = breakdown.get("h_margin_quality", 0.0)
+    avail_v = breakdown.get("ru_availability", 0.0)
+    warr_v = breakdown.get("warranty", 0.0)
+    step_4 = {
+        "bep_proximity": {
+            "value": bep_v,
+            "weight": 0.40,
+            "contribution": round(bep_v * 0.40, 4),
+            "label": "Близость к BEP",
+            "hint_engineer": (
+                f"bep_prox = max(0, 1 - |Q - Q_BEP|/Q_BEP) = "
+                f"max(0, 1 - |{Q_m3h:g} - {Q_BEP:g}|/{Q_BEP:g}) = {bep_v:.3f}"
+            ),
+            "hint_manager": (
+                f"Насколько близко рабочая точка к идеалу: {bep_v * 100:.0f}% — "
+                f"чем выше, тем меньше износ и расход энергии."
+            ),
+        },
+        "eta": {
+            "value": eta_v,
+            "weight": 0.25,
+            "contribution": round(eta_v * 0.25, 4),
+            "label": "КПД в BEP",
+            "hint_engineer": (
+                f"η_BEP = {eta_v * 100:.0f}%"
+                + ("" if e.get("eta_BEP_pct") else " (fallback 30% — нет в БД)")
+            ),
+            "hint_manager": (
+                f"Эффективность насоса {eta_v * 100:.0f}% — "
+                f"влияет на счёт за электричество."
+            ),
+        },
+        "h_margin": {
+            "value": h_v,
+            "weight": 0.20,
+            "contribution": round(h_v * 0.20, 4),
+            "label": "Запас по напору",
+            "hint_engineer": (
+                f"H_max/H_full = {e['H_max_m']:g}/{H_full_m:g} = "
+                f"{(e['H_max_m'] / H_full_m if H_full_m else 0):.2f}; "
+                f"идеал в [1.05, 1.15] → h_q={h_v:.2f}"
+            ),
+            "hint_manager": (
+                f"Запас напора подобран на {h_v * 100:.0f}% от идеала — "
+                f"насос не «впритык» и не сильно избыточен."
+            ),
+        },
+        "availability": {
+            "value": avail_v,
+            "weight": 0.10,
+            "contribution": round(avail_v * 0.10, 4),
+            "label": "Доступность в РФ",
+            "hint_engineer": (
+                f"available_ru.status = "
+                f"{pump.get('available_ru', {}).get('status', 'unknown')} "
+                f"→ avail={avail_v:.2f}"
+            ),
+            "hint_manager": (
+                f"Поставка в РФ оценена в {avail_v * 100:.0f}% "
+                f"(официальный канал=100%, параллельный=60%, под заказ=40%)."
+            ),
+        },
+        "warranty": {
+            "value": warr_v,
+            "weight": 0.05,
+            "contribution": round(warr_v * 0.05, 4),
+            "label": "Гарантия",
+            "hint_engineer": (
+                f"warranty = min({pump.get('warranty_months', 12)}/24, 1.0) "
+                f"= {warr_v:.2f}"
+            ),
+            "hint_manager": (
+                f"Заводская гарантия {pump.get('warranty_months', 12)} мес "
+                f"— нормирована к 24 мес (=100%)."
+            ),
+        },
+    }
+
+    # Композит base_score = сумма contribution × ns_factor × penalties
+    composite_sum = round(
+        bep_v * 0.40 + eta_v * 0.25 + h_v * 0.20 + avail_v * 0.10 + warr_v * 0.05,
+        4,
+    )
+
+    citations = []
+    citations.append(_CITATIONS_BEP)
+    if pump.get("type") != "submersible_sewage":
+        citations.append(_CITATIONS_AOR)
+    if wastewater_type in ("domestic", "drainage", "industrial"):
+        citations.append(_CITATIONS_FREE_PASSAGE)
+    if e.get("NPSHr_at_BEP_m"):
+        citations.append(_CITATIONS_NPSH)
+
+    return {
+        "step_1_filter": step_1,
+        "step_2_envelope": step_2,
+        "step_3_aor": step_3,
+        "step_4_composite": step_4,
+        "step_4_composite_sum": composite_sum,
+        "step_4_final_score": breakdown.get("final_score", 0.0),
+        # step_5_segment + rank проставляются в pick_top_per_segment.
+        "step_5_segment": "",
+        "rank_in_segment": None,
+        "candidates_in_segment": None,
+        "citations": citations,
+    }
+
+
 # Иерархия защиты IP — ключ для сравнения "не ниже". Используется в filter_by_ip_motor.
 _IP_RANK: dict[str, int] = {"IP54": 1, "IP55": 2, "IP58": 3, "IP68": 4}
 
@@ -329,6 +516,7 @@ def make_pump_result(
     ex_required: bool = False,
     n_pumps_override: int | None = None,
     L1: L1Input | None = None,
+    H_full_m: float = 0.0,
 ) -> PumpResult:
     """Конвертация из raw JSON в типизированный PumpResult с оценкой цены комплекта.
 
@@ -498,6 +686,21 @@ def make_pump_result(
             f"мм — учтён в выборе DN корпуса."
         )
 
+    # 2026-05-11: «Why this pump?» — структурированное объяснение для UI.
+    # Шаги 1-4 + цитаты. step_5_segment / rank проставляются в pick_top_per_segment
+    # (там известно положение в сегменте).
+    H_full_for_explainer = H_full_m if H_full_m else (
+        e["H_max_m"] / 1.10 if e.get("H_max_m") else 1.0
+    )
+    score_explanation = build_score_explanation(
+        pump=pump,
+        breakdown=breakdown,
+        zone=zone,
+        Q_m3h=Q_m3h,
+        H_full_m=H_full_for_explainer,
+        wastewater_type=wastewater_type,
+    )
+
     return PumpResult(
         id=pump["id"],
         brand=pump["brand"],
@@ -512,6 +715,7 @@ def make_pump_result(
         available_ru_status=(pump.get("available_ru") or {}).get("status", "unknown"),
         score=round(score, 4),
         score_breakdown=breakdown,
+        score_explanation=score_explanation,
         aor_zone=zone,
         notes=pump_notes,
         price_estimate_rub=price_breakdown.total_rub,
@@ -557,11 +761,21 @@ def pick_top_per_segment(
             wastewater_type=wastewater_type, ex_required=ex_required,
             n_pumps_override=n_pumps_override,
             L1=L1,
+            H_full_m=H_full_m,
         )
         # Duty point — точка работы
         pr.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
         # Sync price_estimate_rub после возможных uplift'ов в make_pump_result.
         pr.price_estimate_rub = pr.price_breakdown.total_rub
+        # 2026-05-11: проставляем step_5_segment / rank в explainer
+        # (известно только тут — позиция в сегменте + всего кандидатов).
+        if pr.score_explanation:
+            pr.score_explanation["step_5_segment"] = (
+                f"Лучший в сегменте «{segment}»: рейтинг 1 из {len(seg_candidates)} "
+                f"кандидатов (score={best[1]:.3f})"
+            )
+            pr.score_explanation["rank_in_segment"] = 1
+            pr.score_explanation["candidates_in_segment"] = len(seg_candidates)
         setattr(results, segment, pr)
         selected_brands.add(best[0].get("brand", ""))
         selected_ids.add(best[0].get("id", ""))
@@ -594,9 +808,16 @@ def pick_top_per_segment(
             wastewater_type=wastewater_type, ex_required=ex_required,
             n_pumps_override=n_pumps_override,
             L1=L1,
+            H_full_m=H_full_m,
         )
         alt.duty_point = {"Q_m3h": Q_m3h, "H_m": H_full_m}
         alt.price_estimate_rub = alt.price_breakdown.total_rub
+        # Alternatives — отметим что это «лучший в бренде» вне топ-сегмента.
+        if alt.score_explanation:
+            alt.score_explanation["step_5_segment"] = (
+                f"Альтернатива из сегмента «{p.get('price_segment')}» "
+                f"(другой бренд, score={score:.3f})"
+            )
         alternatives.append(alt)
 
     return results, len(scored), warnings, alternatives
@@ -656,21 +877,35 @@ def build_suggestions(
     # При z₂ < z₁ (отрицательный геометрический напор) насос НЕ нужен —
     # жидкость сама течёт под действием силы тяжести (gh).
     if L0.dH_m is not None and L0.dH_m < 0:
+        eng_dh = (
+            f"⚖️ Физика: dH = z₂ - z₁ = разность отметок (точка сброса минус "
+            f"точка забора). dH={L0.dH_m} м означает что приёмник на |{L0.dH_m}| м "
+            f"НИЖЕ источника.\n"
+            f"🔬 По уравнению Бернулли P₁/(ρg) + z₁ = P₂/(ρg) + z₂ + h_тр: "
+            f"при z₂ < z₁ жидкость течёт самотёком, насос не нужен.\n"
+            f"💡 Если приёмник ВЫШЕ источника на {abs(L0.dH_m)} м — "
+            f"уберите минус и поставьте {abs(L0.dH_m)}.\n"
+            f"📐 По СП 32 §6.4 насос требуется только при положительном "
+            f"геометрическом напоре + потерях на трение."
+        )
+        mgr_dh = (
+            f"🌊 dH={L0.dH_m} м — точка сброса НИЖЕ точки забора. "
+            f"Вода и так потечёт сама собой, насос не нужен.\n"
+            f"💰 Решение: уточните у клиента схему — где источник, где приёмник?\n"
+            f"  • Если перепутали знак — поставьте +{abs(L0.dH_m)} м, "
+            f"тогда подберём насос (стандартная КНС 200-1500 тыс ₽).\n"
+            f"  • Если действительно самотёк — нужен только самотёчный "
+            f"коллектор и колодец (60-200 тыс ₽, без насоса вообще).\n"
+            f"⏱ Без уточнения тратить время на подбор насоса бессмысленно — "
+            f"клиент откажется когда увидит чек."
+        )
         suggestions.append(InputSuggestion(
             field="dH_m",
             current_value=f"{L0.dH_m}",
             suggested_value=f"{abs(L0.dH_m)}",
-            reason=(
-                f"⚖️ Физика: dH = z₂ - z₁ = разность отметок (точка сброса минус "
-                f"точка забора). dH={L0.dH_m} м означает что приёмник на |{L0.dH_m}| м "
-                f"НИЖЕ источника.\n"
-                f"🔬 По уравнению Бернулли P₁/(ρg) + z₁ = P₂/(ρg) + z₂ + h_тр: "
-                f"при z₂ < z₁ жидкость течёт самотёком, насос не нужен.\n"
-                f"💡 Если приёмник ВЫШЕ источника на {abs(L0.dH_m)} м — "
-                f"уберите минус и поставьте {abs(L0.dH_m)}.\n"
-                f"📐 По СП 32 §6.4 насос требуется только при положительном "
-                f"геометрическом напоре + потерях на трение."
-            ),
+            reason=eng_dh,
+            reason_engineer=eng_dh,
+            reason_manager=mgr_dh,
             severity="critical",
         ))
 
@@ -679,19 +914,33 @@ def build_suggestions(
     # 30-100+ м (оборудование разнесено). L < 5 м физически возможен только
     # для микро-объектов (квартира).
     if L0.L_m is not None and L0.L_m < 5 and L0.Q_m3h > 50:
+        eng_l = (
+            f"📏 L={L0.L_m} м для Q={L0.Q_m3h} м³/ч — несоразмерно.\n"
+            f"🔬 Гидравлика: для Q={L0.Q_m3h} м³/ч типовая трасса "
+            f"30-100+ м (соединение между КНС, ОС, выпуском). "
+            f"L<5 м означает почти отсутствие трубы.\n"
+            f"💡 Возможно вы имели в виду {L0.L_m * 10} м (опечатка ×10)?\n"
+            f"📐 Для Q≥50 м³/ч обычная норма: L_внутри = 50-200 м, "
+            f"L_вне = 200-2000 м (СП 32 §6.5)."
+        )
+        mgr_l = (
+            f"📏 Трасса {L0.L_m} м при расходе {L0.Q_m3h} м³/ч — "
+            f"подозрительно мало. Так бывает только если КНС стоит "
+            f"прямо у точки сброса (внутри здания).\n"
+            f"💰 Если на самом деле трасса {L0.L_m * 10} м (типичная опечатка) — "
+            f"подбор изменится: понадобится более мощный насос (+10-30% к цене) "
+            f"и больший диаметр трубы.\n"
+            f"📞 Уточните у клиента: какое реальное расстояние между КНС "
+            f"и точкой сброса/ОС? Если ошибиться — насос не вытянет напор "
+            f"и стоки пойдут наружу через 1-2 месяца эксплуатации."
+        )
         suggestions.append(InputSuggestion(
             field="L_m",
             current_value=f"{L0.L_m}",
             suggested_value=f"{L0.L_m * 10}",
-            reason=(
-                f"📏 L={L0.L_m} м для Q={L0.Q_m3h} м³/ч — несоразмерно.\n"
-                f"🔬 Гидравлика: для Q={L0.Q_m3h} м³/ч типовая трасса "
-                f"30-100+ м (соединение между КНС, ОС, выпуском). "
-                f"L<5 м означает почти отсутствие трубы.\n"
-                f"💡 Возможно вы имели в виду {L0.L_m * 10} м (опечатка ×10)?\n"
-                f"📐 Для Q≥50 м³/ч обычная норма: L_внутри = 50-200 м, "
-                f"L_вне = 200-2000 м (СП 32 §6.5)."
-            ),
+            reason=eng_l,
+            reason_engineer=eng_l,
+            reason_manager=mgr_l,
             severity="warning",
         ))
 
@@ -708,21 +957,35 @@ def build_suggestions(
             if std >= D_optimal:
                 D_optimal = std
                 break
+        eng_vlow = (
+            f"🔬 Гидравлика: при D={L1.pipe_D_mm} мм скорость "
+            f"v=Q/A=Q/(πD²/4)={computed.v_ms:.3f} м/с.\n"
+            f"⚠ По СП 32 §5.4 для бытовой канализации v_min=0.7 м/с — "
+            f"при меньших скоростях осадок (взвешенные вещества) не "
+            f"уносится, происходит ЗАИЛИВАНИЕ за месяцы.\n"
+            f"📐 Расчёт оптимального D: D = √(4Q/(πv)), для v=1.2 м/с "
+            f"(середина допустимого диапазона 0.7-2.5 м/с) → "
+            f"D = √(4·{Q_m3s:.4f}/(π·1.2))·1000 = {D_optimal} мм (стандартный DN).\n"
+            f"💡 Замените pipe_D_mm на {D_optimal}."
+        )
+        mgr_vlow = (
+            f"🌊 Труба DN{int(L1.pipe_D_mm)} слишком широкая для расхода "
+            f"{L0.Q_m3h} м³/ч — вода течёт медленно ({computed.v_ms:.2f} м/с), "
+            f"осадок (песок, тряпки) оседает прямо в трубе.\n"
+            f"💰 Через 3-6 мес труба зарастёт изнутри, насос будет давить "
+            f"в забитую трубу — поломка двигателя 80-200 тыс ₽.\n"
+            f"💡 Решение: труба DN{int(D_optimal)} вместо DN{int(L1.pipe_D_mm)} — "
+            f"экономия на трубе ~30-50% + насос проработает 10 лет вместо 2.\n"
+            f"📞 Если клиент настаивает на DN{int(L1.pipe_D_mm)} — "
+            f"закладывайте промывку трассы 2 раза в год (40-80 тыс ₽/год OPEX)."
+        )
         suggestions.append(InputSuggestion(
             field="L1.pipe_D_mm",
             current_value=f"{L1.pipe_D_mm}",
             suggested_value=f"{D_optimal}",
-            reason=(
-                f"🔬 Гидравлика: при D={L1.pipe_D_mm} мм скорость "
-                f"v=Q/A=Q/(πD²/4)={computed.v_ms:.3f} м/с.\n"
-                f"⚠ По СП 32 §5.4 для бытовой канализации v_min=0.7 м/с — "
-                f"при меньших скоростях осадок (взвешенные вещества) не "
-                f"уносится, происходит ЗАИЛИВАНИЕ за месяцы.\n"
-                f"📐 Расчёт оптимального D: D = √(4Q/(πv)), для v=1.2 м/с "
-                f"(середина допустимого диапазона 0.7-2.5 м/с) → "
-                f"D = √(4·{Q_m3s:.4f}/(π·1.2))·1000 = {D_optimal} мм (стандартный DN).\n"
-                f"💡 Замените pipe_D_mm на {D_optimal}."
-            ),
+            reason=eng_vlow,
+            reason_engineer=eng_vlow,
+            reason_manager=mgr_vlow,
             severity="warning",
         ))
 
@@ -741,21 +1004,36 @@ def build_suggestions(
         # Расчёт давления гидроудара по Жуковскому
         a_pe100 = 320  # скорость волны в PE100 (м/с)
         delta_p_bar = 1000 * a_pe100 * computed.v_ms / 1e5
+        eng_vhigh = (
+            f"🔬 Гидравлика: при D={L1.pipe_D_mm} мм скорость "
+            f"v={computed.v_ms:.2f} м/с.\n"
+            f"⚠ СП 32 §5.4: v_max=2.5 м/с — иначе абразивный износ "
+            f"трубы (срок службы падает в 2-3 раза) и эрозия фасонок.\n"
+            f"💥 Жуковский: при резком закрытии клапана Δp = ρ·a·Δv = "
+            f"1000·320·{computed.v_ms:.2f} ≈ {delta_p_bar:.1f} бар "
+            f"(только для PE100, для стали ×3). Может разорвать трубу.\n"
+            f"📐 Оптимум: D = √(4Q/(πv)) для v=1.2 м/с → {D_optimal} мм.\n"
+            f"💡 Замените pipe_D_mm на {D_optimal}."
+        )
+        mgr_vhigh = (
+            f"🌊 Труба DN{int(L1.pipe_D_mm)} слишком узкая для расхода "
+            f"{L0.Q_m3h} м³/ч — вода летит со скоростью {computed.v_ms:.1f} м/с, "
+            f"стенки трубы стирает песок и взвесь как наждачкой.\n"
+            f"💰 Последствия:\n"
+            f"  • Срок службы ПЭ-трубы падает с 50 лет до 15-20 лет.\n"
+            f"  • При закрытии клапана возможен гидроудар ~{delta_p_bar:.0f} бар — "
+            f"риск разрыва трубы (замена трассы 500-2000 тыс ₽).\n"
+            f"💡 Решение: труба DN{int(D_optimal)} вместо DN{int(L1.pipe_D_mm)} — "
+            f"увеличение цены трубы ~25-40%, но окупится в первые 5 лет.\n"
+            f"⏱ Срок поставки больших диаметров +1-2 недели."
+        )
         suggestions.append(InputSuggestion(
             field="L1.pipe_D_mm",
             current_value=f"{L1.pipe_D_mm}",
             suggested_value=f"{D_optimal}",
-            reason=(
-                f"🔬 Гидравлика: при D={L1.pipe_D_mm} мм скорость "
-                f"v={computed.v_ms:.2f} м/с.\n"
-                f"⚠ СП 32 §5.4: v_max=2.5 м/с — иначе абразивный износ "
-                f"трубы (срок службы падает в 2-3 раза) и эрозия фасонок.\n"
-                f"💥 Жуковский: при резком закрытии клапана Δp = ρ·a·Δv = "
-                f"1000·320·{computed.v_ms:.2f} ≈ {delta_p_bar:.1f} бар "
-                f"(только для PE100, для стали ×3). Может разорвать трубу.\n"
-                f"📐 Оптимум: D = √(4Q/(πv)) для v=1.2 м/с → {D_optimal} мм.\n"
-                f"💡 Замените pipe_D_mm на {D_optimal}."
-            ),
+            reason=eng_vhigh,
+            reason_engineer=eng_vhigh,
+            reason_manager=mgr_vhigh,
             severity="warning",
         ))
 
@@ -767,19 +1045,33 @@ def build_suggestions(
     temp_c = L1.liquid_temp_c if L1 else None
     if pipe_mat in ("pe100_sdr17", "pp", "pvc") and temp_c is not None and temp_c > 60:
         # Для PP допустимо до 70°C, но запас ниже
+        eng_pipe = (
+            f"🧪 Материаловедение: {pipe_mat} имеет T_max = 60°C "
+            f"для длительной эксплуатации (ISO 4427 для ПЭ100).\n"
+            f"📉 При T={temp_c}°C ползучесть ускоряется по закону "
+            f"Аррениуса (k = A·exp(-E_a/RT)): срок службы падает "
+            f"с 50 лет до 5-10 лет. Возможно разрушение трубы за месяцы.\n"
+            f"💡 Замените на steel_seamless_new — до 200°C при PN ≤ 16 бар, "
+            f"либо cast_iron_new — до 150°C, дешевле стали."
+        )
+        mgr_pipe = (
+            f"🔥 Полимерная труба ({pipe_mat}) не выдержит стоки T={temp_c}°C — "
+            f"размягчится и потечёт через 6-12 мес. Производитель не покрывает "
+            f"гарантией работу >60°C.\n"
+            f"💰 Замена трубы по материалам:\n"
+            f"  • Сталь бесшовная (до 200°C) — +80-150% к цене ПЭ.\n"
+            f"  • Чугун ВЧШГ (до 150°C) — +50-100% к цене ПЭ, дешевле стали.\n"
+            f"⏱ Срок поставки стали/чугуна 2-4 недели против 1-2 для ПЭ.\n"
+            f"📞 Если оставить ПЭ — клиент через год придёт менять всю трассу "
+            f"за свой счёт (500-1500 тыс ₽) и будет ругать нас за плохой подбор."
+        )
         suggestions.append(InputSuggestion(
             field="L1.pipe_material",
             current_value=f"{pipe_mat}",
             suggested_value="steel_seamless_new",
-            reason=(
-                f"🧪 Материаловедение: {pipe_mat} имеет T_max = 60°C "
-                f"для длительной эксплуатации (ISO 4427 для ПЭ100).\n"
-                f"📉 При T={temp_c}°C ползучесть ускоряется по закону "
-                f"Аррениуса (k = A·exp(-E_a/RT)): срок службы падает "
-                f"с 50 лет до 5-10 лет. Возможно разрушение трубы за месяцы.\n"
-                f"💡 Замените на steel_seamless_new — до 200°C при PN ≤ 16 бар, "
-                f"либо cast_iron_new — до 150°C, дешевле стали."
-            ),
+            reason=eng_pipe,
+            reason_engineer=eng_pipe,
+            reason_manager=mgr_pipe,
             severity="critical",
         ))
 
@@ -792,21 +1084,38 @@ def build_suggestions(
         delta = L1.inflow_per_hour_m3 - L0.Q_m3h
         # Время переполнения камеры 5м³ при текущем балансе
         t_overflow_min = 5.0 / delta * 60 if delta > 0 else float("inf")
+        eng_inflow = (
+            f"⚖️ Баланс масс (закон сохранения): dV/dt = Q_in - Q_out.\n"
+            f"При Q_in={L1.inflow_per_hour_m3} > Q_out={L0.Q_m3h} м³/ч "
+            f"уровень растёт со скоростью {delta:.1f} м³/ч.\n"
+            f"⏱ Камера 5 м³ переполнится за {t_overflow_min:.1f} мин — "
+            f"стоки пойдут на улицу.\n"
+            f"💡 Решение 1: Q_насоса = Q_in × 1.2 = {suggested_Q} м³/ч "
+            f"(+20% запас по СП 32 §6.5).\n"
+            f"💡 Решение 2: 2-3 насоса параллельно (1+1 рабочий+резерв).\n"
+            f"💡 Решение 3: увеличить V_камеры (буфер) — но это OPEX, не CAPEX."
+        )
+        mgr_inflow = (
+            f"⚖️ Приток в КНС ({L1.inflow_per_hour_m3} м³/ч) больше, чем "
+            f"вытаскивает насос ({L0.Q_m3h} м³/ч). Камера переполнится "
+            f"за {t_overflow_min:.0f} минут, стоки польются на улицу.\n"
+            f"💰 Решения:\n"
+            f"  • Поставить насос побольше Q={suggested_Q} м³/ч — "
+            f"+20-40% к цене насоса.\n"
+            f"  • Поставить 2 насоса в параллель (раб+рез по СП 32) — "
+            f"+60-100% к цене (2× оборудования).\n"
+            f"⏱ Без увеличения мощности — первый ливень = аварийный звонок "
+            f"клиента + штраф Росприроднадзора 100-500 тыс ₽ "
+            f"за загрязнение земли (КоАП ст.8.6).\n"
+            f"📞 Срочно уточните реальный приток у клиента (паспорт объекта)."
+        )
         suggestions.append(InputSuggestion(
             field="Q_m3h",
             current_value=f"{L0.Q_m3h}",
             suggested_value=f"{suggested_Q}",
-            reason=(
-                f"⚖️ Баланс масс (закон сохранения): dV/dt = Q_in - Q_out.\n"
-                f"При Q_in={L1.inflow_per_hour_m3} > Q_out={L0.Q_m3h} м³/ч "
-                f"уровень растёт со скоростью {delta:.1f} м³/ч.\n"
-                f"⏱ Камера 5 м³ переполнится за {t_overflow_min:.1f} мин — "
-                f"стоки пойдут на улицу.\n"
-                f"💡 Решение 1: Q_насоса = Q_in × 1.2 = {suggested_Q} м³/ч "
-                f"(+20% запас по СП 32 §6.5).\n"
-                f"💡 Решение 2: 2-3 насоса параллельно (1+1 рабочий+резерв).\n"
-                f"💡 Решение 3: увеличить V_камеры (буфер) — но это OPEX, не CAPEX."
-            ),
+            reason=eng_inflow,
+            reason_engineer=eng_inflow,
+            reason_manager=mgr_inflow,
             severity="critical",
         ))
 
@@ -1219,6 +1528,400 @@ def build_suggestions(
             field="L1.groundwater_level_m",
             current_value=f"{gw:+.1f}",
             suggested_value=f"ж/б пригруз {V_concrete_m3:.1f} м³",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # ──────────────────────────────────────────────────────────────────
+    # 2026-05-11: 11 legacy triggers без отдельной InputSuggestion —
+    # дополняем 2-level пояснения для UI «возможно вы имели в виду».
+    # Frontend рендерит таб «Инженер»/«Менеджер» по reason_engineer/_manager.
+    # ──────────────────────────────────────────────────────────────────
+
+    # LEG-1: auto_q_high — Q > 500 м³/ч
+    if "auto_q_high" in triggers:
+        eng = (
+            f"📈 Q={L0.Q_m3h} м³/ч > 500 — выход за диапазон бюджетных серий "
+            f"(ANTARUS / Pedrollo / CNP заканчиваются на ~400-500 м³/ч).\n"
+            f"🔬 Для такого расхода применяются промышленные классы: "
+            f"  • Центробежные одноступенчатые (KSB Sewabloc, Wilo EMU FA) "
+            f"до 1500 м³/ч.\n"
+            f"  • Многоступенчатые ЦНС (ЦНС-300, ЦНС-500) для напоров > 50 м.\n"
+            f"📐 NPSHr таких насосов 5-8 м — требуется проверка кавитации.\n"
+            f"⚠ AOR-зона уже на 70-115% BEP; работа вне AOR резко снижает "
+            f"ресурс рабочего колеса (СП 32 §6.5)."
+        )
+        mgr = (
+            f"🏭 Расход {L0.Q_m3h} м³/ч — это уже промышленный масштаб "
+            f"(район/посёлок/завод).\n"
+            f"💰 Цена:\n"
+            f"  • Насос промышленный — 500 тыс — 2.5 млн ₽ за единицу.\n"
+            f"  • КНС-комплект 2+1 — 3-8 млн ₽ под ключ.\n"
+            f"⏱ Срок поставки нестандартного заказа — 4-8 недель "
+            f"(склада нет, делают под проект).\n"
+            f"📞 Обязательно передайте инженеру — нужен индивидуальный "
+            f"расчёт магистральной КНС, бюджетные серии не подойдут."
+        )
+        suggestions.append(InputSuggestion(
+            field="Q_m3h",
+            current_value=f"{L0.Q_m3h}",
+            suggested_value="промышленная КНС, инженерный подбор",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # LEG-2: auto_h_high — H_full > 80 м
+    if "auto_h_high" in triggers:
+        eng = (
+            f"📈 H_full={computed.H_full_m:.1f} м > 80 — за пределами "
+            f"одноступенчатых центробежных канализационных насосов.\n"
+            f"🔬 Для H>80 нужны:\n"
+            f"  • Многоступенчатые насосы CR/MFL/ЦНС (вертикальные in-line).\n"
+            f"  • Либо бустер-станция: 2 КНС последовательно с промежуточным "
+            f"резервуаром (СП 32 §6.5).\n"
+            f"📐 NPSH_required растёт с числом ступеней (NPSHr ~ k·√i) — "
+            f"риск кавитации при низком подпоре."
+        )
+        mgr = (
+            f"⛰ Напор {computed.H_full_m:.0f} м — это подъём на 20+ этажей. "
+            f"Обычные канализационные насосы такое не вытягивают.\n"
+            f"💰 Цена:\n"
+            f"  • Многоступенчатый насос CR/MFL — 600 тыс — 1.2 млн ₽.\n"
+            f"  • Бустер-станция (2 КНС) — 1.5-3 млн ₽.\n"
+            f"⏱ Спецзаказ под проект, срок 4-6 недель.\n"
+            f"📞 Передайте инженеру — нужен расчёт по двум вариантам "
+            f"(одна высоконапорная vs две последовательные)."
+        )
+        suggestions.append(InputSuggestion(
+            field="H_full_m",
+            current_value=f"{computed.H_full_m:.1f}",
+            suggested_value="multi-stage или бустер",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # LEG-3: auto_industrial — wastewater_type=industrial
+    if "auto_industrial" in triggers:
+        eng = (
+            "🏭 Промстоки требуют индустриального класса оборудования:\n"
+            "📐 free_passage насоса ≥ 35-50 мм (вместо 10-20 для бытовых).\n"
+            "📐 Материалы: чугун ВЧШГ / нерж 316L (против абразива и "
+            "коррозии); сталь для t > 60°C.\n"
+            "⚡ Электрика по зонам ATEX (если есть органика/растворители): "
+            "II 2G Ex db IIB T4 — насос+ЩУ+датчики уровня.\n"
+            "🧪 Возможна необходимость песколовки/гидроциклона перед КНС "
+            "(СП 32 §7.4) и аэротенка для биологии (СП 32 §9)."
+        )
+        mgr = (
+            f"🏭 Промстоки ({L0.Q_m3h} м³/ч) — это совсем другой класс "
+            f"оборудования, не бытовой.\n"
+            f"💰 Наценка к бытовому варианту:\n"
+            f"  • Чугунный/нержавеющий насос — +50-100% к цене.\n"
+            f"  • ATEX-исполнение (если требуется) — ещё +30-50%.\n"
+            f"  • Песколовка/гидроциклон — +200-500 тыс ₽.\n"
+            f"⏱ Срок поставки 6-10 недель (производство под заказ).\n"
+            f"📞 Уточните у клиента: состав стоков (pH, T, абразив, "
+            f"взрывоопасность), это влияет на цену в 2-3 раза."
+        )
+        suggestions.append(InputSuggestion(
+            field="wastewater_type",
+            current_value="industrial",
+            suggested_value="индустриальный класс, требуется анализ стоков",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # LEG-4: auto_fire_protection
+    if "auto_fire_protection" in triggers:
+        eng = (
+            "🔥 Пожарная насосная установка (ПНУ) — отдельный класс по СП "
+            "8.13130.2020 «Источники наружного противопожарного водоснабжения» "
+            "и СП 10.13130.2020 «Внутренний противопожарный водопровод».\n"
+            "📐 Обязательный состав:\n"
+            "  • Резервуар пожарного запаса (V по СП 8 §6 = 3 ч × Q_расч).\n"
+            "  • Насос рабочий + резервный (1+1, СП 10 §6.5).\n"
+            "  • Жокей-насос для поддержания давления.\n"
+            "  • Автоматика по ГОСТ Р 53325 (датчики давления, ШУ ПНУ).\n"
+            "⚠ Расчёт Q_расч и H_расч зависит от категории помещения "
+            "(А-Д), типа спринклеров, длины самых удалённых ветвей."
+        )
+        mgr = (
+            "🔥 Пожарная установка — это не наш стандартный профиль. "
+            "Требует индивидуального проектирования и сертификации МЧС.\n"
+            "💰 Ориентир:\n"
+            "  • Насосы + ШУ ПНУ — 400 тыс — 1.5 млн ₽.\n"
+            "  • Резервуар 50-200 м³ — 500 тыс — 1.5 млн ₽.\n"
+            "  • Проект + согласование с МЧС — 200-500 тыс ₽.\n"
+            "⏱ Полный цикл (проект → согласование → монтаж → испытания) — "
+            "1-3 месяца.\n"
+            "📞 Передайте инженеру и менеджеру по пожарным проектам — "
+            "это смежная компетенция, отдельный продукт."
+        )
+        suggestions.append(InputSuggestion(
+            field="wastewater_type",
+            current_value="fire_protection",
+            suggested_value="пожарная установка, отдельное проектирование",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # LEG-5: auto_ex — Ex_required=True
+    if "auto_ex" in triggers and L1 and L1.Ex_required:
+        eng = (
+            "⚠ Взрывозащищённое исполнение по ТР ТС 012/2011 и ГОСТ "
+            "IEC 60079-0:\n"
+            "📐 Маркировка для КНС: II 2G Ex db IIB T4 Gb или II 3G "
+            "Ex eb IIA T3.\n"
+            "🔬 Применяется когда в стоках возможны летучие "
+            "углеводороды/растворители (АЗС, нефтебазы, СТО, химпром).\n"
+            "⚡ Требования:\n"
+            "  • NPSHa critical (нельзя допускать кавитацию — искра).\n"
+            "  • Корпус двигателя: алюминий/чугун с искробезопасным "
+            "монтажом, кабельные вводы Ex e.\n"
+            "  • ШУ — в отдельном безопасном помещении или Ex-исполнение.\n"
+            "  • Заземление обязательно (ПУЭ 7.3.139) + протокол замера."
+        )
+        mgr = (
+            "⚡ Взрывозащищённый насос — спецзаказ для опасных зон "
+            "(АЗС, нефтебаза, химия).\n"
+            "💰 Наценка к стандартному исполнению:\n"
+            "  • Насос Ex (Grundfos SE/SL, Wilo EMU FA) — +30-50%.\n"
+            "  • Ex-кабель + вводы — +50-100 тыс ₽.\n"
+            "  • Сертификат Ex-зоны от Ростехнадзора — 80-150 тыс ₽.\n"
+            "⏱ Срок поставки 8-12 недель (нет на складе, делают под заказ).\n"
+            "📞 Уточните у клиента класс зоны (1/2 = 2G/3G) и группу газов "
+            "(IIA/IIB/IIC). Без этого подобрать нельзя."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.Ex_required",
+            current_value="True",
+            suggested_value="ATEX II 2G/3G, спецзаказ",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # LEG-6: auto_npsha_low — NPSHa < 5 м (горы)
+    if "auto_npsha_low" in triggers and L1 and L1.altitude_m and computed.npsha_m is not None:
+        eng = (
+            f"🌡 NPSHa={computed.npsha_m:.2f} м < 5 м на высоте "
+            f"{L1.altitude_m:.0f} м над уровнем моря.\n"
+            f"📐 Формула: NPSHa = (P_atm - P_vapor)/(ρ·g) - H_suction - h_тр.\n"
+            f"  • P_atm с высотой падает по барометрической формуле "
+            f"(P = P₀·exp(-h/8400)); на 2000 м ~80 кПа vs 101 на 0 м.\n"
+            f"  • P_vapor растёт с температурой (при T=60°C ≈ 20 кПа).\n"
+            f"⚠ NPSHr типичных канализационных насосов 2-4 м. "
+            f"NPSHa - NPSHr < 0.5 м = кавитация (шум, эрозия колеса, "
+            f"снижение Q-H кривой).\n"
+            f"💡 Решение: насос с низким NPSHr (Grundfos SEG Quick-action, "
+            f"WILO Drain TS) либо подпор / снижение T."
+        )
+        mgr = (
+            f"⛰ Объект на высоте {L1.altitude_m:.0f} м — воздух разрежен, "
+            f"обычные насосы будут кавитировать (шуметь, ломать колесо).\n"
+            f"💰 Последствия:\n"
+            f"  • Без спецнасоса — рабочее колесо разрушается за 6-12 мес.\n"
+            f"  • Аварийный ремонт + замена колеса — 200-500 тыс ₽.\n"
+            f"  • Эксплуатация в шуме > 80 дБ — жалобы клиента.\n"
+            f"💡 Решение: насос с низким NPSHr (Grundfos SEG, WILO TS) — "
+            f"+20-30% к цене стандартного, но окупится за 2 года.\n"
+            f"📞 Передайте инженеру для проверки NPSHr-кривой "
+            f"конкретной модели по высоте объекта."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.altitude_m",
+            current_value=f"{L1.altitude_m:.0f}",
+            suggested_value="насос с низким NPSHr",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # LEG-7: auto_l_long_zhukovsky — L > 500 м
+    if "auto_l_long_zhukovsky" in triggers:
+        # Δp_удар = ρ·a·Δv; для PE100 a=320 м/с, для стали ~1100 м/с
+        a_pe = 320
+        a_steel = 1100
+        v_typ = computed.v_ms if computed.v_ms > 0 else 1.5
+        dp_pe_bar = 1000 * a_pe * v_typ / 1e5
+        dp_steel_bar = 1000 * a_steel * v_typ / 1e5
+        eng = (
+            f"💥 Закон Жуковского: Δp_удар = ρ·a·Δv, где a — скорость "
+            f"распространения волны (м/с).\n"
+            f"📐 Для L={L0.L_m:.0f} м, v={v_typ:.2f} м/с:\n"
+            f"  • ПЭ100: a≈320 м/с → Δp = 1000·320·{v_typ:.2f} ≈ {dp_pe_bar:.0f} бар.\n"
+            f"  • Сталь: a≈1100 м/с → Δp ≈ {dp_steel_bar:.0f} бар.\n"
+            f"⚠ Гидроудар возникает при резком закрытии обратного клапана "
+            f"или останове насоса — может разорвать трубу/арматуру.\n"
+            f"💡 Решения:\n"
+            f"  • Обратный клапан с soft-close (демпфирование) — обязателен.\n"
+            f"  • Уравнительная башня / воздушный колпак (для длинных трасс).\n"
+            f"  • ЧРП на насосе с плавным остановом (rampdown ≥10 с)."
+        )
+        mgr = (
+            f"💥 Трасса {L0.L_m:.0f} м — длинная, при резком останове насоса "
+            f"возникает гидроудар (как удар молотом по трубе).\n"
+            f"💰 Без защиты:\n"
+            f"  • Обычный обратный клапан треснет за 1-3 удара.\n"
+            f"  • Возможен разрыв трубы или арматуры — замена 800 тыс — 2 млн ₽ "
+            f"(земляные работы + труба + простой).\n"
+            f"💡 Решение: обратный клапан с soft-close (демпфер) — "
+            f"+40-80 тыс ₽ к стандартному. Окупается с первой аварией.\n"
+            f"⏱ Срок поставки клапана с демпфером — 1-2 недели."
+        )
+        suggestions.append(InputSuggestion(
+            field="L_m",
+            current_value=f"{L0.L_m:.0f}",
+            suggested_value="soft-close клапан обязателен",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # LEG-8: auto_category_I — I категория надёжности
+    if "auto_category_I" in triggers:
+        eng = (
+            "🏛 СП 31.13330.2021 «Водоснабжение. Наружные сети», табл.7.1 — "
+            "I категория надёжности (объекты, перерыв в работе которых "
+            "недопустим > 10 мин).\n"
+            "📐 Требования:\n"
+            "  • Резервирование 2+1 минимум (2 рабочих + 1 резерв).\n"
+            "  • Два независимых источника электропитания (ПУЭ 1.2.18) "
+            "+ АВР на вводе.\n"
+            "  • Резервный электроагрегат (ДГУ) или питание от двух подстанций.\n"
+            "  • Автоматическое управление, диспетчеризация.\n"
+            "⚠ По СП 32 §6.2 для КНС I кат. редундантность пересчитывается:\n"
+            "  • Schema 1+1 → 2+1 = 3 насоса.\n"
+            "  • Schema 2+1 → 3+1 = 4 насоса."
+        )
+        mgr = (
+            "🏛 I категория надёжности — объект критической важности "
+            "(больница, водозабор, металлургия). Простой запрещён > 10 минут.\n"
+            "💰 Цена удваивается:\n"
+            "  • Насосов 3 вместо 2 (раб+раб+рез) — +50% к насосам.\n"
+            "  • Два независимых ввода питания + АВР — 200-500 тыс ₽.\n"
+            "  • ДГУ резервный — 600 тыс — 2 млн ₽ (зависит от мощности).\n"
+            "  • Автоматика, диспетчеризация — 200-400 тыс ₽.\n"
+            "⏱ Срок проектирования и монтажа +4-6 недель.\n"
+            "📞 Уточните у клиента: реальная I кат. или просто перестраховка? "
+            "Иногда II кат. достаточно (×1.3 вместо ×2)."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.reliability_category",
+            current_value="I",
+            suggested_value="2+1 + 2 ввода + ДГУ",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # LEG-9: auto_no_match — кандидатов нет
+    if "auto_no_match" in triggers:
+        eng = (
+            f"🔍 Ни один насос из БД не попадает в envelope "
+            f"Q={L0.Q_m3h} м³/ч × H={computed.H_full_m:.1f} м.\n"
+            f"📐 Возможные причины:\n"
+            f"  • Q или H за диапазоном БД (текущая БД 0.5-500 м³/ч, 5-100 м).\n"
+            f"  • Жёсткий фильтр L1 (IP_motor, Ex, wastewater_type) "
+            f"отсёк всех кандидатов.\n"
+            f"  • Комбинация параметров нетипична (например, Q=1 м³/ч H=80 м — "
+            f"нужен бытовой дозирующий, не КНС).\n"
+            f"💡 Решения:\n"
+            f"  • Ослабить L1-фильтры (попробовать без Ex / без точного IP).\n"
+            f"  • Проверить единицы Q (л/с vs м³/ч).\n"
+            f"  • Передать инженеру для подбора по импортному каталогу."
+        )
+        mgr = (
+            f"🔍 По заданным параметрам Q={L0.Q_m3h}/H={computed.H_full_m:.1f} "
+            f"наших стандартных насосов не нашлось.\n"
+            f"💰 Что делать:\n"
+            f"  • Уточните данные у клиента (возможно ошибка в единицах).\n"
+            f"  • Передайте инженеру для индивидуального подбора.\n"
+            f"⏱ Ответ инженера обычно за 1-3 рабочих дня. "
+            f"Бывает что подходит импортный/нестандартный насос — "
+            f"тогда срок поставки до 8-12 недель и цена +50-100% к каталожной."
+        )
+        suggestions.append(InputSuggestion(
+            field="Q_m3h",
+            current_value=f"{L0.Q_m3h}/{computed.H_full_m:.1f}",
+            suggested_value="инженерный подбор",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical",
+        ))
+
+    # LEG-10: auto_low_match_count — мало кандидатов (< 2)
+    if "auto_low_match_count" in triggers:
+        eng = (
+            f"⚠ Найден всего 1 насос для Q={L0.Q_m3h}/H={computed.H_full_m:.1f}.\n"
+            f"📐 Это значит:\n"
+            f"  • Точка работы близка к границе AOR (точка наименьшей энергии).\n"
+            f"  • КПД может быть низким (BEP далеко от рабочей точки).\n"
+            f"  • Износ ускоренный (работа вне POR/AOR).\n"
+            f"⚠ score обычно < 0.4 — насос работать будет, но не оптимально.\n"
+            f"💡 Решение: рассмотреть параллельную работу двух меньших "
+            f"насосов или сместить точку (другая труба → другой H)."
+        )
+        mgr = (
+            "⚠ По вашим параметрам подходит только 1 насос — он будет "
+            "работать, но не в оптимальной точке.\n"
+            "💰 Что это значит на практике:\n"
+            "  • КПД ниже паспортного на 10-20% → перерасход электричества "
+            "30-50% от номинала.\n"
+            "  • Для типового насоса 5 кВт это +1500-2500 кВт·ч/год = "
+            "+15-30 тыс ₽/год к счёту за свет.\n"
+            "  • За 5 лет переплата по OPEX 75-150 тыс ₽.\n"
+            "💡 Рекомендуем уточнить параметры с инженером и/или "
+            "посмотреть альтернативу (2 меньших насоса в параллель)."
+        )
+        suggestions.append(InputSuggestion(
+            field="Q_m3h",
+            current_value=f"{L0.Q_m3h}/{computed.H_full_m:.1f}",
+            suggested_value="проверить альтернативы",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # LEG-11: auto_pipe_temp_incompatible — уже обработан suggestion #6 (eng_pipe).
+    # Этот блок служит fallback для случаев, когда suggestion #6 не сработал
+    # (например, нет L1.pipe_material, но trigger пришёл из другой логики).
+    if "auto_pipe_temp_incompatible" in triggers and not any(
+        s.field == "L1.pipe_material" for s in suggestions
+    ):
+        pipe_mat = L1.pipe_material if L1 else "неизвестно"
+        temp_c = L1.liquid_temp_c if L1 else 0
+        eng = (
+            f"🧪 {pipe_mat} + T={temp_c}°C — материал не выдержит длительной "
+            f"эксплуатации при такой температуре (ISO 4427 для ПЭ100: T_max=60°C).\n"
+            f"📐 По Аррениусу срок службы падает в 5-10 раз. См. полную "
+            f"справку в suggestion на pipe_material."
+        )
+        mgr = (
+            f"🔥 Полимерная труба и горячие стоки T={temp_c}°C — несовместимы. "
+            f"Через 6-12 мес труба потечёт. См. рекомендацию по замене "
+            f"материала (сталь/чугун) в основном suggestion."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.pipe_material",
+            current_value=f"{pipe_mat}",
+            suggested_value="steel_seamless_new или cast_iron_new",
             reason=eng,
             reason_engineer=eng,
             reason_manager=mgr,

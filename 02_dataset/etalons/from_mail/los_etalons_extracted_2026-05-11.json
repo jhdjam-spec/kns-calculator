@@ -1,0 +1,313 @@
+{
+  "generated_at": "2026-05-11",
+  "description": "8 LOS (local treatment system) etalons extracted from Y.Disk mail archive, for KNS calculator etalon enrichment",
+  "source": "02_dataset/_inbox/yadisk_kns/extracted_text.jsonl",
+  "method": "regex-based extraction of Q (m³/day, m³/h, l/s, ЧЭ), models, treatment types from PDF text",
+  "destination_for_review": "02_dataset/etalons/from_mail/los_etalons_extracted_2026-05-11.json",
+  "do_not_merge_into": [
+    "etalons_public",
+    "pumps.json"
+  ],
+  "etalons": [
+    {
+      "file": "08-09-2022_15-58-27.zip",
+      "label": "ЮНИЛОС 2022 / ТРИУМФ",
+      "note": "Архив переписки 2022-09-08 с расчётами Юнилос и Триумф",
+      "size_bytes": 19382694,
+      "text_len_chars": 19226,
+      "extracted": {
+        "Q_m3_per_day": [
+          "0,6",
+          "2"
+        ],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "ЮНИЛОС 2022",
+          "ЮНИЛОС",
+          "ЮНИЛОС-",
+          "ТРИУМФ",
+          "АСТРА",
+          "АСТРА-",
+          "аэротенк"
+        ],
+        "treatment_types": [
+          "biological",
+          "mechanical",
+          "aerotank"
+        ],
+        "prices_rub_raw": [],
+        "cities": [],
+        "years": [
+          "2022",
+          "2018",
+          "2017"
+        ]
+      },
+      "status": "extracted_with_Q"
+    },
+    {
+      "file": "ТП КОС-ПП 100.pdf",
+      "label": "BIO-100 UV (ТП КОС-ПП 100)",
+      "note": "Типовое проектное решение биологические очистные сооружения BIO-100 с УФ-обеззараживанием",
+      "size_bytes": 2681332,
+      "text_len_chars": 20446,
+      "extracted": {
+        "Q_m3_per_day": [],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "BIO-100 UV",
+          "аэротенка-илоотделителя",
+          "аэротенка",
+          "аэротенк",
+          "аэротенке",
+          "Аэротенк"
+        ],
+        "treatment_types": [
+          "biological",
+          "mechanical",
+          "aerotank",
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [],
+        "years": [
+          "2021"
+        ]
+      },
+      "status": "extracted_partial"
+    },
+    {
+      "file": "Опросник_на_КОС_ВЗиС_1_на_6816_чел_БГПЗ (1).pdf",
+      "label": "БГПЗ ВЗиС КОС-1 на 6816 чел",
+      "note": "Опросник на канализационные очистные сооружения, основное здание БГПЗ",
+      "size_bytes": 213100,
+      "text_len_chars": 26358,
+      "extracted": {
+        "Q_m3_per_day": [],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "Аэротенк",
+          "аэротенки"
+        ],
+        "treatment_types": [
+          "biological",
+          "mechanical",
+          "aerotank",
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [],
+        "years": [
+          "2023",
+          "2019"
+        ]
+      },
+      "status": "extracted_partial"
+    },
+    {
+      "file": "Опросник_на_КОС_ВЗиС_3_на_2700 офис_чел_БГПЗ (1).pdf",
+      "label": "БГПЗ ВЗиС КОС-3 офисная зона на 2700 чел",
+      "note": "Опросник КОС, офисная часть БГПЗ",
+      "size_bytes": 342844,
+      "text_len_chars": 26347,
+      "extracted": {
+        "Q_m3_per_day": [],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "Аэротенк",
+          "аэротенки"
+        ],
+        "treatment_types": [
+          "biological",
+          "mechanical",
+          "aerotank",
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [],
+        "years": [
+          "2023",
+          "2019"
+        ]
+      },
+      "status": "extracted_partial"
+    },
+    {
+      "file": "Опросник_на_КОС_ВЗиС_4_на_3025_чел_БГПЗ (1).pdf",
+      "label": "БГПЗ ВЗиС КОС-4 на 3025 чел",
+      "note": "Опросник КОС, третий участок БГПЗ",
+      "size_bytes": 341931,
+      "text_len_chars": 26320,
+      "extracted": {
+        "Q_m3_per_day": [],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "Аэротенк",
+          "аэротенки"
+        ],
+        "treatment_types": [
+          "biological",
+          "mechanical",
+          "aerotank",
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [],
+        "years": [
+          "2023",
+          "2019"
+        ]
+      },
+      "status": "extracted_partial"
+    },
+    {
+      "file": "Раздел ПД №2 Г2335-ПЗУ (1).pdf",
+      "label": "Г2335-ПЗУ Раздел ПД №2",
+      "note": "Проектная документация раздел ПЗУ объект Г2335",
+      "size_bytes": 7459482,
+      "text_len_chars": 43202,
+      "extracted": {
+        "Q_m3_per_day": [
+          "999",
+          "10000"
+        ],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [],
+        "treatment_types": [
+          "biological",
+          "mechanical"
+        ],
+        "prices_rub_raw": [],
+        "cities": [
+          "Краснодар",
+          "Краснодара"
+        ],
+        "years": [
+          "2023",
+          "2016",
+          "2013",
+          "2012",
+          "2014"
+        ]
+      },
+      "status": "extracted_with_Q"
+    },
+    {
+      "file": "Plastek-пальмида.pdf",
+      "label": "Plastek Пальмида ЛОС",
+      "note": "Производитель корпусов Plastek, объект Пальмида (винзавод/санаторий, Крым)",
+      "size_bytes": 837919,
+      "text_len_chars": 22627,
+      "extracted": {
+        "Q_m3_per_day": [],
+        "Q_m3_per_hour": [],
+        "Q_l_per_s": [
+          "3",
+          "2",
+          "150"
+        ],
+        "Q_pe_persons": [],
+        "for_N_persons": [],
+        "models": [
+          "plastekogroup",
+          "Plastek-КНС",
+          "Plastek-ЕН",
+          "Plastek-КПН-СБ",
+          "Plastek-УФО",
+          "астра",
+          "Plastek работает"
+        ],
+        "treatment_types": [
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [
+          "Краснодар",
+          "Руководителю"
+        ],
+        "years": []
+      },
+      "status": "extracted_partial"
+    },
+    {
+      "file": "Кислород НВК ЛОС.pdf",
+      "label": "Кислород НВК ЛОС",
+      "note": "НВК+ЛОС объекта \"Кислород\"",
+      "size_bytes": 7293376,
+      "text_len_chars": 27453,
+      "extracted": {
+        "Q_m3_per_day": [
+          "30,26",
+          "36,00",
+          "30,26",
+          "30,26",
+          "30,26"
+        ],
+        "Q_m3_per_hour": [
+          "7,54",
+          "7,54"
+        ],
+        "Q_l_per_s": [
+          "3,14",
+          "4,74",
+          "2,3"
+        ],
+        "Q_pe_persons": [
+          "63",
+          "63",
+          "63"
+        ],
+        "for_N_persons": [],
+        "models": [],
+        "treatment_types": [
+          "biological",
+          "SBR",
+          "UV",
+          "disinfection"
+        ],
+        "prices_rub_raw": [],
+        "cities": [
+          "кВтл",
+          "Краснодар"
+        ],
+        "years": [
+          "2024",
+          "2021",
+          "2018",
+          "2011",
+          "2014"
+        ]
+      },
+      "status": "extracted_with_Q"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "extracted_with_Q": 3,
+    "extracted_partial": 5,
+    "missing": 0
+  }
+}

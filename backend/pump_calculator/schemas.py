@@ -252,6 +252,20 @@ class PumpResult(BaseModel):
     available_ru_status: str
     score: float = Field(..., description="Composite score 0..1")
     score_breakdown: dict[str, float] = Field(default_factory=dict)
+    # 2026-05-11: «Why this pump?» — пошаговое структурированное объяснение
+    # подбора (для UI explainer panel). Backward-compat: дополняет, не заменяет
+    # score_breakdown. Структура — см. matching.py:composite_score()
+    # и matching.py:pick_top_per_segment() (там устанавливаются step_5_segment / rank).
+    score_explanation: dict = Field(
+        default_factory=dict,
+        description=(
+            "Шаги 1-5 подбора в человекочитаемой форме для UI WhyThisPump:\n"
+            "  step_1_filter (str), step_2_envelope (str), step_3_aor (str),\n"
+            "  step_4_composite (dict[factor → {value, weight, contribution}]),\n"
+            "  step_5_segment (str), citations (list[{text, url}]).\n"
+            "Не используется в core matching — только для UX-explainer."
+        ),
+    )
     duty_point: dict[str, float] | None = None
     aor_zone: Literal["POR", "AOR", "outside"] | None = None
     notes: list[str] = Field(default_factory=list)

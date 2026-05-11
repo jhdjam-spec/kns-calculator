@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, FileDown, ShieldCheck, Building2, MapPin } from "lucide-react";
 import { QHCurve } from "./QHCurve";
+import { useMode } from "@/components/providers/ModeProvider";
 
 interface HeroProps {
   onCalculate: (Q_m3h: number) => void;
@@ -40,6 +41,16 @@ async function downloadEmptyQuestionnaire(filename: string): Promise<void> {
 export function Hero({ onCalculate, isCalculating }: HeroProps) {
   const [qInput, setQInput] = useState("21.2");
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  const { mode } = useMode();
+
+  // Mode-aware CTA. Менеджер видит обещание (срок, простота),
+  // инженер — инструмент («гидравлический расчёт»).
+  const heroCtaText = isCalculating
+    ? "Считаем…"
+    : mode === "engineer"
+      ? "Запустить гидравлический расчёт"
+      : "Подобрать насос — 60 сек";
+  const qLabel = mode === "engineer" ? "Q, м³/ч" : "Расход (м³/час)";
 
   const handleDownload = async (filename: string) => {
     setDownloadError(null);
@@ -117,8 +128,13 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
               <label
                 htmlFor="hero-q"
                 className="absolute left-4 top-1.5 text-[10px] font-mono uppercase tracking-wider text-ink-400"
+                title={
+                  mode === "engineer"
+                    ? "Q — расход, формула Q = V/t (СП 32.13330 §6.2)"
+                    : "Сколько воды в час нужно перекачивать"
+                }
               >
-                Расход Q, м³/ч
+                {qLabel}
               </label>
               <input
                 id="hero-q"
@@ -137,7 +153,7 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
               onClick={() => onCalculate(qNumeric)}
               className="group h-14 sm:h-16 px-6 rounded-md bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 font-medium inline-flex items-center justify-center gap-2 transition-all duration-base shadow-brand"
             >
-              {isCalculating ? "Считаем…" : "Рассчитать"}
+              {heroCtaText}
               <ArrowRight
                 size={18}
                 strokeWidth={2}

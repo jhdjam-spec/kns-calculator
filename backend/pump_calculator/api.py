@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import os
+from typing import Literal
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -824,6 +825,36 @@ def calc_climate_loads_endpoint(payload: dict) -> dict:
     }
 
 
+@app.get("/climate/cities", tags=["climate"])
+def list_climate_cities() -> dict:
+    """Список городов из climate_cities_2026.json (для autocomplete во фронте).
+
+    Возвращает {cities: [{city, region, climate_zone, altitude_m, frost_depth_mm, t_min_5pct_c, lat, lon}]}.
+    Phase 28 Climate Simulator. Источник СП 131.13330.2020.
+    """
+    from pump_calculator.climate_simulator import list_cities
+    cities = list_cities()
+    return {"cities": cities, "count": len(cities)}
+
+
+@app.get("/climate/{city}", tags=["climate"])
+def get_climate_for_city(city: str) -> dict:
+    """Полная карточка климата + рекомендации по городу.
+
+    Возвращает {climate: {...}, recommendations: [...]}.
+    Если города нет в БД — 404. Phase 28 Climate Simulator.
+    """
+    from pump_calculator.climate_simulator import (
+        _build_recommendations,
+        get_city_climate,
+    )
+    climate = get_city_climate(city)
+    if climate is None:
+        raise HTTPException(404, f"Город '{city}' не найден в БД climate_cities_2026.json")
+    recs = _build_recommendations(climate)
+    return {"climate": climate, "recommendations": recs}
+
+
 @app.post("/structural/ballast", tags=["structural"])
 def calc_ballast_endpoint(payload: dict) -> dict:
     """Расчёт пригруза корпуса бетоном при УГВ (СП 32 §6.3)."""
@@ -1037,6 +1068,130 @@ def classify_incoming(req: ClassifyRequest) -> ClassifyResponse:
         project_codes=project_codes,
         is_trusted_sender=trusted,
     )
+
+
+# ---------------------- Phase 31: TCO / Cost-per-m³ ----------------------
+
+
+class TCORequest(BaseModel):
+    """Запрос на расчёт TCO (Total Cost of Ownership) на N лет.
+
+    Можно передать либо `selection_request` (тогда внутри запустим /select),
+    либо уже посчитанный `selection_result` (быстрее, для UI «Стоимость на 10 лет»
+    на карточке уже выбранного насоса).
+    """
+
+    selection: SelectionResult | None = Field(
+        None,
+        description="Уже посчитанный SelectionResult. Берём mid-насос по умолчанию.",
+    )
+    selection_request: SelectionRequest | None = Field(
+        None,
+        description="L0+L1 — рассчитаем подбор и TCO в одном вызове.",
+    )
+    segment: Literal["budget", "mid", "premium"] = Field(
+        "mid",
+        description="Какой ценовой сегмент использовать для TCO.",
+    )
+    horizon_years: int = Field(10, ge=1, le=30, description="Горизонт TCO, лет")
+    tariff_rub_per_kwh: float = Field(
+        7.5,
+        gt=0,
+        le=50,
+        description="Тариф электроэнергии в ₽/кВт·ч (default 7.5 — РФ 2026)",
+    )
+    install_pct: float = Field(0.10, ge=0, le=0.50, description="Доля монтажа от CAPEX")
+    transport_pct: float = Field(0.03, ge=0, le=0.30, description="Доля логистики")
+
+
+@app.post("/tco/calculate", tags=["pricing"])
+def tco_calculate(req: TCORequest) -> dict:
+    """Расчёт TCO (CAPEX + OPEX за N лет) с разбивкой для Sankey-диаграммы.
+
+    Главный KPI ответа — `cost_per_m3_rub`: «Кубометр стоков стоит X ₽».
+    Подходит для обоснования заказчику выбора премиум-насоса
+    (КПД +10% → −150 тыс ₽/год за 10 лет).
+
+    Возвращает TCOResult JSON c полями:
+        - capex, opex_annual, opex_horizon_rub
+        - tco_horizon_rub, flow_horizon_m3, cost_per_m3_rub
+        - sankey_nodes[], sankey_links[] (готовые для d3-sankey)
+    """
+    from pump_calculator.tco import calculate_tco
+
+    # 1. Получить SelectionResult (либо передан, либо считаем)
+    if req.selection is not None:
+        selection = req.selection
+    elif req.selection_request is not None:
+        selection = run_selection(req.selection_request.L0, req.selection_request.L1)
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="Either 'selection' or 'selection_request' must be provided",
+        )
+
+    # 2. Взять насос из нужного сегмента
+    pump = getattr(selection.results, req.segment, None)
+    if pump is None:
+        raise HTTPException(
+            status_code=422,
+            detail=f"No pump available in segment '{req.segment}'. Try another segment.",
+        )
+
+    # 3. Определить Q_m3h (из computed.duty_point или из selection_request.L0)
+    Q_m3h: float | None = None
+    if req.selection_request is not None:
+        Q_m3h = req.selection_request.L0.Q_m3h
+    elif pump.duty_point and "Q_m3h" in pump.duty_point:
+        Q_m3h = pump.duty_point["Q_m3h"]
+    else:
+        # Fallback: ассампшнс из selection
+        for a in selection.assumptions:
+            if a.startswith("Q_m3h="):
+                try:
+                    Q_m3h = float(a.split("=")[1].split()[0])
+                except (ValueError, IndexError):
+                    pass
+                break
+
+    if Q_m3h is None or Q_m3h <= 0:
+        raise HTTPException(
+            status_code=422,
+            detail="Cannot determine Q_m3h for TCO calculation",
+        )
+
+    # 4. Определить operating_mode
+    operating_mode = None
+    if req.selection_request is not None and req.selection_request.L1 is not None:
+        operating_mode = req.selection_request.L1.operating_mode
+
+    try:
+        result = calculate_tco(
+            pump_price_breakdown=pump.price_breakdown,
+            P_kW=pump.P_kW,
+            Q_m3h=Q_m3h,
+            horizon_years=req.horizon_years,
+            operating_mode=operating_mode,
+            tariff_rub_per_kwh=req.tariff_rub_per_kwh,
+            install_pct=req.install_pct,
+            transport_pct=req.transport_pct,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
+        logger.exception("TCO calculation failed: %s", e.__class__.__name__)
+        raise HTTPException(status_code=500, detail=f"TCO failed: {e}") from e
+
+    payload = result.model_dump()
+    # Метаданные подобранного насоса — для UI
+    payload["pump_meta"] = {
+        "brand": pump.brand,
+        "model": pump.model,
+        "P_kW": pump.P_kW,
+        "segment": req.segment,
+        "price_confidence": pump.price_confidence,
+    }
+    return payload
 
 
 @app.get("/regulations/{code}", tags=["regulations"])
