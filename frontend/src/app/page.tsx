@@ -51,7 +51,7 @@ export default function HomePage() {
   return (
     <>
       <SiteNav />
-      <main>
+      <main id="main">
         <Hero onCalculate={handleHeroSubmit} isCalculating={mutation.isPending} />
         <HowItWorks />
         <ProjectModeCard />
@@ -61,13 +61,10 @@ export default function HomePage() {
           result={latest}
         />
         {mutation.isError && (
-          <div className="bg-error/10 border-y border-error/30 py-6">
+          <div className="bg-error/10 border-y border-error/30 py-6" role="alert">
             <div className="max-w-3xl mx-auto px-5 md:px-10 text-sm text-error">
-              <strong>Ошибка вызова backend:</strong>{" "}
-              {mutation.error?.message ?? "неизвестная ошибка"}
-              <p className="text-xs mt-1 opacity-80">
-                Убедитесь, что backend запущен на http://localhost:8000 (см. README).
-              </p>
+              <strong>Сервис временно недоступен.</strong>{" "}
+              <span>Попробуйте через минуту или позвоните 8 (800) 222-44-57.</span>
             </div>
           </div>
         )}

@@ -19,7 +19,7 @@ export default function StormMinimalPage() {
   return (
     <>
       <SiteNav />
-      <main className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
+      <main id="main" className="min-h-screen bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
             <h1 className="text-sm font-mono uppercase tracking-wider text-ink-500">

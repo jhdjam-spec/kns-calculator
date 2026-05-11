@@ -56,6 +56,7 @@ export function StormMinimalForm() {
   const [result, setResult] = useState<StormMinimalResultData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [upgradeNotice, setUpgradeNotice] = useState<string | null>(null);
 
   const update = (patch: Partial<FormState>) => {
     setForm((prev) => {
@@ -128,22 +129,31 @@ export function StormMinimalForm() {
       localStorage.setItem("inservo:kns:mode", "classical");
     }
     // Phase 20: переключение на Classical-форму
-    alert(
-      "Классический режим (Phase 20) ещё не реализован.\n\n" +
-      "Параметры сохранены в localStorage — будут предзаполнены при появлении формы.",
+    setUpgradeNotice(
+      "Классический режим (Phase 20) ещё не реализован. Параметры сохранены в localStorage — будут предзаполнены при появлении формы.",
     );
   };
 
   if (result && form.objectTypeId && form.area_ha && form.region_city) {
     return (
-      <StormMinimalResult
-        result={result}
-        objectTypeId={form.objectTypeId}
-        region_city={form.region_city}
-        area_ha={form.area_ha}
-        onEdit={() => setResult(null)}
-        onUpgradeToClassical={handleUpgradeToClassical}
-      />
+      <div className="space-y-4 max-w-3xl mx-auto">
+        <StormMinimalResult
+          result={result}
+          objectTypeId={form.objectTypeId}
+          region_city={form.region_city}
+          area_ha={form.area_ha}
+          onEdit={() => setResult(null)}
+          onUpgradeToClassical={handleUpgradeToClassical}
+        />
+        {upgradeNotice && (
+          <div
+            role="status"
+            className="p-3 rounded-md bg-amber-500/10 border border-amber-500/30 text-sm text-amber-200"
+          >
+            {upgradeNotice}
+          </div>
+        )}
+      </div>
     );
   }
 

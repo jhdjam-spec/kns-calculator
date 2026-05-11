@@ -48,38 +48,50 @@ export function FAQ() {
         </div>
 
         <div>
-          {faqs.map((item, i) => (
-            <div key={i} className="border-t border-ink-200 last:border-b">
-              <button
-                type="button"
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full py-6 md:py-7 flex items-start justify-between gap-6 text-left group"
-              >
-                <span className="font-display text-lg md:text-xl font-medium text-ink-950 group-hover:text-brand-700 transition-colors duration-base">
-                  {item.q}
-                </span>
-                <span className="shrink-0 mt-1">
-                  {open === i ? (
-                    <Minus size={20} strokeWidth={1.75} className="text-accent-600" />
-                  ) : (
-                    <Plus size={20} strokeWidth={1.75} className="text-ink-400 group-hover:text-accent-600 transition-colors" />
+          {faqs.map((item, i) => {
+            const isOpen = open === i;
+            const panelId = `faq-panel-${i}`;
+            const triggerId = `faq-trigger-${i}`;
+            return (
+              <div key={i} className="border-t border-ink-200 last:border-b">
+                <button
+                  type="button"
+                  id={triggerId}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full py-6 md:py-7 flex items-start justify-between gap-6 text-left group"
+                >
+                  <span className="font-display text-lg md:text-xl font-medium text-ink-950 group-hover:text-brand-700 transition-colors duration-base">
+                    {item.q}
+                  </span>
+                  <span className="shrink-0 mt-1" aria-hidden="true">
+                    {isOpen ? (
+                      <Minus size={20} strokeWidth={1.75} className="text-accent-600" />
+                    ) : (
+                      <Plus size={20} strokeWidth={1.75} className="text-ink-400 group-hover:text-accent-600 transition-colors" />
+                    )}
+                  </span>
+                </button>
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={triggerId}
+                  aria-hidden={!isOpen}
+                  className={clsx(
+                    "grid transition-all duration-slow ease-out-expo overflow-hidden",
+                    isOpen ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]",
                   )}
-                </span>
-              </button>
-              <div
-                className={clsx(
-                  "grid transition-all duration-slow ease-out-expo overflow-hidden",
-                  open === i ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]",
-                )}
-              >
-                <div className="overflow-hidden">
-                  <p className="text-ink-600 leading-relaxed text-base md:text-lg">
-                    {item.a}
-                  </p>
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-ink-600 leading-relaxed text-base md:text-lg">
+                      {item.a}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

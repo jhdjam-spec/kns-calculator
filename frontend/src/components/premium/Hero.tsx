@@ -24,8 +24,7 @@ async function downloadEmptyQuestionnaire(filename: string): Promise<void> {
     body: JSON.stringify({}),
   });
   if (!res.ok) {
-    alert(`Не удалось скачать форму: ${res.status} ${res.statusText}`);
-    return;
+    throw new Error(`Не удалось скачать форму (${res.status})`);
   }
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -40,6 +39,20 @@ async function downloadEmptyQuestionnaire(filename: string): Promise<void> {
 
 export function Hero({ onCalculate, isCalculating }: HeroProps) {
   const [qInput, setQInput] = useState("21.2");
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+
+  const handleDownload = async (filename: string) => {
+    setDownloadError(null);
+    try {
+      await downloadEmptyQuestionnaire(filename);
+    } catch (e) {
+      setDownloadError(
+        e instanceof Error
+          ? e.message
+          : "Не удалось скачать форму. Попробуйте позже.",
+      );
+    }
+  };
 
   const qNumeric = parseFloat(qInput);
   // Нормируем Q в 0..1 для позиционирования точки на графике (диапазон 0..200 м³/ч)
@@ -153,7 +166,7 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
             <button
               type="button"
-              onClick={() => downloadEmptyQuestionnaire("Техзадание_КНС.docx")}
+              onClick={() => handleDownload("Техзадание_КНС.docx")}
               className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-accent-500 transition-colors group"
             >
               <FileDown size={16} strokeWidth={1.5} />
@@ -167,7 +180,7 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
             <span className="hidden sm:inline text-ink-700">·</span>
             <button
               type="button"
-              onClick={() => downloadEmptyQuestionnaire("Опросный_лист_КНС.docx")}
+              onClick={() => handleDownload("Опросный_лист_КНС.docx")}
               className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-accent-500 transition-colors group"
             >
               <FileDown size={16} strokeWidth={1.5} />
@@ -179,6 +192,15 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
               />
             </button>
           </div>
+
+          {downloadError && (
+            <div
+              role="alert"
+              className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300 max-w-xl"
+            >
+              {downloadError}
+            </div>
+          )}
         </div>
 
         {/* Right: Q-H curve */}
