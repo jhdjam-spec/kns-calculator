@@ -98,6 +98,11 @@ class DatasetEnricher:
         queue_threshold: float = QUEUE_THRESHOLD,
     ) -> None:
         self.dataset_root = Path(dataset_root) if dataset_root else _default_dataset_root()
+        # Writable root для uploads/_queue/_rejected (YC Functions FS read-only,
+        # dataset_root указывает на bundled read-only 02_dataset/). Можно
+        # переопределить через ENV KNS_DATASET_UPLOADS_ROOT, например /tmp/uploads.
+        uploads_override = os.environ.get("KNS_DATASET_UPLOADS_ROOT")
+        self.uploads_root = Path(uploads_override) if uploads_override else self.dataset_root
         self.auto_threshold = auto_threshold
         self.queue_threshold = queue_threshold
 
@@ -107,7 +112,10 @@ class DatasetEnricher:
 
     @property
     def from_uploads_dir(self) -> Path:
-        return self.dataset_root / "etalons" / "from_uploads"
+        # Использует writable uploads_root (см. __init__): на YC Functions
+        # это /tmp/uploads (ephemeral, но это OK — orchestrator merge'ит в
+        # canonical dataset вручную через /admin/uploads/merge).
+        return self.uploads_root / "etalons" / "from_uploads"
 
     @property
     def jsonl_path(self) -> Path:
