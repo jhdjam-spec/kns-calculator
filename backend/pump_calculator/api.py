@@ -1070,6 +1070,50 @@ def classify_incoming(req: ClassifyRequest) -> ClassifyResponse:
     )
 
 
+# ---------------------- /import/parse — TZ Import (Phase 33) ----------------------
+
+
+class ImportParseRequest(BaseModel):
+    """Запрос на парсинг произвольного ТЗ → pre-fill L0/L1 для Wizard.
+
+    Body может быть plain-текстом из textarea (вставка ТЗ/опросного листа)
+    или будущим content-type (DOCX/PDF — пока вне scope MVP).
+    """
+
+    text: str = Field("", description="Текст ТЗ или опросного листа")
+    format: Literal["plain", "questionnaire"] | None = Field(
+        "plain",
+        description="Подсказка о формате. Пока ни на что не влияет — задел.",
+    )
+
+
+@app.post("/import/parse", tags=["etl"])
+def import_parse_tz(req: ImportParseRequest) -> dict:
+    """Извлечь из ТЗ Q/H/город/тип стоков/шифр и сопутствующие L1-параметры.
+
+    Менеджер вставляет ТЗ в /import — backend возвращает поля, которые
+    фронт мапит на L0/L1 wizard через URL-параметры (`/project?preset=auto`).
+
+    Без auth, без БД — чистая функция над текстом. Извлекаются:
+    - Q (м³/ч), H (м), город, тип стоков
+    - шифр проекта (включая список всех найденных)
+    - объект (КНС/ЛОС/ВНС), производитель
+    - Ex_required, reliability (I/II/III), liquid_temp_c
+    - confidence — доля 4 ключевых полей (Q, H, city, wastewater_type)
+
+    См. `pump_calculator.etl.tz_parser` для деталей паттернов.
+    """
+    if not req.text or not req.text.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Поле text пустое — нечего парсить",
+        )
+    from pump_calculator.etl.tz_parser import parse_tz  # noqa: PLC0415
+
+    result = parse_tz(req.text)
+    return result.model_dump()
+
+
 # ---------------------- Phase 31: TCO / Cost-per-m³ ----------------------
 
 
