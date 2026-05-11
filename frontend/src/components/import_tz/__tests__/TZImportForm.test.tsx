@@ -18,6 +18,9 @@ const SAMPLE_RESPONSE: TZParseResponse = {
   confidence: 1.0,
   fields_found: ["Q", "H", "city", "wastewater_type"],
   raw_matches: {},
+  archive_path: null,
+  archive_error: null,
+  archive_size_bytes: 0,
 };
 
 function makeFetchMock(response: TZParseResponse, ok = true, status = 200) {
@@ -100,6 +103,68 @@ describe("<TZImportForm>", () => {
     expect(ta.value).toBe("Q=20 м³/ч");
     fireEvent.click(screen.getByRole("button", { name: /Очистить/i }));
     expect(ta.value).toBe("");
+  });
+
+  it("archive_path и archive_error СКРЫТЫ от пользователя (служебная функция)", async () => {
+    // По требованию заказчика — backend сохраняет в Я.Диск/S3 для dataset
+    // enrichment, но UI НЕ должен показывать факт сохранения пользователю.
+    const withArchive: TZParseResponse = {
+      ...SAMPLE_RESPONSE,
+      archive_path: "/inservo_tz_archive/2026-05-11/test.txt",
+      archive_error: null,
+      archive_size_bytes: 1024,
+    };
+    const fetchMock = makeFetchMock(withArchive);
+    render(<TZImportForm fetchImpl={fetchMock as unknown as typeof fetch} />);
+    fireEvent.change(screen.getByTestId("tz-textarea"), {
+      target: { value: "Q=88.6 м³/ч" },
+    });
+    fireEvent.click(screen.getByTestId("tz-parse-btn"));
+    await waitFor(() => {
+      expect(screen.getByTestId("tz-q")).toBeInTheDocument();
+    });
+    // Archive UI блоки НЕ должны быть в DOM
+    expect(screen.queryByTestId("tz-archive-ok")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("tz-archive-path")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("tz-archive-warn")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Сохранено в архив/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/inservo_tz_archive/i)).not.toBeInTheDocument();
+  });
+
+  it("file-upload .txt заполняет textarea и сохраняет original_filename", async () => {
+    const fetchMock = makeFetchMock(SAMPLE_RESPONSE);
+    render(<TZImportForm fetchImpl={fetchMock as unknown as typeof fetch} />);
+
+    const file = new File(
+      ["Q=88.6 м³/ч, напор 39 м, г. Краснодар"],
+      "техзадание.txt",
+      { type: "text/plain" },
+    );
+    const input = screen.getByTestId("tz-file-input") as HTMLInputElement;
+    Object.defineProperty(input, "files", {
+      value: [file],
+      configurable: true,
+    });
+    fireEvent.change(input);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("tz-original-filename")).toHaveTextContent(
+        "техзадание.txt",
+      );
+    });
+    const ta = screen.getByTestId("tz-textarea") as HTMLTextAreaElement;
+    await waitFor(() => {
+      expect(ta.value).toContain("88.6");
+    });
+
+    // Клик «Распознать» — body содержит original_filename
+    fireEvent.click(screen.getByTestId("tz-parse-btn"));
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalled();
+    });
+    const callArgs = fetchMock.mock.calls[0];
+    const sentBody = JSON.parse((callArgs[1] as RequestInit).body as string);
+    expect(sentBody.original_filename).toBe("техзадание.txt");
   });
 
   it("частичное извлечение (только Q) показывает amber confidence", async () => {

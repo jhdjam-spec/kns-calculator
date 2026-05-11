@@ -1085,6 +1085,11 @@ class ImportParseRequest(BaseModel):
         "plain",
         description="Подсказка о формате. Пока ни на что не влияет — задел.",
     )
+    original_filename: str | None = Field(
+        None,
+        description="Оригинальное имя файла (если ТЗ пришло из file-upload). "
+        "Используется в имени архивной копии на Я.Диске.",
+    )
 
 
 @app.post("/import/parse", tags=["etl"])
@@ -1101,6 +1106,9 @@ def import_parse_tz(req: ImportParseRequest) -> dict:
     - Ex_required, reliability (I/II/III), liquid_temp_c
     - confidence — доля 4 ключевых полей (Q, H, city, wastewater_type)
 
+    После парсинга оригинал ТЗ копируется в архив Серво-Юг на Яндекс.Диск
+    (`/inservo_tz_archive/<date>/...`) — graceful если токен не задан.
+
     См. `pump_calculator.etl.tz_parser` для деталей паттернов.
     """
     if not req.text or not req.text.strip():
@@ -1108,10 +1116,238 @@ def import_parse_tz(req: ImportParseRequest) -> dict:
             status_code=400,
             detail="Поле text пустое — нечего парсить",
         )
+    from pump_calculator.etl.dataset_enrichment import (  # noqa: PLC0415
+        QUEUE_THRESHOLD,
+        enrich_from_parse,
+    )
+    from pump_calculator.etl.s3_uploader import archive_tz_to_s3  # noqa: PLC0415
     from pump_calculator.etl.tz_parser import parse_tz  # noqa: PLC0415
+    from pump_calculator.etl.yadisk_uploader import archive_tz_text  # noqa: PLC0415
 
     result = parse_tz(req.text)
-    return result.model_dump()
+    response = result.model_dump()
+
+    # ---------- Yandex.Disk mirror (sub a4a5e58e) ------------------------
+    # При отсутствии YANDEX_DISK_TOKEN возвращаем archive_path=None +
+    # archive_error="...not configured" — non-blocking.
+    try:
+        yadisk_info = archive_tz_text(
+            req.text,
+            parsed=response,
+            original_filename=req.original_filename,
+        )
+    except Exception as e:  # noqa: BLE001
+        logger.warning("Yandex.Disk archive crashed (non-fatal): %s", e)
+        yadisk_info = {
+            "archive_path": None,
+            "archive_error": f"unexpected: {type(e).__name__}",
+            "archive_size_bytes": 0,
+        }
+
+    # Flat keys (legacy, sub a4a5e58e): сохраняем для обратной совместимости фронта.
+    response["archive_path"] = yadisk_info.get("archive_path")
+    response["archive_error"] = yadisk_info.get("archive_error")
+    response["archive_size_bytes"] = yadisk_info.get("archive_size_bytes", 0)
+
+    # Nested form для нового UI / admin-обзора.
+    response["yadisk_archive"] = {
+        "path": yadisk_info.get("archive_path"),
+        "error": yadisk_info.get("archive_error"),
+        "size_bytes": yadisk_info.get("archive_size_bytes", 0),
+    }
+
+    # ---------- S3 primary archive ---------------------------------------
+    # boto3 lazy import; при отсутствии AWS_ACCESS_KEY_ID — no-op.
+    try:
+        s3_info = archive_tz_to_s3(
+            req.text,
+            parsed=response,
+            original_filename=req.original_filename,
+        )
+    except Exception as e:  # noqa: BLE001
+        logger.warning("S3 archive crashed (non-fatal): %s", e)
+        s3_info = {
+            "bucket": None,
+            "key": None,
+            "parsed_key": None,
+            "upload_id": None,
+            "size_bytes": 0,
+            "url": None,
+            "configured": False,
+            "error": f"unexpected: {type(e).__name__}",
+        }
+
+    response["s3_archive"] = {
+        "bucket": s3_info.get("bucket"),
+        "key": s3_info.get("key"),
+        "parsed_key": s3_info.get("parsed_key"),
+        "upload_id": s3_info.get("upload_id"),
+        "size_bytes": s3_info.get("size_bytes", 0),
+        "url": s3_info.get("url"),
+        "configured": s3_info.get("configured", False),
+        "error": s3_info.get("error"),
+    }
+
+    # ---------- Dataset enrichment pipeline -----------------------------
+    confidence = float(response.get("confidence", 0.0))
+    response["dataset_eligible"] = confidence >= QUEUE_THRESHOLD
+    try:
+        enrichment_info = enrich_from_parse(
+            parsed=response,
+            raw_text=req.text,
+            s3_key=s3_info.get("key"),
+            yadisk_path=yadisk_info.get("archive_path"),
+            upload_id=s3_info.get("upload_id"),
+            original_filename=req.original_filename,
+        )
+    except Exception as e:  # noqa: BLE001
+        logger.warning("Dataset enrichment crashed (non-fatal): %s", e)
+        enrichment_info = {
+            "status": "error",
+            "confidence": confidence,
+            "upload_id": s3_info.get("upload_id"),
+            "record_path": None,
+            "jsonl_appended": False,
+            "error": f"unexpected: {type(e).__name__}",
+        }
+
+    response["dataset_enrichment"] = enrichment_info
+    return response
+
+
+# ---------------------- /admin/uploads — review UI (Phase 33+) ------------
+# TODO: add JWT auth before public access — currently open for MVP review.
+
+
+@app.get("/admin/uploads", tags=["admin"])
+def admin_list_uploads(
+    limit: int = 100,
+    source: Literal["s3", "queue", "jsonl"] | None = None,
+) -> dict:
+    """Список uploaded ТЗ — для будущей review-UI.
+
+    Источники:
+    - ``source=s3`` — append-only catalog из S3 (все uploads вне зависимости от confidence)
+    - ``source=queue`` — записи на ручном ревью (0.5 ≤ conf < 0.7) из ``_queue/``
+    - ``source=jsonl`` — auto-accepted записи из ``etalons_uploaded.jsonl``
+    - default (None) — объединение всех трёх с признаком ``source``.
+
+    Returns
+    -------
+    ``{"items": [...], "count": int, "s3_configured": bool, "limit": int}``
+    """
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+    from pump_calculator.etl.s3_uploader import S3Uploader  # noqa: PLC0415
+
+    items: list[dict] = []
+    enricher = DatasetEnricher()
+    s3 = S3Uploader.from_env()
+
+    if source in (None, "s3"):
+        try:
+            for entry in s3.read_catalog(limit=limit):
+                items.append({"source": "s3", **entry})
+        except Exception as e:  # noqa: BLE001
+            logger.warning("Cannot read S3 catalog: %s", e)
+    if source in (None, "queue"):
+        for entry in enricher.read_queue():
+            items.append({"source": "queue", **entry})
+    if source in (None, "jsonl"):
+        for entry in enricher.read_uploaded():
+            items.append({"source": "jsonl", **entry})
+
+    # Сортировка по дате (новые сверху) и хвост.
+    items.sort(key=lambda x: x.get("uploaded_at", ""), reverse=True)
+    if limit:
+        items = items[:limit]
+
+    return {
+        "items": items,
+        "count": len(items),
+        "s3_configured": s3.is_configured,
+        "limit": limit,
+        "source": source,
+    }
+
+
+@app.get("/admin/uploads/{upload_id}", tags=["admin"])
+def admin_get_upload(upload_id: str) -> dict:
+    """Детальный просмотр одного upload-а.
+
+    Ищем по ID в (queue, jsonl, S3 catalog) — возвращаем первый найденный
+    + (опционально) raw_text из queue. Для S3 catalog — возвращаем
+    metadata entry; raw_text загружается отдельно через
+    ``/admin/uploads/{id}/raw`` (TODO).
+    """
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+    from pump_calculator.etl.s3_uploader import S3Uploader  # noqa: PLC0415
+
+    enricher = DatasetEnricher()
+    # 1. Queue
+    queue_path = enricher.queue_dir / f"{upload_id}.json"
+    if queue_path.exists():
+        try:
+            import json as _json  # noqa: PLC0415
+
+            data = _json.loads(queue_path.read_text(encoding="utf-8"))
+            return {"source": "queue", **data}
+        except (OSError, ValueError) as e:
+            raise HTTPException(500, f"queue read failed: {e}") from e
+    # 2. JSONL
+    for entry in enricher.read_uploaded():
+        if entry.get("id") == upload_id:
+            return {"source": "jsonl", **entry}
+    # 3. S3 catalog
+    s3 = S3Uploader.from_env()
+    if s3.is_configured:
+        for entry in s3.read_catalog():
+            if entry.get("upload_id") == upload_id:
+                return {"source": "s3", **entry}
+    raise HTTPException(404, f"upload not found: {upload_id}")
+
+
+@app.post("/admin/uploads/{upload_id}/approve", tags=["admin"])
+def admin_approve_upload(upload_id: str) -> dict:
+    """Перенести queued upload → ``etalons_uploaded.jsonl``."""
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+
+    enricher = DatasetEnricher()
+    res = enricher.approve(upload_id)
+    if not res.get("ok"):
+        raise HTTPException(404, res.get("error") or "approve failed")
+    return res
+
+
+class RejectRequest(BaseModel):
+    """Опциональная причина reject — пишется в ``_rejected/<id>.json``."""
+
+    reason: str | None = Field(None, description="Почему отклонили (для аудита)")
+
+
+@app.post("/admin/uploads/{upload_id}/reject", tags=["admin"])
+def admin_reject_upload(upload_id: str, req: RejectRequest | None = None) -> dict:
+    """Пометить queued upload как нерелевантный."""
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+
+    enricher = DatasetEnricher()
+    reason = req.reason if req else None
+    res = enricher.reject(upload_id, reason=reason)
+    if not res.get("ok"):
+        raise HTTPException(404, res.get("error") or "reject failed")
+    return res
+
+
+@app.post("/admin/uploads/merge", tags=["admin"])
+def admin_merge_uploads() -> dict:
+    """Merge ``etalons_uploaded.jsonl`` → ``etalons_from_uploads.json``.
+
+    Manual trigger для ежедневного pipeline. Возвращает
+    ``{"merged_count", "skipped_dedup", "output_path"}``.
+    """
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+
+    enricher = DatasetEnricher()
+    return enricher.merge_to_etalons()
 
 
 # ---------------------- Phase 31: TCO / Cost-per-m³ ----------------------

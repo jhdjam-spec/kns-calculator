@@ -6,7 +6,7 @@
 // ╰───────────────────────────────────────────────────────────────────────╯
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type DragEvent } from "react";
 import clsx from "clsx";
 import {
   Loader2,
@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Zap,
   FileText,
+  Upload,
 } from "lucide-react";
 
 export interface TZParseResponse {
@@ -33,6 +34,10 @@ export interface TZParseResponse {
   confidence: number;
   fields_found: string[];
   raw_matches: Record<string, unknown>;
+  // Phase 33+: архив оригиналов на Я.Диске (best-effort)
+  archive_path?: string | null;
+  archive_error?: string | null;
+  archive_size_bytes?: number;
 }
 
 interface TZImportFormProps {
@@ -100,6 +105,10 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
   const [result, setResult] = useState<TZParseResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Имя файла, если ТЗ пришло из file-upload (для архива на Я.Диск)
+  const [originalFilename, setOriginalFilename] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const isEmpty = text.trim() === "";
 
@@ -114,14 +123,22 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
     try {
       const apiBase = process.env.NEXT_PUBLIC_API_BASE || "/api/backend";
       const fetchFn = fetchImpl ?? fetch;
+      const body: {
+        text: string;
+        format: "plain";
+        original_filename?: string;
+      } = { text, format: "plain" };
+      if (originalFilename) {
+        body.original_filename = originalFilename;
+      }
       const response = await fetchFn(`${apiBase}/import/parse`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, format: "plain" }),
+        body: JSON.stringify(body),
       });
       if (!response.ok) {
-        const body = await response.text().catch(() => response.statusText);
-        throw new Error(`HTTP ${response.status}: ${body}`);
+        const respBody = await response.text().catch(() => response.statusText);
+        throw new Error(`HTTP ${response.status}: ${respBody}`);
       }
       const data = (await response.json()) as TZParseResponse;
       setResult(data);
@@ -137,7 +154,55 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
     setText("");
     setResult(null);
     setError(null);
+    setOriginalFilename(null);
     saveDraft("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleFileSelected = async (file: File) => {
+    setError(null);
+    setOriginalFilename(file.name);
+    // .txt / .md / .csv — читаем как текст; DOCX/PDF — оставляем placeholder
+    // (вставка текста через textarea обязательна, бинарные форматы
+    // распарсятся когда будет /import/parse-file endpoint).
+    const ext = (file.name.split(".").pop() || "").toLowerCase();
+    const isText = ["txt", "md", "csv", "log", ""].includes(ext);
+    if (isText) {
+      try {
+        const content = await file.text();
+        setText(content);
+        saveDraft(content);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        setError(`Не удалось прочитать файл: ${msg}`);
+      }
+    } else {
+      setError(
+        `Формат .${ext} пока не парсится. Скопируйте текст ТЗ вручную — ` +
+          `имя файла (${file.name}) сохранится в архиве.`,
+      );
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) void handleFileSelected(file);
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    if (!isDragging) setIsDragging(true);
+  };
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+  const handleDrop = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) void handleFileSelected(file);
   };
 
   return (
@@ -157,12 +222,26 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
           </h2>
         </div>
 
-        <label
-          htmlFor="tz-text"
-          className="block text-sm text-ink-700 mb-1.5"
-        >
-          Текст технического задания
-        </label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label htmlFor="tz-text" className="block text-sm text-ink-700">
+            Текст технического задания
+          </label>
+          <label
+            data-testid="tz-file-upload-label"
+            className="inline-flex items-center gap-1.5 text-xs text-brand-600 hover:text-brand-700 cursor-pointer"
+          >
+            <Upload size={13} strokeWidth={1.75} />
+            <span>Загрузить файл</span>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,.md,.csv,.log,.docx,.pdf"
+              className="hidden"
+              onChange={handleFileChange}
+              data-testid="tz-file-input"
+            />
+          </label>
+        </div>
         <textarea
           id="tz-text"
           value={text}
@@ -170,14 +249,32 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
             setText(e.target.value);
             saveDraft(e.target.value);
           }}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
           rows={14}
           placeholder={SAMPLE_PLACEHOLDER}
-          className="w-full bg-ink-50 border border-ink-200 text-ink-900 rounded-md px-3 py-2 placeholder:text-ink-500 focus:border-brand-500 focus:outline-none font-sans text-sm leading-relaxed"
+          className={clsx(
+            "w-full bg-ink-50 border text-ink-900 rounded-md px-3 py-2 placeholder:text-ink-500 focus:outline-none font-sans text-sm leading-relaxed transition-colors",
+            isDragging
+              ? "border-brand-500 bg-brand-50"
+              : "border-ink-200 focus:border-brand-500",
+          )}
           data-testid="tz-textarea"
         />
 
         <div className="mt-2 text-xs text-ink-600 flex items-center justify-between">
-          <span>{text.length} символов</span>
+          <span>
+            {text.length} символов
+            {originalFilename && (
+              <span
+                className="ml-2 text-brand-700"
+                data-testid="tz-original-filename"
+              >
+                · {originalFilename}
+              </span>
+            )}
+          </span>
           {text.length > 8000 && (
             <span className="text-amber-700">Очень длинный текст — парсер обрабатывает first-match</span>
           )}
@@ -410,6 +507,12 @@ export function TZImportForm({ fetchImpl }: TZImportFormProps = {}) {
                 </ul>
               </div>
             )}
+
+            {/* NB: archive_path / archive_error / s3_archive / dataset_enrichment
+                в response ВСЕГДА скрыты от пользователя. Это служебная функция
+                Серво-Юг (dataset enrichment + audit) — пользователю показывать
+                нельзя по требованию заказчика. Backend сохраняет в фоне,
+                независимо от того видит ли это UI. */}
           </div>
         )}
       </section>
