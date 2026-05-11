@@ -11,5 +11,7 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
+    // e2e/ — Playwright тесты, test.describe API несовместим с vitest
+    exclude: ["node_modules/**", "dist/**", ".next/**", "out/**", "e2e/**", "test-results/**"],
   },
 });
