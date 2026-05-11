@@ -194,8 +194,8 @@
         "Q_max_m3h": 100,
         "H_min_m": 5,
         "H_max_m": 40,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 66.8,
+        "H_BEP_m": 17.2,
         "eta_BEP_pct": 48,
         "NPSHr_m": 1.5
       },
@@ -313,8 +313,8 @@
         "Q_max_m3h": 30,
         "H_min_m": 30,
         "H_max_m": 80,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 15.5,
+        "H_BEP_m": 55.0,
         "eta_BEP_pct": 48,
         "NPSHr_m": 2.5
       },
@@ -336,8 +336,9 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Станция повышения давления, 2 насоса MLV3 в параллель. Цена ~700 526 ₽ у Теплосервис-Сибирь. | eta=48% sub_E_research (low)",
-      "_source": "producers_dataset.json"
+      "_engineer_note": "Станция повышения давления, 2 насоса MLV3 в параллель. Цена ~700 526 ₽ у Теплосервис-Сибирь. | eta=48% sub_E_research (low) | 700526 ₽ research 2026-05-11 (high)",
+      "_source": "producers_dataset.json",
+      "price_rub_2026": 700526
     },
     {
       "id": "leo-xks-50",
@@ -351,8 +352,8 @@
         "Q_max_m3h": 80,
         "H_min_m": 5,
         "H_max_m": 25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 42.5,
+        "H_BEP_m": 15.0,
         "eta_BEP_pct": 50,
         "NPSHr_m": 1.5
       },
@@ -391,8 +392,8 @@
         "Q_max_m3h": 100,
         "H_min_m": 5,
         "H_max_m": 30,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 55.0,
+        "H_BEP_m": 17.5,
         "eta_BEP_pct": 62,
         "NPSHr_m": 1.5
       },
@@ -419,7 +420,8 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Серия Rexa PRO — envelope обобщённый. Конкретные модели V05/V06/V08 — через Wilo-Select 4. | price 320000 от subagent Wilo research 2026-05-10 (medium, https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-) | eta=62% sub_E_research (medium)",
       "_source": "selectonline.ru",
-      "price_rub_2026": 320000
+      "price_rub_2026": 320000,
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "wilo-emu-fa",
@@ -433,8 +435,8 @@
         "Q_max_m3h": 5000,
         "H_min_m": 10,
         "H_max_m": 80,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 3285.0,
+        "H_BEP_m": 34.5,
         "eta_BEP_pct": 68,
         "NPSHr_m": 3.0
       },
@@ -458,8 +460,9 @@
         "distributor": "ВИЛО РУС (российская сборка)"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно | impeller channel->multi-channel canonicalized 2026-05-10 | eta=68% sub_E_research (low)",
-      "_source": "wilo.com/ru, selectonline.ru"
+      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно | impeller channel->multi-channel canonicalized 2026-05-10 | eta=68% sub_E_research (low) | 331500 ₽ research 2026-05-11 (medium)",
+      "_source": "wilo.com/ru, selectonline.ru",
+      "price_rub_2026": 331500
     },
     {
       "id": "wilo-cor-mvie",
@@ -473,8 +476,8 @@
         "Q_max_m3h": 500,
         "H_min_m": 20,
         "H_max_m": 200,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 252.0,
+        "H_BEP_m": 110.0,
         "eta_BEP_pct": 75,
         "NPSHr_m": 5.0
       },
@@ -497,8 +500,9 @@
         "distributor": "ВИЛО РУС"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Станция повышения давления для жилых/коммерческих объектов. С PLC и ЧРП. Эталон премиум-сегмента СПД. | eta=75% sub_E_research (medium)",
-      "_source": "wilo.com/ru"
+      "_engineer_note": "Станция повышения давления для жилых/коммерческих объектов. С PLC и ЧРП. Эталон премиум-сегмента СПД. | eta=75% sub_E_research (medium) | 563182 ₽ research 2026-05-11 (medium)",
+      "_source": "wilo.com/ru",
+      "price_rub_2026": 563182
     },
     {
       "id": "grundfos-hydro-mpc",
@@ -512,8 +516,8 @@
         "Q_max_m3h": 60,
         "H_min_m": 30,
         "H_max_m": 120,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 32.5,
+        "H_BEP_m": 75.0,
         "eta_BEP_pct": 76,
         "NPSHr_m": 3.0
       },
@@ -551,8 +555,8 @@
         "Q_max_m3h": 200,
         "H_min_m": 5,
         "H_max_m": 40,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 102.0,
+        "H_BEP_m": 22.5,
         "eta_BEP_pct": 58,
         "NPSHr_m": 2.0
       },
@@ -591,8 +595,8 @@
         "Q_max_m3h": 6000,
         "H_min_m": 10,
         "H_max_m": 100,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 3935.0,
+        "H_BEP_m": 41.5,
         "eta_BEP_pct": 60,
         "NPSHr_m": 3.0
       },
@@ -616,7 +620,8 @@
       },
       "_engineer_flag": "ok",
       "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (low)",
-      "_source": "ksb.com"
+      "_source": "ksb.com",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "pedrollo-vxm-15-50",
@@ -630,8 +635,8 @@
         "Q_max_m3h": 30,
         "H_min_m": 5,
         "H_max_m": 18,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 17.5,
+        "H_BEP_m": 11.5,
         "eta_BEP_pct": 40,
         "NPSHr_m": 1.0
       },
@@ -1083,7 +1088,8 @@
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 380000
+      "price_rub_2026": 380000,
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "pedrollo-vx-10-35",
@@ -1097,8 +1103,8 @@
         "Q_max_m3h": 24.0,
         "H_min_m": 2.0,
         "H_max_m": 11.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 15.6,
+        "H_BEP_m": 5.15,
         "eta_BEP_pct": 40,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1178,8 +1184,8 @@
         "Q_max_m3h": 33.0,
         "H_min_m": 1.5,
         "H_max_m": 9.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 21.4,
+        "H_BEP_m": 4.12,
         "eta_BEP_pct": 38,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1267,8 +1273,8 @@
         "Q_max_m3h": 30.0,
         "H_min_m": 2.0,
         "H_max_m": 14.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 19.5,
+        "H_BEP_m": 6.2,
         "eta_BEP_pct": 42,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1356,8 +1362,8 @@
         "Q_max_m3h": 39.0,
         "H_min_m": 2.0,
         "H_max_m": 11.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 25.4,
+        "H_BEP_m": 5.33,
         "eta_BEP_pct": 40,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1457,8 +1463,8 @@
         "Q_max_m3h": 33.0,
         "H_min_m": 1.5,
         "H_max_m": 15.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 21.4,
+        "H_BEP_m": 6.22,
         "eta_BEP_pct": 44,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1550,8 +1556,8 @@
         "Q_max_m3h": 39.0,
         "H_min_m": 2.5,
         "H_max_m": 13.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 25.4,
+        "H_BEP_m": 6.17,
         "eta_BEP_pct": 42,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1651,8 +1657,8 @@
         "Q_max_m3h": 21.0,
         "H_min_m": 1.0,
         "H_max_m": 9.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 13.7,
+        "H_BEP_m": 3.8,
         "eta_BEP_pct": 38,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1728,8 +1734,8 @@
         "Q_max_m3h": 27.0,
         "H_min_m": 1.5,
         "H_max_m": 6.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 17.6,
+        "H_BEP_m": 3.25,
         "eta_BEP_pct": 36,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1809,8 +1815,8 @@
         "Q_max_m3h": 24.0,
         "H_min_m": 2.0,
         "H_max_m": 11.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 15.6,
+        "H_BEP_m": 5.15,
         "eta_BEP_pct": 40,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1890,8 +1896,8 @@
         "Q_max_m3h": 33.0,
         "H_min_m": 1.5,
         "H_max_m": 9.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 21.4,
+        "H_BEP_m": 4.12,
         "eta_BEP_pct": 38,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -1979,8 +1985,8 @@
         "Q_max_m3h": 30.0,
         "H_min_m": 2.0,
         "H_max_m": 14.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 19.5,
+        "H_BEP_m": 6.2,
         "eta_BEP_pct": 42,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2068,8 +2074,8 @@
         "Q_max_m3h": 33.0,
         "H_min_m": 1.5,
         "H_max_m": 15.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 21.4,
+        "H_BEP_m": 6.22,
         "eta_BEP_pct": 44,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2161,8 +2167,8 @@
         "Q_max_m3h": 39.0,
         "H_min_m": 2.5,
         "H_max_m": 13.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 25.4,
+        "H_BEP_m": 6.17,
         "eta_BEP_pct": 42,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2262,8 +2268,8 @@
         "Q_max_m3h": 21.0,
         "H_min_m": 1.0,
         "H_max_m": 9.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 13.7,
+        "H_BEP_m": 3.8,
         "eta_BEP_pct": 38,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2339,8 +2345,8 @@
         "Q_max_m3h": 27.0,
         "H_min_m": 1.5,
         "H_max_m": 6.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 17.6,
+        "H_BEP_m": 3.25,
         "eta_BEP_pct": 36,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2420,8 +2426,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 6.6,
         "H_max_m": 22.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 26.0,
+        "H_BEP_m": 12.0,
         "eta_BEP_pct": 50,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2491,8 +2497,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 5.61,
         "H_max_m": 18.7,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 20.0,
+        "H_BEP_m": 12.2,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2564,8 +2570,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 6.6,
         "H_max_m": 22.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 26.0,
+        "H_BEP_m": 12.0,
         "eta_BEP_pct": 55,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2636,8 +2642,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 5.61,
         "H_max_m": 18.7,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 20.0,
+        "H_BEP_m": 12.2,
         "eta_BEP_pct": 50,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2708,8 +2714,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 6.6,
         "H_max_m": 22.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 26.0,
+        "H_BEP_m": 12.0,
         "eta_BEP_pct": 52,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2779,8 +2785,8 @@
         "Q_max_m3h": 40.0,
         "H_min_m": 5.61,
         "H_max_m": 18.7,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 20.0,
+        "H_BEP_m": 12.2,
         "eta_BEP_pct": 50,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.0
@@ -2851,8 +2857,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -2923,8 +2929,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -2994,8 +3000,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3066,8 +3072,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 55,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3138,8 +3144,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 55,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3211,8 +3217,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3283,8 +3289,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 55,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3356,8 +3362,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 55,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3428,8 +3434,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3499,8 +3505,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3570,8 +3576,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 52,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3641,8 +3647,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3712,8 +3718,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 7.14,
         "H_max_m": 23.8,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 56.0,
+        "H_BEP_m": 15.5,
         "eta_BEP_pct": 56,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3784,8 +3790,8 @@
         "Q_max_m3h": 112.0,
         "H_min_m": 8.4,
         "H_max_m": 28.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 72.8,
+        "H_BEP_m": 15.3,
         "eta_BEP_pct": 52,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -3855,8 +3861,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 8.16,
         "H_max_m": 27.2,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 104.0,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -3927,8 +3933,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -3999,8 +4005,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 54,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4071,8 +4077,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4143,8 +4149,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 8.16,
         "H_max_m": 27.2,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 104.0,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4215,8 +4221,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4286,8 +4292,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 8.16,
         "H_max_m": 27.2,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 104.0,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4358,8 +4364,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4429,8 +4435,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 54,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4500,8 +4506,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4571,8 +4577,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 54,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4642,8 +4648,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 8.16,
         "H_max_m": 27.2,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 104.0,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4714,8 +4720,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4785,8 +4791,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4856,8 +4862,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 66,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4927,8 +4933,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 56,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -4998,8 +5004,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 8.16,
         "H_max_m": 27.2,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 104.0,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -5070,8 +5076,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -5141,8 +5147,8 @@
         "Q_max_m3h": 208.0,
         "H_min_m": 9.6,
         "H_max_m": 32.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 135.0,
+        "H_BEP_m": 17.4,
         "eta_BEP_pct": 66,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -5212,8 +5218,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5283,8 +5289,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 9.69,
         "H_max_m": 32.3,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 210.0,
+        "H_BEP_m": 21.0,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5355,8 +5361,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5426,8 +5432,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 60,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5497,8 +5503,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5568,8 +5574,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 66,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5639,8 +5645,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5710,8 +5716,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5781,8 +5787,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 9.69,
         "H_max_m": 32.3,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 210.0,
+        "H_BEP_m": 21.0,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5853,8 +5859,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 67,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5924,8 +5930,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -5995,8 +6001,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6066,8 +6072,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6137,8 +6143,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6208,8 +6214,8 @@
         "Q_max_m3h": 420.0,
         "H_min_m": 11.4,
         "H_max_m": 38.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 273.0,
+        "H_BEP_m": 20.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6279,8 +6285,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6350,8 +6356,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6421,8 +6427,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6492,8 +6498,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6563,8 +6569,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6634,8 +6640,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6705,8 +6711,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 64,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6776,8 +6782,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6847,8 +6853,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6918,8 +6924,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -6989,8 +6995,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7060,8 +7066,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7131,8 +7137,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7202,8 +7208,8 @@
         "Q_max_m3h": 900.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 585.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7273,8 +7279,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 66,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7344,8 +7350,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7415,8 +7421,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 66,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7486,8 +7492,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7557,8 +7563,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7628,8 +7634,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 68,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7699,8 +7705,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 67,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7770,8 +7776,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7841,8 +7847,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7912,8 +7918,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 67,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -7983,8 +7989,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8054,8 +8060,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8125,8 +8131,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8196,8 +8202,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 67,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8267,8 +8273,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 67,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8338,8 +8344,8 @@
         "Q_max_m3h": 2100.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 1365.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 69,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 3.0
@@ -8409,8 +8415,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -8478,8 +8484,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 5.63,
         "H_max_m": 18.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 10.2,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -8548,8 +8554,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 6.81,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -8617,8 +8623,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 8.25,
         "H_max_m": 27.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 15.0,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -8687,8 +8693,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 4.5,
         "H_max_m": 15.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 8.18,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -8756,8 +8762,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 6.81,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -8826,8 +8832,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 6.0,
         "H_max_m": 20.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 10.9,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -8895,8 +8901,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 7.5,
         "H_max_m": 25.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 13.6,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -8964,8 +8970,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 9.38,
         "H_max_m": 31.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 17.0,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9033,8 +9039,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 16.88,
         "H_max_m": 56.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 30.7,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9102,8 +9108,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 63.4,
+        "H_BEP_m": 6.81,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9171,8 +9177,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 5.63,
         "H_max_m": 18.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 63.4,
+        "H_BEP_m": 10.2,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9240,8 +9246,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 6.38,
         "H_max_m": 21.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 63.4,
+        "H_BEP_m": 11.6,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9309,8 +9315,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 8.25,
         "H_max_m": 27.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 63.4,
+        "H_BEP_m": 15.0,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9378,8 +9384,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 10.5,
         "H_max_m": 35.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 63.4,
+        "H_BEP_m": 19.1,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9447,8 +9453,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 3.38,
         "H_max_m": 11.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 6.13,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9516,8 +9522,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 4.88,
         "H_max_m": 16.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 8.86,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9585,8 +9591,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 6.75,
         "H_max_m": 22.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 12.3,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9654,8 +9660,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 8.25,
         "H_max_m": 27.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 15.0,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9723,8 +9729,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 11.25,
         "H_max_m": 37.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 20.4,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9792,8 +9798,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 8.12,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9861,8 +9867,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 6.0,
         "H_max_m": 20.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 13.0,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9930,8 +9936,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 7.5,
         "H_max_m": 25.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 16.2,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -9999,8 +10005,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 9.75,
         "H_max_m": 32.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 21.1,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10068,8 +10074,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 15.0,
         "H_max_m": 50.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 32.5,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10137,8 +10143,8 @@
         "Q_max_m3h": 75.0,
         "H_min_m": 16.88,
         "H_max_m": 56.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 37.5,
+        "H_BEP_m": 36.6,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10206,8 +10212,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 8.12,
         "eta_BEP_pct": 48,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10275,8 +10281,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 5.63,
         "H_max_m": 18.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 12.2,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10344,8 +10350,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 6.38,
         "H_max_m": 21.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 13.8,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10413,8 +10419,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 8.25,
         "H_max_m": 27.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 17.9,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10482,8 +10488,8 @@
         "Q_max_m3h": 97.5,
         "H_min_m": 10.5,
         "H_max_m": 35.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 48.8,
+        "H_BEP_m": 22.8,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10551,8 +10557,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 3.38,
         "H_max_m": 11.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 6.13,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10620,8 +10626,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 4.88,
         "H_max_m": 16.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 8.86,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10689,8 +10695,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 6.75,
         "H_max_m": 22.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 12.3,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10758,8 +10764,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 11.25,
         "H_max_m": 37.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 20.4,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -10827,8 +10833,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 3.38,
         "H_max_m": 11.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 6.13,
         "eta_BEP_pct": 53,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -10897,8 +10903,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 4.88,
         "H_max_m": 16.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 8.86,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -10967,8 +10973,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 5.63,
         "H_max_m": 18.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 10.2,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11037,8 +11043,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 8.25,
         "H_max_m": 27.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 15.0,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11107,8 +11113,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 10.13,
         "H_max_m": 33.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 18.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11177,8 +11183,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 11.63,
         "H_max_m": 38.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 21.1,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11247,8 +11253,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 13.5,
         "H_max_m": 45.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 24.5,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11317,8 +11323,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 3.75,
         "H_max_m": 12.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 6.81,
         "eta_BEP_pct": 58,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11387,8 +11393,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 5.63,
         "H_max_m": 18.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 10.2,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11457,8 +11463,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 7.5,
         "H_max_m": 25.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 13.6,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11527,8 +11533,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 9.0,
         "H_max_m": 30.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 16.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11597,8 +11603,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 10.5,
         "H_max_m": 35.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 19.1,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11667,8 +11673,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 12.75,
         "H_max_m": 42.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 23.2,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11737,8 +11743,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 18.0,
         "H_max_m": 60.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 32.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -11807,8 +11813,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 15.0,
         "H_max_m": 50.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 27.2,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -11877,8 +11883,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 20.63,
         "H_max_m": 68.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 37.5,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -11947,8 +11953,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 21.75,
         "H_max_m": 72.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 39.5,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -12017,8 +12023,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 23.25,
         "H_max_m": 77.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 42.2,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -12087,8 +12093,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 24.0,
         "H_max_m": 80.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 43.6,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -12157,8 +12163,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 12.75,
         "H_max_m": 42.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 23.2,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -12227,8 +12233,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 10.13,
         "H_max_m": 33.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 18.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12297,8 +12303,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 28.13,
         "H_max_m": 93.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 51.1,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -12367,8 +12373,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 6.0,
         "H_max_m": 20.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 10.9,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12437,8 +12443,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 9.75,
         "H_max_m": 32.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 17.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12507,8 +12513,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 11.25,
         "H_max_m": 37.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 20.4,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12577,8 +12583,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 18.75,
         "H_max_m": 62.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 34.1,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12647,8 +12653,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 11.25,
         "H_max_m": 37.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 20.4,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12717,8 +12723,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 12.38,
         "H_max_m": 41.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 22.5,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12787,8 +12793,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 13.13,
         "H_max_m": 43.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 23.8,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12857,8 +12863,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 20.25,
         "H_max_m": 67.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 36.8,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12927,8 +12933,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 22.5,
         "H_max_m": 75.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 40.9,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -12997,8 +13003,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 29.25,
         "H_max_m": 97.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 53.1,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13067,8 +13073,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 31.5,
         "H_max_m": 105.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 57.2,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13137,8 +13143,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 24.0,
         "H_max_m": 80.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 43.6,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13207,8 +13213,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 33.75,
         "H_max_m": 112.5,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 61.3,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13277,8 +13283,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 35.63,
         "H_max_m": 118.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 64.7,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13347,8 +13353,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 25.5,
         "H_max_m": 85.0,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 46.3,
         "eta_BEP_pct": 65,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13417,8 +13423,8 @@
         "Q_max_m3h": 150.0,
         "H_min_m": 16.13,
         "H_max_m": 53.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 97.5,
+        "H_BEP_m": 29.3,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13487,8 +13493,8 @@
         "Q_max_m3h": 225.0,
         "H_min_m": 8.63,
         "H_max_m": 28.75,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 146.0,
+        "H_BEP_m": 15.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 2.0
@@ -13557,8 +13563,8 @@
         "Q_max_m3h": 120.0,
         "H_min_m": 16.88,
         "H_max_m": 56.25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 78.0,
+        "H_BEP_m": 30.7,
         "eta_BEP_pct": 62,
         "NPSHr_at_BEP_m": null,
         "NPSHr_m": 1.5
@@ -13650,8 +13656,9 @@
         "distributor": "ВИЛО РУС"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Пожарная установка по EN 12845/СП 10.13130 (1 раб + 1 рез + жокей). С шкафом Sf. Цены индивидуально под объект — зависит от категории помещения и нормативного Q пожара.",
-      "_source": "wilo.com SiFire EN datasheet (placeholder, без калибровки КП)"
+      "_engineer_note": "Пожарная установка по EN 12845/СП 10.13130 (1 раб + 1 рез + жокей). С шкафом Sf. Цены индивидуально под объект — зависит от категории помещения и нормативного Q пожара. | 806374 ₽ research 2026-05-11 (medium)",
+      "_source": "wilo.com SiFire EN datasheet (placeholder, без калибровки КП)",
+      "price_rub_2026": 806374
     },
     {
       "id": "wilo-bl-50-160",
@@ -13690,8 +13697,9 @@
         "distributor": "ВИЛО РУС"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Стандартный одноступенчатый Wilo BL с возможностью использования в пожарной установке (с пожарным ШУ). Цены — индивидуально.",
-      "_source": "wilo.com BL datasheet (placeholder)"
+      "_engineer_note": "Стандартный одноступенчатый Wilo BL с возможностью использования в пожарной установке (с пожарным ШУ). Цены — индивидуально. | 270294 ₽ research 2026-05-11 (medium)",
+      "_source": "wilo.com BL datasheet (placeholder)",
+      "price_rub_2026": 270294
     },
     {
       "id": "km-100-65-200a",
@@ -13902,9 +13910,10 @@
         "distributor": "CNP / Nanfang Pump Industry"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон ПВТ Краснодар КНС-1: малая бытовая Q≤12 H=10. CNP = Nanfang Pump Industry. | eta=50% sub_E_research (medium)",
+      "_engineer_note": "Эталон ПВТ Краснодар КНС-1: малая бытовая Q≤12 H=10. CNP = Nanfang Pump Industry. | eta=50% sub_E_research (medium) | 94132 ₽ research 2026-05-11 (high)",
       "_source": "ТКП ПВТ 822005890-ОК-НВК-6.4",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 94132
     },
     {
       "id": "cnp-250wq600-10-22",
@@ -13982,9 +13991,10 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый — редкий класс для пром. ливневой/хвостовой подачи Q=7 H=40. Эталон РД №12-НВК (2 насоса 1+1 + резервуар V=20 м³). | impeller multi-stage->closed canonicalized 2026-05-10 | eta=62% sub_E_research (medium)",
+      "_engineer_note": "Вертикальный многоступенчатый — редкий класс для пром. ливневой/хвостовой подачи Q=7 H=40. Эталон РД №12-НВК (2 насоса 1+1 + резервуар V=20 м³). | impeller multi-stage->closed canonicalized 2026-05-10 | eta=62% sub_E_research (medium) | 58631 ₽ research 2026-05-11 (high)",
       "_source": "РД №12-НВК",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 58631
     },
     {
       "id": "pedrollo-f-65-200ar",
@@ -14020,9 +14030,10 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "calibration_pending",
-      "_engineer_note": "Крупный консольный одноступенчатый для повысительных I-категории (22-этажный жилой Краснодар). Q=156 H=57. Закрывает gap премиум booster. | impeller single_stage_centrifugal->single-channel canonicalized 2026-05-10 | eta=68% sub_E_research (medium)",
+      "_engineer_note": "Крупный консольный одноступенчатый для повысительных I-категории (22-этажный жилой Краснодар). Q=156 H=57. Закрывает gap премиум booster. | impeller single_stage_centrifugal->single-channel canonicalized 2026-05-10 | eta=68% sub_E_research (medium) | 196881 ₽ research 2026-05-11 (high)",
       "_source": "Паспорт ПВТ Краснодар (16-20-НВК) + 22-эт.",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "price_rub_2026": 196881
     },
     {
       "id": "wilo-bl-80-200-30-2",
@@ -14111,7 +14122,8 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Бытовая мини-КНС, эталон 18-007-ТХ Крым (КОС хоз-быт) — 1+1 рез. Q=10 H=15 в КНС-3 Ø2200. | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (medium)",
       "_source": "18-007-ТХ Крым (экспертиза 9102031438)",
-      "_added": "2026-05-08"
+      "_added": "2026-05-08",
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "grundfos-seg-40-09-2-50b",
@@ -14991,7 +15003,8 @@
       },
       "_engineer_flag": "ok",
       "_engineer_note": "Cutter с режущим механизмом для волокон. | price 142000 от subagent Wilo research 2026-05-10 (high, https://elit-nasos.ru/products/nasos-rexa-cut-gi03)",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "wilo-rexa-cut-gi03-30",
@@ -15032,7 +15045,8 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "price 160000 от subagent Wilo research 2026-05-10 (medium, https://elit-nasos.ru/groups/rexa%20cut)"
+      "_engineer_note": "price 160000 от subagent Wilo research 2026-05-10 (medium, https://elit-nasos.ru/groups/rexa%20cut)",
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "wilo-rexa-cut-gi06-26",
@@ -15073,7 +15087,8 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "price 230000 от subagent Wilo research 2026-05-10 (low, https://elit-nasos.ru/groups/rexa%20cut)"
+      "_engineer_note": "price 230000 от subagent Wilo research 2026-05-10 (low, https://elit-nasos.ru/groups/rexa%20cut)",
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
     },
     {
       "id": "wilo-rexa-solid-g03-80",
@@ -15523,7 +15538,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Материал G (чугун).",
-      "_source": "Agent D research 2026-05-08, Mat.No 39100xxx"
+      "_source": "Agent D research 2026-05-08, Mat.No 39100xxx",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-n-50-220-g",
@@ -15563,7 +15579,8 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-n-65-220-g",
@@ -15604,7 +15621,8 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-n-100-280-g",
@@ -15645,7 +15663,8 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-krt-f100",
@@ -15687,7 +15706,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Серия KRT — крупная канализационная. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-krt-d150",
@@ -15729,7 +15749,8 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "impeller single-channel-large->single-channel canonicalized 2026-05-10"
+      "_engineer_note": "impeller single-channel-large->single-channel canonicalized 2026-05-10",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "ksb-amarex-krt-e200",
@@ -15771,7 +15792,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Магистральная КНС крупных городов. | impeller single-channel-large->single-channel canonicalized 2026-05-10",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
     },
     {
       "id": "fancy-50wq10-10-0-75",
@@ -16818,7 +16840,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "Взрывозащищённое исполнение Ex для нефтегаза.",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "ex_rating": "1Ex d IIB T4 Gb X"
     },
     {
       "id": "irtysh-pf-100-50-ex",
@@ -16858,7 +16881,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "ATEX для нефтехимии.",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "ex_rating": "1Ex d IIB T4 Gb X"
     },
     {
       "id": "antarus-nk1-50-22-tb",
@@ -17060,7 +17084,8 @@
       },
       "_engineer_flag": "needs_review",
       "_engineer_note": "WQ/E серия — Ex-исполнение для нефтегаза.",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "ex_rating": "1Ex d IIB T3 Gb"
     },
     {
       "id": "kaiquan-100wqe-50-25-ex",
@@ -17099,7 +17124,8 @@
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "ex_rating": "1Ex d IIB T3 Gb"
     },
     {
       "id": "kaiquan-150wqs-100-30",
@@ -19979,7 +20005,8 @@
       "_added": "2026-05-10",
       "datasheet_url": "https://vodokomfort.ru/product/285618-nasos-vertikalniy-mnogostupenchatiy-bm-20-10a-a-d-e-s74119009",
       "notes": "Ступеней: 10. Аналог CR 20-10",
-      "_engineer_note": " | eta=73% sub_E_research (medium)"
+      "_engineer_note": "eta=73% sub_E_research (medium) | 180000 ₽ research 2026-05-11 (low)",
+      "price_rub_2026": 180000
     },
     {
       "id": "istratech-bm-20-17",
@@ -20401,7 +20428,8 @@
       "_added": "2026-05-10",
       "datasheet_url": "https://shop.vodokomfort.ru/product/285681-nasos-vertikalniy-mnogostupenchatiy-bm-64-3-1a-a-d-e-hqqe-a-3-x-380-50gc-15kvt-vhod-vyhod-dn100-istrateh-s74123007",
       "notes": "Ступеней: 3. Аналог CR 64-3-1",
-      "_engineer_note": " | eta=76% sub_E_research (medium)"
+      "_engineer_note": "eta=76% sub_E_research (medium) | 415000 ₽ research 2026-05-11 (medium)",
+      "price_rub_2026": 415000
     },
     {
       "id": "istratech-vo-65-930-30-2",
@@ -26042,8 +26070,8 @@
         "Q_max_m3h": 90,
         "H_min_m": 6,
         "H_max_m": 18,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 69.0,
+        "H_BEP_m": 10.2,
         "eta_BEP_pct": 62,
         "NPSHr_m": 1.5
       },
@@ -26084,8 +26112,8 @@
         "Q_max_m3h": 110,
         "H_min_m": 8,
         "H_max_m": 22,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 85.5,
+        "H_BEP_m": 12.9,
         "eta_BEP_pct": 63,
         "NPSHr_m": 1.5
       },
@@ -26126,8 +26154,8 @@
         "Q_max_m3h": 130,
         "H_min_m": 10,
         "H_max_m": 25,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 102.0,
+        "H_BEP_m": 15.2,
         "eta_BEP_pct": 65,
         "NPSHr_m": 1.5
       },
@@ -26168,8 +26196,8 @@
         "Q_max_m3h": 150,
         "H_min_m": 12,
         "H_max_m": 28,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 118.0,
+        "H_BEP_m": 17.6,
         "eta_BEP_pct": 66,
         "NPSHr_m": 2.0
       },
@@ -26210,8 +26238,8 @@
         "Q_max_m3h": 180,
         "H_min_m": 15,
         "H_max_m": 32,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 142.0,
+        "H_BEP_m": 20.9,
         "eta_BEP_pct": 68,
         "NPSHr_m": 2.0
       },
@@ -26252,8 +26280,8 @@
         "Q_max_m3h": 220,
         "H_min_m": 18,
         "H_max_m": 36,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 174.0,
+        "H_BEP_m": 24.3,
         "eta_BEP_pct": 69,
         "NPSHr_m": 2.0
       },
@@ -26294,8 +26322,8 @@
         "Q_max_m3h": 260,
         "H_min_m": 20,
         "H_max_m": 40,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 204.0,
+        "H_BEP_m": 27.0,
         "eta_BEP_pct": 70,
         "NPSHr_m": 2.5
       },
@@ -26336,8 +26364,8 @@
         "Q_max_m3h": 300,
         "H_min_m": 22,
         "H_max_m": 45,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null,
+        "Q_BEP_m3h": 237.0,
+        "H_BEP_m": 30.0,
         "eta_BEP_pct": 71,
         "NPSHr_m": 2.5
       },
@@ -26995,13 +27023,13 @@
         "cutting": "stainless_steel"
       },
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 378970,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ИСТРАТЕХ Групп (преемник Grundfos)"
       },
-      "_engineer_flag": "request_quote",
-      "_engineer_note": "Режущий механизм — измельчает твёрдые частицы, проталкивает через DN40. Для малых КНС в ATEX. После ухода Grundfos из РФ — параллельный импорт.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Режущий механизм — измельчает твёрдые частицы, проталкивает через DN40. Для малых КНС в ATEX. После ухода Grundfos из РФ — параллельный импорт. | 378970 ₽ research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://flumtec.ru/katalog/nasosy-po-proizvoditelyu/nasosy-grundfos/kanalizatsionnye-nasosy-grundfos/grundfos-seg/"
     },
@@ -27044,13 +27072,13 @@
         "cutting": "stainless_steel"
       },
       "price_segment": "premium",
-      "price_rub_2026": null,
+      "price_rub_2026": 305600,
       "available_ru": {
         "status": "parallel_import",
         "distributor": "ИСТРАТЕХ Групп"
       },
-      "_engineer_flag": "request_quote",
-      "_engineer_note": "Топовая SEG.Ex — Q=14 H=26 в ATEX-зоне с малым DN. Маркировка DEKRA 0344.",
+      "_engineer_flag": "ok",
+      "_engineer_note": "Топовая SEG.Ex — Q=14 H=26 в ATEX-зоне с малым DN. Маркировка DEKRA 0344. | 305600 ₽ research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
       "datasheet_url": "https://gf-shop.ru/seg"
     },
