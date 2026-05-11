@@ -24,7 +24,14 @@ OUT_ZIP = SCRIPT_DIR / "kns-calculator.zip"
 
 # Подпапки 02_dataset, которые попадают в production пакет.
 # Игнорируются: _inbox, _analysis (gitignore), etalons/downloads_*, etalons/pricelist_*
-PUBLIC_DATASET_SUBS = ["pumps", "fittings", "theory", "etl_seed"]
+PUBLIC_DATASET_SUBS = [
+    "pumps",
+    "fittings",
+    "theory",
+    "etl_seed",
+    "failure_modes",  # Sub P: каталог типовых отказов (26 модов) — endpoint /failure-modes
+    "regulations",  # Sub N: climate_cities_2026.json (76 городов СП 131) — endpoint /climate/*
+]
 
 EXCLUDE_PATTERNS = ["__pycache__", ".ruff_cache", ".pytest_cache", "*.pyc", "*.pyo"]
 
