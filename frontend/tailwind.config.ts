@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -10,6 +11,12 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
+        // Semantic tokens (CSS variables) — light/dark via .dark class
+        background: "rgb(var(--bg) / <alpha-value>)",
+        foreground: "rgb(var(--fg) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        muted: "rgb(var(--muted) / <alpha-value>)",
+        border: "rgb(var(--border) / <alpha-value>)",
         // Brand: deep teal-blue — гидравлика, не банковский индиго
         brand: {
           50: "#EEF6F7",

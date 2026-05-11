@@ -9,8 +9,10 @@
 import { AlertTriangle } from "lucide-react";
 
 /**
- * Глобальный баннер «бета-версия» — фиксированная жёлтая полоса в верхней части
- * страницы. Не закрывается, не сворачивается.
+ * Глобальный баннер «бета-версия» — статичная жёлтая полоса в верхней части
+ * страницы (НЕ sticky, чтобы не перекрывать SiteNav на мобильных). Не закрывается,
+ * не сворачивается. Высота ~32px на mobile / ~36px на desktop; SiteNav остаётся
+ * sticky top-0 ниже баннера.
  *
  * Цель: защитить менеджеров/сметчиков от переноса результата калькулятора в
  * ТЗ без проверки инженером. Калькулятор даёт оценочный расчёт; финальные
@@ -21,9 +23,9 @@ export function BetaBanner() {
     <div
       role="status"
       aria-label="Статус калькулятора: бета-версия"
-      className="sticky top-0 z-50 bg-amber-400 text-ink-950 border-b border-amber-500"
+      className="relative z-30 bg-amber-400 text-ink-950 border-b border-amber-500"
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-2 flex items-start md:items-center gap-3 text-xs md:text-sm">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 py-1.5 md:py-2 flex items-start md:items-center gap-3 text-xs md:text-sm">
         <AlertTriangle
           size={16}
           strokeWidth={2.2}

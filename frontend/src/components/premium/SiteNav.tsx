@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import clsx from "clsx";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,14 +17,15 @@ export function SiteNav() {
   return (
     <header
       className={clsx(
-        "fixed top-9 md:top-10 inset-x-0 z-40 transition-all duration-base ease-out-quart",
+        // sticky top-0: висит под BetaBanner (BetaBanner static, не перекрывает на mobile).
+        "sticky top-0 z-40 transition-all duration-base ease-out-quart",
         scrolled
-          ? "h-14 bg-ink-950/72 backdrop-blur-md backdrop-saturate-150 border-b border-white/[0.06]"
-          : "h-[72px] bg-transparent",
+          ? "h-14 bg-ink-950/85 backdrop-blur-md backdrop-saturate-150 border-b border-white/[0.06]"
+          : "h-16 md:h-[72px] bg-ink-950/40 backdrop-blur-sm",
       )}
     >
       <div className="max-w-7xl mx-auto h-full px-5 md:px-10 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-3 group">
+        <a href="#hero" className="flex items-center gap-3 group min-h-11">
           <div className="relative size-8 rounded-md bg-accent-500 flex items-center justify-center shrink-0">
             <span className="font-display font-bold text-ink-950 text-sm">И·С</span>
           </div>
@@ -31,7 +33,7 @@ export function SiteNav() {
             <span className="font-display font-semibold text-ink-50 text-sm tracking-wide uppercase">
               ИНСЕРВО
             </span>
-            <span className="ml-1.5 text-ink-400 text-xs font-mono">· Серво-Юг</span>
+            <span className="ml-1.5 text-ink-400 text-xs font-mono hidden sm:inline">· Серво-Юг</span>
           </div>
         </a>
 
@@ -56,19 +58,21 @@ export function SiteNav() {
           </a>
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-3">
           <a
             href="tel:+78002224457"
-            className="hidden md:flex items-center gap-2 text-ink-50 text-sm font-mono hover:text-accent-500 transition-colors"
+            className="hidden md:flex items-center gap-2 text-ink-50 text-sm font-mono hover:text-accent-500 transition-colors min-h-11"
           >
             <Phone size={14} strokeWidth={1.75} />
             8 (800) 222-44-57
           </a>
+          <ThemeToggle />
           <a
             href="/project"
-            className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-accent-500 text-ink-950 text-sm font-medium hover:bg-accent-400 transition-colors duration-base"
+            className="group inline-flex items-center gap-1.5 px-4 h-11 md:h-9 rounded-md bg-accent-500 text-ink-950 text-sm font-medium hover:bg-accent-400 transition-colors duration-base"
           >
-            Проект →
+            <span className="hidden sm:inline">Проект</span>
+            <span className="sm:hidden">К проекту</span>
             <ArrowRight
               size={14}
               strokeWidth={2}

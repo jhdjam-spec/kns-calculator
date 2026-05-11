@@ -48,7 +48,7 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-ink-950 pt-32 pb-24 md:pt-40 md:pb-32"
+      className="relative overflow-hidden bg-ink-950 pt-16 pb-20 sm:pt-20 md:pt-28 md:pb-32"
     >
       {/* Background: radial gradient + isometric grid + noise */}
       <div
@@ -79,12 +79,12 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
             КАЛЬКУЛЯТОР · 2026
           </div>
 
-          <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-ink-50 leading-[1.05] tracking-tightest">
+          <h1 className="font-display text-[2rem] sm:text-4xl md:text-5xl lg:text-7xl font-bold text-ink-50 leading-[1.05] tracking-tightest">
             Подбор насоса
             <br />
             для <span className="font-normal italic text-accent-500">КНС, ЛОС и СПД</span>
             <br />
-            за 60 секунд
+            за минуту
           </h1>
 
           <p className="text-sm md:text-base text-ink-500 leading-relaxed max-w-xl -mt-2">
@@ -115,14 +115,14 @@ export function Hero({ onCalculate, isCalculating }: HeroProps) {
                 onChange={(e) => setQInput(e.target.value)}
                 step="0.1"
                 min="0"
-                className="w-full h-16 px-4 pt-7 pb-2 rounded-md bg-white/5 border border-white/10 text-ink-50 font-mono text-xl tabular-nums focus:border-accent-500 focus:bg-white/10 outline-none transition-colors duration-base"
+                className="w-full h-14 sm:h-16 px-4 pt-6 sm:pt-7 pb-2 rounded-md bg-white/5 border border-white/10 text-ink-50 font-mono text-base sm:text-xl tabular-nums focus:border-accent-500 focus:bg-white/10 outline-none transition-colors duration-base"
               />
             </div>
             <button
               type="button"
               disabled={isCalculating || !qNumeric || qNumeric <= 0}
               onClick={() => onCalculate(qNumeric)}
-              className="group h-16 px-6 rounded-md bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 font-medium inline-flex items-center justify-center gap-2 transition-all duration-base shadow-brand"
+              className="group h-14 sm:h-16 px-6 rounded-md bg-accent-500 hover:bg-accent-400 disabled:bg-ink-700 disabled:text-ink-500 text-ink-950 font-medium inline-flex items-center justify-center gap-2 transition-all duration-base shadow-brand"
             >
               {isCalculating ? "Считаем…" : "Рассчитать"}
               <ArrowRight

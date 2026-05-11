@@ -2,12 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * CSS variables — teal-brass palette, light/dark mode.
+ * Format: rgb triplets (no commas) for use with `rgb(var(--bg) / <alpha-value>)`.
+ *
+ * Light mode (default): warm graphite ink on near-white background.
+ * Dark mode: deep brand-900 background with brand-400 highlights and brass-400 accent.
+ *
+ * Tokens:
+ *   --bg       — page background
+ *   --fg       — primary text
+ *   --surface  — card / panel background
+ *   --muted    — subdued text / dividers
+ *   --border   — input / card border
+ *   --brand    — primary brand accent (links, focus rings)
+ *   --accent   — secondary brass accent (CTA, KPI)
+ */
 :root {
   color-scheme: light;
+  --bg: 250 250 249;        /* ink-50  #FAFAF9 */
+  --fg: 18 18 16;           /* ink-900 #121210 */
+  --surface: 255 255 255;   /* pure white card */
+  --muted: 117 117 113;     /* ink-500 #757571 */
+  --border: 209 209 204;    /* ink-300 #D1D1CC */
+  --brand: 44 111 130;      /* brand-500 #2C6F82 */
+  --accent: 201 162 74;     /* accent-500 #C9A24A */
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 14 42 53;           /* brand-900 #0E2A35 */
+  --fg: 244 244 242;        /* ink-100 #F4F4F2 */
+  --surface: 19 56 70;      /* brand-800 #133846 */
+  --muted: 166 166 160;     /* ink-400 #A6A6A0 */
+  --border: 24 69 85;       /* brand-700 #184555 */
+  --brand: 74 142 159;      /* brand-400 #4A8E9F */
+  --accent: 212 178 107;    /* accent-400 #D4B26B */
+}
+
+/* Auto dark mode — respect system preference unless .light is set explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+    --bg: 14 42 53;
+    --fg: 244 244 242;
+    --surface: 19 56 70;
+    --muted: 166 166 160;
+    --border: 24 69 85;
+    --brand: 74 142 159;
+    --accent: 212 178 107;
+  }
 }
 
 body {
-  @apply bg-ink-50 text-ink-950 font-sans antialiased;
+  @apply bg-background text-foreground font-sans antialiased;
 }
 
 /* Tabular nums по умолчанию для всех mono-блоков с цифрами */
@@ -21,7 +69,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid theme("colors.brand.500");
+  outline: 2px solid rgb(var(--brand));
   outline-offset: 2px;
 }
 
@@ -56,4 +104,13 @@ body {
 }
 .form-input:hover {
   border-color: theme("colors.ink.500");
+}
+
+/* Mobile: ensure inputs hit 16px to prevent iOS auto-zoom */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
