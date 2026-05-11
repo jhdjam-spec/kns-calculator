@@ -9,36 +9,36 @@ const kpis = [
 
 export function Trust() {
   return (
-    <section id="trust" className="py-24 md:py-32 bg-ink-50 border-t border-ink-200">
+    <section id="trust" className="py-24 md:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: heading + KPIs */}
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-500 mb-4">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-muted mb-4">
               <span className="block w-6 h-px bg-accent-500" />
               ПРОИЗВОДИТЕЛЬ
             </div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-ink-950 leading-[1.05] tracking-tighter mb-6">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-[1.05] tracking-tighter mb-6">
               Производим.
               <br />
-              <span className="font-normal italic text-accent-600">Не перепродаём.</span>
+              <span className="font-normal italic text-accent-600 dark:text-accent-400">Не перепродаём.</span>
             </h2>
-            <p className="text-lg text-ink-600 leading-relaxed mb-10 max-w-xl">
+            <p className="text-lg text-foreground/70 leading-relaxed mb-10 max-w-xl">
               Серво-Юг с 2009 года выпускает канализационные насосные станции,
               локальные очистные сооружения и резервуары. Своё производство в Адыгее,
               шеф-монтаж по Краснодарскому краю и югу России.
             </p>
 
-            <div className="grid grid-cols-2 gap-px bg-ink-200">
+            <div className="grid grid-cols-2 gap-px bg-border">
               {kpis.map(({ value, label, icon: Icon }) => (
-                <div key={label} className="bg-ink-50 p-6">
+                <div key={label} className="bg-surface p-6">
                   <div className="flex items-baseline gap-3 mb-2">
-                    <span className="font-display text-4xl md:text-5xl font-semibold text-ink-950 tabular-nums leading-none">
+                    <span className="font-display text-4xl md:text-5xl font-semibold text-foreground tabular-nums leading-none">
                       {value}
                     </span>
                     <span className="block w-6 h-px bg-accent-500" />
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-ink-500">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted">
                     <Icon size={12} strokeWidth={1.5} />
                     {label}
                   </div>
@@ -48,7 +48,7 @@ export function Trust() {
           </div>
 
           {/* Right: production placeholder */}
-          <div className="aspect-[4/5] rounded-block bg-ink-200 relative overflow-hidden">
+          <div className="aspect-[4/5] rounded-block bg-border relative overflow-hidden">
             <div
               className="absolute inset-0"
               style={{

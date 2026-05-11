@@ -1,6 +1,6 @@
 {
   "_version": "0.2",
-  "_updated": "2026-05-10",
+  "_updated": "2026-05-11",
   "_description": "Каталог насосов для алгоритма подбора. Текущая версия — envelope-only (диапазоны Q/H/P без полных кривых). Полные Q-H кривые добавляются при парсинге PDF-каталогов производителей (см. ETL-пайплайн docling+PlotDigitizer).",
   "_engineer_note": "Каждая запись помечена _engineer_flag. needs_review = envelope взят из producers_dataset.json как агрегат серии, не паспорт конкретной модели. Для production нужны точные паспорта.\n[2026-05-08] +11 new models from kns.zip mass audit: Vandjord SG cutter (Q=15 H=44), KAIQUAN 50WQS202-3 (Мысхако), ANTARUS 2-150-30-150-22-TB (Q=352 H=22), KAIQUAN 100WQ60-9-3, CNP 50WQ12 + 250WQ600 + CHL 8-50, Pedrollo F 65/200AR, Wilo BL 80/200-30 + Rexa PRO C08DA, Grundfos SEG.40.09 (full datasheet).\n[2026-05-09] +61 models from Agent D/E research (Wilo Drain TM, Pedrollo VXm, Grundfos SEG, Fancy WQ, LEO LKS, CNP WQ-W, ГНОМ 150-30, KSB Amarex N). Total: 284.",
   "pumps": [
@@ -472,45 +472,6 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Станция повышения давления для жилых/коммерческих объектов. С PLC и ЧРП. Эталон премиум-сегмента СПД.",
       "_source": "wilo.com/ru"
-    },
-    {
-      "id": "grundfos-sl1-9-30",
-      "brand": "Grundfos",
-      "model": "SL1.50.65.09 (серия 9-30 кВт)",
-      "type": "submersible_sewage",
-      "impeller": "single-channel",
-      "free_passage_mm": 65,
-      "envelope": {
-        "Q_min_m3h": 10,
-        "Q_max_m3h": 250,
-        "H_min_m": 5,
-        "H_max_m": 40,
-        "Q_BEP_m3h": null,
-        "H_BEP_m": null
-      },
-      "power": {
-        "P_kW": 9,
-        "voltage_v": 380,
-        "phase": 3,
-        "ip_rating": "IP68",
-        "ex_rating": "Ex II 2G опция"
-      },
-      "discharge": {
-        "DN_mm": 65
-      },
-      "wastewater_compat": [
-        "domestic",
-        "industrial"
-      ],
-      "price_segment": "premium",
-      "available_ru": {
-        "status": "parallel_import",
-        "lead_time": "4-12_weeks"
-      },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Параллельный импорт — статус нестабильный. В апр 2025 47 позиций исключены из перечня — уточнять конкретно эту модель. | 320000 от subagent Grundfos research 2026-05-10 (medium)",
-      "_source": "Grundfos Product Center",
-      "price_rub_2026": 320000
     },
     {
       "id": "grundfos-hydro-mpc",
@@ -14103,47 +14064,6 @@
       "_added": "2026-05-08"
     },
     {
-      "id": "grundfos-cdm-10-11",
-      "brand": "Grundfos",
-      "model": "CDM 10-11",
-      "type": "booster_station",
-      "impeller": "closed",
-      "free_passage_mm": null,
-      "envelope": {
-        "Q_min_m3h": 4,
-        "Q_max_m3h": 14,
-        "H_min_m": 15,
-        "H_max_m": 65,
-        "Q_BEP_m3h": 10,
-        "H_BEP_m": 30,
-        "eta_BEP_pct": 60.0,
-        "NPSHr_at_BEP_m": null
-      },
-      "power": {
-        "P_kW": 1.5,
-        "voltage_v": 380,
-        "phase": 3,
-        "ip_rating": "IP55"
-      },
-      "discharge": {
-        "DN_mm": 32
-      },
-      "wastewater_compat": [
-        "clean_water",
-        "fire_protection"
-      ],
-      "price_segment": "premium",
-      "available_ru": {
-        "status": "imported_eu",
-        "distributor": "Grundfos РФ (через дилеров)"
-      },
-      "_engineer_flag": "needs_review",
-      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10 | 150000 от subagent Grundfos research 2026-05-10 (low)",
-      "_source": "kns3.zip",
-      "_added": "2026-05-08",
-      "price_rub_2026": 150000
-    },
-    {
       "id": "grundfos-unilift-ap12-40-06-1",
       "brand": "Grundfos",
       "model": "Unilift AP12.40.06.1",
@@ -25022,6 +24942,359 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Извлечено из Технико-коммерческое предложение КНС К2 08.04.2024 (1).pdf: 'Насосный агрегат Enduro 50-160 P в комплекте с автоматической трубной муфтой и верхними держателями направляющих, 2 шт'. Дано Q=21,6 м³/ч, H=9 м для бытовой КНС D=2000 H=8100 (армированный стеклопластик). Калибр 50-160 — это DN50 / Ø колеса 160 мм. Мощность не указана в ТКП — оценить по характеристике; envelope ориентировочный. Производитель Enduro требует уточнения (нет в действующей БД, возможно частная марка дилера или китайский ОЕМ). Распространение в РФ требует проверки.",
       "_source": "Mail extracted catalog 2026-05-10 — Технико-коммерческое предложение КНС К2 08.04.2024 (1).pdf"
+    },
+    {
+      "id": "cnp-cdm-10-11",
+      "brand": "CNP",
+      "model": "CDM 10-11",
+      "type": "booster_station",
+      "impeller": "closed",
+      "free_passage_mm": null,
+      "envelope": {
+        "Q_min_m3h": 4,
+        "Q_max_m3h": 14,
+        "H_min_m": 15,
+        "H_max_m": 65,
+        "Q_BEP_m3h": 10,
+        "H_BEP_m": 30,
+        "eta_BEP_pct": 60.0,
+        "NPSHr_at_BEP_m": null
+      },
+      "power": {
+        "P_kW": 1.5,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP55"
+      },
+      "discharge": {
+        "DN_mm": 32
+      },
+      "wastewater_compat": [
+        "clean_water",
+        "fire_protection"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "imported_cn",
+        "distributor": "CNP Россия / atpump.ru (официальный дилер)"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10 | 150000 от subagent Grundfos research 2026-05-10 (low) | Переименовано из grundfos-cdm-10-11 2026-05-11 — CDM серия принадлежит CNP, не Grundfos (источник: cnp-rus.ru, atpump.ru)",
+      "_source": "kns3.zip",
+      "_added": "2026-05-08",
+      "price_rub_2026": 150000
+    },
+    {
+      "id": "grundfos-sl1-50-65-09",
+      "brand": "Grundfos",
+      "model": "SL1.50.65.09",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65,
+      "envelope": {
+        "Q_min_m3h": 30,
+        "Q_max_m3h": 90,
+        "H_min_m": 6,
+        "H_max_m": 18,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 9,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт — статус нестабильный. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 320000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 320000
+    },
+    {
+      "id": "grundfos-sl1-50-65-11",
+      "brand": "Grundfos",
+      "model": "SL1.50.65.11",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 65,
+      "envelope": {
+        "Q_min_m3h": 40,
+        "Q_max_m3h": 110,
+        "H_min_m": 8,
+        "H_max_m": 22,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 11,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 65
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 380000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 380000
+    },
+    {
+      "id": "grundfos-sl1-80-80-13",
+      "brand": "Grundfos",
+      "model": "SL1.80.80.13",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80,
+      "envelope": {
+        "Q_min_m3h": 50,
+        "Q_max_m3h": 130,
+        "H_min_m": 10,
+        "H_max_m": 25,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 13,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 80
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 440000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 440000
+    },
+    {
+      "id": "grundfos-sl1-80-80-15",
+      "brand": "Grundfos",
+      "model": "SL1.80.80.15",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 80,
+      "envelope": {
+        "Q_min_m3h": 60,
+        "Q_max_m3h": 150,
+        "H_min_m": 12,
+        "H_max_m": 28,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 15,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 80
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 480000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 480000
+    },
+    {
+      "id": "grundfos-sl1-100-100-18",
+      "brand": "Grundfos",
+      "model": "SL1.100.100.18",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 70,
+        "Q_max_m3h": 180,
+        "H_min_m": 15,
+        "H_max_m": 32,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 18,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 540000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 540000
+    },
+    {
+      "id": "grundfos-sl1-100-100-22",
+      "brand": "Grundfos",
+      "model": "SL1.100.100.22",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 90,
+        "Q_max_m3h": 220,
+        "H_min_m": 18,
+        "H_max_m": 36,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 22,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 100
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 600000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 600000
+    },
+    {
+      "id": "grundfos-sl1-150-150-26",
+      "brand": "Grundfos",
+      "model": "SL1.150.150.26",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 100,
+        "Q_max_m3h": 260,
+        "H_min_m": 20,
+        "H_max_m": 40,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 26,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 150
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 650000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 650000
+    },
+    {
+      "id": "grundfos-sl1-150-150-30",
+      "brand": "Grundfos",
+      "model": "SL1.150.150.30",
+      "type": "submersible_sewage",
+      "impeller": "single-channel",
+      "free_passage_mm": 100,
+      "envelope": {
+        "Q_min_m3h": 120,
+        "Q_max_m3h": 300,
+        "H_min_m": 22,
+        "H_max_m": 45,
+        "Q_BEP_m3h": null,
+        "H_BEP_m": null
+      },
+      "power": {
+        "P_kW": 30,
+        "voltage_v": 380,
+        "phase": 3,
+        "ip_rating": "IP68",
+        "ex_rating": "Ex II 2G опция"
+      },
+      "discharge": {
+        "DN_mm": 150
+      },
+      "wastewater_compat": [
+        "domestic",
+        "industrial"
+      ],
+      "price_segment": "premium",
+      "available_ru": {
+        "status": "parallel_import",
+        "lead_time": "4-12_weeks"
+      },
+      "_engineer_flag": "needs_review",
+      "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 700000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_source": "Grundfos Product Center",
+      "price_rub_2026": 700000
     }
   ],
   "_NOT_RECOMMENDED": [

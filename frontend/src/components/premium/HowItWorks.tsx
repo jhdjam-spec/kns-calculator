@@ -23,23 +23,23 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="py-24 md:py-32 bg-ink-50 border-t border-ink-200">
+    <section id="how" className="py-24 md:py-32 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="mb-16 md:mb-20 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-500 mb-4">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-muted mb-4">
             <span className="block w-6 h-px bg-accent-500" />
             ПРОЦЕСС
           </div>
-          <h2 className="font-display text-3xl md:text-5xl font-semibold text-ink-950 leading-tight tracking-tight">
+          <h2 className="font-display text-3xl md:text-5xl font-semibold text-foreground leading-tight tracking-tight">
             Четыре минуты от ТЗ
             <br />
             до спецификации
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-px bg-ink-200">
+        <div className="grid md:grid-cols-3 gap-px bg-border">
           {steps.map(({ n, icon: Icon, title, body }) => (
-            <div key={n} className="bg-ink-50 p-8 md:p-10 group">
+            <div key={n} className="bg-surface p-8 md:p-10 group">
               <div className="flex items-baseline gap-4 mb-6">
                 <span className="font-display text-5xl md:text-6xl font-light text-accent-500 tabular-nums leading-none">
                   {n}
@@ -47,13 +47,13 @@ export function HowItWorks() {
                 <Icon
                   size={28}
                   strokeWidth={1.5}
-                  className="text-ink-400 group-hover:text-brand-700 transition-colors duration-base"
+                  className="text-muted group-hover:text-brand transition-colors duration-base"
                 />
               </div>
-              <h3 className="font-display text-xl font-semibold text-ink-950 mb-3">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-3">
                 {title}
               </h3>
-              <p className="text-ink-600 leading-relaxed">{body}</p>
+              <p className="text-foreground/70 leading-relaxed">{body}</p>
             </div>
           ))}
         </div>

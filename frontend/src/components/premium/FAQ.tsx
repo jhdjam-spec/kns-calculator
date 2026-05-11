@@ -35,14 +35,14 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 md:py-32 bg-ink-50 border-t border-ink-200">
+    <section id="faq" className="py-24 md:py-32 bg-background border-t border-border">
       <div className="max-w-3xl mx-auto px-5 md:px-10">
         <div className="mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-500 mb-4">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-muted mb-4">
             <span className="block w-6 h-px bg-accent-500" />
             FAQ
           </div>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-ink-950 leading-tight tracking-tight">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground leading-tight tracking-tight">
             Частые вопросы
           </h2>
         </div>
@@ -53,7 +53,7 @@ export function FAQ() {
             const panelId = `faq-panel-${i}`;
             const triggerId = `faq-trigger-${i}`;
             return (
-              <div key={i} className="border-t border-ink-200 last:border-b">
+              <div key={i} className="border-t border-border last:border-b">
                 <button
                   type="button"
                   id={triggerId}
@@ -62,14 +62,14 @@ export function FAQ() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="w-full py-6 md:py-7 flex items-start justify-between gap-6 text-left group"
                 >
-                  <span className="font-display text-lg md:text-xl font-medium text-ink-950 group-hover:text-brand-700 transition-colors duration-base">
+                  <span className="font-display text-lg md:text-xl font-medium text-foreground group-hover:text-brand transition-colors duration-base">
                     {item.q}
                   </span>
                   <span className="shrink-0 mt-1" aria-hidden="true">
                     {isOpen ? (
-                      <Minus size={20} strokeWidth={1.75} className="text-accent-600" />
+                      <Minus size={20} strokeWidth={1.75} className="text-accent-600 dark:text-accent-400" />
                     ) : (
-                      <Plus size={20} strokeWidth={1.75} className="text-ink-400 group-hover:text-accent-600 transition-colors" />
+                      <Plus size={20} strokeWidth={1.75} className="text-muted group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors" />
                     )}
                   </span>
                 </button>
@@ -84,7 +84,7 @@ export function FAQ() {
                   )}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-ink-600 leading-relaxed text-base md:text-lg">
+                    <p className="text-foreground/70 leading-relaxed text-base md:text-lg">
                       {item.a}
                     </p>
                   </div>
