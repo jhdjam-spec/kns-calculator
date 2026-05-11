@@ -53,4 +53,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://kns-calc-test.vercel.app/sitemap.xml
+Sitemap: https://kns-calculator-frontend.website.yandexcloud.net/sitemap.xml

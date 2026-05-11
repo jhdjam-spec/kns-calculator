@@ -6,7 +6,8 @@ import { EncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
 import "./globals.css";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://kns-calc-test.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://kns-calculator-frontend.website.yandexcloud.net";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

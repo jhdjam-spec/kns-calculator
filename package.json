@@ -2,7 +2,7 @@
   "name": "kns-calculator-monorepo",
   "version": "0.1.0",
   "private": true,
-  "description": "Vercel monorepo wrapper — frontend в frontend/, backend serverless в api/",
+  "description": "kns-calculator monorepo — frontend (Next.js static на Yandex Object Storage) + backend (FastAPI на Yandex Cloud Functions + API Gateway)",
   "scripts": {
     "build": "cd frontend && npm install && npm run build",
     "dev": "cd frontend && npm run dev"

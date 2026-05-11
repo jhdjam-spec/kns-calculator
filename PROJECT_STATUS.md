@@ -3,15 +3,16 @@
 **Заказчик:** Серво-Юг (Краснодар), партнёр INSERVO
 **Лицензия:** MIT
 **Период разработки:** 2026-05-03 → продолжается
-**Vercel (preview/staging):** READY на https://kns-calc-test.vercel.app
-**Production target:** Yandex Cloud (backend + frontend) — после полного тестирования на Vercel
+**Production:** Yandex Cloud (backend + frontend), LIVE
+- Frontend: https://kns-calculator-frontend.website.yandexcloud.net (YC Object Storage)
+- Backend: https://d5dnu7r53036cq815mes.ccx97b51.apigw.yandexcloud.net (YC Functions + API Gateway)
 
 ## Roadmap
 
 - ✅ **Priority 1** — БД пожарных насосов, ANTARUS MLV/MST, НДС 22%, dealer-флаг
 - ✅ **Priority 2** — Wizard L1 (+8 полей), ref() helper, alternatives (множественные бренды)
 - 🚧 **Priority 4 (PRE-PROD)** — Design UX/UI, генерация TS-типов из Pydantic, упрощение главной
-- 🚧 **Priority 5 (PROD)** — переезд на Yandex Cloud Functions/Compute
+- ✅ **Priority 5 (PROD)** — переезд на Yandex Cloud Functions + Object Storage (LIVE)
 
 ---
 
@@ -135,9 +136,11 @@ frontend/src/app/
 
 ## Deploy
 
-**Vercel (frontend):** https://kns-calc-test.vercel.app — READY
+**Frontend:** YC Object Storage (static) — https://kns-calculator-frontend.website.yandexcloud.net — LIVE
 
-**Backend host:** план переноса на Yandex Cloud Functions/Compute (Python lambda на Vercel ограничена 250 MB).
+**Backend:** YC Functions через API Gateway — https://d5dnu7r53036cq815mes.ccx97b51.apigw.yandexcloud.net — LIVE
+
+Подробности — в [`deploy/yandex-cloud/README.md`](deploy/yandex-cloud/README.md).
 
 ---
 

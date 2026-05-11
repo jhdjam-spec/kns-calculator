@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kns-calc-test.vercel.app/</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/project</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/project</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/tanks</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/tanks</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/storm/minimal</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/storm/minimal</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/fire</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/fire</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/water</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/water</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/electrical</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/electrical</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/hydraulics</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/hydraulics</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/corpus</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/corpus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calc-test.vercel.app/teach/los</loc>
+    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/los</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

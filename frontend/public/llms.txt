@@ -17,20 +17,20 @@
 
 ## Основные разделы
 
-- [Главная — быстрый подбор по Q (расход)](https://kns-calc-test.vercel.app/)
-- [Проект целиком — расширенная форма (Q, H, длина, тип стоков)](https://kns-calc-test.vercel.app/project)
-- [Резервуары — подбор по объёму и материалу](https://kns-calc-test.vercel.app/tanks)
-- [Ливнёвка — расчёт по методу предельных интенсивностей (СП 32.13330 §6.2.4)](https://kns-calc-test.vercel.app/storm/minimal)
-- [Энциклопедия инженера ВК — справочник по 6 темам](https://kns-calc-test.vercel.app/teach)
+- [Главная — быстрый подбор по Q (расход)](https://kns-calculator-frontend.website.yandexcloud.net/)
+- [Проект целиком — расширенная форма (Q, H, длина, тип стоков)](https://kns-calculator-frontend.website.yandexcloud.net/project)
+- [Резервуары — подбор по объёму и материалу](https://kns-calculator-frontend.website.yandexcloud.net/tanks)
+- [Ливнёвка — расчёт по методу предельных интенсивностей (СП 32.13330 §6.2.4)](https://kns-calculator-frontend.website.yandexcloud.net/storm/minimal)
+- [Энциклопедия инженера ВК — справочник по 6 темам](https://kns-calculator-frontend.website.yandexcloud.net/teach)
 
 ## Энциклопедия — темы
 
-- [Пожарные системы (СП 10.13130, СП 5.13130)](https://kns-calc-test.vercel.app/teach/fire)
-- [Водоснабжение и канализация (СП 30.13330, СП 32.13330)](https://kns-calc-test.vercel.app/teach/water)
-- [Электрооборудование КНС (ПУЭ, СП 76.13330)](https://kns-calc-test.vercel.app/teach/electrical)
-- [Гидравлика трубопроводов](https://kns-calc-test.vercel.app/teach/hydraulics)
-- [Материалы корпуса (стеклопластик, бетон, металл)](https://kns-calc-test.vercel.app/teach/corpus)
-- [Локальные очистные сооружения](https://kns-calc-test.vercel.app/teach/los)
+- [Пожарные системы (СП 10.13130, СП 5.13130)](https://kns-calculator-frontend.website.yandexcloud.net/teach/fire)
+- [Водоснабжение и канализация (СП 30.13330, СП 32.13330)](https://kns-calculator-frontend.website.yandexcloud.net/teach/water)
+- [Электрооборудование КНС (ПУЭ, СП 76.13330)](https://kns-calculator-frontend.website.yandexcloud.net/teach/electrical)
+- [Гидравлика трубопроводов](https://kns-calculator-frontend.website.yandexcloud.net/teach/hydraulics)
+- [Материалы корпуса (стеклопластик, бетон, металл)](https://kns-calculator-frontend.website.yandexcloud.net/teach/corpus)
+- [Локальные очистные сооружения](https://kns-calculator-frontend.website.yandexcloud.net/teach/los)
 
 ## Что считает калькулятор
 

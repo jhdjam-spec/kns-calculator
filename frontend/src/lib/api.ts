@@ -3,14 +3,12 @@ import { selectionResultSchema, type SelectionResult } from "@/schemas/result";
 
 /**
  * Базовый URL для backend.
- * - В dev режиме next.config.mjs делает rewrite /api/backend/* → http://localhost:8000/*
- * - В production — задаётся через NEXT_PUBLIC_API_BASE
+ *
+ * - В dev (`next dev`): `next.config.mjs` rewrites `/api/backend/*` → `http://localhost:8000/*`.
+ * - В production (static export на YC Object Storage): `NEXT_PUBLIC_API_BASE`
+ *   задаётся во время сборки и инлайнится в бандл — фронт ходит напрямую
+ *   на YC API Gateway (`https://d5dnu7r53036cq815mes.ccx97b51.apigw.yandexcloud.net`).
  */
-// Same-origin path: `/api/backend/*` → backend.
-// - На Vercel: vercel.json rewrites → YC API Gateway.
-// - В dev: next.config.mjs переписывает /api/backend/* → http://localhost:8000/*.
-// - На YC Object Storage static (BUILD_TARGET=yc-static): нужен прямой URL,
-//   задаётся через NEXT_PUBLIC_API_BASE на build time.
 const API_PREFIX =
   process.env.NEXT_PUBLIC_API_BASE
     ? `${process.env.NEXT_PUBLIC_API_BASE}`

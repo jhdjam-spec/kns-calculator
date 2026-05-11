@@ -1,7 +1,7 @@
 """Загрузка JSON-датасета из ../02_dataset/.
 
 Override через env var `KNS_DATASET_ROOT` — нужен для serverless-окружений
-(Vercel, Render и др.), где cwd может отличаться от dev-окружения.
+(Yandex Cloud Functions и др.), где cwd может отличаться от dev-окружения.
 """
 
 from __future__ import annotations

@@ -136,7 +136,7 @@ def main() -> int:
     print("      --service-account-id ajeur7e0n1k1n458t79n \\")
     print(f"      --source-path \"{OUT_ZIP}\" \\")
     print("      --environment KNS_DATASET_ROOT=./02_dataset \\")
-    print("      --environment CORS_ALLOWED_ORIGINS=https://kns-calc-test.vercel.app")
+    print("      --environment CORS_ALLOWED_ORIGINS=https://kns-calculator-frontend.website.yandexcloud.net")
     print()
     print("  # Сделать публичной")
     print("  yc serverless function allow-unauthenticated-invoke kns-calculator-api \\")

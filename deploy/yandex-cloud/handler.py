@@ -30,8 +30,8 @@ if str(_HERE) not in sys.path:
 # Dataset находится рядом с handler.py
 os.environ.setdefault("KNS_DATASET_ROOT", str(_HERE / "02_dataset"))
 
-# CORS — origins для Vercel preview/staging + production frontend
-default_origins = "https://kns-calc-test.vercel.app,https://kns-calculator.vercel.app"
+# CORS — production frontend на YC Object Storage (static hosting)
+default_origins = "https://kns-calculator-frontend.website.yandexcloud.net"
 if "CORS_ALLOWED_ORIGINS" not in os.environ:
     os.environ["CORS_ALLOWED_ORIGINS"] = default_origins
 

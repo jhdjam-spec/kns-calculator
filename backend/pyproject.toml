@@ -21,8 +21,8 @@ dependencies = [
 ]
 
 # numpy-only friction factor (Swamee-Jain) — fluids/scipy убраны ради размера
-# Vercel Python lambda (250 MB unzipped). Если понадобится Colebrook-White
-# с iter-точностью — вернуть fluids в опциональную группу.
+# zip-пакета YC Functions (~500 MB cap для code+layers). Если понадобится
+# Colebrook-White с iter-точностью — вернуть fluids в опциональную группу.
 
 [project.optional-dependencies]
 dev = [

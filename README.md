@@ -196,6 +196,35 @@ MIT — см. [LICENSE](LICENSE) и [NOTICE](NOTICE).
 
 Это не юридические требования сверх MIT, а просьба автора — уважение к авторству основа здорового opensource-сообщества.
 
+## Деплой
+
+Production-цель — **Yandex Cloud** (фронт и бэк в РФ-юрисдикции, единый
+billing, изолированный folder).
+
+| Компонент | Платформа | URL |
+|---|---|---|
+| Frontend (Next.js static export) | YC Object Storage | https://kns-calculator-frontend.website.yandexcloud.net |
+| Backend (FastAPI на YC Functions через API Gateway) | YC Serverless | https://d5dnu7r53036cq815mes.ccx97b51.apigw.yandexcloud.net |
+
+Сборка фронта:
+
+```bash
+cd frontend
+NEXT_PUBLIC_API_BASE=https://d5dnu7r53036cq815mes.ccx97b51.apigw.yandexcloud.net \
+    npm run build
+python ../deploy/yandex-cloud/sync_frontend.py
+```
+
+Сборка бэкенда (zip-пакет для YC Function):
+
+```bash
+cd deploy/yandex-cloud
+python build.py
+# далее: yc serverless function version create --source-path kns-calculator.zip ...
+```
+
+Подробности — в [`deploy/yandex-cloud/README.md`](deploy/yandex-cloud/README.md).
+
 ## Контакты
 
 Issues и pull requests — через GitHub. Зеркало репозитория для российских пользователей: [GitVerse](https://gitverse.ru).

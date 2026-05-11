@@ -1,14 +1,15 @@
 # Yandex Cloud Functions deployment
 
 Деплой backend kns-calculator на Yandex Cloud Functions (Python 3.11 runtime).
+Это **единственная** production-платформа проекта — фронт и бэк живут в YC.
 
 ## Зачем YC
 
-- Vercel @vercel/python lambda 250MB cap не вмещает fastapi+reportlab+python-docx
 - YC Functions: 512MB code+layers, 4GB RAM, 10мин timeout, ~500мс cold start
 - РФ-юрисдикция (152-ФЗ персональные данные), оплата в рублях
 - Free tier: 1 млн вызовов в месяц
 - Yandex Cloud MCP уже подключён в Claude Code (`mcp__yandex-cloud__*`)
+- Frontend (static export) рядом в Object Storage с website hosting
 
 ## Структура
 
@@ -76,7 +77,7 @@ yc serverless function version create `
     --service-account-id ajeur7e0n1k1n458t79n `
     --source-path kns-calculator.zip `
     --environment KNS_DATASET_ROOT=./02_dataset `
-    --environment CORS_ALLOWED_ORIGINS=https://kns-calc-test.vercel.app
+    --environment CORS_ALLOWED_ORIGINS=https://kns-calculator-frontend.website.yandexcloud.net
 ```
 
 ### 5. Публичный URL
@@ -89,15 +90,18 @@ yc serverless function allow-unauthenticated-invoke kns-calculator-api
 
 URL: `https://functions.yandexcloud.net/<function_id>`
 
-### 6. Vercel env var
+### 6. Frontend build env var
 
-В Vercel dashboard kns-calc-test:
+При сборке фронта (`frontend/`) задайте `NEXT_PUBLIC_API_BASE` — он
+инлайнится в статический бандл во время `next build`:
 
-```text
-NEXT_PUBLIC_API_BASE=https://functions.yandexcloud.net/<function_id>
+```bash
+cd frontend
+NEXT_PUBLIC_API_BASE=https://<api-gateway>.apigw.yandexcloud.net npm run build
+python ../deploy/yandex-cloud/sync_frontend.py
 ```
 
-После redeploy фронт начнёт ходить в YC backend.
+После повторной заливки в Object Storage фронт начнёт ходить в YC backend.
 
 ## Smoke tests
 
