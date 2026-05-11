@@ -101,7 +101,7 @@ class TestPureHelpers:
         from datetime import datetime
 
         ts = datetime(2026, 5, 11, tzinfo=UTC)
-        assert today_subfolder(ts) == "/inservo_tz_archive/2026-05-11"
+        assert today_subfolder(ts) == "/Parser_Project_KNS/2026-05-11"
 
 
 # ---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ class TestUploadFlow:
             ]
         )
         up = YaDiskUploader(token="t0k3n", opener=opener)
-        url = up._get_upload_url("/inservo_tz_archive/foo.txt")
+        url = up._get_upload_url("/Parser_Project_KNS/foo.txt")
         assert url == "https://uploader.disk.yandex.net/upload?key=xxx"
 
         req = opener.calls[0]
@@ -173,9 +173,9 @@ class TestUploadFlow:
         ).encode("utf-8")
         opener = _make_opener(
             [
-                # ensure_folder_chain step 1: /inservo_tz_archive
+                # ensure_folder_chain step 1: /Parser_Project_KNS
                 _make_response(201, b""),
-                # ensure_folder_chain step 2: /inservo_tz_archive/2026-05-11
+                # ensure_folder_chain step 2: /Parser_Project_KNS/2026-05-11
                 _make_response(201, b""),
                 # GET upload url
                 _make_response(200, upload_url_body),
@@ -187,9 +187,9 @@ class TestUploadFlow:
         result = up.upload_text(
             "Q=88 м³/ч",
             filename="test.txt",
-            folder="/inservo_tz_archive/2026-05-11",
+            folder="/Parser_Project_KNS/2026-05-11",
         )
-        assert result["path"] == "/inservo_tz_archive/2026-05-11/test.txt"
+        assert result["path"] == "/Parser_Project_KNS/2026-05-11/test.txt"
         assert result["error"] is None
         assert result["size_bytes"] > 0
 
@@ -282,11 +282,11 @@ class TestArchiveTzText:
     def test_uses_injected_uploader(self):
         fake = MagicMock()
         fake.upload_text.return_value = {
-            "path": "/inservo_tz_archive/2026-05-11/x.txt",
+            "path": "/Parser_Project_KNS/2026-05-11/x.txt",
             "error": None,
             "size_bytes": 9,
         }
         info = archive_tz_text("text body", parsed=None, uploader=fake)
-        assert info["archive_path"].startswith("/inservo_tz_archive")
+        assert info["archive_path"].startswith("/Parser_Project_KNS")
         assert info["archive_error"] is None
         fake.upload_text.assert_called_once()

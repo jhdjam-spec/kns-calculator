@@ -52,7 +52,9 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 YADISK_API_BASE = "https://cloud-api.yandex.net/v1/disk"
-DEFAULT_ARCHIVE_ROOT = "/inservo_tz_archive"
+# Корень архива на Я.Диске. По умолчанию /Parser_Project_KNS (2026-05-11
+# по требованию заказчика). Можно переопределить через ENV YANDEX_DISK_ARCHIVE_ROOT.
+DEFAULT_ARCHIVE_ROOT = os.environ.get("YANDEX_DISK_ARCHIVE_ROOT", "/Parser_Project_KNS")
 DEFAULT_TIMEOUT_S = 15.0  # короткий, чтобы не блокировать /import/parse
 
 
