@@ -8,6 +8,13 @@ interface EngineerCTAProps {
   result: SelectionResult | null;
 }
 
+/**
+ * Inverted CTA-секция в стиле Apple Newsletter:
+ * - В light mode → тёмно-teal `bg-brand-900` фон, белый текст. Создаёт «островок»
+ *   на фоне светлого hero, привлекает внимание.
+ * - В dark mode → остаётся `bg-ink-950` (как в hero), плавно вписан.
+ * SVG wireframe-арт всегда виден (низкая opacity), цвет stroke адаптирован.
+ */
 export function EngineerCTA({ result }: EngineerCTAProps) {
   const handleDownloadDocx = async () => {
     try {
@@ -21,9 +28,12 @@ export function EngineerCTA({ result }: EngineerCTAProps) {
   };
 
   return (
-    <section id="engineer" className="py-24 md:py-32 bg-ink-950 relative overflow-hidden">
+    <section
+      id="engineer"
+      className="py-24 md:py-32 bg-brand-900 dark:bg-ink-950 relative overflow-hidden transition-colors duration-base"
+    >
       {/* Background art: large wireframe КНС */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] dark:opacity-[0.06]">
         <svg
           viewBox="0 0 400 300"
           className="w-full max-w-3xl h-auto"
@@ -46,7 +56,7 @@ export function EngineerCTA({ result }: EngineerCTAProps) {
       </div>
 
       <div className="relative max-w-3xl mx-auto px-5 md:px-10 text-center">
-        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-300 mb-6">
+        <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-200 dark:text-ink-300 mb-6">
           <span className="block w-6 h-px bg-accent-500" />
           ИНЖЕНЕР
         </div>
@@ -55,7 +65,7 @@ export function EngineerCTA({ result }: EngineerCTAProps) {
           <br />
           <span className="font-normal italic text-accent-500">инженеру?</span>
         </h2>
-        <p className="mt-6 text-lg text-ink-300 max-w-xl mx-auto">
+        <p className="mt-6 text-lg text-ink-200 dark:text-ink-300 max-w-xl mx-auto">
           Получите спецификацию с печатью, расчётом гидравлики и сертификатами за 1 рабочий день.
           Прямой контакт с ведущим инженером — без call-центров.
         </p>
@@ -83,7 +93,7 @@ export function EngineerCTA({ result }: EngineerCTAProps) {
           </button>
         </div>
 
-        <p className="mt-8 text-xs font-mono uppercase tracking-wider text-ink-500">
+        <p className="mt-8 text-xs font-mono uppercase tracking-wider text-ink-300 dark:text-ink-500">
           без регистрации · ответ в течение 1 рабочего дня
         </p>
       </div>
