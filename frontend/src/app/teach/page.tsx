@@ -89,6 +89,24 @@ export default function TeachPage() {
             </div>
           </section>
 
+          {/* Failure Mode Library — отдельная карточка */}
+          <section className="mb-16">
+            <a
+              href="/teach/failure-modes"
+              className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 bg-ink-900 border border-ink-800 rounded-lg hover:border-accent-500/50 transition-colors group"
+            >
+              <div>
+                <div className="font-display font-semibold text-ink-50 group-hover:text-accent-500 transition-colors mb-1">
+                  📚 Библиотека типовых отказов
+                </div>
+                <div className="text-sm text-ink-400">
+                  26 режимов отказа КНС/НС: симптомы · причины · профилактика · стоимость ремонта · downtime.
+                </div>
+              </div>
+              <span className="text-accent-500 group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </section>
+
           {/* Эталонные примеры */}
           <section>
             <h3 className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-4">

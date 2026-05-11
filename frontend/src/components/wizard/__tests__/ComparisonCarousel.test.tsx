@@ -31,6 +31,7 @@ const makePump = (overrides: Partial<PumpResult> = {}): PumpResult => ({
   available_ru_status: "official",
   score: 0.671,
   score_breakdown: {},
+  score_explanation: {},
   duty_point: { Q_m3h: 21.2, H_m: 12.6 },
   aor_zone: "POR",
   notes: [],

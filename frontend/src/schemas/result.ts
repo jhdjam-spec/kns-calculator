@@ -49,6 +49,13 @@ export const pumpResultSchema = z.object({
   available_ru_status: z.string(),
   score: z.number(),
   score_breakdown: z.record(z.number()).default({}),
+  // 2026-05-11 «Why this pump?» — пошаговое объяснение подбора для UI explainer
+  // (см. backend/pump_calculator/matching.py::build_score_explanation).
+  // Структура свободная (passthrough) — UI читает поля step_1_filter,
+  // step_2_envelope, step_3_aor, step_4_composite (dict factor → {value,
+  // weight, contribution, label, hint_engineer, hint_manager}),
+  // step_5_segment, rank_in_segment, candidates_in_segment, citations[].
+  score_explanation: z.record(z.unknown()).optional().default({}),
   duty_point: z.record(z.number()).nullable().optional(),
   aor_zone: z.enum(["POR", "AOR", "outside"]).nullable().optional(),
   notes: z.array(z.string()).default([]),

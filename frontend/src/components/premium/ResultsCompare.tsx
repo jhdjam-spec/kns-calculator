@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import clsx from "clsx";
-import { Check, ChevronDown, AlertTriangle, FileDown, FileSpreadsheet } from "lucide-react";
+import { Check, ChevronDown, AlertTriangle, FileDown, FileSpreadsheet, HelpCircle } from "lucide-react";
 import type { SelectionResult, PumpResult, PriceBreakdown } from "@/schemas/result";
 import { triggerReasonLabels } from "@/schemas/result";
 import { formatRubFull, calcMatchPct } from "@/lib/units";
 import { openEncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
 import { SuggestionList } from "@/components/wizard/SuggestionCard";
+import { WhyThisPump } from "@/components/wizard/WhyThisPump";
+import { CostSankey } from "@/components/wizard/CostSankey";
 import {
   downloadCalculationPdf,
   downloadBomCsv,
@@ -344,6 +346,8 @@ function PumpCard({
   H_m: number;
 }) {
   const [expanded, setExpanded] = useState(isHighlighted);
+  const [whyOpen, setWhyOpen] = useState(false);
+  const [sankeyOpen, setSankeyOpen] = useState(false);
   const meta = segmentMeta[segment];
   const matchPct = calcMatchPct(
     Q_m3h,
@@ -460,6 +464,32 @@ function PumpCard({
       )}
 
       {expanded && breakdown && <BomTable breakdown={breakdown} />}
+
+      {/* «Почему этот?» + «Стоимость на 10 лет» */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={() => setWhyOpen(true)}
+          data-testid={`why-button-${segment}`}
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-700 hover:text-accent-600 bg-ink-50 hover:bg-accent-500/10 px-3 py-1.5 rounded-md border border-ink-200 transition-colors"
+          title="Объяснение подбора: 5 шагов + композит-факторы"
+        >
+          <HelpCircle size={13} strokeWidth={1.75} />
+          Почему этот?
+        </button>
+        <button
+          type="button"
+          onClick={() => setSankeyOpen(true)}
+          data-testid={`tco-button-${segment}`}
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-700 hover:text-accent-600 bg-ink-50 hover:bg-accent-500/10 px-3 py-1.5 rounded-md border border-ink-200 transition-colors"
+          title="TCO: CAPEX + OPEX на 1/10 лет, стоимость 1 м³"
+        >
+          ₽ Стоимость на 10 лет
+        </button>
+      </div>
+
+      <WhyThisPump pump={pump} open={whyOpen} onClose={() => setWhyOpen(false)} />
+      <CostSankey pump={pump} segment={segment} open={sankeyOpen} onClose={() => setSankeyOpen(false)} />
     </div>
   );
 }

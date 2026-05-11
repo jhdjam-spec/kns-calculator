@@ -1,6 +1,7 @@
 "use client";
 
 import type { ProjectInput } from "@/lib/api-extended";
+import { ClimateSimulator } from "@/components/wizard/ClimateSimulator";
 
 interface Props {
   data: Partial<ProjectInput>;
@@ -9,12 +10,9 @@ interface Props {
   onBack: () => void;
 }
 
-const RUSSIAN_CITIES = [
-  "Москва", "Санкт-Петербург", "Краснодар", "Сочи", "Ростов-на-Дону",
-  "Симферополь", "Ялта", "Ставрополь", "Воронеж", "Казань", "Самара",
-  "Уфа", "Пермь", "Екатеринбург", "Челябинск", "Новосибирск", "Красноярск",
-  "Иркутск", "Хабаровск", "Владивосток", "Якутск", "Магадан",
-];
+// RUSSIAN_CITIES заменены на динамический список из ClimateSimulator (Phase 28
+// pulls 76 городов из 02_dataset/regulations/climate_cities_2026.json via
+// GET /climate/cities). Fallback "Краснодар" остался.
 
 const SOILS = [
   { key: "clay_loam", label: "Суглинок (стандартный)" },
@@ -59,22 +57,13 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
           />
         </Field>
 
-        {/* Город */}
-        <Field
-          label="Город"
-          hint="Используется для глубины промерзания (СП 131), снеговых/ветровых районов (СП 20), q₂₀ ливнёвки (СП 32)"
-        >
-          <select
-            aria-label="Город"
-            className="form-input"
+        {/* Город — Climate Simulator (Phase 28) */}
+        <div className="md:col-span-2">
+          <ClimateSimulator
             value={data.region_city || "Краснодар"}
-            onChange={(e) => setData({ ...data, region_city: e.target.value })}
-          >
-            {RUSSIAN_CITIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </Field>
+            onChange={(city) => setData({ ...data, region_city: city })}
+          />
+        </div>
 
         {/* Заказчик */}
         <Field label="Заказчик (опционально)">

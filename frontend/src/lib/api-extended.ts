@@ -199,11 +199,122 @@ export interface BurialDepthInput {
   has_groundwater?: boolean;
 }
 
+// Phase 28 Climate Simulator
+export interface ClimateCity {
+  city: string;
+  region: string;
+  climate_zone: string;
+  altitude_m: number;
+  frost_depth_mm: number;
+  t_min_5pct_c: number;
+  lat?: number | null;
+  lon?: number | null;
+}
+
+export interface ClimateCardResponse {
+  climate: Record<string, unknown> & ClimateCity;
+  recommendations: Array<{
+    code: string;
+    severity: string;
+    title: string;
+    text: string;
+  }>;
+}
+
 export const climateApi = {
   burialDepth: (input: BurialDepthInput) =>
     postJSON<Record<string, unknown>>("/climate/burial-depth", input),
   loads: (input: Record<string, unknown>) =>
     postJSON<Record<string, unknown>>("/climate/loads", input),
+  cities: () =>
+    getJSON<{ cities: ClimateCity[]; count: number }>("/climate/cities"),
+  forCity: (city: string) =>
+    getJSON<ClimateCardResponse>(`/climate/${encodeURIComponent(city)}`),
+};
+
+// ─── TCO (Phase 31) ─────────────────────────────────────────────────
+
+export interface TCORequestBody {
+  selection?: unknown;
+  selection_request?: unknown;
+  segment?: "budget" | "mid" | "premium";
+  horizon_years?: number;
+  tariff_rub_per_kwh?: number;
+  install_pct?: number;
+  transport_pct?: number;
+}
+
+export interface TCOSankeyNode {
+  id: string;
+  name: string;
+  category: string;
+  value: number;
+}
+
+export interface TCOSankeyLink {
+  source: string;
+  target: string;
+  value: number;
+}
+
+export interface TCOResponse {
+  horizon_years: number;
+  operating_mode: string;
+  hours_per_year: number;
+  tariff_rub_per_kwh: number;
+  capex: Record<string, number>;
+  opex_annual: Record<string, number>;
+  opex_horizon_rub: number;
+  tco_horizon_rub: number;
+  flow_horizon_m3: number;
+  cost_per_m3_rub: number;
+  sankey_nodes: TCOSankeyNode[];
+  sankey_links: TCOSankeyLink[];
+  pump_meta?: Record<string, unknown>;
+}
+
+export const tcoApi = {
+  calculate: (body: TCORequestBody) =>
+    postJSON<TCOResponse>("/tco/calculate", body),
+};
+
+// ─── Failure modes (Phase 31) ───────────────────────────────────────
+
+export interface FailureMode {
+  id: string;
+  name: string;
+  category: string;
+  severity: "low" | "medium" | "high" | "critical";
+  symptoms: string[];
+  causes: string[];
+  prevention: string[];
+  fix_cost_rub: [number, number];
+  downtime_hours: [number, number];
+  lifecycle_impact: string;
+  trigger_in_calculator?: string | null;
+  sp_norm?: string;
+  image_alt?: string;
+}
+
+export interface FailureModesListResponse {
+  count: number;
+  categories: string[];
+  filter: { trigger: string | null; category: string | null; severity: string | null };
+  modes: FailureMode[];
+}
+
+export const failureModesApi = {
+  list: (params?: { trigger?: string; category?: string; severity?: string }) => {
+    const qs = new URLSearchParams();
+    if (params?.trigger) qs.set("trigger", params.trigger);
+    if (params?.category) qs.set("category", params.category);
+    if (params?.severity) qs.set("severity", params.severity);
+    const suffix = qs.toString();
+    return getJSON<FailureModesListResponse>(
+      `/failure-modes${suffix ? "?" + suffix : ""}`,
+    );
+  },
+  get: (id: string) => getJSON<FailureMode>(`/failure-modes/${encodeURIComponent(id)}`),
 };
 
 // ─── Structural (Phase 26) ──────────────────────────────────────────

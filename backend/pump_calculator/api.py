@@ -1194,6 +1194,47 @@ def tco_calculate(req: TCORequest) -> dict:
     return payload
 
 
+# ---------------------- Phase 31: Failure Mode Library ----------------------
+
+
+@app.get("/failure-modes", tags=["failure_modes"])
+def list_failure_modes_endpoint(
+    trigger: str | None = None,
+    category: str | None = None,
+    severity: str | None = None,
+) -> dict:
+    """Каталог типовых отказов КНС/НС.
+
+    Источник: 02_dataset/failure_modes/failure_modes_2026.json (26 режимов,
+    с симптомами/причинами/стоимостью/downtime + ссылки на СП/ГОСТ).
+
+    Фильтры (комбинируются как AND):
+    - trigger: по `trigger_in_calculator` (например `auto_npsh_low`)
+    - category: hydraulic / mechanical / electrical / operational / environmental
+    - severity: low / medium / high / critical
+    """
+    from pump_calculator.failure_modes import list_categories, list_failure_modes
+
+    modes = list_failure_modes(trigger=trigger, category=category, severity=severity)
+    return {
+        "count": len(modes),
+        "categories": list_categories(),
+        "filter": {"trigger": trigger, "category": category, "severity": severity},
+        "modes": modes,
+    }
+
+
+@app.get("/failure-modes/{mode_id}", tags=["failure_modes"])
+def get_failure_mode_endpoint(mode_id: str) -> dict:
+    """Полная карточка одного режима отказа по id."""
+    from pump_calculator.failure_modes import get_failure_mode
+
+    mode = get_failure_mode(mode_id)
+    if mode is None:
+        raise HTTPException(status_code=404, detail=f"Failure mode not found: {mode_id}")
+    return mode
+
+
 @app.get("/regulations/{code}", tags=["regulations"])
 def get_regulation_by_code(code: str) -> dict:
     """Получить норматив по коду (например 'SP_32' или 'СП 32.13330.2018')."""
