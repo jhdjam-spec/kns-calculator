@@ -12,8 +12,8 @@ import math
 from pump_calculator import catalog
 from pump_calculator.schemas import ComputedHydraulics, L0Input, L1Input
 
-G = 9.81  # м/с²
-NU_WATER_20C = 1.01e-6  # м²/с (стандарт ISO 9906 для расчётов при 20°C)
+G = 9.80665  # м/с² — стандартное значение, ISO 80000-3 (унифицировано 2026-05-13 по PhD-аудиту)
+NU_WATER_20C = 1.01e-6  # м²/с (стандарт ISO 9906:2024 для расчётов при 20°C)
 
 
 def nu_water_at_t(T_celsius: float = 20.0) -> float:
@@ -155,15 +155,18 @@ def compute_hydraulics(L0: L0Input, L1: L1Input | None = None) -> ComputedHydrau
     H_tr = fd * (L0.L_m / D_si) * (v_ms**2) / (2 * G) if L0.L_m > 0 else 0.0
 
     # 4. Σζ для местных потерь
-    # Если задан n_bends/n_valves в L1 — используем их (по Идельчик):
-    #   ζ_отвод90° ≈ 0.3, ζ_задвижка_открытая ≈ 0.15, ζ_обр_клапан ≈ 1.5
+    # v0.3 (2026-05-13): обновлено по Idelchik 2007 4th ed. (audit reference).
+    # Если задан n_bends/n_valves в L1 — используем их:
+    #   ζ_отвод90° R/D=1.5 = 0.18 (Idelchik 2007 Diagram 6-1, было 0.3 v0.2)
+    #   ζ_задвижка_открытая = 0.15
+    #   ζ_обр_клапан_swing DN50-80 = 2.5 (default; ball-check 8.0 для Ex-зон)
     # Иначе — типовая обвязка КНС (готовый коэффициент из catalog).
     if L1 and (L1.n_bends or L1.n_valves):
         n_bends = L1.n_bends or 0
         n_valves = L1.n_valves or 0
-        # Базовая обвязка КНС: 1 обр.клапан (1.5) + 1 ввод (1.0) + 1 выход (1.0) = 3.5
-        base_kns_zeta = 3.5
-        sum_zeta = base_kns_zeta + n_bends * 0.3 + n_valves * 0.15
+        # Базовая обвязка КНС: 1 swing-check (2.5) + 1 ввод (1.0) + 1 выход (1.0) = 4.5
+        base_kns_zeta = 4.5
+        sum_zeta = base_kns_zeta + n_bends * 0.18 + n_valves * 0.15
     else:
         sum_zeta = catalog.get_typical_obvyazka_sum_zeta()
     H_m = sum_zeta * (v_ms**2) / (2 * G)

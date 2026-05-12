@@ -123,6 +123,43 @@ class L1Input(BaseModel):
             "Если ниже отметки дна корпуса — нужен anti-buoyancy расчёт."
         ),
     )
+    # 2026-05-13: тип грунта (СП 22.13330.2016 табл. А.1) — для EXT-1
+    # горизонтального давления (PhD-Mechanics audit P1-4) и геозащит
+    # (Sc.D. cross-domain). Default — sand_medium (соответствует старому
+    # hardcode K_a=0.33, γ=18, φ=30°).
+    soil_type: Literal[
+        "sand_dense", "sand_medium", "sand_loose", "sand_water_saturated",
+        "loam", "clay_hard", "clay_plastic", "clay_soft", "peat",
+    ] | None = Field(
+        None,
+        description=(
+            "Тип грунта основания КНС по СП 22.13330.2016 табл. А.1. "
+            "Влияет на расчёт горизонтального давления σ_x = γ·z·K_a, "
+            "выбор reinforcement (рёбра/ж/б обойма), порог EXT-1, "
+            "необходимость свайного основания (peat). "
+            "Default: sand_medium (γ=18 кН/м³, φ=30°, K_a=0.33)."
+        ),
+    )
+    # ATEX-зоны по IEC 60079 — для filter_by_ex (PhD-Electrical audit P0-1)
+    ex_zone_class: Literal[
+        "Zone_0", "Zone_1", "Zone_2", "Zone_20", "Zone_21", "Zone_22", "none",
+    ] | None = Field(
+        None,
+        description=(
+            "Класс взрывоопасной зоны по IEC 60079-10-1 (газ) / 60079-10-2 (пыль). "
+            "Zone_0/20 — постоянная; Zone_1/21 — частая; Zone_2/22 — кратковременная. "
+            "Если задано — calculator вызывает filter_by_ex(pumps) и исключает "
+            "несертифицированные модели. Дополняет L1.Ex_required (bool)."
+        ),
+    )
+    ex_temp_class: Literal["T1", "T2", "T3", "T4", "T5", "T6"] | None = Field(
+        None,
+        description=(
+            "Температурный класс ATEX (max поверхностная температура): "
+            "T1 ≤450°C, T2 ≤300°C, T3 ≤200°C (default для H2S/CH4 КНС), "
+            "T4 ≤135°C, T5 ≤100°C, T6 ≤85°C. IEC 60079-0."
+        ),
+    )
     # Барометрия — для NPSHa в горных регионах
     altitude_m: float | None = Field(
         None, ge=-500, le=4500,

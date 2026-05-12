@@ -15,7 +15,7 @@ import math
 
 from .models import BallastResult, StructuralScenarioInput
 
-G = 9.81
+G = 9.80665  # м/с² — стандартное значение, ISO 80000-3 (унифицировано 2026-05-13)
 
 # Удельные веса материалов корпусов, кг/м³ (для расчёта G_корп = ρ × V_материала)
 MATERIAL_DENSITIES_KG_M3 = {

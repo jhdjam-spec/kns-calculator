@@ -1,6 +1,6 @@
 {
-  "_version": "0.2",
-  "_updated": "2026-05-11",
+  "_version": "0.3",
+  "_updated": "2026-05-13",
   "_description": "Каталог насосов для алгоритма подбора. Текущая версия — envelope-only (диапазоны Q/H/P без полных кривых). Полные Q-H кривые добавляются при парсинге PDF-каталогов производителей (см. ETL-пайплайн docling+PlotDigitizer).",
   "_engineer_note": "Каждая запись помечена _engineer_flag. needs_review = envelope взят из producers_dataset.json как агрегат серии, не паспорт конкретной модели. Для production нужны точные паспорта.\n[2026-05-08] +11 new models from kns.zip mass audit: Vandjord SG cutter (Q=15 H=44), KAIQUAN 50WQS202-3 (Мысхако), ANTARUS 2-150-30-150-22-TB (Q=352 H=22), KAIQUAN 100WQ60-9-3, CNP 50WQ12 + 250WQ600 + CHL 8-50, Pedrollo F 65/200AR, Wilo BL 80/200-30 + Rexa PRO C08DA, Grundfos SEG.40.09 (full datasheet).\n[2026-05-09] +61 models from Agent D/E research (Wilo Drain TM, Pedrollo VXm, Grundfos SEG, Fancy WQ, LEO LKS, CNP WQ-W, ГНОМ 150-30, KSB Amarex N). Total: 284.",
   "pumps": [
@@ -26,7 +26,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -68,7 +69,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -114,7 +116,8 @@
         "current_A": 35,
         "cos_phi": 0.91,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -163,7 +166,8 @@
         "current_A": 68,
         "cos_phi": 0.89,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -207,7 +211,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -248,7 +253,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -288,7 +294,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -328,7 +335,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -367,7 +375,8 @@
         "voltage_v": 220,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -408,7 +417,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex-опция",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -450,7 +460,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -491,7 +502,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -531,7 +543,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -570,7 +583,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -611,7 +625,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -652,7 +667,8 @@
         "voltage_v": 220,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -731,7 +747,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65.0
@@ -817,7 +834,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -903,7 +921,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -989,7 +1008,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -1075,7 +1095,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -1156,7 +1177,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -1245,7 +1267,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -1334,7 +1357,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -1435,7 +1459,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -1528,7 +1553,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -1629,7 +1655,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -1706,7 +1733,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -1787,7 +1815,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -1868,7 +1897,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -1957,7 +1987,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2046,7 +2077,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2139,7 +2171,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2240,7 +2273,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2317,7 +2351,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2398,7 +2433,8 @@
         "phase": 1,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2471,7 +2507,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2543,7 +2580,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2616,7 +2654,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40.0
@@ -2688,7 +2727,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2761,7 +2801,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2832,7 +2873,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50.0
@@ -2904,7 +2946,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65.0
@@ -2977,7 +3020,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65.0
@@ -3049,7 +3093,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65.0
@@ -3121,7 +3166,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3193,7 +3239,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3266,7 +3313,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3338,7 +3386,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3411,7 +3460,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3484,7 +3534,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3556,7 +3607,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3627,7 +3679,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3698,7 +3751,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3769,7 +3823,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3841,7 +3896,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80.0
@@ -3912,7 +3968,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -3984,7 +4041,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4056,7 +4114,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4128,7 +4187,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4200,7 +4260,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4272,7 +4333,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4343,7 +4405,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4416,7 +4479,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4487,7 +4551,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4559,7 +4624,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4630,7 +4696,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4701,7 +4768,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4773,7 +4841,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4844,7 +4913,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4915,7 +4985,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -4987,7 +5058,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -5058,7 +5130,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -5130,7 +5203,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -5201,7 +5275,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100.0
@@ -5272,7 +5347,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5343,7 +5419,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5416,7 +5493,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5487,7 +5565,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5558,7 +5637,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5629,7 +5709,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5700,7 +5781,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5771,7 +5853,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5842,7 +5925,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5914,7 +5998,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -5985,7 +6070,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -6056,7 +6142,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -6127,7 +6214,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -6198,7 +6286,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -6269,7 +6358,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150.0
@@ -6340,7 +6430,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6411,7 +6502,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6482,7 +6574,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6553,7 +6646,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6624,7 +6718,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6695,7 +6790,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6766,7 +6862,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6837,7 +6934,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6908,7 +7006,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -6979,7 +7078,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -7050,7 +7150,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -7121,7 +7222,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -7192,7 +7294,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -7263,7 +7366,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200.0
@@ -7334,7 +7438,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7405,7 +7510,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7476,7 +7582,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7547,7 +7654,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7618,7 +7726,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7689,7 +7798,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250.0
@@ -7760,7 +7870,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -7831,7 +7942,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -7902,7 +8014,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -7973,7 +8086,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8044,7 +8158,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8115,7 +8230,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8186,7 +8302,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8257,7 +8374,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8328,7 +8446,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8399,7 +8518,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300.0
@@ -8470,7 +8590,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8540,7 +8661,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8611,7 +8733,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8680,7 +8803,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8750,7 +8874,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8819,7 +8944,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8889,7 +9015,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -8958,7 +9085,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9027,7 +9155,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9097,7 +9226,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9167,7 +9297,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9236,7 +9367,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9305,7 +9437,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9374,7 +9507,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9443,7 +9577,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9512,7 +9647,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9581,7 +9717,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9650,7 +9787,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9719,7 +9857,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9788,7 +9927,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9857,7 +9997,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9926,7 +10067,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -9995,7 +10137,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10064,7 +10207,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10133,7 +10277,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10202,7 +10347,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10271,7 +10417,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10340,7 +10487,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10409,7 +10557,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10478,7 +10627,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10547,7 +10697,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10616,7 +10767,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10685,7 +10837,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10754,7 +10907,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10823,7 +10977,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10892,7 +11047,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -10962,7 +11118,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11032,7 +11189,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11102,7 +11260,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11172,7 +11331,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11242,7 +11402,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11312,7 +11473,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11382,7 +11544,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11452,7 +11615,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11522,7 +11686,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11592,7 +11757,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11662,7 +11828,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11732,7 +11899,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11802,7 +11970,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11872,7 +12041,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -11942,7 +12112,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12012,7 +12183,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12082,7 +12254,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12152,7 +12325,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12222,7 +12396,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12292,7 +12467,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12362,7 +12538,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12432,7 +12609,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12502,7 +12680,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12572,7 +12751,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12642,7 +12822,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12712,7 +12893,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12782,7 +12964,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12852,7 +13035,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12922,7 +13106,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -12992,7 +13177,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13062,7 +13248,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13132,7 +13319,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13202,7 +13390,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13272,7 +13461,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13342,7 +13532,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13412,7 +13603,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13482,7 +13674,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13552,7 +13745,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13622,7 +13816,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": null,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": null,
       "wastewater_compat": [
@@ -13667,7 +13862,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -13707,7 +13903,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -13748,7 +13945,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -13793,7 +13991,8 @@
         "ip_rating": "IP68",
         "insulation_class": "F",
         "motor_protection": "PTC_built_in",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -13841,7 +14040,8 @@
         "n_rpm": 1450,
         "cos_phi": 0.78,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -13881,7 +14081,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -13922,7 +14123,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -13964,7 +14166,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250
@@ -14005,7 +14208,8 @@
         "phase": 3,
         "n_rpm": 2900,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -14044,7 +14248,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -14092,7 +14297,8 @@
         "insulation_class": "F",
         "motor_efficiency_class": "IE2",
         "motor_protection": "PTC_integrated",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -14135,7 +14341,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -14183,7 +14390,8 @@
         "ip_rating": "IP68",
         "insulation_class": "F",
         "frequency_hz": 50,
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -14226,7 +14434,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -14268,7 +14477,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -14310,7 +14520,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -14353,7 +14564,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -14396,7 +14608,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -14439,7 +14652,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -14483,7 +14697,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -14524,7 +14739,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -14565,7 +14781,8 @@
         "voltage_v": 220,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -14608,7 +14825,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -14649,7 +14867,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 350
@@ -14691,7 +14910,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP54",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -14733,7 +14953,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 300
@@ -14776,7 +14997,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -14817,7 +15039,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -14858,7 +15081,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -14899,7 +15123,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -14940,7 +15165,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -14981,7 +15207,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -15022,7 +15249,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15064,7 +15292,8 @@
         "voltage_v": 460,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15106,7 +15335,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -15148,7 +15378,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -15190,7 +15421,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -15232,7 +15464,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -15274,7 +15507,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200
@@ -15316,7 +15550,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15357,7 +15592,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15397,7 +15633,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15437,7 +15674,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -15477,7 +15715,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -15517,7 +15756,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -15557,7 +15797,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -15599,7 +15840,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15640,7 +15882,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -15682,7 +15925,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -15724,7 +15968,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -15767,7 +16012,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -15810,7 +16056,8 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200
@@ -15853,7 +16100,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15894,7 +16142,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -15934,7 +16183,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -15974,7 +16224,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16014,7 +16265,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16055,7 +16307,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16096,7 +16349,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16137,7 +16391,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -16178,7 +16433,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25
@@ -16218,7 +16474,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25
@@ -16257,7 +16514,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -16297,7 +16555,8 @@
         "voltage_v": 230,
         "phase": 1,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -16337,7 +16596,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -16377,7 +16637,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16417,7 +16678,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16457,7 +16719,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40
@@ -16497,7 +16760,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -16537,7 +16801,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16577,7 +16842,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -16618,7 +16884,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16659,7 +16926,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -16700,7 +16968,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16740,7 +17009,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16780,7 +17050,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -16820,7 +17091,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -16860,7 +17132,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -16901,7 +17175,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 100
@@ -16942,7 +17218,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50
@@ -16983,7 +17260,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -17024,7 +17302,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -17064,7 +17343,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200
@@ -17104,7 +17384,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -17145,7 +17427,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 100
@@ -17186,7 +17470,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -17228,7 +17513,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200
@@ -17270,7 +17556,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -17309,7 +17596,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -17353,7 +17641,8 @@
         "ip_rating": "IP55",
         "insulation_class": "F",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -17396,7 +17685,8 @@
         "ip_rating": "IP55",
         "insulation_class": "F",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -17438,7 +17728,8 @@
         "n_rpm": 2950,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -17479,7 +17770,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -17521,7 +17813,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -17563,7 +17856,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -17605,7 +17899,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -17647,7 +17942,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -17689,7 +17985,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -17731,7 +18028,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -17774,7 +18072,8 @@
         "phase": 3,
         "ip_rating": "IP55",
         "motor_efficiency_class": "IE3",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -17818,7 +18117,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -17865,7 +18165,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -17912,7 +18213,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -17959,7 +18261,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18006,7 +18309,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18053,7 +18357,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18100,7 +18405,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18147,7 +18453,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18194,7 +18501,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18241,7 +18549,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18288,7 +18597,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18335,7 +18645,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18382,7 +18693,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18429,7 +18741,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18476,7 +18789,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18523,7 +18837,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18570,7 +18885,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18617,7 +18933,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18664,7 +18981,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18711,7 +19029,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18758,7 +19077,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18805,7 +19125,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18852,7 +19173,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18899,7 +19221,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18946,7 +19269,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -18993,7 +19317,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19040,7 +19365,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19087,7 +19413,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19134,7 +19461,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19181,7 +19509,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19228,7 +19557,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19275,7 +19605,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -19322,7 +19653,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19369,7 +19701,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19416,7 +19749,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19463,7 +19797,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19510,7 +19845,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19557,7 +19893,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19604,7 +19941,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -19651,7 +19989,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19698,7 +20037,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19745,7 +20085,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19792,7 +20133,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19839,7 +20181,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19886,7 +20229,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19933,7 +20277,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -19980,7 +20325,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -20027,7 +20373,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -20074,7 +20421,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -20121,7 +20469,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -20168,7 +20517,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -20215,7 +20565,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20262,7 +20613,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20309,7 +20661,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20356,7 +20709,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -20403,7 +20757,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -20450,7 +20805,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -20497,7 +20853,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -20538,7 +20895,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP55",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -20585,7 +20943,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20632,7 +20991,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20679,7 +21039,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20726,7 +21087,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20774,7 +21136,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20822,7 +21185,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20870,7 +21234,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20918,7 +21283,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -20967,7 +21333,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21016,7 +21383,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21063,7 +21431,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21110,7 +21479,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21158,7 +21528,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21206,7 +21577,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21254,7 +21626,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21302,7 +21675,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21350,7 +21724,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21399,7 +21774,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21448,7 +21824,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21495,7 +21872,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21543,7 +21921,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21591,7 +21970,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21639,7 +22019,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21688,7 +22069,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21737,7 +22119,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21785,7 +22168,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21833,7 +22217,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -21881,7 +22266,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -21929,7 +22315,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -21977,7 +22364,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22026,7 +22414,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22075,7 +22464,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22123,7 +22513,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22171,7 +22562,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22219,7 +22611,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22267,7 +22660,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -22315,7 +22709,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22362,7 +22757,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22409,7 +22805,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22457,7 +22854,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22506,7 +22904,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22554,7 +22953,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22602,7 +23002,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22650,7 +23051,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22698,7 +23100,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22746,7 +23149,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22794,7 +23198,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22842,7 +23247,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22890,7 +23296,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22939,7 +23346,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -22988,7 +23396,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23035,7 +23444,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23082,7 +23492,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23130,7 +23541,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23178,7 +23590,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23226,7 +23639,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23274,7 +23688,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23322,7 +23737,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23370,7 +23786,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23418,7 +23835,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23466,7 +23884,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23514,7 +23933,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23562,7 +23982,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23610,7 +24031,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23658,7 +24080,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23706,7 +24129,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23754,7 +24178,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23802,7 +24227,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23851,7 +24277,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23900,7 +24327,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 200,
@@ -23949,7 +24377,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -23996,7 +24425,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24043,7 +24473,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24090,7 +24521,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24138,7 +24570,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24187,7 +24620,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24236,7 +24670,8 @@
         "frequency_hz": 50,
         "ip_rating": "IP54",
         "insulation_class": "F",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 250,
@@ -24285,7 +24720,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24332,7 +24768,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24379,7 +24816,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24425,7 +24863,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24473,7 +24912,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24520,7 +24960,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24567,7 +25008,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24613,7 +25055,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -24659,7 +25102,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -24705,7 +25149,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -24751,7 +25196,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -24798,7 +25244,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -24844,7 +25291,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -24889,7 +25337,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -24934,7 +25383,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -24981,7 +25431,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -25027,7 +25478,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -25073,7 +25525,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -25119,7 +25572,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -25165,7 +25619,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -25211,7 +25666,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150,
@@ -25256,7 +25712,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25,
@@ -25304,7 +25761,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25,
@@ -25352,7 +25810,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -25400,7 +25859,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -25448,7 +25908,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -25501,7 +25962,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -25549,7 +26011,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 50,
@@ -25597,7 +26060,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -25645,7 +26109,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80,
@@ -25694,7 +26159,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32,
@@ -25739,7 +26205,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -25783,7 +26250,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -25827,7 +26295,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100,
@@ -25871,7 +26340,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 40,
@@ -25919,7 +26389,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 125,
@@ -25966,7 +26437,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25,
@@ -26011,7 +26483,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 25,
@@ -26057,7 +26530,8 @@
         "phase": 3,
         "frequency_hz": 50,
         "rpm": 2900,
-        "ip_rating": "IP68"
+        "ip_rating": "IP68",
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65,
@@ -26098,7 +26572,8 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP55",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 32
@@ -26141,7 +26616,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -26183,7 +26659,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 65
@@ -26225,7 +26702,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -26267,7 +26745,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 80
@@ -26309,7 +26788,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -26351,7 +26831,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 100
@@ -26393,7 +26874,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -26435,7 +26917,8 @@
         "phase": 3,
         "ip_rating": "IP68",
         "ex_rating": "Ex II 2G опция",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": false
       },
       "discharge": {
         "DN_mm": 150
@@ -26476,7 +26959,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 40
@@ -26525,7 +27010,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -26574,7 +27061,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -26623,7 +27112,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 80
@@ -26672,7 +27163,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 80
@@ -26721,7 +27214,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 100
@@ -26770,7 +27265,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -26821,7 +27318,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 65
@@ -26869,7 +27368,9 @@
         "voltage_v": 380,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 80
@@ -26917,7 +27418,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 80
@@ -26967,7 +27470,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 80
@@ -27017,7 +27522,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 1450
+        "rpm": 1450,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 150
@@ -27066,7 +27573,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 40
@@ -27115,7 +27624,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 40
@@ -27164,7 +27675,9 @@
         "voltage_v": 400,
         "phase": 3,
         "ip_rating": "IP68",
-        "rpm": 2900
+        "rpm": 2900,
+        "is_ex": true,
+        "ex_rating": "Ex db IIB T3"
       },
       "discharge": {
         "DN_mm": 50
@@ -27208,5 +27721,9 @@
       "reason": "Бытовые. Аналогично.",
       "_engineer_flag": "not_recommended"
     }
+  ],
+  "_changelog_v0_3": [
+    "[2026-05-13] Added is_ex flag (bool) on every pump (default False).",
+    "[2026-05-13] Set is_ex=True + ex_rating placeholder on 19 pumps with Ex pattern in id/model."
   ]
 }

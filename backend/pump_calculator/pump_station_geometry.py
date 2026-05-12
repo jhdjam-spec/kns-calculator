@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from math import pi, sqrt
 
-G = 9.81  # м/с²
+G = 9.80665  # м/с² — стандартное значение, ISO 80000-3 (унифицировано 2026-05-13)
 
 
 def calc_v_min_pool_m3(Q_per_pump_m3h: float, t_min_run_min: float = 5.0) -> float:

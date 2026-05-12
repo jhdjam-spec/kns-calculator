@@ -1,12 +1,26 @@
 # Энциклопедия гидравлики, физики и динамики насосных систем
 ## Том 1 — База знаний для kns-calculator (Серво-Юг)
 
-**Версия:** 1.0 (Phase 22, 2026-05-08)
+**Версия:** 1.1 (обновлена 2026-05-13 по 9-экспертному аудиту: PhD-Hydraulics 8.7/10, PhD-Mechanics 6.5/10, Sc.D. 6.0/10)
 **Назначение:** справочный том для модулей `pump_calculator/physics.py`, `physics_advanced.py`, будущих фаз 23-30.
-**Источники (только проверенные):**
-- Идельчик И.Е. «Справочник по гидравлическим сопротивлениям», изд. 3-е, 1992 (далее — Идельчик-92).
+
+**Δ от v1.0 (2026-05-13):**
+1. **Idelchik 1992 → 2007** (4-е изд., Begell House): отвод 90° R/D=1.5 пересмотрен 0.21 → 0.18 (Diagram 6-1, p.302); отвод 45° 0.13 → 0.11.
+2. **g унифицировано** 9.81 → **9.80665** (ISO 80000-3) во всех модулях.
+3. **СП 22.13330.2016 табл.А.1** — добавлена полная таблица грунтов (γ, φ, K_a) для EXT-1 σ_x.
+4. **СП 32.13330.2018 + Изм.№4 2025** — K_safety anti-buoyancy 1.10 → 1.20 (1.30 для I категории).
+5. **ISO 9906:2024** заменяет :2012.
+6. **IEC 60034-1 §8.10.2** — добавлена таблица motor thermal derating (40-70°C).
+
+**Источники (актуальные редакции 2026-05-13):**
+- **Idelchik I.E.** «Handbook of Hydraulic Resistance» 4th ed. (Begell House, 2007) ISBN 978-1567002515 — обновляет Идельчик-92, ζ ≤ 0.21 пересмотрены до ζ ≤ 0.18.
 - Karassik I.J., Messina J.P., Cooper P., Heald C.C. «Pump Handbook», 4-е изд., McGraw-Hill, 2008 (Karassik-08).
-- ISO 9906:2012 «Rotodynamic pumps — Hydraulic performance acceptance tests».
+- **Gülich J.F.** «Centrifugal Pumps» 4th ed. (Springer, 2020) ISBN 978-3030147884 — отраслевой стандарт, заменяет Lobanoff-Ross 1985.
+- ISO 9906:2024 «Rotodynamic pumps — Hydraulic performance acceptance tests» (Grade 1B/2B для погружных).
+- IEC 60034-1:2017 «Rotating electrical machines» §8.10.2 (temperature derating).
+- ANSI/HI 9.6.3-2017 «Centrifugal and Vertical Pumps — Allowable Operating Region».
+- ANSI/HI 9.6.7-2010 «Effects of Liquid Viscosity».
+- **IAPWS-IF97** «Industrial Formulation for Water and Steam» — точные ρ(T), μ(T), p_vap(T).
 - ГОСТ 6134-2007 «Насосы динамические. Методы испытаний».
 - СП 32.13330.2018 «Канализация. Наружные сети и сооружения» (ред. с изм. №1-4).
 - СП 30.13330.2020 «Внутренний водопровод и канализация зданий».

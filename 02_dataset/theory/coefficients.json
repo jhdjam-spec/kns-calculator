@@ -1,7 +1,16 @@
 {
-  "_version": "0.2",
-  "_updated": "2026-05-02",
+  "_version": "0.3",
+  "_updated": "2026-05-13",
   "_description": "Машинно-читаемые таблицы коэффициентов для гидравлических расчётов. Источники процитированы по полю _source.",
+  "_changelog_v0_3": [
+    "[2026-05-13] Idelchik 2007 4th ed.: ζ отвод 90° R/D=1.5 пересмотрен 0.21 → 0.18 (Diagram 6-1, p.302)",
+    "[2026-05-13] Idelchik 2007 4th ed.: ζ отвод 45° R/D=1.5 пересмотрен 0.13 → 0.11 (Diagram 6-2)",
+    "[2026-05-13] Добавлен soil_parameters_sp22 — таблица А.1 СП 22.13330.2016 (γ, φ, c, K_a по типу грунта)",
+    "[2026-05-13] Добавлен soil_lateral_pressure_extra — компонент σ_x от УГВ по СП 22 §5.6.5",
+    "[2026-05-13] Добавлен motor_thermal_derating_iec60034 — поправки derating по IEC 60034-1 §8",
+    "[2026-05-13] anchoring_safety_factor SF_minimum 1.10 → 1.20 (СП 22 §5.4 + СП 31 для I категории)",
+    "[2026-05-13] check valve по умолчанию swing-check (ζ=2.5 для DN50-80) — реальная практика, ball-check как ATEX вариант"
+  ],
   "_changelog_v0_2": [
     "ζ Идельчика — пересмотрены под фактические значения (отвод 90° R/D=1.5 = 0.21, не 0.75)",
     "Добавлена таблица скорости звука в трубах (wave_speed_ms_by_pipe_material) для расчёта гидроудара по Жуковскому",
@@ -36,23 +45,25 @@
   },
 
   "local_resistance_zeta": {
-    "_description": "Коэффициенты местных сопротивлений ζ для расчёта H_м = ζ·v²/(2g). Турбулентный режим. Обновлено в v0.2 по результатам R2 deep-research (Идельчик).",
-    "_source": "Идельчик И.Е. «Справочник по гидравлическим сопротивлениям» + R2 deep-research (29 источников). Engineering Toolbox + Crane TP-410.",
-    "_engineer_note": "v0.2: значения для отводов и тройников приведены к Идельчику. Старые литературные default (0.75/0.30) были завышены.",
+    "_description": "Коэффициенты местных сопротивлений ζ для расчёта H_м = ζ·v²/(2g). Турбулентный режим. Обновлено в v0.3 по Idelchik 2007 (4th ed.) — отвод 90° R/D=1.5 пересмотрен 0.21 → 0.18.",
+    "_source": "Idelchik I.E. «Handbook of Hydraulic Resistance» 4th ed. (Begell House, 2007), ISBN 978-1567002515 + Crane TP-410. Старая редакция: Идельчик 1992.",
+    "_engineer_note": "v0.3 (2026-05-13): отвод 90° R/D=1.5 = 0.18 (Idelchik Diagram 6-1 p.302). Default check valve — swing (ζ=2.5 для DN50-80) — реальная практика; ball-check 8.0 оставлен как опция для Ex-зон.",
     "values": {
       "valve_gate_open_100":     {"zeta": 0.15, "label": "Задвижка открытая 100%"},
       "valve_gate_open_75":      {"zeta": 0.30, "label": "Задвижка открытая 75%"},
       "valve_gate_open_50":      {"zeta": 2.0,  "label": "Задвижка открытая 50%"},
       "valve_gate_open_25":      {"zeta": 17.0, "label": "Задвижка открытая 25%"},
-      "valve_check_DN50_80":     {"zeta": 8.0,  "label": "Обратный клапан DN 50-80 (доминирует в обвязке КНС!)", "_engineer_note": "Большой разброс по производителям — VAG 6.0, шаровые китайские 4.5, swing/wafer 2-3"},
+      "valve_check_DN50_80_swing": {"zeta": 2.5,  "label": "Обратный клапан DN 50-80 swing-check (default для КНС)", "_engineer_note": "Idelchik 2007 §10-12, реальная практика КНС Серво-Юг"},
+      "valve_check_DN50_80":     {"zeta": 2.5,  "label": "Обратный клапан DN 50-80 (default = swing-check)", "_engineer_note": "v0.3 (2026-05-13): default swing-check ζ=2.5 вместо ball-check ζ=8.0. Ball-check значение сохранено как valve_check_DN50_80_ball для ATEX-применений."},
+      "valve_check_DN50_80_ball": {"zeta": 8.0,  "label": "Обратный клапан DN 50-80 ball-check (для Ex-зон/новых установок)", "_engineer_note": "Большой разброс по производителям — VAG 6.0, шаровые китайские 4.5, swing/wafer 2-3"},
       "valve_check_DN100_150":   {"zeta": 5.0,  "label": "Обратный клапан DN 100-150"},
       "valve_check_DN200_300":   {"zeta": 2.5,  "label": "Обратный клапан DN 200-300"},
       "valve_check_nozzle":      {"zeta": 1.5,  "label": "Обратный клапан nozzle-check (антиударный, для длинных трасс)"},
       "elbow_90_RD1":            {"zeta": 0.30, "label": "Отвод 90° R/D=1.0 (стандарт)"},
-      "elbow_90_RD15":           {"zeta": 0.21, "label": "Отвод 90° R/D=1.5 (предпочтителен в КНС)", "_engineer_note": "Точное Идельчик. Не 0.75!"},
+      "elbow_90_RD15":           {"zeta": 0.18, "label": "Отвод 90° R/D=1.5 (предпочтителен в КНС)", "_engineer_note": "Idelchik 2007 4th ed. Diagram 6-1 p.302 — обновлено в v0.3 (было 0.21 по Идельчик 1992)."},
       "elbow_90_RD2":            {"zeta": 0.15, "label": "Отвод 90° R/D=2.0 (плавный)"},
       "elbow_90_segment_3":      {"zeta": 0.50, "label": "Отвод 90° сварной 3-секционный"},
-      "elbow_45_RD15":           {"zeta": 0.13, "label": "Отвод 45° R/D=1.5", "_engineer_note": "Точное Идельчик. Не 0.30!"},
+      "elbow_45_RD15":           {"zeta": 0.11, "label": "Отвод 45° R/D=1.5", "_engineer_note": "Idelchik 2007 Diagram 6-2 — обновлено в v0.3 (было 0.13)."},
       "tee_pass_through":        {"zeta": 0.10, "label": "Тройник проходной (поток прямо)", "_engineer_note": "Идельчик: реально ≈0.10, не 0.50"},
       "tee_branch_to_side":      {"zeta": 1.00, "label": "Тройник на поворот (поток в боковой отвод)"},
       "tee_combine_flows":       {"zeta": 0.80, "label": "Тройник на слияние потоков"},
@@ -68,10 +79,11 @@
       "air_release_valve":       {"zeta": 0.50, "label": "Воздухоотводчик в работе (мин. сечения)"}
     },
     "typical_kns_obvyazka_sum_zeta": {
-      "_description": "Сумма ζ для типовой обвязки КНС (4 отвода 90° R/D=1.5 + АТМ DN50-100 + задвижка + обратный клапан DN50-80 + выход в резервуар)",
-      "items": ["4×elbow_90_RD15 (0.84)", "auto_coupling_DN50_100 (0.80)", "valve_gate_open_100 (0.15)", "valve_check_DN50_80 (8.0)", "exit_to_reservoir (1.0)"],
-      "sum_zeta": 10.79,
-      "_engineer_note": "Доминирует обратный клапан (~74% от Σζ). Снижение ζ_check (например, выбор nozzle-check 1.5 вместо ball-check 8.0) даст экономию H_м в 4 раза. Для калькулятора это means: при v=1.5 м/с, типовая Σζ ≈ 10.8, H_м ≈ 1.24 м (а не фиксированные 2.0)."
+      "_description": "Сумма ζ для типовой обвязки КНС (4 отвода 90° R/D=1.5 + АТМ DN50-100 + задвижка + обратный клапан DN50-80 swing + выход в резервуар). v0.3 — обновлено по Idelchik 2007 + swing-check как default.",
+      "items": ["4×elbow_90_RD15 (4×0.18=0.72)", "auto_coupling_DN50_100 (0.80)", "valve_gate_open_100 (0.15)", "valve_check_DN50_80_swing (2.5)", "exit_to_reservoir (1.0)"],
+      "sum_zeta": 5.17,
+      "_engineer_note": "v0.3 (2026-05-13): Σζ снижена с 10.79 до 5.17 (−52%) — Idelchik 2007 даёт меньшие ζ для отводов, и реальная практика КНС использует swing-check (ζ=2.5), а не ball-check (ζ=8.0). При v=1.5 м/с, типовая Σζ=5.17, H_м ≈ 0.59 м (а не 1.24).",
+      "legacy_v0_2_sum_zeta": 10.79
     },
     "default_total_factor_legacy": {
       "_description": "DEPRECATED v0.2. Старая упрощённая модель H_м = factor × H_тр. Использовать только если состав обвязки совсем неизвестен.",
@@ -416,12 +428,132 @@
   },
 
   "anchoring_safety_factor": {
-    "_description": "Якорение корпуса КНС при УГВ выше дна (риск всплытия)",
-    "_source": "NPCA Best Practices for Buried Concrete Tanks, R3 deep-research",
-    "SF_minimum": 1.10,
+    "_description": "Якорение корпуса КНС при УГВ выше дна (риск всплытия). v0.3 (2026-05-13): SF_minimum поднят с 1.10 до 1.20 по СП 22 §5.4 + СП 31 для I категории ответственности.",
+    "_source": "СП 22.13330.2016 §5.4 + СП 31.13330.2012 §4.2 (I категория) + NPCA Best Practices. PhD-Mechanics audit P0-1 2026-05-13.",
+    "SF_minimum": 1.20,
     "SF_recommended": 1.25,
+    "SF_critical_I_category": 1.30,
+    "legacy_SF_minimum_v0_2": 1.10,
     "trigger_for_calculator": "ground_water_level выше дна корпуса И корпус выполнен из ПЭ/HDPE (удельный вес 0.97 — всплывает)",
-    "_engineer_note": "ПЭ-корпус без якорения при УГВ выше дна → всплытие при опорожнении на сервис. Рассчитываем якорную плиту по подъёмной силе."
+    "_engineer_note": "ПЭ-корпус без якорения при УГВ выше дна → всплытие при опорожнении на сервис. Рассчитываем якорную плиту по подъёмной силе с K_safety=1.2 (для I категории — 1.3)."
+  },
+
+  "soil_parameters_sp22": {
+    "_description": "Параметры грунтов для расчёта горизонтального давления (теория Кулона). Таблица А.1 СП 22.13330.2016 'Основания зданий и сооружений'.",
+    "_source": "СП 22.13330.2016 (актуализированная редакция СНиП 2.02.01-83*), таблица А.1. Cntd: https://docs.cntd.ru/document/456054206",
+    "_added_in_v03": "2026-05-13 по PhD-Mechanics audit P1-4 (был K_a=0.33 hardcode)",
+    "_formula_K_a": "K_a = tan²(45° - φ/2) — коэффициент активного давления Кулона",
+    "_formula_sigma_x": "σ_x = γ·z·K_a + γ_w·z_w (СП 22 §5.6.5: при УГВ выше дна добавляется гидростатика грунтовых вод)",
+    "values": {
+      "sand_dense": {
+        "label": "Песок плотный (γ_d > 1.75 г/см³)",
+        "gamma_kN_m3": 18.0,
+        "phi_deg": 38,
+        "c_kPa": 1,
+        "K_a": 0.24,
+        "_note": "Самый благоприятный для КНС. Воронка Серво-Юг — Краснодарский край, прибрежные пески."
+      },
+      "sand_medium": {
+        "label": "Песок средней плотности (default по умолчанию)",
+        "gamma_kN_m3": 18.0,
+        "phi_deg": 30,
+        "c_kPa": 0,
+        "K_a": 0.33,
+        "_note": "Default — соответствует старому hardcode v0.2."
+      },
+      "sand_loose": {
+        "label": "Песок рыхлый",
+        "gamma_kN_m3": 16.0,
+        "phi_deg": 25,
+        "c_kPa": 0,
+        "K_a": 0.41
+      },
+      "sand_water_saturated": {
+        "label": "Песок водонасыщенный (γ' = γ - γ_w)",
+        "gamma_kN_m3": 8.0,
+        "gamma_dry_kN_m3": 18.0,
+        "phi_deg": 28,
+        "c_kPa": 0,
+        "K_a": 0.36,
+        "_note": "Эффективный вес ниже воды, давление в 2× меньше, но появляется γ_w·z_w гидростатика"
+      },
+      "loam": {
+        "label": "Суглинок (промежуточный между песком и глиной)",
+        "gamma_kN_m3": 19.0,
+        "phi_deg": 22,
+        "c_kPa": 15,
+        "K_a": 0.45
+      },
+      "clay_hard": {
+        "label": "Глина твёрдая",
+        "gamma_kN_m3": 19.0,
+        "phi_deg": 22,
+        "c_kPa": 60,
+        "K_a": 0.45
+      },
+      "clay_plastic": {
+        "label": "Глина пластичная",
+        "gamma_kN_m3": 18.0,
+        "phi_deg": 15,
+        "c_kPa": 30,
+        "K_a": 0.59
+      },
+      "clay_soft": {
+        "label": "Глина мягкопластичная",
+        "gamma_kN_m3": 18.0,
+        "phi_deg": 12,
+        "c_kPa": 15,
+        "K_a": 0.65,
+        "_note": "Худший случай — давление почти в 2× выше дефолта"
+      },
+      "peat": {
+        "label": "Торф",
+        "gamma_kN_m3": 11.0,
+        "phi_deg": 10,
+        "c_kPa": 5,
+        "K_a": 0.70,
+        "_note": "Болотистые грунты — требуется свайное основание"
+      }
+    },
+    "gamma_water_kN_m3": 9.80665,
+    "PE100_SDR17_admissible_stress_kPa": 50,
+    "PE100_SDR11_admissible_stress_kPa": 80,
+    "_PE_source": "ISO 9080:2012 + ГОСТ 18599-2001 — долговременное σ_доп для ПЭ100"
+  },
+
+  "motor_thermal_derating_iec60034": {
+    "_description": "Поправки derating двигателя по IEC 60034-1 §8.10 + ГОСТ Р 52776 при повышенной температуре среды или жидкости.",
+    "_source": "IEC 60034-1:2017 §8.10.2 'Temperature derating' + ANSI/IEEE 841-2009",
+    "_added_in_v03": "2026-05-13 по PhD-Electrical audit + Sc.D. cross-domain",
+    "_formula": "P_real = P_nominal × K_derate(T)",
+    "_engineer_note": "Стандартный двигатель класса F (155°C изоляция) рассчитан на T_ambient=40°C. При T_жидкости >40°C погружные нужно derate. Класс H (180°C) расширяет до 65°C.",
+    "ambient_air_C": {
+      "_description": "Поправка по температуре окружающего воздуха для наружных двигателей (booster_station, dry-well)",
+      "table": [
+        {"T_C": 30, "K_derate": 1.07, "label": "+7% — холодный воздух"},
+        {"T_C": 40, "K_derate": 1.00, "label": "Номинал IEC"},
+        {"T_C": 45, "K_derate": 0.96, "label": "−4%"},
+        {"T_C": 50, "K_derate": 0.92, "label": "−8%"},
+        {"T_C": 55, "K_derate": 0.87, "label": "−13%"},
+        {"T_C": 60, "K_derate": 0.82, "label": "−18%"}
+      ]
+    },
+    "liquid_C_submersible": {
+      "_description": "Поправка по температуре перекачиваемой жидкости для погружных двигателей (охлаждение через ротор)",
+      "table": [
+        {"T_C": 20, "K_derate": 1.00, "label": "Стандарт ISO 9906 для холодных стоков"},
+        {"T_C": 40, "K_derate": 1.00, "label": "Граница нормальной работы класса F"},
+        {"T_C": 50, "K_derate": 0.90, "label": "−10% — горячие стоки (бани, прачечные)"},
+        {"T_C": 60, "K_derate": 0.80, "label": "−20% — класс H обязателен"},
+        {"T_C": 65, "K_derate": 0.70, "label": "−30% + PTC-термистор обмотки"},
+        {"T_C": 70, "K_derate": 0.60, "label": "−40% — лимит без shroud/jacket cooling"}
+      ]
+    },
+    "insulation_class": {
+      "F": {"T_max_C": 155, "T_amb_design_C": 40, "_label": "Стандарт IE3"},
+      "H": {"T_max_C": 180, "T_amb_design_C": 50, "_label": "Расширенный, для горячих стоков"}
+    },
+    "trigger_for_calculator": "L1.liquid_temp_c > 40 → emit auto_motor_thermal_derate; > 60 → требовать класс H + PTC"
   },
 
   "pump_to_wall_clearance_mm": {

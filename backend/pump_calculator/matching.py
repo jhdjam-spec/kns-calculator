@@ -470,6 +470,61 @@ def filter_by_ip_motor(
     return out
 
 
+def filter_by_ex(
+    pumps: list[dict[str, Any]],
+    ex_required: bool,
+    ex_zone: str | None = None,
+) -> list[dict[str, Any]]:
+    """Шаг 5б: фильтр по ATEX-маркировке для взрывоопасных зон.
+
+    v0.3 (2026-05-13) — добавлено по PhD-Electrical audit P0-1
+    + Sc.D. cross-domain (filter_by_ex отсутствовал, что = риск ст. 217.2 УК РФ).
+
+    Источник: IEC 60079-0:2017 «Электроустановки во взрывоопасных зонах».
+    ТР ТС 012/2011 «О безопасности оборудования для работы во взрывоопасных средах».
+
+    Логика:
+      - Если ex_required=False и ex_zone in (None, "none") — фильтр не применяется
+        (выдаём все насосы, включая неEx — это обычные объекты).
+      - Если ex_required=True ИЛИ ex_zone in {Zone_0, Zone_1, Zone_2, Zone_20/21/22}:
+        оставляем только насосы с power.ex_rating НЕ null И НЕ "none",
+        ИЛИ с явным is_ex=True, ИЛИ с "Ex"/"ATEX" в model/id (паттерн ETL).
+
+    NB: При недостатке Ex-моделей в каталоге (≤80% БД без ex_rating) функция
+    может вернуть пустой список — в pipeline это даёт пустой выход + триггер
+    auto_no_match → handoff инженеру (это safe behavior, ст.217.2 УК РФ
+    лучше handoff, чем wrong спецификация).
+    """
+    if not ex_required and (not ex_zone or ex_zone == "none"):
+        return pumps
+    out = []
+    for p in pumps:
+        power = p.get("power") or {}
+        ex_rating = power.get("ex_rating")
+        is_ex_flag = power.get("is_ex") or p.get("is_ex")
+        model_str = str(p.get("model", "")).lower()
+        id_str = str(p.get("id", "")).lower()
+        # 1) Прямой флаг is_ex=True
+        if is_ex_flag is True:
+            out.append(p)
+            continue
+        # 2) ex_rating задан и не пустой
+        if ex_rating and str(ex_rating).lower() not in ("none", "null", ""):
+            out.append(p)
+            continue
+        # 3) Паттерн "Ex" в id/model (например kaiquan-50wqe-15-15-ex)
+        # NB: проверяем границы слова, чтобы не путать "exempt"/"extra"
+        import re
+        if re.search(r"(?:^|[-_\s/])ex(?:$|[-_\s/0-9])", id_str) or \
+           re.search(r"(?:^|[-_\s/])ex(?:$|[-_\s/0-9])", model_str):
+            out.append(p)
+            continue
+        if "atex" in id_str or "atex" in model_str:
+            out.append(p)
+            continue
+    return out
+
+
 def filter_by_aor(pumps: list[dict[str, Any]], Q_m3h: float) -> list[dict[str, Any]]:
     """Шаг 5а: отсечь кандидатов вне AOR (40-150% Q_BEP).
 
@@ -1123,26 +1178,74 @@ def build_suggestions(
     # 2026-05-10: 10 научных расширений — suggestions с 2-level reasons
     # ──────────────────────────────────────────────────────────────────
 
-    # EXT-1: боковое давление грунта (СП 22.13330)
+    # EXT-1: боковое давление грунта (СП 22.13330.2016 §5.6.5)
+    # v0.3 (2026-05-13): теперь учитывает L1.soil_type (PhD-Mechanics audit
+    # P1-4) и σ_водн = γ_w·z_w при УГВ выше дна (P0-3, реальный кейс
+    # эталона Евпатория). Если soil_type не задан — fallback на default
+    # sand_medium (старое поведение, K_a=0.33).
     if "auto_lateral_earth_pressure" in triggers and L1 and L1.install_depth_inlet_mm:
         z_m = L1.install_depth_inlet_mm / 1000
-        gamma = 18.0  # кН/м³, объёмный вес грунта
-        K_a = 0.33    # активное давление при φ=30°
-        sigma_x_kpa = gamma * z_m * K_a
+        # Параметры грунта из СП 22.13330.2016 табл. А.1
+        _SOIL_PARAMS = {
+            "sand_dense":           {"gamma": 18.0, "phi": 38, "K_a": 0.24, "label": "Песок плотный"},
+            "sand_medium":          {"gamma": 18.0, "phi": 30, "K_a": 0.33, "label": "Песок ср. плотности (default)"},
+            "sand_loose":           {"gamma": 16.0, "phi": 25, "K_a": 0.41, "label": "Песок рыхлый"},
+            "sand_water_saturated": {"gamma":  8.0, "phi": 28, "K_a": 0.36, "label": "Песок водонасыщенный"},
+            "loam":                 {"gamma": 19.0, "phi": 22, "K_a": 0.45, "label": "Суглинок"},
+            "clay_hard":            {"gamma": 19.0, "phi": 22, "K_a": 0.45, "label": "Глина твёрдая"},
+            "clay_plastic":         {"gamma": 18.0, "phi": 15, "K_a": 0.59, "label": "Глина пластичная"},
+            "clay_soft":            {"gamma": 18.0, "phi": 12, "K_a": 0.65, "label": "Глина мягкопластичная"},
+            "peat":                 {"gamma": 11.0, "phi": 10, "K_a": 0.70, "label": "Торф"},
+        }
+        soil_key = (L1.soil_type or "sand_medium")
+        params = _SOIL_PARAMS.get(soil_key, _SOIL_PARAMS["sand_medium"])
+        gamma = params["gamma"]
+        phi = params["phi"]
+        K_a = params["K_a"]
+        sigma_x_grunt_kpa = gamma * z_m * K_a
+        # Компонент от УГВ (СП 22 §5.6.5): если уровень УГВ выше дна корпуса,
+        # σ_x += γ_w·z_w, где z_w = глубина дна - УГВ от земли
+        gwl_m = L1.groundwater_level_m  # отрицательные = ниже земли
+        sigma_x_water_kpa = 0.0
+        gwl_note = ""
+        if gwl_m is not None:
+            # глубина дна корпуса от земли = z_m (упрощённо для EXT-1)
+            # отметка УГВ от дна = z_m + gwl_m (gwl<0 — ниже земли)
+            z_w = z_m + gwl_m  # положительно, если УГВ выше дна
+            if z_w > 0:
+                sigma_x_water_kpa = 9.80665 * z_w  # γ_w·z_w, кПа
+                gwl_note = (
+                    f"\n💧 УГВ ({gwl_m:.1f} м от земли) выше дна корпуса на {z_w:.1f} м. "
+                    f"СП 22 §5.6.5: добавляется σ_водн = γ_w·z_w = "
+                    f"9.81·{z_w:.1f} ≈ {sigma_x_water_kpa:.1f} кПа."
+                )
+        sigma_x_kpa = sigma_x_grunt_kpa + sigma_x_water_kpa
+        # σ_доп для ПЭ100 SDR17 — 50 кПа (ISO 9080)
+        sigma_PE_kpa = 50.0
+        overstress_note = ""
+        if sigma_x_kpa > sigma_PE_kpa:
+            overstress_note = (
+                f"\n🚨 σ_x={sigma_x_kpa:.0f} кПа > σ_доп ПЭ100 SDR17 (50 кПа). "
+                f"Требуется ПЭ100 SDR11 (80 кПа), стеклопластик или ж/б обойма."
+            )
         eng = (
-            f"🪨 СП 22.13330 «Основания зданий и сооружений», п.5.4 — "
+            f"🪨 СП 22.13330.2016 «Основания зданий и сооружений», §5.6.5 — "
             f"расчёт горизонтального давления грунта по теории Кулона.\n"
-            f"📐 Формула: σ_x = γ·z·K_a, где K_a = tan²(45°-φ/2) — коэф. "
-            f"активного давления.\n"
-            f"При z={z_m:.1f} м, γ=18 кН/м³, φ=30° → K_a=0.33:\n"
-            f"σ_x = 18·{z_m:.1f}·0.33 ≈ {sigma_x_kpa:.1f} кПа на стенку корпуса.\n"
-            f"⚠ При z>5 м стандартный гладкий ПЭ-корпус деформируется — "
-            f"требуются продольные рёбра жёсткости и/или ж/б обойма."
+            f"📐 Формула: σ_x = γ·z·K_a + γ_w·z_w (при УГВ выше дна), "
+            f"K_a = tan²(45°-φ/2).\n"
+            f"Грунт: {params['label']} (γ={gamma} кН/м³, φ={phi}°, K_a={K_a}).\n"
+            f"При z={z_m:.1f} м: σ_грунт = {gamma}·{z_m:.1f}·{K_a} ≈ "
+            f"{sigma_x_grunt_kpa:.1f} кПа.{gwl_note}\n"
+            f"Σ σ_x ≈ {sigma_x_kpa:.1f} кПа на стенку корпуса.{overstress_note}\n"
+            f"⚠ Для ПЭ-корпуса σ_доп=50 кПа (SDR17) / 80 кПа (SDR11) по ISO 9080. "
+            f"При превышении — рёбра жёсткости и/или ж/б обойма."
         )
         mgr = (
-            f"🏗 Глубина монтажа {z_m:.1f} м — это глубокий заглубленный корпус.\n"
-            f"💰 Стандартный ПЭ-корпус не справится с давлением грунта "
-            f"({sigma_x_kpa:.0f} кПа) — нужны рёбра жёсткости (+150-300 тыс ₽) "
+            f"🏗 Глубина {z_m:.1f} м, грунт: {params['label']}.\n"
+            f"💰 Давление грунта {sigma_x_kpa:.0f} кПа на корпус.\n"
+            f"  • Если σ_x ≤ 50 кПа — стандартный ПЭ100 SDR17 OK.\n"
+            f"  • Если 50-80 кПа — нужен SDR11 (+15-25% цены корпуса).\n"
+            f"  • Если >80 кПа — рёбра жёсткости (+150-300 тыс ₽) "
             f"или ж/б обойма (+800 тыс — 1.5 млн ₽).\n"
             f"⏱ Срок изготовления усиленного корпуса +3-5 недель.\n"
             f"📞 Передайте инженеру для расчёта по СП 22.13330."
@@ -1427,6 +1530,98 @@ def build_suggestions(
             field="L1.nitrification_required",
             current_value="не учтено",
             suggested_value="аэротенк θ_c≥10 сут",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="warning",
+        ))
+
+    # EXT-12 (v0.3 2026-05-13): термический derating двигателя (IEC 60034-1 §8.10)
+    if "auto_motor_thermal_derate" in triggers and L1 and L1.liquid_temp_c is not None:
+        T = L1.liquid_temp_c
+        # K_derate из coefficients.json motor_thermal_derating_iec60034
+        _K_DERATE_TABLE = [
+            (40, 1.00), (50, 0.90), (60, 0.80), (65, 0.70), (70, 0.60),
+        ]
+        K = 1.0
+        for T_max, k_val in _K_DERATE_TABLE:
+            if T <= T_max:
+                K = k_val
+                break
+        else:
+            K = 0.60
+        derate_pct = int((1.0 - K) * 100)
+        eng = (
+            f"🔥 IEC 60034-1:2017 §8.10.2 «Temperature derating» — "
+            f"снижение допустимой мощности двигателя при повышенной "
+            f"температуре жидкости.\n"
+            f"📐 Поправка K_derate = {K:.2f} ({derate_pct}% derating) при "
+            f"T_жидк = {T:.0f}°C.\n"
+            f"  • T ≤40°C: K=1.00 (номинал, класс изоляции F)\n"
+            f"  • T 41-50°C: K=0.90 (граница F)\n"
+            f"  • T 51-60°C: K=0.80 + обязателен класс H (180°C)\n"
+            f"  • T 61-65°C: K=0.70 + PTC-термистор обмотки\n"
+            f"  • T >65°C: K=0.60 + jacket cooling или поверхностный насос\n"
+            f"⚠ Без derate двигатель сгорает за 1-3 месяца. ГОСТ Р 52776."
+        )
+        mgr = (
+            f"🌡 Температура стоков {T:.0f}°C — выше нормы для стандартного "
+            f"двигателя.\n"
+            f"💰 Нужны:\n"
+            f"  • Двигатель класса H (изоляция 180°C) — +25-40% к цене насоса\n"
+            f"  • PTC-термистор обмотки + защита класса 10A в ШУ — +15-30 тыс ₽\n"
+            f"  • Запас мощности {derate_pct}% — берите следующий типоразмер\n"
+            f"⏱ Срок изготовления Ex-H исполнения +6-10 недель.\n"
+            f"📞 Передайте инженеру для подбора Wilo Rexa SUPRA-class или "
+            f"KSB Amarex KRT с water-jacket cooling."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.liquid_temp_c",
+            current_value=f"{T:.0f}°C",
+            suggested_value=f"K_derate={K:.2f}, изоляция H",
+            reason=eng,
+            reason_engineer=eng,
+            reason_manager=mgr,
+            severity="critical" if T > 60 else "warning",
+        ))
+
+    # EXT-13 (v0.3 2026-05-13): анаэробная биокоррозия бетона при простоях
+    if "auto_anaerobic_corrosion_risk" in triggers:
+        cycles = (computed.cycles_per_hour_estimate
+                  if computed and computed.cycles_per_hour_estimate is not None
+                  else 0.0)
+        eng = (
+            "🦠 Metcalf & Eddy «Wastewater Engineering» 5th ed. (2014) §5-4 — "
+            "анаэробная биокоррозия бетона КНС.\n"
+            "📐 Механизм:\n"
+            "  • При простое >12ч сульфаты SO4²⁻ восстанавливаются "
+            "бактериями Desulfovibrio до H2S (анаэробно).\n"
+            "  • H2S мигрирует в крышку, где влажная плёнка + Thiobacillus → "
+            "H2SO4 (pH 1-2).\n"
+            "  • Скорость разрушения бетона: 5-15 мм/год по своду крышки.\n"
+            f"⚠ Расчётные циклы вкл/выкл: {cycles:.2f}/ч — слишком "
+            f"редкие пуски (норма 2-15/ч).\n"
+            "📋 Меры:\n"
+            "  • Защитное покрытие бетона эпоксидом (Sika, MasterSeal) — "
+            "20 лет ресурса\n"
+            "  • Вентиляция приёмной камеры 8-12 крат/ч (СП 60.13330 §7.5)\n"
+            "  • Nitrate-shock dosing (NaNO3, 50-100 мг/л при простоях)\n"
+            "  • Или замена на ПЭ/стеклопластик корпус (нет H2S коррозии)."
+        )
+        mgr = (
+            "🦠 Большие интервалы между запусками → биокоррозия бетона.\n"
+            "💰 Защита:\n"
+            "  • Эпоксидное покрытие бетонной крышки — 80-150 тыс ₽\n"
+            "  • Вентилятор + воздуховоды — 45-90 тыс ₽\n"
+            "  • Дозатор нитратов NaNO3 (опционально) — 35-60 тыс ₽\n"
+            "  • Или сразу ПЭ-корпус (Серво-Юг default) — без коррозии\n"
+            "⏱ Без защиты бетонный корпус разрушится за 5-10 лет вместо 50.\n"
+            "📞 Передайте инженеру для решения о материале корпуса."
+        )
+        suggestions.append(InputSuggestion(
+            field="L1.corpus_material",
+            current_value="bетон (предполагается)",
+            suggested_value="pe (ПЭ) или защитное покрытие бетона",
             reason=eng,
             reason_engineer=eng,
             reason_manager=mgr,
@@ -2046,12 +2241,26 @@ def evaluate_handoff_triggers(
     # 2026-05-10: 10 научных расширений (СП/ПУЭ/материаловедение/биология)
     # ──────────────────────────────────────────────────────────────────
 
-    # EXT-1: СП 22.13330 «Основания зданий». Глубокий заглубленный корпус
-    # испытывает боковое давление грунта по Кулону: σ_x = γ·z·K_a, где
-    # γ=18 кН/м³ (типовой грунт), K_a = tan²(45°-φ/2) = 0.33 при φ=30°.
-    # При z=5+ м σ_x достигает 30 кПа — нужны рёбра жёсткости / спец-расчёт.
-    if L1 and L1.install_depth_inlet_mm is not None and L1.install_depth_inlet_mm > 5000:
-        triggers.append("auto_lateral_earth_pressure")
+    # EXT-1: СП 22.13330.2016 «Основания зданий». Глубокий заглубленный корпус
+    # испытывает боковое давление грунта по Кулону: σ_x = γ·z·K_a + γ_w·z_w.
+    # v0.3 (2026-05-13): порог теперь зависит от soil_type и УГВ
+    # (PhD-Mechanics audit P1-7, P0-3). Для глины K_a=0.5-0.65, порог z>3 м;
+    # для УГВ выше дна — z>2.5 м (PhD Sc.D. cross-domain audit).
+    if L1 and L1.install_depth_inlet_mm is not None:
+        z_m = L1.install_depth_inlet_mm / 1000
+        # Порог по типу грунта (СП 22.13330.2016 табл. А.1)
+        _SOIL_THRESHOLDS = {
+            "sand_dense": 5.5, "sand_medium": 5.0, "sand_loose": 4.0,
+            "sand_water_saturated": 3.5, "loam": 4.0,
+            "clay_hard": 4.0, "clay_plastic": 3.3, "clay_soft": 3.0,
+            "peat": 2.5,  # болото — всегда P0
+        }
+        soil_threshold = _SOIL_THRESHOLDS.get(L1.soil_type or "sand_medium", 5.0)
+        # При УГВ выше дна корпуса — порог снижается до 2.5 м (Sc.D. P0-blocker)
+        if L1.groundwater_level_m is not None and (z_m + L1.groundwater_level_m) > 0:
+            soil_threshold = min(soil_threshold, 2.5)
+        if z_m > soil_threshold:
+            triggers.append("auto_lateral_earth_pressure")
 
     # EXT-2: СП 35.13330 «Мосты и трубы». При подземном корпусе крышка
     # должна выдержать класс нагрузки А15 (тротуары, < 1.5 т), B125 (паркинги,
@@ -2099,18 +2308,52 @@ def evaluate_handoff_triggers(
     if L0.wastewater_type == "industrial" and L0.Q_m3h < 50:
         triggers.append("auto_sedimentation_check")
 
-    # EXT-8: УФ/озон обеззараживание (СанПиН 2.1.5.980-00 §4.1.5).
-    # При Q>100 м³/ч хоз-бытовых стоков обязателен сброс через ЛОС с
-    # обеззараживанием перед выпуском в водоём. УФ-доза ≥30 мДж/см² или
-    # озон 5 мг/л.
+    # EXT-8: УФ/озон обеззараживание (СанПиН 2.1.5.980-00 §4.1.5 + МУК 4.3.2030-05).
+    # v0.3 (2026-05-13): УФ-доза дифференцирована по target_discharge
+    # (Sc.D. audit). По МУК 4.3.2030-05:
+    #   • Сброс в канализацию города — 30 мДж/см² (default для домашних > 100 м³/ч)
+    #   • Сброс в водоём культурно-бытового назначения — 60 мДж/см²
+    #   • Сброс в рыбохозяйственный водоём — 80-120 мДж/см² (с предобработкой!)
     if L0.wastewater_type == "domestic" and L0.Q_m3h > 100:
         triggers.append("auto_disinfection_required")
 
-    # EXT-9: Нитри/денитрификация для промстоков (СП 32 §9). При наличии
-    # азота аммонийного (NH4+ > 20 мг/л) необходим аэротенк с возрастом ила
-    # ≥10 суток, аэрация ≥6 ч, рециркуляция нитратов 200-400%.
-    if L0.wastewater_type == "industrial":
-        triggers.append("auto_nitrification_check")
+    # EXT-12 (новый, v0.3 2026-05-13): термический derating двигателя
+    # (PhD-Electrical audit + Sc.D. cross-domain).
+    # IEC 60034-1 §8.10.2: при T_жидк >40°C погружной двигатель надо derate.
+    # При T>60°C обязателен класс изоляции H + PTC-термистор обмотки.
+    if L1 and L1.liquid_temp_c is not None and L1.liquid_temp_c > 40:
+        triggers.append("auto_motor_thermal_derate")
+
+    # EXT-13 (новый, v0.3 2026-05-13): анаэробная биокоррозия бетона
+    # при длительных простоях КНС (Metcalf & Eddy §5-4 + Sc.D. audit).
+    # При cycles_per_hour < 0.5 (длительный простой >2ч) — H2S + Thiobacillus
+    # → H2SO4 → разрушение бетона 5-15 мм/год.
+    if (
+        computed
+        and computed.cycles_per_hour_estimate is not None
+        and computed.cycles_per_hour_estimate < 0.5
+        and computed.cycles_per_hour_estimate > 0  # 0 = continuous, не простой
+    ):
+        triggers.append("auto_anaerobic_corrosion_risk")
+
+    # EXT-9: Нитри/денитрификация для промстоков (СП 32 §9, Henze IWA 2008 §3.4).
+    # v0.3 (2026-05-13): сужено — было «любой industrial», что давало false-positive
+    # для гальваники/АЗС/нефтехимии (PhD-Biology audit + Sc.D. cross-domain).
+    # Теперь срабатывает только для промстоков с биоразлагаемой органикой
+    # (пищевая промышленность, ТКО фильтрат, бытовые с industrial-добавкой),
+    # ИСКЛЮЧАЕТСЯ при Ex_required=True (горюче-смазочные/нефть/H2S не подлежат
+    # биообработке без специальной предварительной фазы). В перспективе нужен
+    # ввод C:N ratio + NH4+ концентрации в L1.
+    # TODO: добавить L1.nh4_mgL и L1.c_to_n_ratio для точного триггера
+    if (
+        L0.wastewater_type == "industrial"
+        and not (L1 and L1.Ex_required)  # АЗС/нефтехимия — НЕ нитрифицировать
+    ):
+        # Temperature gate: при T_жидк <10°C нитрификация почти останавливается
+        # (k_AOB падает в 3× по Arrhenius), при T>40°C — нитрификаторы гибнут.
+        T = (L1.liquid_temp_c if L1 and L1.liquid_temp_c is not None else 20.0)
+        if 10.0 <= T <= 40.0:
+            triggers.append("auto_nitrification_check")
 
     # EXT-10: Гидробак ВНС (СП 30.13330 §11). Для повысительных насосных
     # станций чистой воды Q>50 м³/ч переменный расход компенсируется
@@ -2183,7 +2426,13 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     # Шаг 5а: AOR
     f3 = filter_by_aor(f2, L0_filled.Q_m3h)
 
-    # Шаг 5b: IP-фильтр двигателя (если L1.ip_motor задан).
+    # Шаг 5б: ATEX-фильтр (v0.3 — добавлено 2026-05-13 по PhD-Electrical
+    # audit P0-1: для Ex-зон обычные насосы исключаются (ст. 217.2 УК РФ).
+    ex_required_flag = bool(L1 and L1.Ex_required)
+    ex_zone_val = (L1.ex_zone_class if L1 else None)
+    f3 = filter_by_ex(f3, ex_required_flag, ex_zone_val)
+
+    # Шаг 5в: IP-фильтр двигателя (если L1.ip_motor задан).
     f3 = filter_by_ip_motor(f3, L1.ip_motor if L1 else None)
 
     # Шаг 6

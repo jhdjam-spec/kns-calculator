@@ -307,7 +307,7 @@ class TestNBendsActivation:
         L0 = L0Input(Q_m3h=20, dH_m=10, L_m=50)
         r0 = select_pumps(L0)
         r10 = select_pumps(L0, L1Input(n_bends=10))
-        # 10 отводов × 0.3 + base 3.5 = 6.5
+        # v0.3 (2026-05-13): 10 отводов × 0.18 (Idelchik 2007) + base 4.5 = 6.3
         # Раньше игнорировалось, теперь sum_zeta меняется
         assert r10.computed.sum_zeta != r0.computed.sum_zeta
 
@@ -317,8 +317,9 @@ class TestNBendsActivation:
         r5 = select_pumps(L0, L1Input(n_bends=5))
         r50 = select_pumps(L0, L1Input(n_bends=50))
         assert r50.computed.H_m_m > r5.computed.H_m_m
-        # 50 vs 5 отводов: разница (50-5)*0.3 = 13.5 ζ
-        assert r50.computed.sum_zeta > r5.computed.sum_zeta + 10
+        # v0.3 (2026-05-13): 50 vs 5 отводов: разница (50-5)*0.18 = 8.1 ζ
+        # Idelchik 2007 даёт меньший ζ чем 1992 (0.18 vs 0.3)
+        assert r50.computed.sum_zeta > r5.computed.sum_zeta + 5
 
 
 class TestNoExceptionsOnEdgeCases:
