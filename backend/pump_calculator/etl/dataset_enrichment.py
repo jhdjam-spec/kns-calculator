@@ -242,6 +242,7 @@ class DatasetEnricher:
         queue_record = dict(record)
         queue_record["raw_text"] = raw_text
         try:
+            queue_path.parent.mkdir(parents=True, exist_ok=True)
             queue_path.write_text(
                 json.dumps(queue_record, ensure_ascii=False, indent=2), encoding="utf-8"
             )
