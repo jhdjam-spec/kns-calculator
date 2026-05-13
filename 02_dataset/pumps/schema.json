@@ -1,6 +1,6 @@
 {
-  "_version": "0.2",
-  "_updated": "2026-05-10",
+  "_version": "0.3",
+  "_updated": "2026-05-13",
   "_description": "JSON-схема одной записи насоса в БД калькулятора. Используется как образец для парсинга PDF-каталогов (через docling+PlotDigitizer).",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
@@ -295,8 +295,23 @@
       "description": "Ориентировочная цена в РФ, рубли. null если нет данных"
     },
     "price_source": {
+      "type": ["string", "null"],
+      "description": "Источник цены (label): 'Аркада 2026' / 'Wilo Select' / 'tender_research 2026-05' / 'e-nasos.ru' / null"
+    },
+    "price_source_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Прямой URL источника цены (152-ФЗ data lineage). null если URL утрачен — требует повторной калибровки."
+    },
+    "price_source_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Дата калибровки цены (YYYY-MM-DD) для retention/audit"
+    },
+    "price_confidence": {
       "type": "string",
-      "description": "Источник цены: 'Аркада 2026' / 'Wilo Select' / 'parsing kqpump.com 2026-04' / null"
+      "enum": ["high", "medium", "low"],
+      "description": "Уверенность в цене: high=КП клиента+URL свежий, medium=research+URL, low=обобщённая оценка или URL отсутствует"
     },
     "available_ru": {
       "type": "object",

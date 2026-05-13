@@ -1,0 +1,147 @@
+# YC Cloud Logging dashboards для kns-calculator.
+#
+# Sc.D. Architecture audit 2026-05-13: «Нет YC monitoring + alerts».
+# Этот файл — декларативный snapshot dashboards. Создание через YC Console:
+#   1. Cloud Logging → Dashboards → Create dashboard
+#   2. Импортировать JSON-представление из этого YAML
+#   3. Или вручную создать widgets c queries отсюда
+#
+# Все запросы используют YC Logging Query Language (LQL). Поля приходят
+# из structlog → stdout → автоматически попадают в YC Logging как
+# json_payload.<field>.
+
+dashboards:
+  - name: kns-calculator-overview
+    description: Общая картина — request rate, latency, errors
+    refresh_seconds: 60
+    folder_id: b1ge2mgg8tgh92uerm9c
+    widgets:
+      - title: "Requests by status (last 1h)"
+        type: timeseries
+        query: |
+          json_payload.path != "/health"
+            | stats count() by json_payload.status
+
+      - title: "P95 latency by endpoint (5min buckets)"
+        type: timeseries
+        query: |
+          stats percentile(json_payload.duration_ms, 95) by json_payload.path
+
+      - title: "Errors 5xx by endpoint (last 1h)"
+        type: table
+        query: |
+          json_payload.status >= 500
+            | stats count() by json_payload.path
+
+      - title: "Rate limit hits 429 by IP (last 1h)"
+        type: table
+        query: |
+          json_payload.status = 429
+            | stats count() by json_payload.ip
+
+      - title: "Sentry-captured exceptions"
+        type: timeseries
+        query: |
+          json_payload.logger = "error_reporting"
+            | json_payload.event = "error_captured"
+            | stats count() by json_payload.exc_class
+
+  - name: kns-calculator-audit
+    description: Audit-логи admin-действий + загрузки ТЗ (152-ФЗ ст.19)
+    refresh_seconds: 60
+    folder_id: b1ge2mgg8tgh92uerm9c
+    widgets:
+      - title: "Admin requests (last 24h)"
+        type: table
+        query: |
+          json_payload.logger = "audit.admin"
+            | stats count() by json_payload.method, json_payload.path
+
+      - title: "Admin auth failures (last 24h)"
+        type: timeseries
+        query: |
+          json_payload.logger = "audit.admin"
+            | json_payload.event =~ "Auth fail"
+            | stats count() by date_trunc("hour")
+
+      - title: "ТЗ-imports by hour (last 7d)"
+        type: timeseries
+        query: |
+          json_payload.path = "/import/parse"
+            | json_payload.method = "POST"
+            | stats count() by date_trunc("hour")
+
+      - title: "Daily merge results (last 30d)"
+        type: table
+        query: |
+          json_payload.path = "/admin/uploads/merge-internal"
+            | stats count() by date_trunc("day")
+
+      - title: "Tenant traffic split"
+        type: pie
+        query: |
+          json_payload.path = "/import/parse"
+            | stats count() by json_payload.tenant_id
+
+  - name: kns-calculator-business
+    description: Бизнес-метрики — подборы, городá, ценовые сегменты
+    refresh_seconds: 300
+    folder_id: b1ge2mgg8tgh92uerm9c
+    widgets:
+      - title: "Selection requests by hour"
+        type: timeseries
+        query: |
+          json_payload.path = "/select"
+            | stats count() by date_trunc("hour")
+
+      - title: "PDF/DOCX report generations"
+        type: table
+        query: |
+          json_payload.path =~ "^/handoff/"
+            | stats count() by json_payload.path
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Alert rules
+# ──────────────────────────────────────────────────────────────────────────
+# Создаются в YC Monitoring (не Cloud Logging) через UI или Terraform.
+# Этот файл — спецификация для ручной настройки.
+
+alerts:
+  - name: high-5xx-rate
+    description: ERROR rate > 1% за 5 минут
+    metric: count(json_payload.status >= 500) / count(*) > 0.01
+    window: 5m
+    severity: critical
+    notification:
+      telegram_bot_id: "TG_ONCALL_BOT_ID"   # placeholder — заменить
+      telegram_chat_id: "TG_ONCALL_CHAT_ID"
+
+  - name: p95-latency-spike
+    description: P95 latency > 3s за 5 минут (UX degradation)
+    metric: percentile(json_payload.duration_ms, 95) > 3000
+    window: 5m
+    severity: warning
+    notification:
+      telegram_bot_id: "TG_ONCALL_BOT_ID"
+
+  - name: 5xx-burst
+    description: > 10 5xx за минуту — возможно cascade failure
+    metric: count(json_payload.status >= 500) > 10
+    window: 1m
+    severity: critical
+    notification:
+      telegram_bot_id: "TG_ONCALL_BOT_ID"
+      sms_to: "+7-XXX-XXX-XXXX"   # placeholder
+
+  - name: pumps-dataset-unavailable
+    description: /health возвращает 503 (pumps.json не загружен)
+    metric: count(json_payload.path = "/health" and json_payload.status = 503) > 0
+    window: 1m
+    severity: critical
+
+  - name: daily-merge-failed
+    description: daily-merge-uploads trigger вернул non-2xx
+    metric: count(json_payload.path = "/admin/uploads/merge-internal" and json_payload.status >= 400) > 0
+    window: 24h
+    severity: warning

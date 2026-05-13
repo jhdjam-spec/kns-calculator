@@ -44,6 +44,13 @@ from .seismic import (
     calc_seismic_force_on_corpus,
     list_soil_categories,
 )
+from .trench_stability import (
+    SAFE_SLOPE_BY_DEPTH,
+    SHEET_PILE_MANDATORY_DEPTH_M,
+    SHEET_PILE_RECOMMENDED_DEPTH_M,
+    TrenchStability,
+    check_trench_stability,
+)
 from .wall_thickness import calc_polymer_wall_thickness
 
 __all__ = [
@@ -55,11 +62,15 @@ __all__ = [
     "LateralPressure",
     "PE100_SDR11_ADMISSIBLE_KPA",
     "PE100_SDR17_ADMISSIBLE_KPA",
+    "SAFE_SLOPE_BY_DEPTH",
+    "SHEET_PILE_MANDATORY_DEPTH_M",
+    "SHEET_PILE_RECOMMENDED_DEPTH_M",
     "SOIL_SEISMIC_FACTORS",
     "SeismicResult",
     "SoilSeismicCategory",
     "SoilType",
     "StructuralScenarioInput",
+    "TrenchStability",
     "WallThicknessResult",
     "calc_ballast_concrete",
     "calc_ladder_geometry",
@@ -67,6 +78,7 @@ __all__ = [
     "calc_seismic_force_on_corpus",
     "calculate_pressure",
     "check_corpus_strength",
+    "check_trench_stability",
     "list_soil_categories",
     "wall_friction_force_kN",
 ]

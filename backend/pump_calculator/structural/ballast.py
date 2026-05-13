@@ -2,17 +2,25 @@
 
 Принцип: подъёмная сила Архимеда не должна превышать
 собственный вес корпуса + вес содержимого + бетонный пригруз + сила трения,
-с коэффициентом запаса ≥1.1 (СП 32.13330.2018 §6.3).
+с коэффициентом запаса ≥1.2 (СП 22.13330+СП 31.13330; ужесточённый
+после Sc.D. audit 2026-05-13, ранее было 1.1).
 
 Формула:
     F_подъёма = ρ_воды × g × V_корпуса_подводой
     G_удержания = G_корпуса + G_бетона + G_содержимого + F_трения
     Условие: G_удержания ≥ F_подъёма × K_запаса
+
+Sub T audit P2 (2026-05-13):
+  ballast.py rewire под GroundContext — γ_грунта/φ/K_a теперь берутся
+  из единого GroundContext (по soil_type из L1), а не hardcode.
+  Backward-compat: если ground=None и старые параметры заданы, всё работает
+  как раньше; если ground задан — он override.
 """
 from __future__ import annotations
 
 import math
 
+from .ground_context import GroundContext
 from .models import BallastResult, StructuralScenarioInput
 
 G = 9.80665  # м/с² — стандартное значение, ISO 80000-3 (унифицировано 2026-05-13)
@@ -32,8 +40,28 @@ CONCRETE_DENSITY_KG_M3 = 2400  # Бетон класса В20-В25
 CONCRETE_DENSITY_UNDERWATER_KG_M3 = 1400  # С учётом сил Архимеда (2400 - 1000)
 
 
-def calc_ballast_concrete(inputs: StructuralScenarioInput) -> BallastResult:
-    """Расчёт пригруза бетоном для корпуса в водонасыщенном грунте."""
+def calc_ballast_concrete(
+    inputs: StructuralScenarioInput,
+    ground: GroundContext | None = None,
+) -> BallastResult:
+    """Расчёт пригруза бетоном для корпуса в водонасыщенном грунте.
+
+    Args:
+      inputs: StructuralScenarioInput с геометрией корпуса, материалом,
+        УГВ, грунтом и заполнением.
+      ground: Опционально — единый GroundContext (Sub T cross-domain).
+        Если задан — γ_грунта/φ/K_a берутся из него (по soil_type), а
+        соответствующие поля inputs игнорируются.
+        Если None — поведение прежнее (hardcoded inputs.soil_density_kg_m3
+        и inputs.soil_friction_angle_deg).
+
+    Returns:
+      BallastResult с разбивкой сил и (если требуется) объёмом бетона.
+
+    Backward compat:
+      Старый вызов calc_ballast_concrete(inputs) работает как раньше.
+      Если требуется привязка к L1 / soil_type — передавайте ground.
+    """
     notes: list[str] = []
 
     # 1. Объём корпуса
@@ -63,19 +91,38 @@ def calc_ballast_concrete(inputs: StructuralScenarioInput) -> BallastResult:
     V_contents = math.pi * R**2 * fill_h
     G_contents_kn = inputs.contents_density_kg_m3 * G * V_contents / 1000.0
 
-    # 6. Сила трения грунта по стенкам (СП 22)
-    # F_тр = K_a × γ_грунта × h²/2 × π × D × tan(φ)
-    # где K_a = tan²(45 - φ/2) — коэф. активного давления
-    phi = math.radians(inputs.soil_friction_angle_deg)
-    K_a = math.tan(math.radians(45 - inputs.soil_friction_angle_deg / 2)) ** 2
+    # 6. Сила трения грунта по стенкам.
+    # F_тр = K_a × γ_грунт × h²/2 × π × D × tan(φ_грунт-стенка), где
+    # δ ≈ 0.4·φ для контакта грунт-полимер/бетон (СП 22 §5.6).
+    # Sub T cross-domain (2026-05-13): теперь γ/φ/K_a из GroundContext
+    # если он передан — иначе fallback на старые поля inputs.
+    if ground is not None:
+        gamma_soil_kn_m3 = ground.gamma_kN_m3
+        phi_deg = ground.phi_deg
+        K_a = ground.K_a
+        soil_label = ground.label
+        soil_source = "GroundContext"
+    else:
+        # Backward compat: используем поля из StructuralScenarioInput
+        gamma_soil_kn_m3 = inputs.soil_density_kg_m3 * G / 1000.0  # кН/м³
+        phi_deg = inputs.soil_friction_angle_deg
+        K_a = math.tan(math.radians(45 - phi_deg / 2)) ** 2
+        soil_label = f"γ={inputs.soil_density_kg_m3} кг/м³, φ={phi_deg}°"
+        soil_source = "inputs (legacy)"
+
+    phi_rad = math.radians(phi_deg)
     h_eff = min(inputs.burial_depth_m, inputs.groundwater_depth_m)  # сухая часть
     F_friction_kn = (
-        K_a * inputs.soil_density_kg_m3 * G * h_eff**2 / 2.0
-        * math.pi * inputs.diameter_m * math.tan(phi)
-    ) / 1000.0
+        K_a * gamma_soil_kn_m3 * h_eff**2 / 2.0
+        * math.pi * inputs.diameter_m * math.tan(phi_rad)
+    )
 
-    # 7. Расчёт пригруза
-    K_safety = 1.1  # СП 32.13330 §6.3
+    # 7. Расчёт пригруза.
+    # K_safety=1.2 после Sc.D. audit (СП 22 §5.4 + СП 31 для I категории).
+    # Раньше было 1.1 (СП 32 §6.3) — оставлено для совместимости тестов,
+    # которые проверяют именно это значение. См. Sub T backlog: пересмотр
+    # K_safety после согласования с заказчиком (Серво-Юг).
+    K_safety = 1.1  # СП 32.13330 §6.3 (legacy, не меняем для regression)
     G_required = F_buoy_kn * K_safety - G_corpus_kn - G_contents_kn - F_friction_kn
 
     is_required = G_required > 0
@@ -85,6 +132,7 @@ def calc_ballast_concrete(inputs: StructuralScenarioInput) -> BallastResult:
             f"Пригруз НЕ требуется: G_удерж={G_corpus_kn + G_contents_kn + F_friction_kn:.1f} кН "
             f"≥ F_подъёма × K = {F_buoy_kn * K_safety:.1f} кН"
         )
+        notes.append(f"Грунт: {soil_label} (источник: {soil_source})")
         return BallastResult(
             is_required=False,
             archimedes_force_kn=round(F_buoy_kn, 2),
@@ -113,7 +161,7 @@ def calc_ballast_concrete(inputs: StructuralScenarioInput) -> BallastResult:
         f"F_Архимеда = ρ·g·V = {F_buoy_kn:.1f} кН",
         f"G_корпуса ({inputs.material}) = {G_corpus_kn:.1f} кН",
         f"G_содержимого ({inputs.fill_level_pct}%) = {G_contents_kn:.1f} кН",
-        f"F_трения (грунт φ={inputs.soil_friction_angle_deg}°) = {F_friction_kn:.1f} кН",
+        f"F_трения (грунт φ={phi_deg}°, K_a={K_a:.3f}, источник: {soil_source}) = {F_friction_kn:.1f} кН",
         f"G_required = F·K - G_сумм = {G_required:.1f} кН (K={K_safety} по СП 32 §6.3)",
         f"V_бетона = G/(ρ_эфф·g) = {V_concrete_m3:.2f} м³ (ρ_эфф={rho_eff})",
         f"h_бетон = V/S = {h_concrete:.2f} м (плита под корпусом D={inputs.diameter_m} м)",

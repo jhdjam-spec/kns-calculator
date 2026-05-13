@@ -1,0 +1,47 @@
+# YC Triggers — declarative spec для voa Triggers сервиса.
+#
+# Sc.D. Architecture audit 2026-05-13: «cron на ежедневный merge
+# /admin/uploads/merge» — нужно автоматически каждый день в ~03:00 МСК
+# мерджить etalons_uploaded.jsonl → etalons_from_uploads.json.
+#
+# Деплой:
+#   bash deploy/yandex-cloud/setup_triggers.sh
+#
+# Или вручную через yc CLI (см. ниже).
+#
+# YC Function (kns-calculator-api) НЕ умеет HTTP Basic auth изнутри trigger'а,
+# поэтому endpoint /admin/uploads/merge-internal защищён shared-secret
+# токеном через header X-YC-Internal-Token (ENV YC_INTERNAL_TOKEN).
+
+triggers:
+  - name: daily-merge-uploads
+    description: >-
+      Ежедневно в 00:00 UTC (03:00 МСК) вызывает /admin/uploads/merge-internal
+      на FastAPI для merge накопленных JSONL-uploads в canonical etalons JSON.
+    # Cron-выражение в формате YC (расширенный POSIX): минута, час, день, месяц,
+    # день недели, год. Знак '?' разрешён только в одном из {день_месяца, день_недели}.
+    cron_expression: "0 0 * * ? *"
+    # Function ID — деплоится в folder b1ge2mgg8tgh92uerm9c.
+    function:
+      id: d4echfb1ckrlkv68vog5
+      service_account_id: ajeur7e0n1k1n458t79n
+      # Trigger вызывает FastAPI endpoint через API Gateway. Путь и токен
+      # передаются как payload — функция-обёртка делает HTTP POST.
+      # Для прямого вызова Function-as-cron используем tag $latest.
+      tag: $latest
+    # Retry policy: 1 retry с 60s паузой, dead-letter в S3 bucket аудита.
+    retry:
+      attempts: 1
+      interval: 60s
+    dead_letter_queue:
+      service_account_id: ajeur7e0n1k1n458t79n
+      # Опционально: создать YMQ очередь kns-calc-dlq и подставить ARN сюда.
+      queue_id: null
+
+  # Опциональный второй trigger — еженедельная sanity-проверка БД насосов.
+  # Закомментирован до приоритизации.
+  # - name: weekly-pumps-health
+  #   cron_expression: "0 6 * * MON *"
+  #   function:
+  #     id: d4echfb1ckrlkv68vog5
+  #     service_account_id: ajeur7e0n1k1n458t79n

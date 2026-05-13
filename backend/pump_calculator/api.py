@@ -7,7 +7,7 @@ import uuid
 from typing import Literal
 
 import structlog
-from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import Depends, FastAPI, File, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse, Response
 from pydantic import BaseModel, Field
@@ -16,6 +16,8 @@ from slowapi.middleware import SlowAPIMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from pump_calculator import __version__, catalog
+from pump_calculator.ab_testing import list_flags_snapshot
+from pump_calculator.audit_middleware import AuditMiddleware
 
 # Pydantic-модели импортируем на уровне модуля — FastAPI должен видеть их
 # во время декорирования эндпоинтов (нельзя лениво, как функции расчёта).
@@ -26,6 +28,7 @@ from pump_calculator.climate.models import ClimateScenarioInput  # noqa: F401
 from pump_calculator.complexes import Complex
 from pump_calculator.error_reporting import init_sentry
 from pump_calculator.fire_water import FireScenarioInput
+from pump_calculator.i18n import Lang, detect_lang, t
 from pump_calculator.logging_config import configure_logging
 from pump_calculator.los import LOSScenarioInput
 from pump_calculator.matching import select_pumps as run_selection
@@ -53,6 +56,11 @@ from pump_calculator.schemas import (
 from pump_calculator.security import log_audit, verify_admin
 from pump_calculator.storm.models import StormInput
 from pump_calculator.structural import StructuralScenarioInput
+from pump_calculator.tenancy import (
+    get_tenant_id,
+    get_tenant_label,
+    list_allowed_tenants,
+)
 from pump_calculator.water_supply import WaterScenarioInput
 
 # Observability bootstrap — один раз при cold-start lambda / uvicorn worker.
@@ -66,16 +74,32 @@ def _rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> Re
 
     slowapi бросает RateLimitExceeded когда per-IP лимит исчерпан;
     оборачиваем в JSONResponse чтобы frontend получил структурированный ответ.
+    Сообщение локализуется через ``Accept-Language`` (см. ``i18n.detect_lang``).
     """
+    lang = detect_lang(request.headers.get("Accept-Language"))
     response = JSONResponse(
         status_code=429,
         content={
-            "detail": f"Rate limit exceeded: {exc.detail}",
+            "detail": t("rate_limit_with_detail", lang, detail=str(exc.detail)),
             "limit": str(exc.detail),
         },
     )
     response.headers["Retry-After"] = "60"
     return response
+
+
+def get_lang(accept_language: str | None = Header(None)) -> Lang:
+    """FastAPI dependency: возвращает ``Lang`` для текущего запроса.
+
+    Использование::
+
+        @app.post("/select")
+        def select(req: SelectionRequest, lang: Lang = Depends(get_lang)):
+            if not req.L0.Q_m3h:
+                raise HTTPException(400, t("missing_q", lang))
+    """
+    return detect_lang(accept_language)
+
 
 logger = structlog.get_logger(__name__)
 
@@ -158,6 +182,13 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 
+# Audit log middleware (152-ФЗ ст.19): пишет JSON-event в канал
+# ``audit.request`` для каждого state-changing запроса (/admin, /import/parse,
+# /handoff, /etl/classify). НЕ читает body — только Content-Length, IP, UA.
+# Регистрируется ПЕРЕД CorrelationIdMiddleware, чтобы CorrelationId был
+# внешним (request_id уже в contextvars и попадает в audit.* records).
+app.add_middleware(AuditMiddleware)
+
 # Correlation IDs — добавляем последним, чтобы middleware был самым внешним
 # (Starlette/FastAPI оборачивает middleware в обратном порядке регистрации).
 # Так request_id попадает в логи и из rate-limit denial, и из body-limit 413.
@@ -238,7 +269,11 @@ def privacy() -> str:
 
 @app.post("/select", response_model=SelectionResult, tags=["selection"])
 @limiter.limit("60/minute")
-def select(request: Request, req: SelectionRequest) -> SelectionResult:
+def select(
+    request: Request,
+    req: SelectionRequest,
+    lang: Lang = Depends(get_lang),  # noqa: B008 — FastAPI DI pattern
+) -> SelectionResult:
     """Главный endpoint: 7-шаговый алгоритм подбора насоса.
 
     Принимает L0 (4 поля обязательно) + L1 (опционально).
@@ -248,7 +283,10 @@ def select(request: Request, req: SelectionRequest) -> SelectionResult:
         return run_selection(req.L0, req.L1)
     except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=500, detail=f"Selection failed: {e}") from e
+        raise HTTPException(
+            status_code=500,
+            detail=t("selection_failed", lang, error=str(e)),
+        ) from e
 
 
 @app.post("/select/quick", response_model=SelectionResult, tags=["selection"])
@@ -266,12 +304,18 @@ def list_pumps() -> dict:
 
 
 @app.get("/pumps/{pump_id}", tags=["catalog"])
-def get_pump(pump_id: str) -> dict:
+def get_pump(
+    pump_id: str,
+    lang: Lang = Depends(get_lang),  # noqa: B008 — FastAPI DI pattern
+) -> dict:
     pumps = catalog.load_pumps()
     for p in pumps:
         if p["id"] == pump_id:
             return p
-    raise HTTPException(status_code=404, detail=f"Pump '{pump_id}' not found")
+    raise HTTPException(
+        status_code=404,
+        detail=t("pump_not_found", lang, pump_id=pump_id),
+    )
 
 
 @app.get("/producers", tags=["catalog"])
@@ -455,6 +499,7 @@ class FromFileResponse(BaseModel):
 async def select_from_file(
     request: Request,
     file: UploadFile = File(...),  # noqa: B008  (идиома FastAPI)
+    lang: Lang = Depends(get_lang),  # noqa: B008 — FastAPI DI pattern
 ) -> FromFileResponse:
     """Принять заполненный DOCX-опросник, извлечь параметры и сделать подбор.
 
@@ -468,21 +513,24 @@ async def select_from_file(
     if not file.filename or not file.filename.lower().endswith(".docx"):
         raise HTTPException(
             status_code=400,
-            detail="Поддерживается только DOCX. Для PDF/XLSX/scan см. roadmap Phase 12.2-12.3.",
+            detail=t("only_docx_supported", lang),
         )
 
     file_bytes = await file.read()
     if not file_bytes:
-        raise HTTPException(status_code=400, detail="Файл пустой")
+        raise HTTPException(status_code=400, detail=t("file_empty", lang))
     # Phase 33+ rate-limit hardening: DOCX-опросник обычно <1 MB; 5 MB cap
     # отсекает abuse / случайные большие файлы до парсинга.
     _MAX_DOCX_BYTES = 5 * 1024 * 1024
     if len(file_bytes) > _MAX_DOCX_BYTES:
         raise HTTPException(
             status_code=413,
-            detail=(
-                f"Файл слишком большой ({len(file_bytes)} байт). "
-                f"Максимум {_MAX_DOCX_BYTES} байт (5 MB)."
+            detail=t(
+                "file_too_large",
+                lang,
+                size=len(file_bytes),
+                max_size=_MAX_DOCX_BYTES,
+                max_mb=_MAX_DOCX_BYTES // (1024 * 1024),
             ),
         )
 
@@ -494,7 +542,7 @@ async def select_from_file(
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(
             status_code=400,
-            detail=f"Не удалось распарсить DOCX: {e}",
+            detail=t("docx_parse_failed", lang, error=str(e)),
         ) from e
 
     selection: SelectionResult | None = None
@@ -504,7 +552,8 @@ async def select_from_file(
         except Exception as e:  # pragma: no cover
             logger.exception("unhandled error: %s", e.__class__.__name__)
             raise HTTPException(
-                status_code=500, detail=f"Selection failed: {e}",
+                status_code=500,
+                detail=t("selection_failed", lang, error=str(e)),
             ) from e
 
     return FromFileResponse(
@@ -1054,6 +1103,40 @@ def list_los_catalog() -> dict:
     }
 
 
+class AerotankSizingRequest(BaseModel):
+    """Параметры для расчёта V_аэротенка по Metcalf & Eddy MLSS-методу."""
+
+    Q_m3_day: float = Field(..., gt=0, le=1_000_000, description="Расход стоков, м³/сут")
+    bod_in_mgL: float = Field(..., gt=0, le=50_000, description="БПК5 на входе, мг/л")
+    bod_out_target: float = Field(15.0, ge=1, le=200, description="БПК5 на выходе целевой, мг/л")
+    srt_days: float = Field(10.0, ge=2, le=40, description="SRT / возраст ила, сут (5-25)")
+    mlss_g_L: float = Field(3.5, ge=1.0, le=8.0, description="MLSS, г/л (2-6)")
+    Y: float = Field(0.5, ge=0.3, le=0.7, description="Выход биомассы г VSS/г BOD")
+    Kd: float = Field(0.05, ge=0.02, le=0.15, description="Endogenous decay, 1/сут")
+
+
+@app.post("/los/aerotank-sizing", tags=["los"])
+def calc_aerotank_sizing_endpoint(req: AerotankSizingRequest) -> dict:
+    """Расчёт V_аэротенка по уравнению Metcalf & Eddy 5th §8-4 (eq. 8-22).
+
+    V = Q · SRT · Y · ΔBOD / (MLSS · (1 + Kd · SRT))
+
+    Возвращает V_m3, V с запасом 20%, HRT (время аэрации), F:M ratio.
+    Параллельный метод существующему расчёту по нагрузке на ил (СП 32),
+    ориентированный на кинетику Monod / MLSS.
+    """
+    from pump_calculator.los import calculate_aerotank_volume
+    return calculate_aerotank_volume(
+        Q_m3_day=req.Q_m3_day,
+        bod_in_mgL=req.bod_in_mgL,
+        bod_out_target=req.bod_out_target,
+        srt_days=req.srt_days,
+        mlss_g_L=req.mlss_g_L,
+        Y=req.Y,
+        Kd=req.Kd,
+    )
+
+
 @app.post("/reports/rpz-gost-pdf", tags=["reports"], response_class=Response)
 def generate_rpz_gost_endpoint(inputs: RPZGostInput) -> Response:
     """Расчётно-пояснительная записка (РПЗ) по ГОСТ Р 21.101-2020.
@@ -1143,7 +1226,11 @@ _TRUSTED_DOMAINS: frozenset[str] = frozenset(
 
 @app.post("/etl/classify", response_model=ClassifyResponse, tags=["etl"])
 @limiter.limit("30/minute")
-def classify_incoming(request: Request, req: ClassifyRequest) -> ClassifyResponse:
+def classify_incoming(
+    request: Request,
+    req: ClassifyRequest,
+    lang: Lang = Depends(get_lang),  # noqa: B008 — FastAPI DI pattern
+) -> ClassifyResponse:
     """Классификация входящего письма (CRM-light, P5 mail integration).
 
     Возвращает тип запроса (ОЛ/КП/ТЗ), объект (КНС/ЛОС/ВНС), производителя
@@ -1163,7 +1250,7 @@ def classify_incoming(request: Request, req: ClassifyRequest) -> ClassifyRespons
     if not (req.subject.strip() or req.body.strip() or req.from_email.strip()):
         raise HTTPException(
             status_code=400,
-            detail="Все поля пусты — нечего классифицировать",
+            detail=t("all_fields_empty", lang),
         )
 
     markers = classify_subject_marker(req.subject)
@@ -1223,7 +1310,12 @@ class ImportParseRequest(BaseModel):
 
 @app.post("/import/parse", tags=["etl"])
 @limiter.limit("10/minute")
-def import_parse_tz(request: Request, req: ImportParseRequest) -> dict:
+def import_parse_tz(
+    request: Request,
+    req: ImportParseRequest,
+    tenant_id: str = Depends(get_tenant_id),
+    lang: Lang = Depends(get_lang),  # noqa: B008 — FastAPI DI pattern
+) -> dict:
     """Извлечь из ТЗ Q/H/город/тип стоков/шифр и сопутствующие L1-параметры.
 
     Менеджер вставляет ТЗ в /import — backend возвращает поля, которые
@@ -1244,7 +1336,7 @@ def import_parse_tz(request: Request, req: ImportParseRequest) -> dict:
     if not req.text or not req.text.strip():
         raise HTTPException(
             status_code=400,
-            detail="Поле text пустое — нечего парсить",
+            detail=t("text_empty", lang),
         )
     from pump_calculator.etl.dataset_enrichment import (  # noqa: PLC0415
         QUEUE_THRESHOLD,
@@ -1342,6 +1434,14 @@ def import_parse_tz(request: Request, req: ImportParseRequest) -> dict:
         }
 
     response["dataset_enrichment"] = enrichment_info
+
+    # ---------- Multi-tenancy stub (Sc.D. 2026-05-13) ----------
+    # MVP: пробрасываем tenant_id в metadata архива. Будущее: фильтр /admin/*
+    # по tenant'у + tenant-specific каталог насосов.
+    response["tenant"] = {
+        "id": tenant_id,
+        "label": get_tenant_label(tenant_id),
+    }
     return response
 
 
@@ -1485,6 +1585,98 @@ def admin_merge_uploads(admin: str = Depends(verify_admin)) -> dict:
 
     enricher = DatasetEnricher()
     return enricher.merge_to_etalons()
+
+
+@app.get("/admin/flags", tags=["admin"])
+def admin_list_flags(admin: str = Depends(verify_admin)) -> dict:
+    """Снапшот всех A/B feature flags.
+
+    Возвращает текущие проценты, ENV-имена и описания для всех зарегистрированных
+    флагов из ``pump_calculator.ab_testing.ALL_FLAGS``. Используется для
+    debug/monitoring rollout-статуса научных триггеров.
+
+    Returns
+    -------
+    dict
+        ``{"flags": {name: {percent, env_var, default_pct, description}}}``
+    """
+    return {"flags": list_flags_snapshot()}
+
+
+# ---------------------- /admin/uploads/merge-internal — YC Trigger ---------
+# Отдельный путь БЕЗ HTTP Basic auth для вызова из YC Triggers (daily cron).
+# Защита: shared-secret token в header ``X-YC-Internal-Token`` сверяется
+# с ENV ``YC_INTERNAL_TOKEN``. Если ENV не задан → 503 (fail-closed).
+#
+# Зачем отдельный путь:
+# - YC Triggers не умеют HTTP Basic auth (только service-account JWT).
+# - Service-account JWT validation требует подключения к IAM, что усложняет
+#   cold-start. Shared-secret token — простой и достаточный для closed beta.
+# - Public путь /admin/uploads/merge остаётся под Basic auth для ручного вызова.
+#
+# Sc.D. audit: «cron на ежедневный merge /admin/uploads/merge».
+
+
+@app.post("/admin/uploads/merge-internal", tags=["admin"])
+def admin_merge_uploads_internal(request: Request) -> dict:
+    """Cron-triggered merge (YC Triggers). Auth: ``X-YC-Internal-Token`` header.
+
+    Возвращает то же тело что и ``/admin/uploads/merge``.
+
+    Raises
+    ------
+    HTTPException(503)
+        Если ``YC_INTERNAL_TOKEN`` не задан в ENV (fail-closed).
+    HTTPException(401)
+        Если header отсутствует или не совпал с ENV.
+    """
+    import secrets as _secrets  # noqa: PLC0415
+
+    expected = os.environ.get("YC_INTERNAL_TOKEN", "").strip()
+    if not expected:
+        log_audit.error("YC_INTERNAL_TOKEN not configured — merge-internal locked")
+        raise HTTPException(
+            status_code=503,
+            detail="Internal auth not configured (set YC_INTERNAL_TOKEN env)",
+        )
+
+    provided = (request.headers.get("X-YC-Internal-Token") or "").strip()
+    if not provided or not _secrets.compare_digest(
+        provided.encode("utf-8"),
+        expected.encode("utf-8"),
+    ):
+        client_host = request.client.host if request.client else "unknown"
+        log_audit.warning(
+            "merge-internal auth fail from %s (header_present=%s)",
+            client_host,
+            bool(provided),
+        )
+        raise HTTPException(status_code=401, detail="Bad or missing X-YC-Internal-Token")
+
+    from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
+
+    log_audit.info("merge-internal triggered by YC Trigger")
+    enricher = DatasetEnricher()
+    result = enricher.merge_to_etalons()
+    return {"trigger": "yc-cron", **result}
+
+
+# ---------------------- /admin/tenants — multi-tenancy (stub) -------------
+
+
+@app.get("/admin/tenants", tags=["admin"])
+def admin_list_tenants(admin: str = Depends(verify_admin)) -> dict:
+    """Список разрешённых tenants (для будущего admin UI выбора дилера).
+
+    См. ``pump_calculator.tenancy`` — multi-tenancy stub. В MVP allow-list
+    хардкоден; в Phase 34+ переедет в БД с per-tenant настройками.
+    """
+    tenants = list_allowed_tenants()
+    return {
+        "tenants": tenants,
+        "count": len(tenants),
+        "default": os.environ.get("DEFAULT_TENANT", "servoyug"),
+    }
 
 
 # ---------------------- Phase 31: TCO / Cost-per-m³ ----------------------

@@ -16,13 +16,16 @@ from pump_calculator.api import app
 client = TestClient(app)
 
 
-# Список всех 5 admin endpoints + (HTTP method).
+# Список всех admin endpoints + (HTTP method).
+# /admin/uploads/merge-internal НЕ входит — у него своя auth-схема
+# (X-YC-Internal-Token), проверяется в test_tenancy.py.
 ADMIN_ENDPOINTS = [
     ("GET", "/admin/uploads"),
     ("GET", "/admin/uploads/some-id-123"),
     ("POST", "/admin/uploads/some-id-123/approve"),
     ("POST", "/admin/uploads/some-id-123/reject"),
     ("POST", "/admin/uploads/merge"),
+    ("GET", "/admin/tenants"),
 ]
 
 

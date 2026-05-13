@@ -44,7 +44,11 @@
       },
       "_engineer_flag": "ok",
       "_engineer_note": "Бытовая канализация, малый-средний объект. Эталон цены: КП инженера Серво-Юг 2026 — 85384 ₽/шт. Для гостиниц <100 номеров, частных коттеджей с подвальной канализацией.",
-      "_source": "Реальное КП инженера Серво-Юг (фото 2026-05-04) + АРКАДА КП 29.01.2026"
+      "_source": "Реальное КП инженера Серво-Юг (фото 2026-05-04) + АРКАДА КП 29.01.2026",
+      "price_source": "КП инженера (Серво-Юг)",
+      "price_source_url": null,
+      "price_source_date": "2026-05-04",
+      "price_confidence": "medium"
     },
     {
       "id": "kaiquan-50wqs202-3",
@@ -87,7 +91,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Эталонная точка верификации (АртВинд Мысхако) | 78595 ₽ tender_research 2026-05-11 (medium)",
       "_source": "Паспорт АВ.1382.08.23-М-НК",
-      "price_rub_2026": 78595
+      "price_rub_2026": 78595,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "kaiquan-65wqs215-185",
@@ -135,9 +143,13 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Cutter с режущими лопастями и клыками для длинноволокнистых стоков. Q_BEP=53.7 м³/ч @ H=46 м, КПД 41.8%. Q_min постоянный 20 м³/ч. Электродвигатель 18.5 кВт (модель WQ/SE18.5-2P-00, 35 А, cosφ=0.91), мощность на валу 15.3 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен кривой производительности (60 м³/ч). | 195000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Cutter с режущими лопастями и клыками для длинноволокнистых стоков. Q_BEP=53.7 м³/ч @ H=46 м, КПД 41.8%. Q_min постоянный 20 м³/ч. Электродвигатель 18.5 кВт (модель WQ/SE18.5-2P-00, 35 А, cosφ=0.91), мощность на валу 15.3 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен кривой производительности (60 м³/ч). | 195000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Паспорт 65WQS215-18.5.pdf от 2026.02.25 (inbox 2026-05-04)",
-      "price_rub_2026": 195000
+      "price_rub_2026": 195000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "kaiquan-wq2290-2136-80",
@@ -185,9 +197,13 @@
         "distributor": "АСО"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7 м, КПД 57.2%. Q_min постоянный 24 м³/ч. Электродвигатель 37 кВт (модель WQ/Z37-2P-00, 68 А, cosφ=0.89), мощность на валу 27.5 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен графиком производительности (~120 м³/ч). | 850000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Высоконапорный канализационный, Q_BEP=110 м³/ч @ H=68.7 м, КПД 57.2%. Q_min постоянный 24 м³/ч. Электродвигатель 37 кВт (модель WQ/Z37-2P-00, 68 А, cosφ=0.89), мощность на валу 27.5 кВт в номинальной точке. NPSHr в паспорте не указан. Q_max ограничен графиком производительности (~120 м³/ч). | 850000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Паспорт WQ2290-2136-80.pdf от 2026.02.25 (inbox 2026-05-04)",
-      "price_rub_2026": 850000
+      "price_rub_2026": 850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-nk1-50",
@@ -227,9 +243,13 @@
         "distributor": "Antarus прямой"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Серия НК1 — envelope обобщённый, нужны точные модели (НК1-50/22-15-1.1, НК1-65/...) | eta=48% sub_E_research (low) | 95000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Серия НК1 — envelope обобщённый, нужны точные модели (НК1-50/22-15-1.1, НК1-65/...) | eta=48% sub_E_research (low) | 95000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "search.antarus.su",
-      "price_rub_2026": 95000
+      "price_rub_2026": 95000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-nk2-150",
@@ -268,9 +288,13 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Соответствует кейсу 'Большая КНС 70 л/с' из MATERIALS_INVENTORY (HK2-150-28-150-22-TB-10M) | eta=48% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Соответствует кейсу 'Большая КНС 70 л/с' из MATERIALS_INVENTORY (HK2-150-28-150-22-TB-10M) | eta=48% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "MATERIALS_INVENTORY.md + producers_dataset.json",
-      "price_rub_2026": 1850000
+      "price_rub_2026": 1850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-3mlv20-5",
@@ -311,7 +335,11 @@
       },
       "_engineer_flag": "ok",
       "_engineer_note": "СПД 3-насосная с GPRS-диспетчеризацией. Q=38.43 м³/ч, H=75 м, P=10.6 кВт на валу, мотор 5.5 кВт. Подобрано через программу 'УМНАЯ ВОДА' Antarus. Цена 3 500 650 ₽ из КП Серво-Юг для Беловодск Крым 2026.",
-      "_source": "Паспорт ANTARUS 3 MLV20-5/GPRS (inbox 2026-05-04) + КП Беловодск 28012026_2"
+      "_source": "Паспорт ANTARUS 3 MLV20-5/GPRS (inbox 2026-05-04) + КП Беловодск 28012026_2",
+      "price_source": "КП инженера (Серво-Юг)",
+      "price_source_url": null,
+      "price_source_date": "2026-05-04",
+      "price_confidence": "medium"
     },
     {
       "id": "antarus-mlv3-6",
@@ -349,9 +377,13 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Станция повышения давления, 2 насоса MLV3 в параллель. Цена ~700 526 ₽ у Теплосервис-Сибирь. | eta=48% sub_E_research (low) | 700526 ₽ research 2026-05-11 (high)",
+      "_engineer_note": "Станция повышения давления, 2 насоса MLV3 в параллель. Цена ~700 526 ₽ у Теплосервис-Сибирь. | eta=48% sub_E_research (low) | 700526 ₽ research 2026-05-11 (high) | нужна повторная калибровка price_source_url",
       "_source": "producers_dataset.json",
-      "price_rub_2026": 700526
+      "price_rub_2026": 700526,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "leo-xks-50",
@@ -436,7 +468,11 @@
       "_engineer_note": "Серия Rexa PRO — envelope обобщённый. Конкретные модели V05/V06/V08 — через Wilo-Select 4. | price 320000 от subagent Wilo research 2026-05-10 (medium, https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-) | eta=62% sub_E_research (medium)",
       "_source": "selectonline.ru",
       "price_rub_2026": 320000,
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_source": "wl-russia.ru (Wilo Russia)",
+      "price_source_url": "https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-emu-fa",
@@ -476,9 +512,13 @@
         "distributor": "ВИЛО РУС (российская сборка)"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно | impeller channel->multi-channel canonicalized 2026-05-10 | eta=68% sub_E_research (low) | 331500 ₽ research 2026-05-11 (medium)",
+      "_engineer_note": "Большие промышленные КНС, российская сборка ✓ — устойчиво доступно | impeller channel->multi-channel canonicalized 2026-05-10 | eta=68% sub_E_research (low) | 331500 ₽ research 2026-05-11 (medium) | нужна повторная калибровка price_source_url",
       "_source": "wilo.com/ru, selectonline.ru",
-      "price_rub_2026": 331500
+      "price_rub_2026": 331500,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-cor-mvie",
@@ -519,7 +559,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Станция повышения давления для жилых/коммерческих объектов. С PLC и ЧРП. Эталон премиум-сегмента СПД. | eta=75% sub_E_research (medium) | 563182 ₽ research 2026-05-11 (medium)",
       "_source": "wilo.com/ru",
-      "price_rub_2026": 563182
+      "price_rub_2026": 563182,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-hydro-mpc",
@@ -559,7 +603,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Эталон премиум СПД на базе CR-серии. Аналог — Wilo-COR MVIE. | 580000 от subagent Grundfos research 2026-05-10 (medium) | eta=76% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 580000
+      "price_rub_2026": 580000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-amarex",
@@ -599,9 +647,13 @@
         "distributor": "ООО КСБ Москва"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Конкретная модель внутри серии — через KSB EasySelect | eta=58% sub_E_research (low) | 360000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Конкретная модель внутри серии — через KSB EasySelect | eta=58% sub_E_research (low) | 360000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "ksb.com",
-      "price_rub_2026": 360000
+      "price_rub_2026": 360000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "ksb-amarex-krt",
@@ -640,10 +692,14 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Эталон для очень крупных КНС (городские, промышленные) | impeller channel->multi-channel canonicalized 2026-05-10 | eta=60% sub_E_research (low) | 1850000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "ksb.com",
       "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
-      "price_rub_2026": 1850000
+      "price_rub_2026": 1850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "pedrollo-vxm-15-50",
@@ -685,7 +741,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Малая КНС для частных домов/коттеджей. Однофазная — упрощает монтаж. | price 60840₽ от subagent research 2026-05-10 (high conf, src: https://e-nasos.ru/fekalnye/pedrollo/vx/vxm-15-50-) | eta=40% sub_E_research (medium)",
       "_source": "pedrollo.com",
-      "price_rub_2026": 60840
+      "price_rub_2026": 60840,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx/vxm-15-50-",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "kaiquan-65wq-s-30-22-5-5",
@@ -772,7 +832,11 @@
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 95510
+      "price_rub_2026": 95510,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "kaiquan-80wq-s-50-22-7-5",
@@ -859,7 +923,11 @@
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 124955
+      "price_rub_2026": 124955,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "kaiquan-100wq-s-100-22-15",
@@ -946,7 +1014,11 @@
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 314381
+      "price_rub_2026": 314381,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "antarus-нк2-100-22",
@@ -1029,11 +1101,15 @@
       "image_url": null,
       "notes": "Демо-запись. Российский конкурент Wilo/Grundfos в среднем сегменте.",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 850000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | 850000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "phase5-etl-seed-2026-05-03",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 850000
+      "price_rub_2026": 850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-wilo-rexa-pro-v08da",
@@ -1121,7 +1197,11 @@
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
       "price_rub_2026": 380000,
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_source": "wl-russia.ru (Wilo Russia)",
+      "price_source_url": "https://wl-russia.ru/fekalnyj-nasos-wilo-rexa-pro-",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-10-35",
@@ -1203,7 +1283,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 49504
+      "price_rub_2026": 49504,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-10-50",
@@ -1293,7 +1377,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 50856
+      "price_rub_2026": 50856,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-15-35",
@@ -1383,7 +1471,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 59592
+      "price_rub_2026": 59592,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-15-50",
@@ -1485,7 +1577,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 60840
+      "price_rub_2026": 60840,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-20-35",
@@ -1579,7 +1675,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 70000
+      "price_rub_2026": 70000,
+      "price_source": "stoking.ru",
+      "price_source_url": "https://stoking.ru/products/nasos-pedrollo-vx-20-5",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-20-50",
@@ -1681,7 +1781,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 72168
+      "price_rub_2026": 72168,
+      "price_source": "teploprofi.com",
+      "price_source_url": "https://www.teploprofi.com/catalogue/show/nasos-pe",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-8-35",
@@ -1759,7 +1863,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 47000
+      "price_rub_2026": 47000,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vx-8-50",
@@ -1841,7 +1949,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 48500
+      "price_rub_2026": 48500,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-10-35",
@@ -1923,7 +2035,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 48256
+      "price_rub_2026": 48256,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-10-50",
@@ -2013,7 +2129,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 49504
+      "price_rub_2026": 49504,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-15-35",
@@ -2103,7 +2223,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 58000
+      "price_rub_2026": 58000,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-20-35",
@@ -2197,7 +2321,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 68000
+      "price_rub_2026": 68000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-20-50",
@@ -2299,7 +2427,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 70364
+      "price_rub_2026": 70364,
+      "price_source": "comfortfm.ru",
+      "price_source_url": "https://comfortfm.ru/nasosyi/fekalnyiy_nasos_pedro",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-8-35",
@@ -2377,7 +2509,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 46384
+      "price_rub_2026": 46384,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx/vxm-8-35-n",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-vxm-8-50",
@@ -2459,7 +2595,11 @@
       "_source": "pdfplumber-pedrollo-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 47736
+      "price_rub_2026": 47736,
+      "price_source": "e-nasos.ru",
+      "price_source_url": "https://e-nasos.ru/fekalnye/pedrollo/vx",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-s-40-252",
@@ -2532,7 +2672,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 314102
+      "price_rub_2026": 314102,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-40-252",
@@ -2606,7 +2750,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 290000
+      "price_rub_2026": 290000,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-k-40-252",
@@ -2679,7 +2827,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 427682
+      "price_rub_2026": 427682,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru/price/product/1457324",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-50-215",
@@ -2753,7 +2905,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 375176
+      "price_rub_2026": 375176,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-s-50-216",
@@ -2972,7 +3128,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 464311
+      "price_rub_2026": 464311,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-e-65-216",
@@ -3045,7 +3205,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 474781
+      "price_rub_2026": 474781,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-65-217",
@@ -3265,7 +3429,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 245638
+      "price_rub_2026": 245638,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru/price/product/1457288",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-e-80-216",
@@ -3338,7 +3506,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 408203
+      "price_rub_2026": 408203,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru/price/product/1457201",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-80-252",
@@ -3412,7 +3584,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 308150
+      "price_rub_2026": 308150,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru/price/product/1457303",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-80-253",
@@ -3486,7 +3662,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 480365
+      "price_rub_2026": 480365,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-e-80-253",
@@ -3559,7 +3739,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 491534
+      "price_rub_2026": 491534,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-k-80-253",
@@ -4066,7 +4250,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 580000
+      "price_rub_2026": 580000,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-d-100-253",
@@ -4139,7 +4327,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 480000
+      "price_rub_2026": 480000,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-k-100-253",
@@ -4212,7 +4404,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 520000
+      "price_rub_2026": 520000,
+      "price_source": "ksb.nt-rt.ru",
+      "price_source_url": "https://ksb.nt-rt.ru",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-f-100-254",
@@ -4431,7 +4627,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 552971
+      "price_rub_2026": 552971,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-e-100-315",
@@ -4576,7 +4776,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 586203
+      "price_rub_2026": 586203,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-k-100-315",
@@ -5010,7 +5214,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 644076
+      "price_rub_2026": 644076,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-d-100-403",
@@ -5445,7 +5653,11 @@
       "_source": "pdfplumber-ksb-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 656857
+      "price_rub_2026": 656857,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "ksb-krt-d-150-315",
@@ -8609,11 +8821,15 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 295000
+      "price_rub_2026": 295000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-нк1-100-15-7-5-квт-10м-tb",
@@ -8681,11 +8897,15 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 295000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 295000
+      "price_rub_2026": 295000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-нк1-50-10-0-75-квт-10м",
@@ -9174,11 +9394,15 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=53% sub_E_research (low) | 145000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=53% sub_E_research (low) | 145000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 145000
+      "price_rub_2026": 145000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-нк1-50-45-7-5-квт-10м-tb",
@@ -9245,11 +9469,15 @@
       "image_url": null,
       "notes": null,
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 320000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Импортирован через ETL — проверить корректность аппроксимации Q-H и КПД до production-использования. | B2B-only / public price not found (subagent research 2026-05-10) | eta=58% sub_E_research (low) | 320000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "pdfplumber-antarus-2026-05",
       "_added": "2026-05-03",
       "_updated": "2026-05-03",
-      "price_rub_2026": 320000
+      "price_rub_2026": 320000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-нк1-65-10-1-1-квт-10м",
@@ -13877,9 +14105,13 @@
         "distributor": "ВИЛО РУС"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Пожарная установка по EN 12845/СП 10.13130 (1 раб + 1 рез + жокей). С шкафом Sf. Цены индивидуально под объект — зависит от категории помещения и нормативного Q пожара. | 806374 ₽ research 2026-05-11 (medium)",
+      "_engineer_note": "Пожарная установка по EN 12845/СП 10.13130 (1 раб + 1 рез + жокей). С шкафом Sf. Цены индивидуально под объект — зависит от категории помещения и нормативного Q пожара. | 806374 ₽ research 2026-05-11 (medium) | нужна повторная калибровка price_source_url",
       "_source": "wilo.com SiFire EN datasheet (placeholder, без калибровки КП)",
-      "price_rub_2026": 806374
+      "price_rub_2026": 806374,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-bl-50-160",
@@ -13919,9 +14151,13 @@
         "distributor": "ВИЛО РУС"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Стандартный одноступенчатый Wilo BL с возможностью использования в пожарной установке (с пожарным ШУ). Цены — индивидуально. | 270294 ₽ research 2026-05-11 (medium)",
+      "_engineer_note": "Стандартный одноступенчатый Wilo BL с возможностью использования в пожарной установке (с пожарным ШУ). Цены — индивидуально. | 270294 ₽ research 2026-05-11 (medium) | нужна повторная калибровка price_source_url",
       "_source": "wilo.com BL datasheet (placeholder)",
-      "price_rub_2026": 270294
+      "price_rub_2026": 270294,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "km-100-65-200a",
@@ -13963,7 +14199,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Российский эконом-вариант для пожарных СПД (СП 10.13130). Применяется с пожарным ШУ. Цены — индивидуально под объект. | 145434 ₽ tender_research 2026-05-11 (medium)",
       "_source": "hms-livny.ru (placeholder)",
-      "price_rub_2026": 145434
+      "price_rub_2026": 145434,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "vandjord-sg-50-75-25-0d",
@@ -14096,10 +14336,14 @@
         "status": "official"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Эталон ЛОС Свирь-15 (СЗ-РФ): 4 насоса в ливневой КНС Ø2300×2000 для Q=15 л/с (54 м³/ч). Малый ливневый. EC = epoxy coated. | eta=56% sub_E_research (low) | 78595 ₽ tender_research 2026-05-11 (medium)",
+      "_engineer_note": "Эталон ЛОС Свирь-15 (СЗ-РФ): 4 насоса в ливневой КНС Ø2300×2000 для Q=15 л/с (54 м³/ч). Малый ливневый. EC = epoxy coated. | eta=56% sub_E_research (low) | 78595 ₽ tender_research 2026-05-11 (medium) | нужна повторная калибровка price_source_url",
       "_source": "Проект ЛОС Свирь-15 263-НВК",
       "_added": "2026-05-08",
-      "price_rub_2026": 78595
+      "price_rub_2026": 78595,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cnp-50wq12-10-075",
@@ -14142,7 +14386,11 @@
       "_engineer_note": "Эталон ПВТ Краснодар КНС-1: малая бытовая Q≤12 H=10. CNP = Nanfang Pump Industry. | eta=50% sub_E_research (medium) | 94132 ₽ research 2026-05-11 (high)",
       "_source": "ТКП ПВТ 822005890-ОК-НВК-6.4",
       "_added": "2026-05-08",
-      "price_rub_2026": 94132
+      "price_rub_2026": 94132,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-250wq600-10-22",
@@ -14184,7 +14432,11 @@
       "_engineer_note": "Эталон ПВТ Краснодар КНС-2: Q=600 м³/ч (255 л/с) H=10. Установлено в Ø4000×6540 ПВТ-корпусе. Крупный ливневый. | eta=68% sub_E_research (medium) | 850000 ₽ tender_research 2026-05-11 (low)",
       "_source": "ТКП ПВТ 822005890-ОК-НВК-6.4",
       "_added": "2026-05-08",
-      "price_rub_2026": 850000
+      "price_rub_2026": 850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-chl-8-50",
@@ -14226,7 +14478,11 @@
       "_engineer_note": "Вертикальный многоступенчатый — редкий класс для пром. ливневой/хвостовой подачи Q=7 H=40. Эталон РД №12-НВК (2 насоса 1+1 + резервуар V=20 м³). | impeller multi-stage->closed canonicalized 2026-05-10 | eta=62% sub_E_research (medium) | 58631 ₽ research 2026-05-11 (high)",
       "_source": "РД №12-НВК",
       "_added": "2026-05-08",
-      "price_rub_2026": 58631
+      "price_rub_2026": 58631,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "pedrollo-f-65-200ar",
@@ -14266,7 +14522,11 @@
       "_engineer_note": "Крупный консольный одноступенчатый для повысительных I-категории (22-этажный жилой Краснодар). Q=156 H=57. Закрывает gap премиум booster. | impeller single_stage_centrifugal->single-channel canonicalized 2026-05-10 | eta=68% sub_E_research (medium) | 196881 ₽ research 2026-05-11 (high)",
       "_source": "Паспорт ПВТ Краснодар (16-20-НВК) + 22-эт.",
       "_added": "2026-05-08",
-      "price_rub_2026": 196881
+      "price_rub_2026": 196881,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-bl-80-200-30-2",
@@ -14314,10 +14574,14 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43. | impeller channel->multi-channel canonicalized 2026-05-10 | 680000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Насос с сухим ротором блочный, 2-полюсный. Корпус EN-GJL-250 + катафорез, колесо EN-GJL-200, уплотнение AQ1EGG (SiC/SiC). Эталон BloPlast SPT-2900/5700 (Блорэй), 1+1 для Q=174 H=43. | impeller channel->multi-channel canonicalized 2026-05-10 | 680000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Wilo Spaix datasheet 2022.09.21 + BloPlast SPT-2900/5700",
       "_added": "2026-05-08",
-      "price_rub_2026": 680000
+      "price_rub_2026": 680000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-rexa-pro-c08da-415",
@@ -14360,7 +14624,11 @@
       "_source": "18-007-ТХ Крым (экспертиза 9102031438)",
       "_added": "2026-05-08",
       "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
-      "price_rub_2026": 247663
+      "price_rub_2026": 247663,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-seg-40-09-2-50b",
@@ -14407,10 +14675,14 @@
         "distributor": "via Турция/Казахстан"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "AUTOADAPT — самонастраивающаяся характеристика. SmartTrim. Уплотнение SiC/SiC + LIPSEAL. Корпус EN-GJL-200, импеллер PA-I. ISO9906:2012 grade 3B2. Артикул 96075897. Габариты 374×118×216×546 мм. | 218000 от subagent Grundfos research 2026-05-10 (high)",
+      "_engineer_note": "AUTOADAPT — самонастраивающаяся характеристика. SmartTrim. Уплотнение SiC/SiC + LIPSEAL. Корпус EN-GJL-200, импеллер PA-I. ISO9906:2012 grade 3B2. Артикул 96075897. Габариты 374×118×216×546 мм. | 218000 от subagent Grundfos research 2026-05-10 (high) | нужна повторная калибровка price_source_url",
       "_source": "Grundfos SEG4009250B полный паспорт (артикул 96075897)",
       "_added": "2026-05-08",
-      "price_rub_2026": 218000
+      "price_rub_2026": 218000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "cnp-50wq20-15-2.2",
@@ -14453,7 +14725,11 @@
       "_engineer_note": "Корпус HT200, рабочее колесо 20Cr13. 2880 об/мин. Уплотнение SiC. Из массива КНС 2.zip — паспорт CNP. Подобран как замена KAIQUAN 50WQS202-3 для бытовых стоков. | segment standard→mid (PRR fix 2026-05-10) | 61623 ₽ tender_research 2026-05-11 (high)",
       "_source": "kns2.zip 50WQ20-15-2.2(I)  CNP.pdf (KP инженер Серво-Юг)",
       "_added": "2026-05-08",
-      "price_rub_2026": 61623
+      "price_rub_2026": 61623,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "high"
     },
     {
       "id": "cnp-50wq25-10-2.2",
@@ -14496,7 +14772,11 @@
       "_engineer_note": "КНС-1 в массиве проектов КНС 2.zip. Бытовые стоки, средний напор. Альтернатива KAIQUAN. | segment standard→mid (PRR fix 2026-05-10) | 61623 ₽ tender_research 2026-05-11 (medium)",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08",
-      "price_rub_2026": 61623
+      "price_rub_2026": 61623,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-65wq50-55-15",
@@ -14537,10 +14817,14 @@
         "distributor": "ООО СиЭнПи Рус (Москва)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км. | segment standard→mid (PRR fix 2026-05-10) | 280000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Высоконапорный CNP — для длинных напорных трубопроводов и больших Δh. Рекомендован для промобъектов с расстоянием до КОС >1 км. | segment standard→mid (PRR fix 2026-05-10) | 280000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08",
-      "price_rub_2026": 280000
+      "price_rub_2026": 280000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "cnp-80wq60-11-4",
@@ -14584,7 +14868,11 @@
       "_engineer_note": "КНС-2 в массиве проектов КНС 2.zip. Бытово-промышленный, среднеобъёмный. | segment standard→mid (PRR fix 2026-05-10) | 108806 ₽ tender_research 2026-05-11 (high)",
       "_source": "kns2.zip CNP паспорт",
       "_added": "2026-05-08",
-      "price_rub_2026": 108806
+      "price_rub_2026": 108806,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "high"
     },
     {
       "id": "smz-kit-kpa-250-18-150-18.5",
@@ -14672,7 +14960,11 @@
       "_engineer_note": "Найдено в КП #28052025_1 ООО «Серво-Полимер» — наша КНС D1600 H8500 для Симферополя. Q=40 H=12 P=3кВт DN80 муфта QG. Эталон собственной сделки. | 95000 ₽ tender_research 2026-05-11 (medium)",
       "_source": "kns3.zip / KP_28052025.txt",
       "_added": "2026-05-08",
-      "price_rub_2026": 95000
+      "price_rub_2026": 95000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "masdaf-nmm-100-160",
@@ -14797,10 +15089,14 @@
         "distributor": "Grundfos РФ"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Маломощный погружной для бытового применения. Однофазный 220В. Free passage 35 мм — ограниченное применение. | 91590 от subagent Grundfos research 2026-05-10 (high)",
+      "_engineer_note": "Маломощный погружной для бытового применения. Однофазный 220В. Free passage 35 мм — ограниченное применение. | 91590 от subagent Grundfos research 2026-05-10 (high) | нужна повторная калибровка price_source_url",
       "_source": "kns3.zip",
       "_added": "2026-05-08",
-      "price_rub_2026": 91590
+      "price_rub_2026": 91590,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "gis-sg-40-075-25-0d",
@@ -14970,10 +15266,14 @@
         "distributor": "Аркада"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа. | impeller channel->multi-channel canonicalized 2026-05-10 | 290000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Новый размер DN300 от KAIQUAN. Отличается от существующего kaiquan-wq2290-2136-80 (DN80). Подозрение что у нас в БД был оптимизирован под другую сделку — этот для большой ливневки/дренажа. | impeller channel->multi-channel canonicalized 2026-05-10 | 290000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "kns3.zip",
       "_added": "2026-05-08",
-      "price_rub_2026": 290000
+      "price_rub_2026": 290000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tm-32-7",
@@ -15015,7 +15315,11 @@
       },
       "_engineer_flag": "ok",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10"
+      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tm-32-8",
@@ -15057,7 +15361,11 @@
       },
       "_engineer_flag": "ok",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10"
+      "_engineer_note": "impeller multi-channel-open->open canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tmw-32-8",
@@ -15098,8 +15406,12 @@
         "distributor": "hvacspareparts.com / wl-russia"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Twister-функция (взрыхление осадка). | impeller multi-channel-twister->multi-channel canonicalized 2026-05-10",
-      "_source": "Agent D research 2026-05-08"
+      "_engineer_note": "Twister-функция (взрыхление осадка). | impeller multi-channel-twister->multi-channel canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tmw-32-11",
@@ -15141,7 +15453,11 @@
       },
       "_engineer_flag": "ok",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "impeller multi-channel-twister->multi-channel canonicalized 2026-05-10"
+      "_engineer_note": "impeller multi-channel-twister->multi-channel canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tmr-32-8",
@@ -15182,8 +15498,12 @@
         "distributor": "elit-nasos.ru"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Suction-down to 2 mm — для откачки до сухого. | impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10",
-      "_source": "Agent D research 2026-05-08"
+      "_engineer_note": "Suction-down to 2 mm — для откачки до сухого. | impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-drain-tmr-32-11",
@@ -15225,7 +15545,11 @@
       },
       "_engineer_flag": "ok",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10"
+      "_engineer_note": "impeller multi-channel-suction-down->multi-channel canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-rexa-cut-gi03-26",
@@ -15268,7 +15592,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Cutter с режущим механизмом для волокон. | price 142000 от subagent Wilo research 2026-05-10 (high, https://elit-nasos.ru/products/nasos-rexa-cut-gi03)",
       "_source": "Agent D research 2026-05-08",
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_source": "elit-nasos.ru",
+      "price_source_url": "https://elit-nasos.ru/products/nasos-rexa-cut-gi03",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-rexa-cut-gi03-30",
@@ -15311,7 +15639,11 @@
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
       "_engineer_note": "price 160000 от subagent Wilo research 2026-05-10 (medium, https://elit-nasos.ru/groups/rexa%20cut)",
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_source": "elit-nasos.ru",
+      "price_source_url": "https://elit-nasos.ru/groups/rexa%20cut",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-rexa-cut-gi06-26",
@@ -15354,7 +15686,11 @@
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
       "_engineer_note": "price 230000 от subagent Wilo research 2026-05-10 (low, https://elit-nasos.ru/groups/rexa%20cut)",
-      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)"
+      "ex_rating_optional": "Ex II 2G Ex db IIB T4 Gb (опция, по запросу)",
+      "price_source": "elit-nasos.ru",
+      "price_source_url": "https://elit-nasos.ru/groups/rexa%20cut",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-rexa-solid-g03-80",
@@ -15397,7 +15733,11 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "price 380000 от subagent Wilo research 2026-05-10 (low, https://www.prof-pump.ru/nasosy/vodootvedeniya/wil)"
+      "_engineer_note": "price 380000 от subagent Wilo research 2026-05-10 (low, https://www.prof-pump.ru/nasosy/vodootvedeniya/wil)",
+      "price_source": "prof-pump.ru",
+      "price_source_url": "https://www.prof-pump.ru/nasosy/vodootvedeniya/wil",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-rexa-solid-g05-100",
@@ -15440,7 +15780,11 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "price 580000 от subagent Wilo research 2026-05-10 (medium, https://spb.lca.su/product/kanalizatsionnyj-nasos-)"
+      "_engineer_note": "price 580000 от subagent Wilo research 2026-05-10 (medium, https://spb.lca.su/product/kanalizatsionnyj-nasos-)",
+      "price_source": "spb.lca.su",
+      "price_source_url": "https://spb.lca.su/product/kanalizatsionnyj-nasos-",
+      "price_source_date": "2026-05-10",
+      "price_confidence": "medium"
     },
     {
       "id": "wilo-rexa-solid-t-s08-150",
@@ -15483,7 +15827,11 @@
       },
       "_engineer_flag": "request_quote",
       "_source": "Agent D research 2026-05-08",
-      "_engineer_note": "request_quote: Серия Rexa SOLID-T (T = тяжёлая, single-channel impeller, P=22 kW, DN150, free p | 580000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "request_quote: Серия Rexa SOLID-T (T = тяжёлая, single-channel impeller, P=22 kW, DN150, free p | 580000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-rexa-solid-t-s12-200",
@@ -15525,8 +15873,12 @@
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Крупная промышл КНС. | request_quote: Тяжёлый канализационный насос P=45 kW, DN200, free passage 150 mm. В РФ не стоку | 1250000 ₽ tender_research 2026-05-11 (low)",
-      "_source": "Agent D research 2026-05-08"
+      "_engineer_note": "Крупная промышл КНС. | request_quote: Тяжёлый канализационный насос P=45 kW, DN200, free passage 150 mm. В РФ не стоку | 1250000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "pedrollo-vxc-15-50",
@@ -15567,8 +15919,12 @@
         "distributor": "pd-shop.ru"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "С режущим механизмом для волокон. | impeller vortex-cutter->cutter canonicalized 2026-05-10",
-      "_source": "Agent D research 2026-05-08"
+      "_engineer_note": "С режущим механизмом для волокон. | impeller vortex-cutter->cutter canonicalized 2026-05-10 | нужна повторная калибровка price_source_url",
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "pedrollo-mc-15-50",
@@ -15609,7 +15965,12 @@
         "distributor": "pd-shop.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "pedrollo-bcm-15-50",
@@ -15650,7 +16011,12 @@
         "distributor": "pd-shop.ru"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "grundfos-seg-40-12-2",
@@ -15691,7 +16057,12 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "grundfos-seg-40-15-2",
@@ -15732,7 +16103,12 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "grundfos-seg-40-26-2",
@@ -15773,7 +16149,12 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent D research 2026-05-08"
+      "_source": "Agent D research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "ksb-amarex-n-32-160-g",
@@ -15814,9 +16195,13 @@
         "distributor": "KSB Pumps Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Материал G (чугун).",
+      "_engineer_note": "Материал G (чугун). | нужна повторная калибровка price_source_url",
       "_source": "Agent D research 2026-05-08, Mat.No 39100xxx",
-      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "ksb-amarex-n-50-220-g",
@@ -15858,7 +16243,12 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "ksb-amarex-n-65-220-g",
@@ -15901,7 +16291,12 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "ksb-amarex-n-100-280-g",
@@ -15944,7 +16339,12 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent D research 2026-05-08",
-      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)"
+      "ex_rating_optional": "Ex db IIB T3/T4 Gb (опция ATEX, по запросу)",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "ksb-amarex-krt-f100",
@@ -16117,8 +16517,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Самый дешёвый бытовой WQ.",
-      "_source": "Agent E research 2026-05-08"
+      "_engineer_note": "Самый дешёвый бытовой WQ. | нужна повторная калибровка price_source_url",
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "fancy-50wq10-12-1-1",
@@ -16159,7 +16563,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-65wq20-10-1-5",
@@ -16200,7 +16609,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-65wq25-15-2-2",
@@ -16241,7 +16655,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-100wq50-7-2-2",
@@ -16283,7 +16702,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-100wq60-15-5-5",
@@ -16325,7 +16749,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-100wq100-30-15",
@@ -16367,7 +16796,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "fancy-150wq140-22-22",
@@ -16409,7 +16843,12 @@
         "distributor": "Fancy Pumps Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-lks-256",
@@ -16449,8 +16888,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Самый дешёвый дренажный мини.",
-      "_source": "Agent E research 2026-05-08"
+      "_engineer_note": "Самый дешёвый дренажный мини. | нужна повторная калибровка price_source_url",
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "leo-xks-300",
@@ -16490,7 +16933,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-xks-750",
@@ -16531,7 +16979,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-aks-1100",
@@ -16572,7 +17025,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-amsm-1500",
@@ -16613,7 +17071,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-amsm-2200",
@@ -16654,7 +17117,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "leo-ams-3700",
@@ -16695,7 +17163,12 @@
         "distributor": "LEO Group"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-40wq9-5",
@@ -16736,7 +17209,12 @@
         "distributor": "CNP Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08, CNP WQ-W cutter"
+      "_source": "Agent E research 2026-05-08, CNP WQ-W cutter",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-50wq15-10",
@@ -16777,7 +17255,12 @@
         "distributor": "CNP Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-65wq30-15",
@@ -16818,7 +17301,12 @@
         "distributor": "CNP Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-80wq40-20",
@@ -16860,7 +17348,12 @@
         "distributor": "CNP Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-100wq45-22",
@@ -16902,7 +17395,12 @@
         "distributor": "CNP Russia"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "gnom-40-25",
@@ -16943,8 +17441,12 @@
         "distributor": "СЭМЗ Томск"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российский эконом-сегмент.",
-      "_source": "Agent E research 2026-05-08"
+      "_engineer_note": "Российский эконом-сегмент. | нужна повторная калибровка price_source_url",
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "gnom-50-25",
@@ -16985,7 +17487,12 @@
         "distributor": "СЭМЗ Томск"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "gnom-100-25",
@@ -17026,7 +17533,12 @@
         "distributor": "СЭМЗ Томск"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "gnom-150-30",
@@ -17067,7 +17579,12 @@
         "distributor": "СЭМЗ Томск"
       },
       "_engineer_flag": "ok",
-      "_source": "Agent E research 2026-05-08"
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "gnom-cmf-50-50",
@@ -17107,8 +17624,12 @@
         "distributor": "СЭМЗ Томск"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Высоконапорная серия ЦМФ.",
-      "_source": "Agent E research 2026-05-08"
+      "_engineer_note": "Высоконапорная серия ЦМФ. | нужна повторная калибровка price_source_url",
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "Agent D/E research 2026-05-09",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "irtysh-pf-40-35-ex",
@@ -17149,9 +17670,13 @@
         "distributor": "завод Взлёт, Омск"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Взрывозащищённое исполнение Ex для нефтегаза. | 360000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Взрывозащищённое исполнение Ex для нефтегаза. | 360000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Agent E research 2026-05-08",
-      "ex_rating": "1Ex d IIB T4 Gb X"
+      "ex_rating": "1Ex d IIB T4 Gb X",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "irtysh-pf-100-50-ex",
@@ -17192,9 +17717,13 @@
         "distributor": "завод Взлёт, Омск"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "ATEX для нефтехимии. | 720000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "ATEX для нефтехимии. | 720000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Agent E research 2026-05-08",
-      "ex_rating": "1Ex d IIB T4 Gb X"
+      "ex_rating": "1Ex d IIB T4 Gb X",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-nk1-50-22-tb",
@@ -17401,9 +17930,13 @@
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "WQ/E серия — Ex-исполнение для нефтегаза. | 165000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "WQ/E серия — Ex-исполнение для нефтегаза. | 165000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Agent E research 2026-05-08",
-      "ex_rating": "1Ex d IIB T3 Gb"
+      "ex_rating": "1Ex d IIB T3 Gb",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "kaiquan-100wqe-50-25-ex",
@@ -17446,7 +17979,11 @@
       "_engineer_flag": "needs_review",
       "_source": "Agent E research 2026-05-08",
       "ex_rating": "1Ex d IIB T3 Gb",
-      "_engineer_note": "245000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "245000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "kaiquan-150wqs-100-30",
@@ -17489,7 +18026,11 @@
       },
       "_engineer_flag": "needs_review",
       "_source": "Agent E research 2026-05-08",
-      "_engineer_note": "380000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "380000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "kaiquan-200wqs-200-15",
@@ -17531,8 +18072,12 @@
         "distributor": "ACO Russia"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Магистральная для крупных объектов. | impeller single-channel-large->single-channel canonicalized 2026-05-10 | 520000 ₽ tender_research 2026-05-11 (low)",
-      "_source": "Agent E research 2026-05-08"
+      "_engineer_note": "Магистральная для крупных объектов. | impeller single-channel-large->single-channel canonicalized 2026-05-10 | 520000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "_source": "Agent E research 2026-05-08",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "antarus-2mlv32-3-gprs",
@@ -17786,10 +18331,14 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Вертикальный многоступенчатый для повысительных и пожарных систем малых объектов. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09",
-      "price_rub_2026": 410000
+      "price_rub_2026": 410000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-helix-v-3606",
@@ -17829,10 +18378,14 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 720000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Вертикальный многоступенчатый, средняя мощность для МКД и общественных зданий. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 720000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09",
-      "price_rub_2026": 720000
+      "price_rub_2026": 720000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-helix-v-5208",
@@ -17872,10 +18425,14 @@
         "status": "parallel_import"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 1150000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Для зданий повышенной этажности и пожарных насосных с большой высотой подъёма. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 1150000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Wilo Helix V catalog 2024",
       "_added": "2026-05-09",
-      "price_rub_2026": 1150000
+      "price_rub_2026": 1150000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-cr-32-4-2",
@@ -17915,10 +18472,14 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_engineer_note": "Российская преемница — ИСТРАТЕХ ИЛТ 32-4. Эталон Сочи Роза Хутор Grundfos SP 95-4. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 410000 от subagent Grundfos research 2026-05-10 (medium) | нужна повторная калибровка price_source_url",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09",
-      "price_rub_2026": 410000
+      "price_rub_2026": 410000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-cr-64-3-2",
@@ -17958,10 +18519,14 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 620000 от subagent Grundfos research 2026-05-10 (medium)",
+      "_engineer_note": "Преемница ИСТРАТЕХ ИЛТ 64-3. Для пожарных насосных Q>40 H<80. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 620000 от subagent Grundfos research 2026-05-10 (medium) | нужна повторная калибровка price_source_url",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09",
-      "price_rub_2026": 620000
+      "price_rub_2026": 620000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-cr-95-2-2",
@@ -18001,10 +18566,14 @@
         "status": "parallel_import_or_replacement"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с). | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 775000 от subagent Grundfos research 2026-05-10 (high)",
+      "_engineer_note": "Подходит для Бондаревской ВЭС Q=133 H=30 (диктующий пожарный расход 31 л/с). | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 775000 от subagent Grundfos research 2026-05-10 (high) | нужна повторная калибровка price_source_url",
       "_source": "Grundfos CR catalog (parallel)",
       "_added": "2026-05-09",
-      "price_rub_2026": 775000
+      "price_rub_2026": 775000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-ilt-95-2",
@@ -18045,10 +18614,14 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 580000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Российская преемница Grundfos CR 95-2-2 (после ухода Grundfos из РФ). Подходит для пожарных насосных Q≈130-140 м³/ч H≈30-40 м. Эталон Бондаревской ВЭС Q=133 H=30. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 580000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "ИСТРАТЕХ Групп каталог 2026 (research 2026-05-08)",
       "_added": "2026-05-09",
-      "price_rub_2026": 580000
+      "price_rub_2026": 580000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-ilt-64-3",
@@ -18089,10 +18662,14 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 440000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Преемница Grundfos CR 64-3. Для МКД и зданий повышенной этажности. | impeller radial-multistage-vertical->closed canonicalized 2026-05-10 | 440000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "ИСТРАТЕХ Групп каталог 2026",
       "_added": "2026-05-09",
-      "price_rub_2026": 440000
+      "price_rub_2026": 440000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-4",
@@ -18140,7 +18717,11 @@
       "price_rub_2026": 65402,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 4. Аналог CR 1-4",
-      "_engineer_note": " | eta=48% sub_E_research (low)"
+      "_engineer_note": "eta=48% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-5",
@@ -18188,7 +18769,11 @@
       "price_rub_2026": 67291,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 5. Аналог CR 1-5",
-      "_engineer_note": " | eta=48% sub_E_research (low)"
+      "_engineer_note": "eta=48% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-8",
@@ -18236,7 +18821,11 @@
       "price_rub_2026": 73513,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 8. Аналог CR 1-8",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-15",
@@ -18284,7 +18873,11 @@
       "price_rub_2026": 95295,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 15. Аналог CR 1-15",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-17",
@@ -18332,7 +18925,11 @@
       "price_rub_2026": 100267,
       "datasheet_url": "https://companywts.ru/catalog/istratex/nasos-vertikalnyy-mnogostupenchatyy-istratekh-bm-1-17a-a-d-e-hqqe-a-1-1-kvt-dn25-32-s74111014/",
       "notes": "Ступеней: 17. Аналог CR 1-17",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-19",
@@ -18380,7 +18977,11 @@
       "price_rub_2026": 106572,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 19. Аналог CR 1-19",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-21",
@@ -18428,7 +19029,11 @@
       "price_rub_2026": 110373,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 21. Аналог CR 1-21",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-1-23",
@@ -18476,7 +19081,11 @@
       "price_rub_2026": 114269,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 23. Аналог CR 1-23",
-      "_engineer_note": " | eta=50% sub_E_research (low)"
+      "_engineer_note": "eta=50% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-bm-3-3",
@@ -18524,7 +19133,11 @@
       "price_rub_2026": 61195,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 3. Аналог CR 3-3",
-      "_engineer_note": " | eta=55% sub_E_research (medium)"
+      "_engineer_note": " | eta=55% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-4",
@@ -18572,7 +19185,11 @@
       "price_rub_2026": 65402,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 4. Аналог CR 3-4",
-      "_engineer_note": " | eta=56% sub_E_research (medium)"
+      "_engineer_note": " | eta=56% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-6",
@@ -18620,7 +19237,11 @@
       "price_rub_2026": 66875,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 6. Аналог CR 3-6",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-9",
@@ -18668,7 +19289,11 @@
       "price_rub_2026": 81277,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 9. Аналог CR 3-9",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-10",
@@ -18716,7 +19341,11 @@
       "price_rub_2026": 83198,
       "datasheet_url": "https://vodokomfort.ru/product/285499-nasos-vertikalniy-mnogostupenchatiy-bm-3-10a-a-d-e-hqqe-a-3-x-380-50gc-0-75kvt-vhod-dn25-32-vyhod-dn25-32-istrateh-s74113009",
       "notes": "Ступеней: 10. Аналог CR 3-10",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-11",
@@ -18764,7 +19393,11 @@
       "price_rub_2026": 85513,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 11. Аналог CR 3-11",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-12",
@@ -18812,7 +19445,11 @@
       "price_rub_2026": 89939,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 12. Аналог CR 3-12",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-15",
@@ -18860,7 +19497,11 @@
       "price_rub_2026": 91202,
       "datasheet_url": "https://shop.vodokomfort.ru/product/285503-nasos-vertikalniy-mnogostupenchatiy-bm-3-15a-a-d-e-hqqe-a-3-x-380-50gc-1-1kvt-vhod-dn25-32-vyhod-dn25-32-istrateh-s74113013",
       "notes": "Ступеней: 15. Аналог CR 3-15",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-17",
@@ -18908,7 +19549,11 @@
       "price_rub_2026": 105796,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 17. Аналог CR 3-17",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-19",
@@ -18956,7 +19601,11 @@
       "price_rub_2026": 110573,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 19. Аналог CR 3-19",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-21",
@@ -19004,7 +19653,11 @@
       "price_rub_2026": 112586,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 21. Аналог CR 3-21",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-23",
@@ -19052,7 +19705,11 @@
       "price_rub_2026": 116205,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 23. Аналог CR 3-23",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-25",
@@ -19100,7 +19757,11 @@
       "price_rub_2026": 119894,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 25. Аналог CR 3-25",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-33",
@@ -19148,7 +19809,11 @@
       "price_rub_2026": 138744,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 33. Аналог CR 3-33",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-3-36",
@@ -19196,7 +19861,11 @@
       "price_rub_2026": 165121,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 36. Аналог CR 3-36",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-4",
@@ -19244,7 +19913,11 @@
       "price_rub_2026": 67520,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 4. Аналог CR 5-4",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-5",
@@ -19292,7 +19965,11 @@
       "price_rub_2026": 75686,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 5. Аналог CR 5-5",
-      "_engineer_note": " | eta=64% sub_E_research (medium)"
+      "_engineer_note": " | eta=64% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-8",
@@ -19340,7 +20017,11 @@
       "price_rub_2026": 83359,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 8. Аналог CR 5-8",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-9",
@@ -19388,7 +20069,11 @@
       "price_rub_2026": 93753,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 9. Аналог CR 5-9",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-10",
@@ -19436,7 +20121,11 @@
       "price_rub_2026": 96053,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 10. Аналог CR 5-10",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-20",
@@ -19484,7 +20173,11 @@
       "price_rub_2026": 124212,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 20. Аналог CR 5-20",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-22",
@@ -19532,7 +20225,11 @@
       "price_rub_2026": 137885,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 22. Аналог CR 5-22",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-24",
@@ -19580,7 +20277,11 @@
       "price_rub_2026": 141697,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 24. Аналог CR 5-24",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-5-29",
@@ -19628,7 +20329,11 @@
       "price_rub_2026": 150587,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 29. Аналог CR 5-29",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-5",
@@ -19676,7 +20381,11 @@
       "price_rub_2026": 156127,
       "datasheet_url": "https://shop.vodokomfort.ru/product/285574-nasos-vertikalniy-mnogostupenchatiy-bm-10-5a-a-d-e-hqqe-a-3-x-380-50gc-2-2kvt-vhod-vyhod-dn40-istrateh-s74117005",
       "notes": "Ступеней: 5. Аналог CR 10-5",
-      "_engineer_note": " | eta=68% sub_E_research (medium)"
+      "_engineer_note": " | eta=68% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-6",
@@ -19724,7 +20433,11 @@
       "price_rub_2026": 106316,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 6. Аналог CR 10-6",
-      "_engineer_note": " | eta=69% sub_E_research (medium)"
+      "_engineer_note": " | eta=69% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-7",
@@ -19772,7 +20485,11 @@
       "price_rub_2026": 115105,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 7. Аналог CR 10-7",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-12",
@@ -19820,7 +20537,11 @@
       "price_rub_2026": 138454,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 12. Аналог CR 10-12",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-14",
@@ -19868,7 +20589,11 @@
       "price_rub_2026": 168256,
       "datasheet_url": "https://alran.ru/catalog/sistemy-vodosnab/nasosy1/poverkhnostnye-nasosy/mnogostupenchatye-poverkhnostn/vertikalnye-s-chastotnym-preob/nasos-vertikalnyy-mnogostupench-868899088/",
       "notes": "Ступеней: 14. Аналог CR 10-14",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-16",
@@ -19916,7 +20641,11 @@
       "price_rub_2026": 172085,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 16. Аналог CR 10-16",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-10-18",
@@ -19964,7 +20693,11 @@
       "price_rub_2026": 192927,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 18. Аналог CR 10-18",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-3",
@@ -20012,7 +20745,11 @@
       "price_rub_2026": 133403,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 3. Аналог CR 15-3",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-5",
@@ -20060,7 +20797,11 @@
       "price_rub_2026": 178114,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 5. Аналог CR 15-5",
-      "_engineer_note": " | eta=71% sub_E_research (medium)"
+      "_engineer_note": " | eta=71% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-6",
@@ -20108,7 +20849,11 @@
       "price_rub_2026": 216621,
       "datasheet_url": "https://vodokomfort.ru/product/285602-nasos-vertikalniy-mnogostupenchatiy-bm-15-6a-a-d-e-hqqe-a-3-x-380-50gc-5-5kvt-vhod-vyhod-dn50-istrateh-s74118006",
       "notes": "Ступеней: 6. Аналог CR 15-6",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-7",
@@ -20156,7 +20901,11 @@
       "price_rub_2026": 223538,
       "datasheet_url": "https://spb.wtpump.ru/catalog/detail/699883/",
       "notes": "Ступеней: 7. Аналог CR 15-7",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-8",
@@ -20204,7 +20953,11 @@
       "price_rub_2026": 243455,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 8. Аналог CR 15-8",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-15-10",
@@ -20252,7 +21005,11 @@
       "price_rub_2026": 295707,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 10. Аналог CR 15-10",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-20-4",
@@ -20300,7 +21057,11 @@
       "price_rub_2026": 233429,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 4. Аналог CR 20-4",
-      "_engineer_note": " | eta=73% sub_E_research (medium)"
+      "_engineer_note": " | eta=73% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-20-5",
@@ -20348,7 +21109,11 @@
       "price_rub_2026": 227695,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 5. Аналог CR 20-5",
-      "_engineer_note": " | eta=73% sub_E_research (medium)"
+      "_engineer_note": " | eta=73% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-20-10",
@@ -20396,7 +21161,11 @@
       "datasheet_url": "https://vodokomfort.ru/product/285618-nasos-vertikalniy-mnogostupenchatiy-bm-20-10a-a-d-e-s74119009",
       "notes": "Ступеней: 10. Аналог CR 20-10",
       "_engineer_note": "eta=73% sub_E_research (medium) | 180000 ₽ research 2026-05-11 (low)",
-      "price_rub_2026": 180000
+      "price_rub_2026": 180000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-20-17",
@@ -20444,7 +21213,11 @@
       "price_rub_2026": 520533,
       "datasheet_url": "https://www.teremonline.ru/product/vertikalnyy-mnogostupenchatyy-nasos-istratex-bm-20-17a-a-d-e-hqqe-a/",
       "notes": "Ступеней: 17. Аналог CR 20-17",
-      "_engineer_note": " | eta=73% sub_E_research (medium)"
+      "_engineer_note": " | eta=73% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-32-3",
@@ -20492,7 +21265,11 @@
       "price_rub_2026": 352281,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 3. Аналог CR 32-3",
-      "_engineer_note": " | eta=74% sub_E_research (medium)"
+      "_engineer_note": " | eta=74% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-32-3-2",
@@ -20540,7 +21317,11 @@
       "price_rub_2026": 352281,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 3. Аналог CR 32-3-2",
-      "_engineer_note": " | eta=74% sub_E_research (medium)"
+      "_engineer_note": " | eta=74% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-45-1-1",
@@ -20588,7 +21369,11 @@
       "price_rub_2026": 237822,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 1. Аналог CR 45-1-1",
-      "_engineer_note": " | eta=75% sub_E_research (medium)"
+      "_engineer_note": " | eta=75% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-45-1",
@@ -20636,7 +21421,11 @@
       "price_rub_2026": 260458,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 1. Аналог CR 45-1",
-      "_engineer_note": " | eta=75% sub_E_research (medium)"
+      "_engineer_note": " | eta=75% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-45-2-2",
@@ -20684,7 +21473,11 @@
       "price_rub_2026": 315158,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 2. Аналог CR 45-2-2",
-      "_engineer_note": " | eta=75% sub_E_research (medium)"
+      "_engineer_note": " | eta=75% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-64-1-1",
@@ -20732,7 +21525,11 @@
       "price_rub_2026": 277238,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 1. Аналог CR 64-1-1",
-      "_engineer_note": " | eta=76% sub_E_research (medium)"
+      "_engineer_note": " | eta=76% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-64-1",
@@ -20780,7 +21577,11 @@
       "price_rub_2026": 301202,
       "datasheet_url": "https://alran.ru/brands/istratekh/",
       "notes": "Ступеней: 1. Аналог CR 64-1",
-      "_engineer_note": " | eta=76% sub_E_research (medium)"
+      "_engineer_note": " | eta=76% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-bm-64-3-1",
@@ -20828,7 +21629,11 @@
       "datasheet_url": "https://shop.vodokomfort.ru/product/285681-nasos-vertikalniy-mnogostupenchatiy-bm-64-3-1a-a-d-e-hqqe-a-3-x-380-50gc-15kvt-vhod-vyhod-dn100-istrateh-s74123007",
       "notes": "Ступеней: 3. Аналог CR 64-3-1",
       "_engineer_note": "eta=76% sub_E_research (medium) | 415000 ₽ research 2026-05-11 (medium)",
-      "price_rub_2026": 415000
+      "price_rub_2026": 415000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "istratech-vo-65-930-30-2",
@@ -20876,7 +21681,11 @@
       "price_rub_2026": 326095,
       "datasheet_url": "https://new.etpgpb.ru/portal/catalog/products/2398011-nasos-tsentrobezhnyy-vertikalnyy-odnostupenchatyy-vo-65-930-30-2-85/",
       "notes": "Ступеней: 1. Аналог TP 65",
-      "_engineer_note": " | eta=70% sub_E_research (low)"
+      "_engineer_note": "eta=70% sub_E_research (low) | нужна повторная калибровка price_source_url",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low"
     },
     {
       "id": "istratech-hcfs-kmg-80-200-211-45",
@@ -20918,7 +21727,11 @@
       "datasheet_url": "https://wtpump.ru/catalog/detail/699762/",
       "notes": "Установка пожаротушения 1+1 (рабочий+резерв)",
       "_engineer_note": "eta=72% sub_E_research (medium) | 1850000 ₽ tender_research 2026-05-11 (low)",
-      "price_rub_2026": 1850000
+      "price_rub_2026": 1850000,
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "cns-13-70",
@@ -20966,7 +21779,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: малая-ппд, индивидуальное-водоснабжение",
-      "price_rub_2026": 119700
+      "price_rub_2026": 119700,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-105",
@@ -21014,7 +21832,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: малая-ппд",
-      "price_rub_2026": 136500
+      "price_rub_2026": 136500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-140",
@@ -21062,7 +21885,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: малая-ппд",
-      "price_rub_2026": 152250
+      "price_rub_2026": 152250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-175",
@@ -21111,7 +21939,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: малая-ппд, пожарка-спд",
-      "price_rub_2026": 168000
+      "price_rub_2026": 168000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-210",
@@ -21160,7 +21993,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: малая-ппд, пожарка-спд",
-      "price_rub_2026": 183750
+      "price_rub_2026": 183750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-245",
@@ -21209,7 +22047,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 199500
+      "price_rub_2026": 199500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-280",
@@ -21258,7 +22101,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 210000
+      "price_rub_2026": 210000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-315",
@@ -21308,7 +22156,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 225750
+      "price_rub_2026": 225750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-13-350",
@@ -21358,7 +22211,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 236250
+      "price_rub_2026": 236250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-44",
@@ -21406,7 +22264,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив",
-      "price_rub_2026": 107100
+      "price_rub_2026": 107100,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-66",
@@ -21454,7 +22317,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив",
-      "price_rub_2026": 117600
+      "price_rub_2026": 117600,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-88",
@@ -21503,7 +22371,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив, пожарка-спд",
-      "price_rub_2026": 128100
+      "price_rub_2026": 128100,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-110",
@@ -21552,7 +22425,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 136500
+      "price_rub_2026": 136500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-132",
@@ -21601,7 +22479,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 152250
+      "price_rub_2026": 152250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-154",
@@ -21650,7 +22533,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 163800
+      "price_rub_2026": 163800,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-176",
@@ -21699,7 +22587,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 175350
+      "price_rub_2026": 175350,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-198",
@@ -21749,7 +22642,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 183750
+      "price_rub_2026": 183750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-38-220",
@@ -21799,7 +22697,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 192150
+      "price_rub_2026": 192150,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-66",
@@ -21847,7 +22750,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив",
-      "price_rub_2026": 129150
+      "price_rub_2026": 129150,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-99",
@@ -21896,7 +22804,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив, пожарка-спд",
-      "price_rub_2026": 144900
+      "price_rub_2026": 144900,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-132",
@@ -21945,7 +22858,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 160650
+      "price_rub_2026": 160650,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-165",
@@ -21994,7 +22912,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 176400
+      "price_rub_2026": 176400,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-198",
@@ -22044,7 +22967,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 192150
+      "price_rub_2026": 192150,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-231",
@@ -22094,7 +23022,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 207900
+      "price_rub_2026": 207900,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-264",
@@ -22143,7 +23076,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, шахтный-водоотлив",
-      "price_rub_2026": 223650
+      "price_rub_2026": 223650,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-297",
@@ -22192,7 +23130,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 235200
+      "price_rub_2026": 235200,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-60-330",
@@ -22241,7 +23184,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, шахтный-водоотлив",
-      "price_rub_2026": 247800
+      "price_rub_2026": 247800,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-98",
@@ -22290,7 +23238,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив, пожарка-спд",
-      "price_rub_2026": 288750
+      "price_rub_2026": 288750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-147",
@@ -22339,7 +23292,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд",
-      "price_rub_2026": 336000
+      "price_rub_2026": 336000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-196",
@@ -22389,7 +23347,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд",
-      "price_rub_2026": 378000
+      "price_rub_2026": 378000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-245",
@@ -22439,7 +23402,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: пожарка-спд, ппд, нефтехимия",
-      "price_rub_2026": 425250
+      "price_rub_2026": 425250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-294",
@@ -22488,7 +23456,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия, шахтный-водоотлив",
-      "price_rub_2026": 467250
+      "price_rub_2026": 467250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-343",
@@ -22537,7 +23510,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 504000
+      "price_rub_2026": 504000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-392",
@@ -22586,7 +23564,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 535500
+      "price_rub_2026": 535500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-441",
@@ -22635,7 +23618,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 556500
+      "price_rub_2026": 556500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-105-490",
@@ -22684,7 +23672,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 578550
+      "price_rub_2026": 578550,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-85",
@@ -22732,7 +23725,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: водоотлив, магистраль",
-      "price_rub_2026": 402150
+      "price_rub_2026": 402150,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-128",
@@ -22780,7 +23778,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: магистраль",
-      "price_rub_2026": 451500
+      "price_rub_2026": 451500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-170",
@@ -22829,7 +23832,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, магистраль",
-      "price_rub_2026": 501900
+      "price_rub_2026": 501900,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-212",
@@ -22879,7 +23887,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, пожарка-спд",
-      "price_rub_2026": 551250
+      "price_rub_2026": 551250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-255",
@@ -22928,7 +23941,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 603750
+      "price_rub_2026": 603750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-297",
@@ -22977,7 +23995,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 656250
+      "price_rub_2026": 656250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-340",
@@ -23026,7 +24049,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 703500
+      "price_rub_2026": 703500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-383",
@@ -23075,7 +24103,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 750750
+      "price_rub_2026": 750750,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-425",
@@ -23124,7 +24157,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия",
-      "price_rub_2026": 794850
+      "price_rub_2026": 794850,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-475",
@@ -23173,7 +24211,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, нефтехимия. СПЕЦЗАКАЗ",
-      "price_rub_2026": 892500
+      "price_rub_2026": 892500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-680",
@@ -23222,7 +24265,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд. СПЕЦЗАКАЗ",
-      "price_rub_2026": 1260000
+      "price_rub_2026": 1260000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-950",
@@ -23271,7 +24319,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд. СПЕЦЗАКАЗ",
-      "price_rub_2026": 1785000
+      "price_rub_2026": 1785000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-180-1185",
@@ -23321,7 +24374,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: ппд. СПЕЦЗАКАЗ",
       "price_rub_2026": 11200000,
-      "_engineer_note": "11200000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "11200000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-180-1422",
@@ -23371,7 +24428,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: ппд. СПЕЦЗАКАЗ",
       "price_rub_2026": 13500000,
-      "_engineer_note": "13500000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "13500000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-300-120",
@@ -23419,7 +24480,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: магистраль, водоотлив",
-      "price_rub_2026": 625800
+      "price_rub_2026": 625800,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-180",
@@ -23467,7 +24533,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: магистраль",
-      "price_rub_2026": 735000
+      "price_rub_2026": 735000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-240",
@@ -23516,7 +24587,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: магистраль, ппд",
-      "price_rub_2026": 840000
+      "price_rub_2026": 840000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-300",
@@ -23565,7 +24641,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, магистраль",
-      "price_rub_2026": 945000
+      "price_rub_2026": 945000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-360",
@@ -23614,7 +24695,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, магистраль",
-      "price_rub_2026": 1039500
+      "price_rub_2026": 1039500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-420",
@@ -23663,7 +24749,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 1134000
+      "price_rub_2026": 1134000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-480",
@@ -23712,7 +24803,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, шахтный-водоотлив",
-      "price_rub_2026": 1186500
+      "price_rub_2026": 1186500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-540",
@@ -23761,7 +24857,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 1239000
+      "price_rub_2026": 1239000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-300-600",
@@ -23810,7 +24911,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, магистраль",
-      "price_rub_2026": 1286250
+      "price_rub_2026": 1286250,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-160",
@@ -23859,7 +24965,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: магистраль, ппд",
-      "price_rub_2026": 1575000
+      "price_rub_2026": 1575000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-240",
@@ -23908,7 +25019,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд, магистраль",
-      "price_rub_2026": 1942500
+      "price_rub_2026": 1942500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-320",
@@ -23957,7 +25073,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 2310000
+      "price_rub_2026": 2310000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-400",
@@ -24006,7 +25127,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 2730000
+      "price_rub_2026": 2730000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-480",
@@ -24055,7 +25181,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 3097500
+      "price_rub_2026": 3097500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-560",
@@ -24104,7 +25235,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 3465000
+      "price_rub_2026": 3465000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-640",
@@ -24153,7 +25289,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 3832500
+      "price_rub_2026": 3832500,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-720",
@@ -24202,7 +25343,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
-      "price_rub_2026": 4200000
+      "price_rub_2026": 4200000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-500-800",
@@ -24252,7 +25398,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
       "price_rub_2026": 24000000,
-      "_engineer_note": "24000000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "24000000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-500-880",
@@ -24302,7 +25452,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: ппд",
       "price_rub_2026": 26500000,
-      "_engineer_note": "26500000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "26500000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-500-1000",
@@ -24352,7 +25506,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: ппд. СПЕЦЗАКАЗ",
       "price_rub_2026": 30000000,
-      "_engineer_note": "30000000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "30000000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-850-240",
@@ -24400,7 +25558,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, магистраль",
-      "price_rub_2026": 4200000
+      "price_rub_2026": 4200000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-850-360",
@@ -24448,7 +25611,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, магистраль",
-      "price_rub_2026": 5250000
+      "price_rub_2026": 5250000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-850-480",
@@ -24496,7 +25664,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив",
-      "price_rub_2026": 6300000
+      "price_rub_2026": 6300000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-850-600",
@@ -24545,7 +25718,12 @@
       "_added": "2026-05-10",
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, ппд",
-      "price_rub_2026": 7350000
+      "price_rub_2026": 7350000,
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cns-850-720",
@@ -24595,7 +25773,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, ппд",
       "price_rub_2026": 35000000,
-      "_engineer_note": "35000000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "35000000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-850-840",
@@ -24645,7 +25827,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, ппд",
       "price_rub_2026": 40500000,
-      "_engineer_note": "40500000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "40500000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cns-850-960",
@@ -24695,7 +25881,11 @@
       "free_passage_mm": 0,
       "notes": "Применения: шахтный-водоотлив, ппд",
       "price_rub_2026": 46000000,
-      "_engineer_note": "46000000 ₽ tender_research 2026-05-11 (low)"
+      "_engineer_note": "46000000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "cnp-50wq10-7-0.55",
@@ -24743,7 +25933,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Минимальная бытовая. Конкурент KAIQUAN 50WQS5-9-0.55.",
-      "_engineer_note": " | eta=48% sub_E_research (medium)"
+      "_engineer_note": " | eta=48% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq10-10-0.75",
@@ -24791,7 +25985,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "ACW = с режущей кромкой (semi-cutter). Бытовая КНС.",
-      "_engineer_note": " | eta=50% sub_E_research (medium)"
+      "_engineer_note": " | eta=50% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq15-15-1.5",
@@ -24838,7 +26036,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=53% sub_E_research (medium)"
+      "_engineer_note": " | eta=53% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq15-20-2.2",
@@ -24887,7 +26089,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Рабочая лошадка для коттеджных КНС. На dn.ru комплект с TOS-50 = 60 000 ₽.",
-      "_engineer_note": " | eta=55% sub_E_research (medium)"
+      "_engineer_note": " | eta=55% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq15-32-4",
@@ -24935,7 +26141,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Высоконапорный 50WQ для КНС с длинным напорным трубопроводом.",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq15-40-5.5",
@@ -24983,7 +26193,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "На dn.ru ~95 тыс. Высокий напор для рассредоточенных КНС.",
-      "_engineer_note": " | eta=60% sub_E_research (medium)"
+      "_engineer_note": " | eta=60% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq25-20-3",
@@ -25030,7 +26244,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=56% sub_E_research (medium)"
+      "_engineer_note": " | eta=56% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-50wq25-35-7.5",
@@ -25077,7 +26295,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-65wq25-15-3",
@@ -25124,7 +26346,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=56% sub_E_research (medium)"
+      "_engineer_note": " | eta=56% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-65wq30-25-5.5",
@@ -25171,7 +26397,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=60% sub_E_research (medium)"
+      "_engineer_note": " | eta=60% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-65wq40-50-11",
@@ -25219,7 +26449,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Высоконапорный коммерческий — для отелей, торговых центров, очистных модулей.",
-      "_engineer_note": " | eta=64% sub_E_research (medium)"
+      "_engineer_note": " | eta=64% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-80wq40-22-5.5",
@@ -25266,7 +26500,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=60% sub_E_research (medium)"
+      "_engineer_note": " | eta=60% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-80wq40-30-7.5",
@@ -25312,7 +26550,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-80wq48-38-11",
@@ -25358,7 +26600,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=64% sub_E_research (medium)"
+      "_engineer_note": " | eta=64% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-100wq50-7-2.2",
@@ -25406,7 +26652,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Дешёвый низконапорный для ливневых КНС / откачка с малой высотой.",
-      "_engineer_note": " | eta=55% sub_E_research (medium)"
+      "_engineer_note": " | eta=55% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-100wq65-15-5.5",
@@ -25453,7 +26703,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=60% sub_E_research (medium)"
+      "_engineer_note": " | eta=60% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-100wq80-15-7.5",
@@ -25500,7 +26754,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-100wq80-35-18.5",
@@ -25547,7 +26805,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "EF = energy-efficient двигатель IE3.",
-      "_engineer_note": " | eta=66% sub_E_research (medium)"
+      "_engineer_note": " | eta=66% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-150wq150-16-11",
@@ -25594,7 +26856,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=64% sub_E_research (medium)"
+      "_engineer_note": " | eta=64% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-150wq150-20-15",
@@ -25641,7 +26907,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Конкурент Wilo EMU FA15 / KSB Amarex KRT 150.",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-150wq180-25-22",
@@ -25688,7 +26958,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Топ серии WQ — для крупных промпредприятий.",
-      "_engineer_note": " | eta=67% sub_E_research (medium)"
+      "_engineer_note": " | eta=67% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm1-3",
@@ -25737,7 +27011,12 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "notes": "Малая ВНС / квартирный буст. 3 ступени, 25 бар, 2900 об/мин. Аналог Grundfos CR1-3."
+      "notes": "Малая ВНС / квартирный буст. 3 ступени, 25 бар, 2900 об/мин. Аналог Grundfos CR1-3.",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "low",
+      "_engineer_note": "нужна повторная калибровка price_source_url"
     },
     {
       "id": "cnp-cdm3-7",
@@ -25786,7 +27065,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm5-8",
@@ -25835,7 +27118,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=65% sub_E_research (medium)"
+      "_engineer_note": " | eta=65% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm5-14",
@@ -25884,7 +27171,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=66% sub_E_research (medium)"
+      "_engineer_note": " | eta=66% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdmf5-26",
@@ -25938,7 +27229,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Нержавейка 304. Высоконапорная для пожарного водоснабжения / промывки фильтров.",
-      "_engineer_note": " | eta=64% sub_E_research (medium)"
+      "_engineer_note": " | eta=64% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm10-15",
@@ -25987,7 +27282,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=68% sub_E_research (medium)"
+      "_engineer_note": " | eta=68% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm20-5",
@@ -26036,7 +27335,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm32-1",
@@ -26085,7 +27388,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=68% sub_E_research (medium)"
+      "_engineer_note": " | eta=68% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-cdm65-1",
@@ -26135,7 +27442,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Крупная ВНС — конкурент Grundfos CRN64 / Wilo Helix VE 6004.",
-      "_engineer_note": " | eta=70% sub_E_research (medium)"
+      "_engineer_note": " | eta=70% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-td32-26g",
@@ -26181,7 +27492,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Циркуляционный одноступенчатый in-line. Аналог Wilo IL32.",
-      "_engineer_note": " | eta=68% sub_E_research (medium)"
+      "_engineer_note": " | eta=68% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-td65-30g",
@@ -26226,7 +27541,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-td100-22g",
@@ -26271,7 +27590,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-td100-33-15",
@@ -26316,7 +27639,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=74% sub_E_research (medium)"
+      "_engineer_note": " | eta=74% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-nis65-40-200-15",
@@ -26365,7 +27692,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Консольно-моноблочный. Прямой аналог KSB Etabloc / Wilo IL. DN suct 65 / DN disch 40 / D импеллер 200 мм.",
-      "_engineer_note": " | eta=72% sub_E_research (medium)"
+      "_engineer_note": " | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-nis150-125-200-11",
@@ -26413,7 +27744,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Точные Q-H по паспорту требуется уточнить — у дилера только обозначение DN×D. | eta=72% sub_E_research (medium)"
+      "_engineer_note": "Точные Q-H по паспорту требуется уточнить — у дилера только обозначение DN×D. | eta=72% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-chl2-30",
@@ -26459,7 +27794,11 @@
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
       "notes": "Горизонтальный многоступенчатый. Самый дешёвый вариант для малых ВНС.",
-      "_engineer_note": " | eta=58% sub_E_research (medium)"
+      "_engineer_note": " | eta=58% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "cnp-chlf4-60",
@@ -26507,7 +27846,11 @@
       "_source": "research-2026-05-08-cnp",
       "_added": "2026-05-08",
       "_engineer_flag": "ok",
-      "_engineer_note": " | eta=62% sub_E_research (medium)"
+      "_engineer_note": " | eta=62% sub_E_research (medium)",
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-08",
+      "price_confidence": "medium"
     },
     {
       "id": "enduro-50-160-p",
@@ -26588,10 +27931,14 @@
         "distributor": "CNP Россия / atpump.ru (официальный дилер)"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10 | 150000 от subagent Grundfos research 2026-05-10 (low) | Переименовано из grundfos-cdm-10-11 2026-05-11 — CDM серия принадлежит CNP, не Grundfos (источник: cnp-rus.ru, atpump.ru)",
+      "_engineer_note": "Жокей-насос для пожарной СПД. Точные параметры P_kW требуют сверки по паспорту — оценочно 1.5 кВт. | impeller centrifugal_closed->closed canonicalized 2026-05-10 | 150000 от subagent Grundfos research 2026-05-10 (low) | Переименовано из grundfos-cdm-10-11 2026-05-11 — CDM серия принадлежит CNP, не Grundfos (источник: cnp-rus.ru, atpump.ru) | нужна повторная калибровка price_source_url",
       "_source": "kns3.zip",
       "_added": "2026-05-08",
-      "price_rub_2026": 150000
+      "price_rub_2026": 150000,
+      "price_source": "manufacturer_passport",
+      "price_source_url": null,
+      "price_source_date": "2026-05-10",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-sl1-50-65-09",
@@ -26634,7 +27981,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт — статус нестабильный. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 320000 от subagent Grundfos research 2026-05-10 (medium) | eta=62% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 320000
+      "price_rub_2026": 320000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-50-65-11",
@@ -26677,7 +28028,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 380000 от subagent Grundfos research 2026-05-10 (medium) | eta=63% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 380000
+      "price_rub_2026": 380000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-80-80-13",
@@ -26720,7 +28075,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 440000 от subagent Grundfos research 2026-05-10 (medium) | eta=65% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 440000
+      "price_rub_2026": 440000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-80-80-15",
@@ -26763,7 +28122,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 480000 от subagent Grundfos research 2026-05-10 (medium) | eta=66% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 480000
+      "price_rub_2026": 480000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-100-100-18",
@@ -26806,7 +28169,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 540000 от subagent Grundfos research 2026-05-10 (medium) | eta=68% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 540000
+      "price_rub_2026": 540000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-100-100-22",
@@ -26849,7 +28216,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 600000 от subagent Grundfos research 2026-05-10 (medium) | eta=69% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 600000
+      "price_rub_2026": 600000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-150-150-26",
@@ -26892,7 +28263,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 650000 от subagent Grundfos research 2026-05-10 (medium) | eta=70% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 650000
+      "price_rub_2026": 650000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "grundfos-sl1-150-150-30",
@@ -26935,7 +28310,11 @@
       "_engineer_flag": "needs_review",
       "_engineer_note": "Параллельный импорт. Выделено из grundfos-sl1-9-30 (split 2026-05-11). | 700000 от subagent Grundfos research 2026-05-10 (medium) | eta=71% sub_E_research (medium)",
       "_source": "Grundfos Product Center",
-      "price_rub_2026": 700000
+      "price_rub_2026": 700000,
+      "price_source": "sub_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "medium"
     },
     {
       "id": "gnom-10-10-ex",
@@ -26984,9 +28363,13 @@
         "distributor": "ГМС Ливгидромаш / Ампика"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Дренажный взрывозащищенный для ливневок, шахт, нефтехимии. Цена из nasoscentr.ru (08.2024).",
+      "_engineer_note": "Дренажный взрывозащищенный для ливневок, шахт, нефтехимии. Цена из nasoscentr.ru (08.2024). | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.hms-livgidromash.ru/catalog/nasosy/gnom/"
+      "datasheet_url": "https://www.hms-livgidromash.ru/catalog/nasosy/gnom/",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "gnom-16-16-ex",
@@ -27035,9 +28418,13 @@
         "distributor": "ГМС Ливгидромаш"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Подтверждено: ampika.ru указывает Ex-маркировку 1Ex d IIC T5 Gb, размеры 300x320x695, цена 163 200 ₽.",
+      "_engineer_note": "Подтверждено: ampika.ru указывает Ex-маркировку 1Ex d IIC T5 Gb, размеры 300x320x695, цена 163 200 ₽. | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.hms-livgidromash.ru/catalog/nasosy/gnom/gnom_16_16_ex_vzryvozashchishchennyy_model_1814.html"
+      "datasheet_url": "https://www.hms-livgidromash.ru/catalog/nasosy/gnom/gnom_16_16_ex_vzryvozashchishchennyy_model_1814.html",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "gnom-25-20-ex",
@@ -27086,9 +28473,13 @@
         "distributor": "ГМС Ливгидромаш"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Цена nasoscentr 205 400 ₽. Для промливневок Q=25 H=20 — основной кандидат.",
+      "_engineer_note": "Цена nasoscentr 205 400 ₽. Для промливневок Q=25 H=20 — основной кандидат. | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://nasoscentr.ru/catalog/gnom-25-20-ex.html"
+      "datasheet_url": "https://nasoscentr.ru/catalog/gnom-25-20-ex.html",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "gnom-40-25-ex",
@@ -27139,7 +28530,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Q=40 H=25 — типовой Promlivnevka. Цена в открытых источниках не публикуется (КП от завода). Источник: agregat-nasos.spb.ru. | 240396 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
+      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "high"
     },
     {
       "id": "gnom-53-10-ex",
@@ -27190,7 +28585,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Большие расход + низкий напор для шахт и подтоплений. Высокая эффективность для откачки промливневок. | 227056 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
+      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "high"
     },
     {
       "id": "gnom-100-25-ex",
@@ -27241,7 +28640,11 @@
       "_engineer_flag": "ok",
       "_engineer_note": "Топовая модель ГНОМ Ex. Для крупных промливневок Q=100 H=25. Замена импорту в Ex-зонах. | 267076 ₽ tender_research 2026-05-11 (high)",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml"
+      "datasheet_url": "https://www.agregat-nasos.spb.ru/teh15.shtml",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "high"
     },
     {
       "id": "irtysh-pf2-50-150-125-ex",
@@ -27292,9 +28695,13 @@
         "distributor": "Завод Взлёт (Омск)"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Подтверждено vzlet-omsk.ru. Ресурс 7000ч до отказа, 20 лет срока службы. | 410000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Подтверждено vzlet-omsk.ru. Ресурс 7000ч до отказа, 20 лет срока службы. | 410000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://www.vzlet-omsk.ru/catalog/nasosy/pf2-50-150-125-3-2ekh-016-detail"
+      "datasheet_url": "https://www.vzlet-omsk.ru/catalog/nasosy/pf2-50-150-125-3-2ekh-016-detail",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "irtysh-pf2-65-160-ex",
@@ -27342,9 +28749,13 @@
         "distributor": "Завод Взлёт"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Ex-вариант стандартного ПФС 65/160. Маркировка 1Ex d IIB T4 Gb X (общая для серии). | 425000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Ex-вариант стандартного ПФС 65/160. Маркировка 1Ex d IIB T4 Gb X (общая для серии). | 425000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://ptexport.ru/tehirtish.html"
+      "datasheet_url": "https://ptexport.ru/tehirtish.html",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "irtysh-pf2-80-180-ex",
@@ -27392,9 +28803,13 @@
         "distributor": "Завод Взлёт"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Промежуточный вариант между ПФ 50/30 и ПФ 100/50 — закрывает Q=50 H=28 для нефтехимии. | 580000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Промежуточный вариант между ПФ 50/30 и ПФ 100/50 — закрывает Q=50 H=28 для нефтехимии. | 580000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://ptexport.ru/tehirtish.html"
+      "datasheet_url": "https://ptexport.ru/tehirtish.html",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-emu-fa-08-52-170w-ex",
@@ -27444,9 +28859,13 @@
         "distributor": "Wilo Russia / proteplo.org"
       },
       "_engineer_flag": "needs_review",
-      "_engineer_note": "Vortex impeller — для жидкостей с длинноволокнистыми включениями. Гарантия 24 мес. Срок поставки 60 дн.",
+      "_engineer_note": "Vortex impeller — для жидкостей с длинноволокнистыми включениями. Гарантия 24 мес. Срок поставки 60 дн. | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://proteplo.org/catalog/nasosy/nasosy_wilo/nasos_wilo-emu-fa-08-52-170w-t17-4-8h-ex-sva-v"
+      "datasheet_url": "https://proteplo.org/catalog/nasosy/nasosy_wilo/nasos_wilo-emu-fa-08-52-170w-t17-4-8h-ex-sva-v",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-emu-fa-08-64-246e-ex",
@@ -27496,9 +28915,13 @@
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Подтверждено wl-russia.ru: Qmax=147.6, Qopt=76.1, Hmax=20.1, Hopt=14.5, P2=6.5 кВт. Single-channel impeller — стандартная фекальная. | 380000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Подтверждено wl-russia.ru: Qmax=147.6, Qopt=76.1, Hmax=20.1, Hopt=14.5, P2=6.5 кВт. Single-channel impeller — стандартная фекальная. | 380000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://wl-russia.ru/fekalnyj-nasos-wilo-emu-fa-08-64-246e-plus-t-17-4-16hex"
+      "datasheet_url": "https://wl-russia.ru/fekalnyj-nasos-wilo-emu-fa-08-64-246e-plus-t-17-4-16hex",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "wilo-emu-fa-15-52-230e-ex",
@@ -27547,9 +28970,13 @@
         "distributor": "Wilo Russia"
       },
       "_engineer_flag": "request_quote",
-      "_engineer_note": "Крупная КНС: Q=180 м3/ч при H=14 м. Артикул 6049225. DN150 — фланцевое подключение. | 720000 ₽ tender_research 2026-05-11 (low)",
+      "_engineer_note": "Крупная КНС: Q=180 м3/ч при H=14 м. Артикул 6049225. DN150 — фланцевое подключение. | 720000 ₽ tender_research 2026-05-11 (low) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://nasosclub.ru/catalog/kanalizatsionnye/wilo_kanalization/emu-fa/nasos-kanalizatsionnyy-wilo-emu-fa-15-52-230e-t17-2-4-16h-ex-artikul-6049225/"
+      "datasheet_url": "https://nasosclub.ru/catalog/kanalizatsionnye/wilo_kanalization/emu-fa/nasos-kanalizatsionnyy-wilo-emu-fa-15-52-230e-t17-2-4-16h-ex-artikul-6049225/",
+      "price_source": "tender_research 2026-05",
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-seg-40-09-ex",
@@ -27598,9 +29025,13 @@
         "distributor": "ИСТРАТЕХ Групп (преемник Grundfos)"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Режущий механизм — измельчает твёрдые частицы, проталкивает через DN40. Для малых КНС в ATEX. После ухода Grundfos из РФ — параллельный импорт. | 378970 ₽ research 2026-05-11 (high)",
+      "_engineer_note": "Режущий механизм — измельчает твёрдые частицы, проталкивает через DN40. Для малых КНС в ATEX. После ухода Grundfos из РФ — параллельный импорт. | 378970 ₽ research 2026-05-11 (high) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://flumtec.ru/katalog/nasosy-po-proizvoditelyu/nasosy-grundfos/kanalizatsionnye-nasosy-grundfos/grundfos-seg/"
+      "datasheet_url": "https://flumtec.ru/katalog/nasosy-po-proizvoditelyu/nasosy-grundfos/kanalizatsionnye-nasosy-grundfos/grundfos-seg/",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-seg-40-26-ex",
@@ -27649,9 +29080,13 @@
         "distributor": "ИСТРАТЕХ Групп"
       },
       "_engineer_flag": "ok",
-      "_engineer_note": "Топовая SEG.Ex — Q=14 H=26 в ATEX-зоне с малым DN. Маркировка DEKRA 0344. | 305600 ₽ research 2026-05-11 (high)",
+      "_engineer_note": "Топовая SEG.Ex — Q=14 H=26 в ATEX-зоне с малым DN. Маркировка DEKRA 0344. | 305600 ₽ research 2026-05-11 (high) | нужна повторная калибровка price_source_url",
       "_source": "Research ATEX 2026-05-11",
-      "datasheet_url": "https://gf-shop.ru/seg"
+      "datasheet_url": "https://gf-shop.ru/seg",
+      "price_source": null,
+      "price_source_url": null,
+      "price_source_date": "2026-05-11",
+      "price_confidence": "low"
     },
     {
       "id": "grundfos-seg-50-40-ex",

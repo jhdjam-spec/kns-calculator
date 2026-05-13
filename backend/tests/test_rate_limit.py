@@ -64,7 +64,15 @@ def test_import_parse_rate_limit(client: TestClient) -> None:
     assert r.status_code == 429, f"Ожидали 429 на 11-м запросе, получили {r.status_code}"
     body = r.json()
     assert "detail" in body
-    assert "exceed" in body["detail"].lower() or "rate" in body["detail"].lower()
+    # i18n: сообщение локализовано (ru by default), но "limit" с тех.деталями
+    # ("10 per 1 minute") остаётся в обоих языках. Также проверяем EN-ветку.
+    detail_lower = body["detail"].lower()
+    assert (
+        "exceed" in detail_lower
+        or "rate" in detail_lower
+        or "лимит" in detail_lower
+        or "превыш" in detail_lower
+    )
     # Retry-After header — обязательный по RFC 6585 §4.
     assert r.headers.get("Retry-After") == "60"
 
