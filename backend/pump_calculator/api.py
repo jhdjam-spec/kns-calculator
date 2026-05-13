@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
-import logging
 import os
+import uuid
 from typing import Literal
 
+import structlog
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse, Response
 from pydantic import BaseModel, Field
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from pump_calculator import __version__, catalog
 
@@ -19,15 +21,17 @@ from pump_calculator import __version__, catalog
 # во время декорирования эндпоинтов (нельзя лениво, как функции расчёта).
 # Сами расчётные функции по-прежнему импортируются лениво в теле эндпоинта
 # для минимизации lambda cold-start.
-from pump_calculator.bom import BOMSpecification  # noqa: E402
-from pump_calculator.climate.models import ClimateScenarioInput  # noqa: E402, F401
-from pump_calculator.complexes import Complex  # noqa: E402
-from pump_calculator.fire_water import FireScenarioInput  # noqa: E402
-from pump_calculator.los import LOSScenarioInput  # noqa: E402
+from pump_calculator.bom import BOMSpecification
+from pump_calculator.climate.models import ClimateScenarioInput  # noqa: F401
+from pump_calculator.complexes import Complex
+from pump_calculator.error_reporting import init_sentry
+from pump_calculator.fire_water import FireScenarioInput
+from pump_calculator.logging_config import configure_logging
+from pump_calculator.los import LOSScenarioInput
 from pump_calculator.matching import select_pumps as run_selection
-from pump_calculator.project import ProjectInput  # noqa: E402
+from pump_calculator.project import ProjectInput
 from pump_calculator.rate_limiter import BodyLimitMiddleware, limiter
-from pump_calculator.reports import (  # noqa: E402
+from pump_calculator.reports import (
     CalculationReportInput,
     RPZGostInput,
 )
@@ -47,9 +51,14 @@ from pump_calculator.schemas import (
     WaterHammerRequest,
 )
 from pump_calculator.security import log_audit, verify_admin
-from pump_calculator.storm.models import StormInput  # noqa: E402
-from pump_calculator.structural import StructuralScenarioInput  # noqa: E402
-from pump_calculator.water_supply import WaterScenarioInput  # noqa: E402
+from pump_calculator.storm.models import StormInput
+from pump_calculator.structural import StructuralScenarioInput
+from pump_calculator.water_supply import WaterScenarioInput
+
+# Observability bootstrap — один раз при cold-start lambda / uvicorn worker.
+# Запускаем до создания FastAPI app, чтобы middleware-логгеры уже видели конфиг.
+configure_logging(level=os.environ.get("LOG_LEVEL", "INFO"))
+init_sentry()
 
 
 def _rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> Response:
@@ -68,7 +77,33 @@ def _rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> Re
     response.headers["Retry-After"] = "60"
     return response
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
+
+
+class CorrelationIdMiddleware(BaseHTTPMiddleware):
+    """Inject ``X-Request-ID`` header + structlog contextvars на каждый запрос.
+
+    Пробрасывает входящий ``X-Request-ID`` если клиент его прислал (полезно
+    для frontend → backend трассировки в Sentry), иначе генерирует UUID4.
+    Все log-вызовы внутри обработчика автоматически получают ``request_id``,
+    ``method``, ``path`` как поля в JSON.
+    """
+
+    async def dispatch(self, request: Request, call_next):
+        req_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
+
+        # contextvars — async-safe (per-task) bind.
+        structlog.contextvars.bind_contextvars(
+            request_id=req_id,
+            method=request.method,
+            path=request.url.path,
+        )
+        try:
+            response = await call_next(request)
+            response.headers["X-Request-ID"] = req_id
+            return response
+        finally:
+            structlog.contextvars.clear_contextvars()
 
 # pump_calculator.handoff (reportlab + python-docx + lxml) импортируется лениво
 # внутри handoff-эндпоинтов — это уменьшает cold-start lambda на ~50 МБ.
@@ -122,6 +157,11 @@ app.add_middleware(BodyLimitMiddleware, max_size=_BODY_LIMIT_BYTES)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
+
+# Correlation IDs — добавляем последним, чтобы middleware был самым внешним
+# (Starlette/FastAPI оборачивает middleware в обратном порядке регистрации).
+# Так request_id попадает в логи и из rate-limit denial, и из body-limit 413.
+app.add_middleware(CorrelationIdMiddleware)
 
 
 @app.middleware("http")

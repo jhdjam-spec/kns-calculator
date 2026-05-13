@@ -12,13 +12,14 @@
 from __future__ import annotations
 
 import json
-import logging
 from functools import lru_cache
 from typing import Any
 
+import structlog
+
 from pump_calculator.catalog import DATASET_ROOT
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 FAILURE_MODES_PATH = DATASET_ROOT / "failure_modes" / "failure_modes_2026.json"
 

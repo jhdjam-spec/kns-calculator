@@ -7,6 +7,8 @@ pydantic>=2.6,<3.0
 starlette>=0.36
 python-multipart>=0.0.9  # для /select/from-file FastAPI endpoint
 slowapi>=0.1.9,<1.0  # rate-limit per IP (Sc.D. Architecture HIGH, 2026-05-13)
+structlog>=24.1,<26.0  # structured logging + correlation IDs (Architecture audit 2026-05-13)
+# Optional: sentry-sdk[fastapi]>=2.0,<3.0 — uncomment if SENTRY_DSN configured
 
 # YC Functions handler — кастомный YC event → ASGI scope (см. handler.py)
 # Mangum НЕ работает: YC передаёт event в собственном формате,

@@ -17,14 +17,15 @@ Phase 28: построен поверх dataset 02_dataset/regulations/climate_c
 from __future__ import annotations
 
 import json
-import logging
 from functools import lru_cache
 from typing import Any
+
+import structlog
 
 from pump_calculator.catalog import DATASET_ROOT
 from pump_calculator.schemas import L1Input
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 CLIMATE_DATASET_PATH = DATASET_ROOT / "regulations" / "climate_cities_2026.json"
 

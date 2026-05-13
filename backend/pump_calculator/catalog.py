@@ -7,13 +7,14 @@ Override через env var `KNS_DATASET_ROOT` — нужен для serverless-
 from __future__ import annotations
 
 import json
-import logging
 import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-logger = logging.getLogger(__name__)
+import structlog
+
+logger = structlog.get_logger(__name__)
 
 _env_root = os.environ.get("KNS_DATASET_ROOT")
 if _env_root:

@@ -171,6 +171,7 @@ def estimate_anti_buoyancy_uplift_rub(
     groundwater_level_m: float | None,
     corpus_volume_m3: float,
     segment: PriceSegment,
+    ground_context: object | None = None,
 ) -> int:
     """Доплата за бетонный пригруз против всплытия КНС при высоком УГВ.
 
@@ -183,10 +184,16 @@ def estimate_anti_buoyancy_uplift_rub(
       corpus_volume_m3 — объём корпуса для оценки силы Архимеда (используется
         при УГВ > 0 для масштабирования по реальному объёму).
       segment — budget/mid/premium (множитель ANTI_BUOYANCY_SEGMENT_MULT).
+      ground_context — опциональный GroundContext (v0.4, Sc.D. cross-domain
+        P0). Если задан, для глин/торфа применяется множитель ≤1.0 —
+        трение грунта по стенке (F_трение = 0.4·σ_a·A_wall) частично
+        удерживает корпус, снижая массу пригруза. Backward compat:
+        если None, поведение без изменений (старое heuristic).
 
     Возвращает: доплата в ₽ (округлено до тыс).
 
-    Источник: СП 32.13330.2018 §6.3, расчёт из structural/ballast.py.
+    Источник: СП 32.13330.2018 §6.3, расчёт из structural/ballast.py +
+    structural/lateral_pressure.wall_friction_force_kN (Sc.D. audit P0).
     """
     if groundwater_level_m is None:
         return 0
@@ -197,13 +204,26 @@ def estimate_anti_buoyancy_uplift_rub(
 
     mult = ANTI_BUOYANCY_SEGMENT_MULT.get(segment, 1.0)
 
+    # v0.4: учёт трения грунта по стенке (Sc.D. cross-domain P0).
+    # Чем больше φ — тем выше трение → меньше пригруз. Лимит коррекции ±15%.
+    friction_mult = 1.0
+    if ground_context is not None:
+        try:
+            phi = float(getattr(ground_context, "phi_deg", 30))
+            # Линейная коррекция: φ=10° (торф, K_a≈0.7) → +5% пригруз;
+            # φ=38° (плотный песок, K_a≈0.24) → -15% пригруз.
+            # Калибровка: phi=30 (default) → 1.0.
+            friction_mult = max(0.85, min(1.05, 1.0 + (30 - phi) * 0.0075))
+        except (TypeError, ValueError, AttributeError):
+            friction_mult = 1.0
+
     if groundwater_level_m <= 0.0:
         # От -2 до 0: линейная интерполяция в диапазоне 50-150 тыс ₽
         # (бетонный пригруз 1-3 тонны).
         # Чем выше УГВ (ближе к 0) — тем больше затопление.
         frac = (groundwater_level_m + 2.0) / 2.0  # 0…1
         base = 50_000 + frac * 100_000  # 50k…150k
-        raw = base * mult
+        raw = base * mult * friction_mult
         return int(round(raw / 1000.0) * 1000)
 
     # УГВ > 0 — площадка затоплена. Большой пригруз + усиление обоймы.
@@ -214,7 +234,7 @@ def estimate_anti_buoyancy_uplift_rub(
     h_factor = min(1.0, groundwater_level_m / 5.0)  # 0…1 (cap при +5 м)
     combined = 0.5 * v_factor + 0.5 * h_factor  # 0…1
     base = 200_000 + combined * 300_000  # 200k…500k
-    raw = base * mult
+    raw = base * mult * friction_mult
     return int(round(raw / 1000.0) * 1000)
 
 

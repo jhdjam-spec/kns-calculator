@@ -8,6 +8,12 @@ from __future__ import annotations
 from typing import Any
 
 from pump_calculator import catalog
+from pump_calculator.cavitation import (
+    CavitationResult,
+    analyze_cavitation,
+    explain_cavitation_engineer,
+    explain_cavitation_manager,
+)
 from pump_calculator.hydraulics import aor_zone, compute_hydraulics
 from pump_calculator.pricing import (
     estimate_fire_kit_price,
@@ -1184,64 +1190,62 @@ def build_suggestions(
     # эталона Евпатория). Если soil_type не задан — fallback на default
     # sand_medium (старое поведение, K_a=0.33).
     if "auto_lateral_earth_pressure" in triggers and L1 and L1.install_depth_inlet_mm:
-        z_m = L1.install_depth_inlet_mm / 1000
-        # Параметры грунта из СП 22.13330.2016 табл. А.1
-        _SOIL_PARAMS = {
-            "sand_dense":           {"gamma": 18.0, "phi": 38, "K_a": 0.24, "label": "Песок плотный"},
-            "sand_medium":          {"gamma": 18.0, "phi": 30, "K_a": 0.33, "label": "Песок ср. плотности (default)"},
-            "sand_loose":           {"gamma": 16.0, "phi": 25, "K_a": 0.41, "label": "Песок рыхлый"},
-            "sand_water_saturated": {"gamma":  8.0, "phi": 28, "K_a": 0.36, "label": "Песок водонасыщенный"},
-            "loam":                 {"gamma": 19.0, "phi": 22, "K_a": 0.45, "label": "Суглинок"},
-            "clay_hard":            {"gamma": 19.0, "phi": 22, "K_a": 0.45, "label": "Глина твёрдая"},
-            "clay_plastic":         {"gamma": 18.0, "phi": 15, "K_a": 0.59, "label": "Глина пластичная"},
-            "clay_soft":            {"gamma": 18.0, "phi": 12, "K_a": 0.65, "label": "Глина мягкопластичная"},
-            "peat":                 {"gamma": 11.0, "phi": 10, "K_a": 0.70, "label": "Торф"},
-        }
-        soil_key = (L1.soil_type or "sand_medium")
-        params = _SOIL_PARAMS.get(soil_key, _SOIL_PARAMS["sand_medium"])
-        gamma = params["gamma"]
-        phi = params["phi"]
-        K_a = params["K_a"]
-        sigma_x_grunt_kpa = gamma * z_m * K_a
-        # Компонент от УГВ (СП 22 §5.6.5): если уровень УГВ выше дна корпуса,
-        # σ_x += γ_w·z_w, где z_w = глубина дна - УГВ от земли
-        gwl_m = L1.groundwater_level_m  # отрицательные = ниже земли
-        sigma_x_water_kpa = 0.0
+        # v0.4 (2026-05-13): рефакторинг под единый GroundContext
+        # (Sc.D. cross-domain P0 «N×M связность soil/gwl/T»). γ/φ/K_a/K_p
+        # читаются из coefficients.json soil_parameters_sp22.
+        from pump_calculator.structural import (
+            GroundContext,
+            check_corpus_strength,
+        )
+        ctx = GroundContext.from_l1(L1)
+        z_m = ctx.install_depth_m
+        result = check_corpus_strength(ctx, z_max_m=z_m)
+        gamma = ctx.gamma_kN_m3
+        phi = ctx.phi_deg
+        K_a = ctx.K_a
+        K_p = ctx.K_p
+        sigma_x_grunt_kpa = result["pressure_breakdown"]["soil_active_kPa"]
+        sigma_x_water_kpa = result["pressure_breakdown"]["water_kPa"]
+        sigma_x_kpa = result["sigma_total_kPa"]
+        sigma_p_kpa = result["pressure_breakdown"]["passive_resistance_kPa"]
         gwl_note = ""
-        if gwl_m is not None:
-            # глубина дна корпуса от земли = z_m (упрощённо для EXT-1)
-            # отметка УГВ от дна = z_m + gwl_m (gwl<0 — ниже земли)
-            z_w = z_m + gwl_m  # положительно, если УГВ выше дна
-            if z_w > 0:
-                sigma_x_water_kpa = 9.80665 * z_w  # γ_w·z_w, кПа
-                gwl_note = (
-                    f"\n💧 УГВ ({gwl_m:.1f} м от земли) выше дна корпуса на {z_w:.1f} м. "
-                    f"СП 22 §5.6.5: добавляется σ_водн = γ_w·z_w = "
-                    f"9.81·{z_w:.1f} ≈ {sigma_x_water_kpa:.1f} кПа."
-                )
-        sigma_x_kpa = sigma_x_grunt_kpa + sigma_x_water_kpa
-        # σ_доп для ПЭ100 SDR17 — 50 кПа (ISO 9080)
-        sigma_PE_kpa = 50.0
+        if sigma_x_water_kpa > 0:
+            z_w = ctx.gwl_above_bottom_m
+            gwl_note = (
+                f"\n💧 УГВ ({ctx.groundwater_level_m:.1f} м от земли) выше дна "
+                f"корпуса на {z_w:.1f} м. СП 22 §5.6.5: добавляется "
+                f"σ_водн = γ_w·z_w = 9.81·{z_w:.1f} ≈ {sigma_x_water_kpa:.1f} кПа."
+            )
+        sigma_PE_kpa = result["sigma_allowable_kPa"]
         overstress_note = ""
         if sigma_x_kpa > sigma_PE_kpa:
             overstress_note = (
                 f"\n🚨 σ_x={sigma_x_kpa:.0f} кПа > σ_доп ПЭ100 SDR17 (50 кПа). "
-                f"Требуется ПЭ100 SDR11 (80 кПа), стеклопластик или ж/б обойма."
+                f"Рекомендация: {result['recommendation']}."
+            )
+        # K_p — пассивный отпор грунта для глубоких котлованов ≥5 м
+        # (откол грунта при открытой траншее, СП 22 §5.6.2).
+        kp_note = ""
+        if z_m >= 5.0:
+            kp_note = (
+                f"\n🪨 K_p={K_p:.2f} (пассивный отпор грунта) — при открытом "
+                f"котловане σ_p = γ·z·K_p ≈ {sigma_p_kpa:.0f} кПа удерживает "
+                f"стенку. Контролировать откол при глубине ≥5 м."
             )
         eng = (
             f"🪨 СП 22.13330.2016 «Основания зданий и сооружений», §5.6.5 — "
             f"расчёт горизонтального давления грунта по теории Кулона.\n"
             f"📐 Формула: σ_x = γ·z·K_a + γ_w·z_w (при УГВ выше дна), "
             f"K_a = tan²(45°-φ/2).\n"
-            f"Грунт: {params['label']} (γ={gamma} кН/м³, φ={phi}°, K_a={K_a}).\n"
-            f"При z={z_m:.1f} м: σ_грунт = {gamma}·{z_m:.1f}·{K_a} ≈ "
+            f"Грунт: {ctx.label} (γ={gamma} кН/м³, φ={phi}°, K_a={K_a:.2f}).\n"
+            f"При z={z_m:.1f} м: σ_грунт = {gamma}·{z_m:.1f}·{K_a:.2f} ≈ "
             f"{sigma_x_grunt_kpa:.1f} кПа.{gwl_note}\n"
-            f"Σ σ_x ≈ {sigma_x_kpa:.1f} кПа на стенку корпуса.{overstress_note}\n"
+            f"Σ σ_x ≈ {sigma_x_kpa:.1f} кПа на стенку корпуса.{overstress_note}{kp_note}\n"
             f"⚠ Для ПЭ-корпуса σ_доп=50 кПа (SDR17) / 80 кПа (SDR11) по ISO 9080. "
             f"При превышении — рёбра жёсткости и/или ж/б обойма."
         )
         mgr = (
-            f"🏗 Глубина {z_m:.1f} м, грунт: {params['label']}.\n"
+            f"🏗 Глубина {z_m:.1f} м, грунт: {ctx.label}.\n"
             f"💰 Давление грунта {sigma_x_kpa:.0f} кПа на корпус.\n"
             f"  • Если σ_x ≤ 50 кПа — стандартный ПЭ100 SDR17 OK.\n"
             f"  • Если 50-80 кПа — нужен SDR11 (+15-25% цены корпуса).\n"
@@ -1467,21 +1471,25 @@ def build_suggestions(
             severity="warning",
         ))
 
-    # EXT-8: УФ/озон обеззараживание
+    # EXT-8: УФ/озон обеззараживание (v0.4: dose дифференцирована по target_discharge)
     if "auto_disinfection_required" in triggers:
+        uv_dose, target = _ext_8_uv_dose_required(L1)
         eng = (
             f"🦠 СанПиН 2.1.5.980-00 «Гигиенические требования к охране "
             f"поверхностных вод», п.4.1.5 — обеззараживание стоков "
             f"перед сбросом в водоём (хоз-бытовые Q={L0.Q_m3h} > 100 м³/ч).\n"
-            f"📐 УФ-доза по МУК 4.3.2030-05: D = I·t ≥ 30 мДж/см² "
-            f"для инактивации E.coli (3 lg) и колифагов (2 lg).\n"
-            f"📐 Озон по СанПиН: C·t ≥ 5 мг·мин/л (5 мг/л при t=1 мин).\n"
+            f"📐 УФ-доза по МУК 4.3.2030-05: D = I·t ≥ {uv_dose} мДж/см² "
+            f"для целевого сброса '{target}' (E.coli 3 lg, колифаги 2 lg).\n"
+            f"📐 NB для непрозрачных стоков (turbidity > 30 NTU) — озон "
+            f"вместо УФ: C·t ≥ 5 мг·мин/л.\n"
             f"⚠ Хлорирование запрещено для сброса в рыбохозяйственные "
-            f"водоёмы (Приказ Росрыболовства №20)."
+            f"водоёмы (Приказ Росрыболовства №20).\n"
+            f"💡 30 мДж/см² — стандарт general_use; для fishery_water "
+            f"требуется 80-120 мДж/см² с предобработкой."
         )
         mgr = (
-            f"🦠 Q={L0.Q_m3h} м³/ч хоз-бытовых — по СанПиН обязательно "
-            f"обеззараживание перед сбросом.\n"
+            f"🦠 Q={L0.Q_m3h} м³/ч хоз-бытовых, сброс в '{target}' — "
+            f"по СанПиН требуется УФ-доза {uv_dose} мДж/см².\n"
             f"💰 Варианты:\n"
             f"  • УФ-стерилизатор Sita / Wedeco на Q=100-200 — 380-650 тыс ₽\n"
             f"  • Озонатор 50-100 г/ч — 850 тыс — 1.5 млн ₽\n"
@@ -1500,29 +1508,48 @@ def build_suggestions(
             severity="warning",
         ))
 
-    # EXT-9: нитри/денитрификация
+    # EXT-9: нитри/денитрификация (v0.4: точный расчёт по NH4 / C:N / target)
     if "auto_nitrification_check" in triggers:
+        # Перевычисляем dict-параметры (single source of truth — _check_ext_9_nitrification)
+        ext9 = _check_ext_9_nitrification(L0, L1, computed)
+        if ext9 is None:
+            # Safety: триггер прошёл, но детали не совпали (T/UI desync).
+            # Используем generic-фолбэк без чисел.
+            ext9 = {
+                "nh4": 25.0, "bod5": 250.0, "c_to_n": 10.0,
+                "T": 20.0, "nh4_limit": 2.0, "target": "municipal_sewage",
+                "srt_min_d": 15.0,
+            }
         eng = (
-            "🧪 Нитри/денитрификация в ЛОС промстоков (СП 32.13330 §9.2.5).\n"
-            "📐 Кинетика по Monod: μ = μ_max·S/(K_s+S), где для "
-            "Nitrosomonas μ_max=0.8 сут⁻¹, K_s≈1 мг/л NH4-N.\n"
-            "⚠ Условия:\n"
-            "  • Возраст ила θ_c ≥ 10 сут (бактерии медленно растут)\n"
-            "  • Аэрация ≥ 6 ч (DO ≥ 2 мг/л в зоне нитрификации)\n"
-            "  • T ≥ 12°C (при <10°C нитрификация останавливается)\n"
-            "  • pH 7.5-8.5 (оптимум для аммоний-окисляющих)\n"
-            "  • Рециркуляция нитратов 200-400% для денитри (аноксидная зона).\n"
-            "📐 Объём аэротенка: V = Q·θ_аэр + Q·θ_денитр."
+            f"🧪 Нитри/денитрификация в ЛОС (СП 32.13330 §9.2.5 + Henze IWA "
+            f"2008 §3.4).\n"
+            f"📐 Параметры стоков: NH4_in={ext9['nh4']:.0f} мг/л > "
+            f"ПДК={ext9['nh4_limit']} мг/л для '{ext9['target']}', "
+            f"C:N=БПК5/N={ext9['c_to_n']:.1f}, T={ext9['T']:.0f}°C.\n"
+            f"📐 Кинетика по Monod: μ = μ_max·S/(K_s+S), где для "
+            f"Nitrosomonas μ_max=0.8 сут⁻¹, K_s≈1 мг/л NH4-N (Henze IWA "
+            f"§3.4, Arrhenius θ=1.103).\n"
+            f"📐 SRT_min = 15·1.103^(15−T) = {ext9['srt_min_d']:.1f} сут.\n"
+            f"⚠ Условия для биоты (нитрификаторы Nitrosomonas+Nitrobacter):\n"
+            f"  • Возраст ила θ_c ≥ {ext9['srt_min_d']:.0f} сут\n"
+            f"  • Аэрация DO ≥ 2 мг/л в зоне нитрификации\n"
+            f"  • MLSS 3-5 г/л (активный ил), пенный индекс <150 мл/г\n"
+            f"  • T 12-35°C (вне диапазона нитрификаторы гибнут)\n"
+            f"  • pH 7.5-8.5 (оптимум для аммоний-окисляющих)\n"
+            f"  • Рециркуляция нитратов 200-400% для денитрификации.\n"
+            f"📐 Объём аэротенка: V = Q·SRT_min/MLSS·(1+R_recycle)."
         )
         mgr = (
-            f"🧪 Промстоки с азотом — нужна полноценная биологическая "
-            f"очистка (нитри + денитрификация).\n"
+            f"🧪 Аммоний NH4={ext9['nh4']:.0f} мг/л превышает норматив "
+            f"({ext9['nh4_limit']} мг/л для '{ext9['target']}') — нужна "
+            f"биологическая очистка (аэротенк с активным илом).\n"
             f"💰 ЛОС на Q={L0.Q_m3h} м³/ч с нитри/денитри:\n"
             f"  • Аэротенк ж/б 50-150 м³ — 1.5-3.5 млн ₽\n"
             f"  • Воздуходувка + аэраторы — 450-850 тыс ₽\n"
             f"  • Вторичный отстойник — 380-720 тыс ₽\n"
             f"  • Автоматика DO/pH/NH4 — 280-450 тыс ₽\n"
-            f"⏱ Запуск ила (наработка биоценоза) — 4-8 недель.\n"
+            f"⏱ Срок: 4-6 нед проектирование+поставка, ~600-1200 тыс ₽ "
+            f"к стоимости ЛОС. Запуск биоценоза 4-8 недель.\n"
             f"📞 Передайте инженеру-технологу для расчёта по реальным "
             f"показателям сточных вод (БПК, ХПК, NH4, P)."
         )
@@ -2126,6 +2153,114 @@ def build_suggestions(
     return suggestions
 
 
+# ---------------------------------------------------------------------------
+# Phase 34+ (2026-05-13): научные helper-функции для EXT-9 / EXT-8.
+# Возвращают «срабатывает ли триггер» + структурированные параметры (NH4, C:N,
+# SRT, ПДК), которые потом используются в build_suggestions для формирования
+# 2-уровневого reason_engineer / reason_manager.
+# ---------------------------------------------------------------------------
+
+def _check_ext_9_nitrification(
+    L0: L0Input, L1: L1Input | None, computed: ComputedHydraulics | None
+) -> dict | None:
+    """EXT-9: проверка необходимости нитрификации по Henze IWA 2008 §3.4.
+
+    Возвращает dict с параметрами расчёта (nh4, bod5, T, srt_min, ПДК, target)
+    либо None если нитрификация не требуется.
+
+    Условия срабатывания (все AND):
+      • NH4+ > 20 мг/л (default бытовые 25, индустр 100)
+      • C:N = БПК5/NH4 > 3 (углерод для гетеротрофов нитрификаторов)
+      • 12°C ≤ T ≤ 35°C (Nitrosomonas/Nitrobacter — Arrhenius θ=1.103)
+      • heavy_metals_present=False (Cr, Cd, Hg, Pb убивают активный ил)
+      • Ex_required=False (нефтехимия — отдельная анаэробная фаза)
+      • NH4_in > ПДК(target_discharge): рыбхоз 0.4, общ. 2.0, полив 10, муниц. 40
+    """
+    if L1 and L1.Ex_required:
+        return None  # АЗС/нефтехимия — биообработка не работает
+    if L0.wastewater_type not in ("industrial", "domestic"):
+        return None  # drainage / clean_water / fire — не для биологии
+    # Heavy metals → биота отравлена, нужна физ-химия
+    if L1 and getattr(L1, "heavy_metals_present", False):
+        return None
+
+    # NH4_in: явно задано либо default по типу стоков (TYPICAL_INFLUENT)
+    nh4 = (L1.nh4_in_mgL if L1 and L1.nh4_in_mgL is not None else None)
+    if nh4 is None:
+        _NH4_DEFAULTS = {
+            "domestic": 25.0, "industrial": 100.0,
+            "drainage": 5.0, "clean_water": 0.5, "fire_protection": 0.0,
+        }
+        nh4 = _NH4_DEFAULTS.get(L0.wastewater_type or "domestic", 25.0)
+
+    # BOD5_in для C:N
+    bod5 = (L1.bod5_in_mgL if L1 and L1.bod5_in_mgL is not None else None)
+    if bod5 is None:
+        _BOD5_DEFAULTS = {
+            "domestic": 250.0, "industrial": 500.0,
+            "drainage": 30.0, "clean_water": 2.0, "fire_protection": 0.0,
+        }
+        bod5 = _BOD5_DEFAULTS.get(L0.wastewater_type or "domestic", 250.0)
+
+    # T-gate (нитрификаторы работают при 12-35°C)
+    T = (L1.liquid_temp_c if L1 and L1.liquid_temp_c is not None else 20.0)
+    if T < 12.0 or T > 35.0:
+        return None
+
+    # NH4-порог Henze: если меньше — нитрификация не нужна
+    if nh4 < 20.0:
+        return None
+
+    # C:N ratio (нужен углерод для гетеротрофов / денитрификаторов)
+    c_to_n = bod5 / nh4 if nh4 > 0 else 0.0
+    if c_to_n < 3.0:
+        return None
+
+    # ПДК по target_discharge
+    target = (L1.target_discharge if L1 and L1.target_discharge else "municipal_sewage")
+    _NH4_LIMITS = {
+        "fishery_water": 0.4,     # рыбхоз — жёсткая (МУК + Приказ Росрыболовства №20)
+        "general_use": 2.0,       # СанПиН 2.1.5.980-00
+        "reuse_irrigation": 10.0, # СанПиН СЭ 6.04.001
+        "municipal_sewage": 40.0, # городская канализация — мягкая
+    }
+    nh4_limit = _NH4_LIMITS.get(target, 2.0)
+    if nh4 <= nh4_limit:
+        return None  # уже в норме
+
+    # SRT correction по T (Arrhenius θ=1.103, Henze IWA §3.4)
+    srt_min_d = 15.0 * (1.103 ** (15.0 - T))
+
+    return {
+        "nh4": nh4,
+        "bod5": bod5,
+        "c_to_n": c_to_n,
+        "T": T,
+        "nh4_limit": nh4_limit,
+        "target": target,
+        "srt_min_d": srt_min_d,
+    }
+
+
+def _ext_8_uv_dose_required(L1: L1Input | None) -> tuple[int, str]:
+    """EXT-8: возвращает (uv_dose мДж/см², target) по L1.target_discharge.
+
+    Доза по МУК 4.3.2030-05 / СанПиН 2.1.5.980-00:
+      • municipal_sewage — 25 мДж/см² (E.coli 3 lg)
+      • general_use — 30 мДж/см² (водоём культ-быт)
+      • reuse_irrigation — 60 мДж/см² (СанПиН СЭ 6.04.001 — на полив)
+      • fishery_water — 100 мДж/см² (МУК + Приказ Росрыболовства №20)
+    """
+    target = (L1.target_discharge if L1 and L1.target_discharge else "municipal_sewage")
+    _UV_DOSE = {
+        "fishery_water": 100,
+        "general_use": 30,
+        "reuse_irrigation": 60,
+        "municipal_sewage": 25,
+    }
+    return _UV_DOSE.get(target, 30), target
+
+
 def evaluate_handoff_triggers(
     L0: L0Input, L1: L1Input | None, computed: ComputedHydraulics, candidates_count: int
 ) -> list[str]:
@@ -2336,24 +2471,19 @@ def evaluate_handoff_triggers(
     ):
         triggers.append("auto_anaerobic_corrosion_risk")
 
-    # EXT-9: Нитри/денитрификация для промстоков (СП 32 §9, Henze IWA 2008 §3.4).
-    # v0.3 (2026-05-13): сужено — было «любой industrial», что давало false-positive
-    # для гальваники/АЗС/нефтехимии (PhD-Biology audit + Sc.D. cross-domain).
-    # Теперь срабатывает только для промстоков с биоразлагаемой органикой
-    # (пищевая промышленность, ТКО фильтрат, бытовые с industrial-добавкой),
-    # ИСКЛЮЧАЕТСЯ при Ex_required=True (горюче-смазочные/нефть/H2S не подлежат
-    # биообработке без специальной предварительной фазы). В перспективе нужен
-    # ввод C:N ratio + NH4+ концентрации в L1.
-    # TODO: добавить L1.nh4_mgL и L1.c_to_n_ratio для точного триггера
-    if (
-        L0.wastewater_type == "industrial"
-        and not (L1 and L1.Ex_required)  # АЗС/нефтехимия — НЕ нитрифицировать
-    ):
-        # Temperature gate: при T_жидк <10°C нитрификация почти останавливается
-        # (k_AOB падает в 3× по Arrhenius), при T>40°C — нитрификаторы гибнут.
-        T = (L1.liquid_temp_c if L1 and L1.liquid_temp_c is not None else 20.0)
-        if 10.0 <= T <= 40.0:
-            triggers.append("auto_nitrification_check")
+    # EXT-9: Нитри/денитрификация по строгим параметрам Monod / Henze IWA 2008 §3.4
+    # v0.4 (Phase 34+, 2026-05-13): полностью переписан после PhD-Biology audit +
+    # Sc.D. cross-domain. Решено через _check_ext_9_nitrification, который
+    # учитывает NH4_in, BOD5_in, тяжёлые металлы, T-gate, ПДК по target_discharge.
+    # Срабатывает когда:
+    #   NH4_in > 20 мг/л (Henze IWA 2008 §3.4)
+    #   AND C:N = BOD5/NH4 > 3 (нужен углерод для гетеротрофов)
+    #   AND 12°C ≤ T ≤ 35°C (Nitrosomonas/Nitrobacter диапазон)
+    #   AND нет тяжёлых металлов (Cr, Cd, Pb, Hg отравляют ил)
+    #   AND нет Ex_required (нефтехимия не подлежит биообработке)
+    #   AND NH4_in > ПДК по target_discharge (рыбхоз 0.4, общ. 2.0, муниц. 40)
+    if _check_ext_9_nitrification(L0, L1, computed):
+        triggers.append("auto_nitrification_check")
 
     # EXT-10: Гидробак ВНС (СП 30.13330 §11). Для повысительных насосных
     # станций чистой воды Q>50 м³/ч переменный расход компенсируется
@@ -2363,6 +2493,67 @@ def evaluate_handoff_triggers(
         triggers.append("auto_hydrobak_required")
 
     return triggers
+
+
+# ---------------------- Кавитационный анализ ----------------------
+# Sc.D. audit 2026-05-13: заменяем примитивный `NPSHa - NPSHr >= 0.5`
+# на полный Thoma σ + σ_3% по ISO 9906:2024 (Karassik §22.7).
+# См. pump_calculator/cavitation.py.
+
+def _map_pump_type_for_cavitation(
+    pump_type_db: str,
+) -> str:
+    """Маппинг pump.type (БД) → cavitation pump_type.
+
+    Submersible_sewage / drainage_pump → "submersible" (мягкие пороги).
+    Multistage / booster_station → "multistage" (строгие пороги Karassik).
+    Иначе → "surface" (default консервативный).
+    """
+    pt = (pump_type_db or "").lower()
+    if pt in ("submersible_sewage", "submersible", "drainage_pump", "submersible_drainage"):
+        return "submersible"
+    if pt in ("multistage", "booster_station", "vertical_multistage"):
+        return "multistage"
+    return "surface"
+
+
+def evaluate_cavitation_for_results(
+    results: SelectionResultsBySegment,
+    computed: ComputedHydraulics,
+    L1: L1Input | None,
+) -> dict[str, CavitationResult]:
+    """Полный кавитационный анализ для каждого подобранного насоса.
+
+    Возвращает {segment: CavitationResult} только для сегментов где есть
+    результат + NPSHr_at_BEP_m задан (backward-compat: если NPSHr
+    отсутствует — analyze_cavitation вернёт marginal с предупреждением).
+
+    Используется как замена примитивного `NPSHa − NPSHr ≥ 0.5`.
+    """
+    out: dict[str, CavitationResult] = {}
+    if computed.npsha_m is None or computed.H_full_m is None:
+        return out
+    liquid_temp_c = (L1.liquid_temp_c if L1 and L1.liquid_temp_c is not None else 20.0)
+
+    for segment in ("budget", "mid", "premium"):
+        pr = getattr(results, segment, None)
+        if pr is None:
+            continue
+        npshr_m = pr.envelope.NPSHr_at_BEP_m
+        if npshr_m is None:
+            # Backward-compat: NPSHr нет в паспорте → analyze_cavitation
+            # вернёт marginal с recommendations. Не пропускаем сегмент.
+            npshr_m = 0.0
+        cav_pump_type = _map_pump_type_for_cavitation(pr.type)
+        result = analyze_cavitation(
+            NPSHa_m=computed.npsha_m,
+            NPSHr_3pct_m=npshr_m,
+            H_full_m=computed.H_full_m,
+            pump_type=cav_pump_type,  # type: ignore[arg-type]
+            liquid_temp_c=liquid_temp_c,
+        )
+        out[segment] = result
+    return out
 
 
 # ----------------------- Главная функция -----------------------
@@ -2457,6 +2648,17 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
     # Шаг 7
     triggers = evaluate_handoff_triggers(L0_filled, L1, computed, candidates_total)
 
+    # Шаг 7b: кавитационный анализ по ISO 9906:2024 (Sc.D. 2026-05-13).
+    # Заменяет примитивный `NPSHa - NPSHr >= 0.5`. Анализ выполняется
+    # для **каждого** подобранного насоса (budget/mid/premium) — важно
+    # для многоступенчатых, где простая разница даёт ложно-зелёный сигнал.
+    cavitation_per_segment = evaluate_cavitation_for_results(results, computed, L1)
+    # Берём worst-case (если хоть один сегмент warning/critical — добавляем trigger).
+    cav_risks = [r.risk for r in cavitation_per_segment.values()]
+    if "critical" in cav_risks or "warning" in cav_risks:
+        if "auto_cavitation_warning" not in triggers:
+            triggers.append("auto_cavitation_warning")
+
     # Жёсткий триггер: если ни один сегмент не заполнен — handoff обязателен
     if results.budget is None and results.mid is None and results.premium is None:
         if "auto_no_match" not in triggers:
@@ -2544,6 +2746,23 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             f"рассмотрите снижение T или подпора."
         ))
 
+    # Sc.D. audit 2026-05-13: полный кавитационный анализ ISO 9906:2024.
+    # Заменяет старую проверку `NPSHa - NPSHr >= 0.5` (которая на много-
+    # ступенчатых даёт ложно-зелёный сигнал).
+    if "auto_cavitation_warning" in triggers and cavitation_per_segment:
+        worst_segment, worst_result = None, None
+        for seg, cav in cavitation_per_segment.items():
+            if cav.risk in ("critical", "warning"):
+                if worst_result is None or cav.margin < worst_result.margin:
+                    worst_segment, worst_result = seg, cav
+        if worst_result is not None:
+            warnings.insert(0, (
+                f"⚠ Кавитация (ISO 9906:2024, сегмент «{worst_segment}»): "
+                f"margin σ_avail/σ_req = {worst_result.margin:.2f}, "
+                f"risk={worst_result.risk}. {worst_result.risk_reason} "
+                f"Рекомендации: {'; '.join(worst_result.recommendations[:2])}"
+            ))
+
     # ──────────────────────────────────────────────────────────────────
     # 2026-05-10: warnings для 10 научных расширений
     # ──────────────────────────────────────────────────────────────────
@@ -2592,9 +2811,11 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             f"Рекомендуется песколовка/гидроциклон до КНС (СП 32 §7.4)."
         ))
     if "auto_disinfection_required" in triggers:
+        _uv_dose, _target = _ext_8_uv_dose_required(L1)
         warnings.insert(0, (
-            f"⚠ Q={L0.Q_m3h} м³/ч хоз-бытовых — по СанПиН 2.1.5.980-00 "
-            f"обязательно обеззараживание (УФ ≥30 мДж/см² или озон ≥5 мг/л) "
+            f"⚠ Q={L0.Q_m3h} м³/ч хоз-бытовых, сброс в '{_target}' — "
+            f"по СанПиН 2.1.5.980-00 обязательно обеззараживание "
+            f"(УФ ≥{_uv_dose} мДж/см² или озон ≥5 мг/л) "
             f"перед сбросом в водоём. Иначе штраф 250-500 тыс ₽ (КоАП 8.13)."
         ))
     if "auto_nitrification_check" in triggers:
@@ -2635,6 +2856,35 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             s.reason_engineer = s.reason
         if not s.reason_manager:
             s.reason_manager = s.reason
+
+    # Sc.D. 2026-05-13: 2-level reason для auto_cavitation_warning.
+    # Берём worst case среди сегментов (наименьший margin).
+    if "auto_cavitation_warning" in triggers and cavitation_per_segment:
+        from pump_calculator.schemas import InputSuggestion
+        worst = min(
+            cavitation_per_segment.values(),
+            key=lambda r: r.margin,
+        )
+        # Карта pump_type для текста ISO порога
+        worst_seg_pump_type = "submersible"
+        for seg, cav in cavitation_per_segment.items():
+            if cav is worst:
+                pr = getattr(results, seg, None)
+                if pr is not None:
+                    worst_seg_pump_type = _map_pump_type_for_cavitation(pr.type)
+                break
+        severity = "critical" if worst.risk == "critical" else "warning"
+        eng_text = explain_cavitation_engineer(worst, worst_seg_pump_type)  # type: ignore[arg-type]
+        mgr_text = explain_cavitation_manager(worst)
+        suggestions.append(InputSuggestion(
+            field="L1.altitude_m",
+            current_value=f"NPSHa={worst.NPSHa_m:.2f} м",
+            suggested_value=f"насос с NPSHr_3% < {worst.NPSHa_m * 0.7:.1f} м",
+            reason=eng_text,
+            reason_engineer=eng_text,
+            reason_manager=mgr_text,
+            severity=severity,
+        ))
 
     return SelectionResult(
         input=SelectionRequest(L0=L0_filled, L1=L1),

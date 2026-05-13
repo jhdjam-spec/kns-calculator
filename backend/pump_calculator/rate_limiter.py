@@ -27,12 +27,11 @@ NB: slowapi in-memory storage. YC Functions concurrency=1 + cold start
 
 from __future__ import annotations
 
-import logging
-
+import structlog
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 # Глобальный limiter; импортируется в api.py и используется как декоратор:
 #   @limiter.limit("10/minute")

@@ -18,9 +18,20 @@ from .ballast import (
     BallastResult,
     calc_ballast_concrete,
 )
+from .ground_context import GroundContext, SoilType
 from .ladder import (
     LadderResult,
     calc_ladder_geometry,
+)
+from .lateral_pressure import (
+    GAMMA_WATER_KN_M3,
+    GRAVITY,
+    PE100_SDR11_ADMISSIBLE_KPA,
+    PE100_SDR17_ADMISSIBLE_KPA,
+    LateralPressure,
+    calculate_pressure,
+    check_corpus_strength,
+    wall_friction_force_kN,
 )
 from .models import (
     StructuralScenarioInput,
@@ -37,15 +48,25 @@ from .wall_thickness import calc_polymer_wall_thickness
 
 __all__ = [
     "BallastResult",
+    "GAMMA_WATER_KN_M3",
+    "GRAVITY",
+    "GroundContext",
     "LadderResult",
+    "LateralPressure",
+    "PE100_SDR11_ADMISSIBLE_KPA",
+    "PE100_SDR17_ADMISSIBLE_KPA",
     "SOIL_SEISMIC_FACTORS",
     "SeismicResult",
     "SoilSeismicCategory",
+    "SoilType",
     "StructuralScenarioInput",
     "WallThicknessResult",
     "calc_ballast_concrete",
     "calc_ladder_geometry",
     "calc_polymer_wall_thickness",
     "calc_seismic_force_on_corpus",
+    "calculate_pressure",
+    "check_corpus_strength",
     "list_soil_categories",
+    "wall_friction_force_kN",
 ]

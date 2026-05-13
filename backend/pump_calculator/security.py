@@ -15,15 +15,15 @@ HTTP Basic + access log + privacy stub, 1.5 дня».
 
 from __future__ import annotations
 
-import logging
 import os
 import secrets
 
+import structlog
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 security_basic = HTTPBasic(auto_error=True)
-log_audit = logging.getLogger("audit.admin")
+log_audit = structlog.get_logger("audit.admin")
 
 
 def verify_admin(

@@ -36,7 +36,6 @@ stdlib `urllib.request` достаточно для PUT/GET с заголовк�
 from __future__ import annotations
 
 import json
-import logging
 import os
 import re
 import urllib.error
@@ -45,7 +44,9 @@ import urllib.request
 from datetime import UTC, datetime
 from typing import Any
 
-logger = logging.getLogger(__name__)
+import structlog
+
+logger = structlog.get_logger(__name__)
 
 # ---------------------------------------------------------------------------
 # Константы

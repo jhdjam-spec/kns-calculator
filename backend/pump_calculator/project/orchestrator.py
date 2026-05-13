@@ -6,7 +6,7 @@
 """
 from __future__ import annotations
 
-import logging
+import structlog
 
 from pump_calculator.regulations import ref as _reg_ref
 
@@ -18,7 +18,7 @@ from .models import (
     SubsystemResult,
 )
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 def _ref_dict(reg_key: str, section: str, purpose: str, quote: str = "") -> dict:

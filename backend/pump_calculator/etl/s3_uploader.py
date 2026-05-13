@@ -47,13 +47,14 @@ from __future__ import annotations
 
 import hashlib
 import json
-import logging
 import os
 import re
 from datetime import UTC, datetime
 from typing import Any
 
-logger = logging.getLogger(__name__)
+import structlog
+
+logger = structlog.get_logger(__name__)
 
 # ---------------------------------------------------------------------------
 # Константы
