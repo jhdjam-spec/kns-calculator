@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Allow: /privacy
 
 # AI search / LLM crawlers — explicitly allowed
 User-agent: GPTBot

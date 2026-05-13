@@ -6,20 +6,67 @@ import logging
 import os
 from typing import Literal
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, PlainTextResponse, Response
 from pydantic import BaseModel, Field
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 from pump_calculator import __version__, catalog
+
+# Pydantic-модели импортируем на уровне модуля — FastAPI должен видеть их
+# во время декорирования эндпоинтов (нельзя лениво, как функции расчёта).
+# Сами расчётные функции по-прежнему импортируются лениво в теле эндпоинта
+# для минимизации lambda cold-start.
+from pump_calculator.bom import BOMSpecification  # noqa: E402
+from pump_calculator.climate.models import ClimateScenarioInput  # noqa: E402, F401
+from pump_calculator.complexes import Complex  # noqa: E402
+from pump_calculator.fire_water import FireScenarioInput  # noqa: E402
+from pump_calculator.los import LOSScenarioInput  # noqa: E402
 from pump_calculator.matching import select_pumps as run_selection
+from pump_calculator.project import ProjectInput  # noqa: E402
+from pump_calculator.rate_limiter import BodyLimitMiddleware, limiter
+from pump_calculator.reports import (  # noqa: E402
+    CalculationReportInput,
+    RPZGostInput,
+)
 from pump_calculator.schemas import (
+    BurialDepthRequest,
     ClassifyRequest,
     ClassifyResponse,
+    ClimateLoadsRequest,
+    DarcyWeisbachRequest,
+    FireWaterCalcRequest,
     L0Input,
+    LadderRequest,
+    NpshRequest,
     SelectionRequest,
     SelectionResult,
+    SprinklersRequest,
+    WaterHammerRequest,
 )
+from pump_calculator.security import log_audit, verify_admin
+from pump_calculator.storm.models import StormInput  # noqa: E402
+from pump_calculator.structural import StructuralScenarioInput  # noqa: E402
+from pump_calculator.water_supply import WaterScenarioInput  # noqa: E402
+
+
+def _rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> Response:
+    """Возвращает 429 JSON с Retry-After header.
+
+    slowapi бросает RateLimitExceeded когда per-IP лимит исчерпан;
+    оборачиваем в JSONResponse чтобы frontend получил структурированный ответ.
+    """
+    response = JSONResponse(
+        status_code=429,
+        content={
+            "detail": f"Rate limit exceeded: {exc.detail}",
+            "limit": str(exc.detail),
+        },
+    )
+    response.headers["Retry-After"] = "60"
+    return response
 
 logger = logging.getLogger(__name__)
 
@@ -37,20 +84,62 @@ app = FastAPI(
 )
 
 # CORS: prod — список разрешённых origin'ов через ENV `CORS_ALLOWED_ORIGINS`
-# (запятая-разделённый). Dev/MVP по умолчанию ["*"]. См. PRR audit 2026-05-10.
-_cors_env = os.environ.get("CORS_ALLOWED_ORIGINS", "*").strip()
-if _cors_env == "*":
-    _cors_origins = ["*"]
-else:
-    _cors_origins = [o.strip() for o in _cors_env.split(",") if o.strip()]
+# (запятая-разделённый). Sc.D. audit 2026-05-13 (P0 security): fail-CLOSED default.
+# Если ENV не задан, CORS-middleware НЕ подключается → браузер блокирует cross-origin
+# запросы (same-origin only). Wildcard "*" больше НЕ принимается как дефолт.
+#
+# Dev:   CORS_ALLOWED_ORIGINS=http://localhost:3000
+# Prod:  CORS_ALLOWED_ORIGINS=https://kns.inservo.ru,https://kns-calculator-frontend.website.yandexcloud.net
+_cors_env = os.environ.get("CORS_ALLOWED_ORIGINS", "").strip()
+_cors_origins = [o.strip() for o in _cors_env.split(",") if o.strip()]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=_cors_origins,
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+if not _cors_origins:
+    # Fail-closed: ничего не подключаем — браузер блокирует cross-origin запросы.
+    logger.warning(
+        "CORS_ALLOWED_ORIGINS not configured — only same-origin requests will be allowed. "
+        "Set CORS_ALLOWED_ORIGINS env to comma-separated origin list "
+        "(e.g. CORS_ALLOWED_ORIGINS=http://localhost:3000 for dev).",
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_cors_origins,
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+# ──────────────────────────────────────────────────────────────────────────
+# Security middleware (Sc.D. Architecture HIGH priority, 2026-05-13)
+# ──────────────────────────────────────────────────────────────────────────
+# 1. BodyLimitMiddleware: 413 для запросов >10 MB — отсечка OOM на YC (512 MB cap).
+# 2. SlowAPIMiddleware + limiter: per-IP rate limiting.
+# Тонкая настройка лимитов — в декораторах @limiter.limit() на эндпоинтах.
+
+_BODY_LIMIT_BYTES = int(os.environ.get("MAX_REQUEST_BODY_BYTES", str(10 * 1024 * 1024)))
+app.add_middleware(BodyLimitMiddleware, max_size=_BODY_LIMIT_BYTES)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
+
+
+@app.middleware("http")
+async def audit_admin_requests(request: Request, call_next):
+    """Логировать все обращения к /admin/* — кто, когда, откуда.
+
+    Sc.D. audit: «access log обязателен для closed beta» (152-ФЗ ст.19,
+    OWASP A09:2021 — Security Logging Failures).
+    """
+    if request.url.path.startswith("/admin"):
+        client_host = request.client.host if request.client else "unknown"
+        log_audit.info(
+            "%s %s from %s",
+            request.method,
+            request.url.path,
+            client_host,
+        )
+    return await call_next(request)
 
 
 @app.get("/", tags=["meta"])
@@ -79,8 +168,37 @@ def health() -> dict:
     }
 
 
+# Privacy notice (152-ФЗ ст.9, ст.18, ст.19 — закон «О персональных данных»).
+# Sc.D. audit 2026-05-13: для closed beta достаточно статичной заглушки;
+# полный policy + DPO contract — Phase 34+.
+_PRIVACY_TEXT = (
+    "Политика обработки персональных данных\n"
+    "========================================\n\n"
+    "Сервис kns-calculator (далее «Калькулятор») является инженерным "
+    "B2B-инструментом первичного подбора насосного оборудования.\n\n"
+    "1. При загрузке файлов ТЗ через калькулятор архив может содержать "
+    "персональные данные клиентов (ФИО, телефон, e-mail, адрес объекта).\n\n"
+    "2. Использование калькулятора означает согласие на обработку "
+    "переданных данных в целях подбора оборудования и улучшения базы "
+    "знаний сервиса (152-ФЗ ст.9, ст.18).\n\n"
+    "3. Данные хранятся в S3-хранилище Yandex Cloud (РФ) и не передаются "
+    "третьим лицам без отдельного согласия.\n\n"
+    "4. Запросы на удаление / получение копии данных (152-ФЗ ст.14, ст.21) "
+    "направлять DPO по адресу: zakaz@inservo.ru.\n\n"
+    "Оператор: ООО «Серво-Юг», ИНН/ОГРН — на странице "
+    "https://inservo.ru. Контакт DPO: zakaz@inservo.ru.\n"
+)
+
+
+@app.get("/privacy", tags=["meta"], response_class=PlainTextResponse)
+def privacy() -> str:
+    """Statement обработки персональных данных (152-ФЗ, closed beta stub)."""
+    return _PRIVACY_TEXT
+
+
 @app.post("/select", response_model=SelectionResult, tags=["selection"])
-def select(req: SelectionRequest) -> SelectionResult:
+@limiter.limit("60/minute")
+def select(request: Request, req: SelectionRequest) -> SelectionResult:
     """Главный endpoint: 7-шаговый алгоритм подбора насоса.
 
     Принимает L0 (4 поля обязательно) + L1 (опционально).
@@ -94,7 +212,8 @@ def select(req: SelectionRequest) -> SelectionResult:
 
 
 @app.post("/select/quick", response_model=SelectionResult, tags=["selection"])
-def select_quick(L0: L0Input) -> SelectionResult:
+@limiter.limit("60/minute")
+def select_quick(request: Request, L0: L0Input) -> SelectionResult:
     """Упрощённый endpoint: только L0, без L1. Для быстрых L0-вызовов с фронта."""
     return run_selection(L0, None)
 
@@ -141,7 +260,8 @@ class QuestionnaireRequest(BaseModel):
 
 
 @app.post("/handoff/questionnaire", tags=["handoff"], response_class=Response)
-def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
+@limiter.limit("20/minute")
+def handoff_questionnaire(request: Request, req: QuestionnaireRequest) -> Response:
     """Генерация PDF опросного листа клиенту (Артефакт 1)."""
     from pump_calculator.handoff import generate_questionnaire_pdf
 
@@ -166,7 +286,8 @@ def handoff_questionnaire(req: QuestionnaireRequest) -> Response:
 
 
 @app.post("/handoff/bom", tags=["handoff"], response_class=Response)
-def handoff_bom(selection: SelectionResult) -> Response:
+@limiter.limit("20/minute")
+def handoff_bom(request: Request, selection: SelectionResult) -> Response:
     """Генерация PDF BOM-черновика (Артефакт 2). 3 ценовых сегмента."""
     from pump_calculator.handoff import generate_bom_pdf
 
@@ -184,7 +305,8 @@ def handoff_bom(selection: SelectionResult) -> Response:
 
 
 @app.post("/handoff/rpz-gost", tags=["handoff"], response_class=Response)
-def handoff_rpz_gost(req: SelectionRequest) -> Response:
+@limiter.limit("20/minute")
+def handoff_rpz_gost(request: Request, req: SelectionRequest) -> Response:
     """РПЗ по ГОСТ Р 21.101-2020 (13 разделов) — full pipeline endpoint.
 
     Принимает SelectionRequest (L0+L1), внутри запускает compute_hydraulics
@@ -221,7 +343,8 @@ def handoff_rpz_gost(req: SelectionRequest) -> Response:
 
 
 @app.post("/handoff/questionnaire-docx", tags=["handoff"], response_class=Response)
-def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
+@limiter.limit("20/minute")
+def handoff_questionnaire_docx(request: Request, req: QuestionnaireRequest) -> Response:
     """Генерация DOCX опросного листа клиенту (для редактирования и парсинга обратно).
 
     DOCX формат предпочтительнее PDF для случаев, когда клиент будет заполнять
@@ -251,7 +374,8 @@ def handoff_questionnaire_docx(req: QuestionnaireRequest) -> Response:
 
 
 @app.post("/handoff/empty-questionnaire-docx", tags=["handoff"], response_class=Response)
-def handoff_empty_questionnaire_docx() -> Response:
+@limiter.limit("20/minute")
+def handoff_empty_questionnaire_docx(request: Request) -> Response:
     """Пустой DOCX опросник — для клиента, который заполняет с нуля без предзаполнения."""
     from pump_calculator.handoff import generate_questionnaire_docx
 
@@ -287,7 +411,11 @@ class FromFileResponse(BaseModel):
 
 
 @app.post("/select/from-file", response_model=FromFileResponse, tags=["selection"])
-async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  # noqa: B008  (идиома FastAPI)
+@limiter.limit("20/minute")
+async def select_from_file(
+    request: Request,
+    file: UploadFile = File(...),  # noqa: B008  (идиома FastAPI)
+) -> FromFileResponse:
     """Принять заполненный DOCX-опросник, извлечь параметры и сделать подбор.
 
     Поддерживаемые форматы:
@@ -306,6 +434,17 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
     file_bytes = await file.read()
     if not file_bytes:
         raise HTTPException(status_code=400, detail="Файл пустой")
+    # Phase 33+ rate-limit hardening: DOCX-опросник обычно <1 MB; 5 MB cap
+    # отсекает abuse / случайные большие файлы до парсинга.
+    _MAX_DOCX_BYTES = 5 * 1024 * 1024
+    if len(file_bytes) > _MAX_DOCX_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=(
+                f"Файл слишком большой ({len(file_bytes)} байт). "
+                f"Максимум {_MAX_DOCX_BYTES} байт (5 MB)."
+            ),
+        )
 
     from pump_calculator.handoff import parse_questionnaire_docx
 
@@ -345,7 +484,7 @@ async def select_from_file(file: UploadFile = File(...)) -> FromFileResponse:  #
 
 
 @app.post("/storm/calc", tags=["storm"])
-def calculate_storm(payload: dict) -> dict:
+def calculate_storm(inputs: StormInput) -> dict:
     """Полный расчёт ливневой канализации по СП 32.
 
     Принимает StormInput (см. pump_calculator.storm.models) и возвращает
@@ -355,16 +494,6 @@ def calculate_storm(payload: dict) -> dict:
     Классическим (Phase 20).
     """
     from pump_calculator.storm import calculate_full_storm
-    from pump_calculator.storm.models import StormInput
-
-    try:
-        inputs = StormInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(
-            status_code=400,
-            detail=f"Некорректный input: {e}",
-        ) from e
 
     try:
         result = calculate_full_storm(inputs)
@@ -414,7 +543,7 @@ def list_storm_presets() -> dict:
 
 
 @app.post("/fire-water/sprinklers", tags=["fire_water"])
-def calc_sprinklers_endpoint(payload: dict) -> dict:
+def calc_sprinklers_endpoint(req: SprinklersRequest) -> dict:
     """Расчёт автоматических спринклерных установок по СП 485.1311500.2020.
 
     Требует:
@@ -424,10 +553,12 @@ def calc_sprinklers_endpoint(payload: dict) -> dict:
     from pump_calculator.fire_water import calc_sprinkler_demand
     try:
         result = calc_sprinkler_demand(
-            group=payload["group"],
-            coverage_area_m2=payload.get("coverage_area_m2"),
+            group=req.group,
+            coverage_area_m2=req.coverage_area_m2,
         )
-    except Exception as e:
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
@@ -453,28 +584,20 @@ def list_sprinkler_groups_endpoint() -> dict:
 
 
 @app.post("/fire-water/calc", tags=["fire_water"])
-def calculate_fire_water(payload: dict) -> dict:
+def calculate_fire_water(req: FireWaterCalcRequest) -> dict:
     """Расчёт противопожарного водоснабжения по СП 8.13130 + СП 10.13130.
 
-    Принимает FireScenarioInput (см. pump_calculator.fire_water.models),
-    возвращает FireResult с расходами, резервуаром, насосной и ссылками
-    на нормативы.
+    Принимает FireScenarioInput + H_design_m, возвращает FireResult с расходами,
+    резервуаром, насосной и ссылками на нормативы.
     """
-    from pump_calculator.fire_water import (
-        FireScenarioInput,
-        calculate_fire_scenario,
-    )
+    from pump_calculator.fire_water import calculate_fire_scenario
+
+    # Извлечь H_design_m, остальные поля передать как FireScenarioInput
+    scenario_dict = req.model_dump(exclude={"H_design_m"})
+    inputs = FireScenarioInput(**scenario_dict)
 
     try:
-        inputs = FireScenarioInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
-
-    H_design = float(payload.get("H_design_m", 60.0))
-
-    try:
-        result = calculate_fire_scenario(inputs, H_design_m=H_design)
+        result = calculate_fire_scenario(inputs, H_design_m=req.H_design_m)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
     except Exception as e:  # pragma: no cover
@@ -507,23 +630,16 @@ def calculate_fire_water(payload: dict) -> dict:
 
 
 @app.post("/water/demand", tags=["water_supply"])
-def calculate_water_demand_endpoint(payload: dict) -> dict:
+def calculate_water_demand_endpoint(inputs: WaterScenarioInput) -> dict:
     """Расчёт водопотребления по СП 30.13330.2020 + СП 31.13330.2021.
 
     Принимает WaterScenarioInput, возвращает WaterDemandResult с раздельными
     расходами ХВС/ГВС/полива и суммарными показателями.
     """
     from pump_calculator.water_supply import (
-        WaterScenarioInput,
         calc_water_demand,
         sizing_water_station,
     )
-
-    try:
-        inputs = WaterScenarioInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
 
     try:
         demand = calc_water_demand(inputs)
@@ -606,7 +722,7 @@ def list_regulations(category: str | None = None) -> dict:
 
 
 @app.post("/physics/npsh", tags=["physics"])
-def calc_npsh_endpoint(payload: dict) -> dict:
+def calc_npsh_endpoint(req: NpshRequest) -> dict:
     """NPSHa с поправкой на высоту над уровнем моря и широту.
 
     Используется для критичных объектов: горные регионы (Архыз, Кавказ),
@@ -615,13 +731,15 @@ def calc_npsh_endpoint(payload: dict) -> dict:
     from pump_calculator.physics_advanced import npsha_with_corrections
     try:
         npsha, refs = npsha_with_corrections(
-            H_suction_m=payload["H_suction_m"],
-            T_celsius=payload.get("T_celsius", 20.0),
-            H_friction_suction_m=payload.get("H_friction_suction_m", 0.0),
-            altitude_m=payload.get("altitude_m", 0.0),
-            latitude_deg=payload.get("latitude_deg", 55.0),
+            H_suction_m=req.H_suction_m,
+            T_celsius=req.T_celsius,
+            H_friction_suction_m=req.H_friction_suction_m,
+            altitude_m=req.altitude_m,
+            latitude_deg=req.latitude_deg,
         )
-    except Exception as e:
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
@@ -641,18 +759,20 @@ def calc_npsh_endpoint(payload: dict) -> dict:
 
 
 @app.post("/physics/water-hammer", tags=["physics"])
-def calc_water_hammer_endpoint(payload: dict) -> dict:
+def calc_water_hammer_endpoint(req: WaterHammerRequest) -> dict:
     """Гидроудар по Жуковскому-Михайлову с учётом материала трубы."""
     from pump_calculator.physics_advanced import water_hammer
     try:
         result = water_hammer(
-            v_ms=payload["v_ms"],
-            pipe_material=payload.get("pipe_material", "pe100_sdr17"),
-            pipe_length_m=payload.get("pipe_length_m", 100.0),
-            closure_time_s=payload.get("closure_time_s", 5.0),
-            T_celsius=payload.get("T_celsius", 15.0),
+            v_ms=req.v_ms,
+            pipe_material=req.pipe_material,
+            pipe_length_m=req.pipe_length_m,
+            closure_time_s=req.closure_time_s,
+            T_celsius=req.T_celsius,
         )
-    except Exception as e:
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {
@@ -676,18 +796,20 @@ def calc_water_hammer_endpoint(payload: dict) -> dict:
 
 
 @app.post("/physics/darcy-weisbach", tags=["physics"])
-def calc_darcy_weisbach_endpoint(payload: dict) -> dict:
+def calc_darcy_weisbach_endpoint(req: DarcyWeisbachRequest) -> dict:
     """Потери напора Дарси-Вейсбаха с λ Swamee-Jain."""
     from pump_calculator.physics_advanced import darcy_weisbach_head_loss_m
     try:
         h_f, details = darcy_weisbach_head_loss_m(
-            L_m=payload["L_m"],
-            D_mm=payload["D_mm"],
-            v_ms=payload["v_ms"],
-            pipe_material=payload.get("pipe_material", "pe100"),
-            T_celsius=payload.get("T_celsius", 15.0),
+            L_m=req.L_m,
+            D_mm=req.D_mm,
+            v_ms=req.v_ms,
+            pipe_material=req.pipe_material,
+            T_celsius=req.T_celsius,
         )
-    except Exception as e:
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return {"h_f_m": h_f, **details}
@@ -761,19 +883,15 @@ def list_project_presets() -> dict:
 
 
 @app.post("/project/calculate", tags=["project"])
-def calculate_project_endpoint(payload: dict) -> dict:
+@limiter.limit("30/minute")
+def calculate_project_endpoint(request: Request, inputs: ProjectInput) -> dict:
     """Главный оркестратор: запускает все подсистемы по проекту.
 
     Возвращает ProjectResult со всеми расчётами + сводную BOM + ссылки на нормативы.
     Это сердце калькулятора — пользователь вводит 5-7 полей раз и получает
     готовое решение проектировщика.
     """
-    from pump_calculator.project import ProjectInput, calculate_project
-    try:
-        inputs = ProjectInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.project import calculate_project
     return calculate_project(inputs).model_dump()
 
 
@@ -783,40 +901,39 @@ def calculate_project_endpoint(payload: dict) -> dict:
 
 
 @app.post("/climate/burial-depth", tags=["climate"])
-def calc_burial_depth_endpoint(payload: dict) -> dict:
+def calc_burial_depth_endpoint(req: BurialDepthRequest) -> dict:
     """Глубина заложения трубопровода по СП 32 + СП 131."""
     from pump_calculator.climate import calc_pipe_burial_depth
     try:
         result = calc_pipe_burial_depth(
-            region_city=payload["region_city"],
-            soil_type=payload.get("soil_type", "clay_loam"),
-            pipe_dn_mm=payload.get("pipe_dn_mm", 200),
-            has_groundwater=payload.get("has_groundwater", False),
+            region_city=req.region_city,
+            soil_type=req.soil_type,
+            pipe_dn_mm=req.pipe_dn_mm,
+            has_groundwater=req.has_groundwater,
         )
-    except Exception as e:
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except Exception as e:  # pragma: no cover
         logger.exception("unhandled error: %s", e.__class__.__name__)
         raise HTTPException(status_code=400, detail=str(e)) from e
     return result.model_dump()
 
 
 @app.post("/climate/loads", tags=["climate"])
-def calc_climate_loads_endpoint(payload: dict) -> dict:
+def calc_climate_loads_endpoint(req: ClimateLoadsRequest) -> dict:
     """Снеговая, ветровая и сейсмическая нагрузки по СП 20 + СП 14."""
     from pump_calculator.climate.loads import (
         calc_seismic_load,
         calc_snow_load_pavilion,
         calc_wind_load_pavilion,
     )
-    city = payload.get("region_city", "Москва")
-    area = payload.get("pavilion_area_m2", 0.0)
-    height = payload.get("pavilion_height_m", 3.0)
-    facade = payload.get("pavilion_facade_area_m2", height * 4)
+    facade = req.pavilion_facade_area_m2 if req.pavilion_facade_area_m2 is not None else req.pavilion_height_m * 4
 
-    s, s_total, s_region, s_notes = calc_snow_load_pavilion(city, area)
-    w, w_total, w_region, w_notes = calc_wind_load_pavilion(city, height, facade)
+    s, s_total, s_region, s_notes = calc_snow_load_pavilion(req.region_city, req.pavilion_area_m2)
+    w, w_total, w_region, w_notes = calc_wind_load_pavilion(req.region_city, req.pavilion_height_m, facade)
     K, F_seism, seism_notes = calc_seismic_load(
-        payload.get("seismic_intensity_balls", 6),
-        payload.get("object_mass_kg", 5000),
+        req.seismic_intensity_balls,
+        req.object_mass_kg,
     )
     return {
         "snow": {"load_kn_m2": s, "total_kn": s_total, "region": s_region, "notes": s_notes},
@@ -856,49 +973,34 @@ def get_climate_for_city(city: str) -> dict:
 
 
 @app.post("/structural/ballast", tags=["structural"])
-def calc_ballast_endpoint(payload: dict) -> dict:
+def calc_ballast_endpoint(inputs: StructuralScenarioInput) -> dict:
     """Расчёт пригруза корпуса бетоном при УГВ (СП 32 §6.3)."""
-    from pump_calculator.structural import StructuralScenarioInput, calc_ballast_concrete
-    try:
-        inputs = StructuralScenarioInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.structural import calc_ballast_concrete
     return calc_ballast_concrete(inputs).model_dump()
 
 
 @app.post("/structural/wall-thickness", tags=["structural"])
-def calc_wall_thickness_endpoint(payload: dict) -> dict:
+def calc_wall_thickness_endpoint(inputs: StructuralScenarioInput) -> dict:
     """Минимальная толщина стенки полимерного корпуса по ISO 9969 SN."""
-    from pump_calculator.structural import StructuralScenarioInput, calc_polymer_wall_thickness
-    try:
-        inputs = StructuralScenarioInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.structural import calc_polymer_wall_thickness
     return calc_polymer_wall_thickness(inputs).model_dump()
 
 
 @app.post("/structural/ladder", tags=["structural"])
-def calc_ladder_endpoint(payload: dict) -> dict:
+def calc_ladder_endpoint(req: LadderRequest) -> dict:
     """Расчёт лестницы внутри корпуса (СП 12-104)."""
     from pump_calculator.structural import calc_ladder_geometry
     return calc_ladder_geometry(
-        height_m=payload["height_m"],
-        pit_diameter_m=payload["pit_diameter_m"],
-        is_corrosive_environment=payload.get("is_corrosive_environment", True),
+        height_m=req.height_m,
+        pit_diameter_m=req.pit_diameter_m,
+        is_corrosive_environment=req.is_corrosive_environment,
     ).model_dump()
 
 
 @app.post("/los/select", tags=["los"])
-def calc_los_select_endpoint(payload: dict) -> dict:
+def calc_los_select_endpoint(inputs: LOSScenarioInput) -> dict:
     """Подбор ЛОС-блока по типу стоков и точке сброса."""
-    from pump_calculator.los import LOSScenarioInput, select_los_block
-    try:
-        inputs = LOSScenarioInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.los import select_los_block
     return select_los_block(inputs).model_dump()
 
 
@@ -913,19 +1015,14 @@ def list_los_catalog() -> dict:
 
 
 @app.post("/reports/rpz-gost-pdf", tags=["reports"], response_class=Response)
-def generate_rpz_gost_endpoint(payload: dict) -> Response:
+def generate_rpz_gost_endpoint(inputs: RPZGostInput) -> Response:
     """Расчётно-пояснительная записка (РПЗ) по ГОСТ Р 21.101-2020.
 
     13-разделовая каноническая структура для защиты проекта в
     гос/негосэкспертизе (ст. 49 ГрК РФ).
     Спецификация — по форме 7 ГОСТ 21.110-2013 (8 колонок).
     """
-    from pump_calculator.reports import RPZGostInput, generate_rpz_gost_pdf
-    try:
-        inputs = RPZGostInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.reports import generate_rpz_gost_pdf
     pdf_bytes = generate_rpz_gost_pdf(inputs)
     return Response(
         content=pdf_bytes,
@@ -939,17 +1036,9 @@ def generate_rpz_gost_endpoint(payload: dict) -> Response:
 
 
 @app.post("/reports/calculation-pdf", tags=["reports"], response_class=Response)
-def calc_report_pdf_endpoint(payload: dict) -> Response:
+def calc_report_pdf_endpoint(inputs: CalculationReportInput) -> Response:
     """Генерация PDF расчётной записки на основе результатов всех модулей."""
-    from pump_calculator.reports import (
-        CalculationReportInput,
-        generate_calculation_report_pdf,
-    )
-    try:
-        inputs = CalculationReportInput(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.reports import generate_calculation_report_pdf
     pdf_bytes = generate_calculation_report_pdf(inputs)
     return Response(
         content=pdf_bytes,
@@ -961,26 +1050,16 @@ def calc_report_pdf_endpoint(payload: dict) -> Response:
 
 
 @app.post("/complex/summary", tags=["complexes"])
-def calc_complex_summary_endpoint(payload: dict) -> dict:
+def calc_complex_summary_endpoint(complex_obj: Complex) -> dict:
     """Сводная BOM по многообъектному комплексу (РЭУ → площадка → объект)."""
-    from pump_calculator.complexes import Complex, build_complex_bom_summary
-    try:
-        complex_obj = Complex(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.complexes import build_complex_bom_summary
     return build_complex_bom_summary(complex_obj).model_dump()
 
 
 @app.post("/bom/export-csv", tags=["bom"], response_class=Response)
-def export_bom_csv_endpoint(payload: dict) -> Response:
+def export_bom_csv_endpoint(spec: BOMSpecification) -> Response:
     """Экспорт BOM в CSV (для импорта в Excel/ГРАНД-Смету)."""
-    from pump_calculator.bom import BOMSpecification, export_bom_csv
-    try:
-        spec = BOMSpecification(**payload)
-    except Exception as e:
-        logger.exception("unhandled error: %s", e.__class__.__name__)
-        raise HTTPException(status_code=400, detail=f"Некорректный input: {e}") from e
+    from pump_calculator.bom import export_bom_csv
     csv_text = export_bom_csv(spec)
     return Response(
         content=csv_text.encode("utf-8-sig"),
@@ -1023,7 +1102,8 @@ _TRUSTED_DOMAINS: frozenset[str] = frozenset(
 
 
 @app.post("/etl/classify", response_model=ClassifyResponse, tags=["etl"])
-def classify_incoming(req: ClassifyRequest) -> ClassifyResponse:
+@limiter.limit("30/minute")
+def classify_incoming(request: Request, req: ClassifyRequest) -> ClassifyResponse:
     """Классификация входящего письма (CRM-light, P5 mail integration).
 
     Возвращает тип запроса (ОЛ/КП/ТЗ), объект (КНС/ЛОС/ВНС), производителя
@@ -1078,9 +1158,17 @@ class ImportParseRequest(BaseModel):
 
     Body может быть plain-текстом из textarea (вставка ТЗ/опросного листа)
     или будущим content-type (DOCX/PDF — пока вне scope MVP).
+
+    Hard limits (Sc.D. Architecture audit 2026-05-13):
+    - ``text`` ≤ 200_000 chars ≈ 200 KB UTF-8 — отсечка abuse при ETL парсинге.
+    - ``original_filename`` ≤ 255 chars — POSIX filename limit.
     """
 
-    text: str = Field("", description="Текст ТЗ или опросного листа")
+    text: str = Field(
+        "",
+        description="Текст ТЗ или опросного листа",
+        max_length=200_000,
+    )
     format: Literal["plain", "questionnaire"] | None = Field(
         "plain",
         description="Подсказка о формате. Пока ни на что не влияет — задел.",
@@ -1089,11 +1177,13 @@ class ImportParseRequest(BaseModel):
         None,
         description="Оригинальное имя файла (если ТЗ пришло из file-upload). "
         "Используется в имени архивной копии на Я.Диске.",
+        max_length=255,
     )
 
 
 @app.post("/import/parse", tags=["etl"])
-def import_parse_tz(req: ImportParseRequest) -> dict:
+@limiter.limit("10/minute")
+def import_parse_tz(request: Request, req: ImportParseRequest) -> dict:
     """Извлечь из ТЗ Q/H/город/тип стоков/шифр и сопутствующие L1-параметры.
 
     Менеджер вставляет ТЗ в /import — backend возвращает поля, которые
@@ -1216,13 +1306,16 @@ def import_parse_tz(req: ImportParseRequest) -> dict:
 
 
 # ---------------------- /admin/uploads — review UI (Phase 33+) ------------
-# TODO: add JWT auth before public access — currently open for MVP review.
+# HTTP Basic auth (closed beta). Установить ENV ADMIN_USER/ADMIN_PASS
+# перед деплоем — иначе все /admin/* возвращают 503.
+# См. pump_calculator/security.py + reference_kns_scd_architecture_prr_2026-05-13.md.
 
 
 @app.get("/admin/uploads", tags=["admin"])
 def admin_list_uploads(
     limit: int = 100,
     source: Literal["s3", "queue", "jsonl"] | None = None,
+    admin: str = Depends(verify_admin),
 ) -> dict:
     """Список uploaded ТЗ — для будущей review-UI.
 
@@ -1271,7 +1364,7 @@ def admin_list_uploads(
 
 
 @app.get("/admin/uploads/{upload_id}", tags=["admin"])
-def admin_get_upload(upload_id: str) -> dict:
+def admin_get_upload(upload_id: str, admin: str = Depends(verify_admin)) -> dict:
     """Детальный просмотр одного upload-а.
 
     Ищем по ID в (queue, jsonl, S3 catalog) — возвращаем первый найденный
@@ -1307,7 +1400,7 @@ def admin_get_upload(upload_id: str) -> dict:
 
 
 @app.post("/admin/uploads/{upload_id}/approve", tags=["admin"])
-def admin_approve_upload(upload_id: str) -> dict:
+def admin_approve_upload(upload_id: str, admin: str = Depends(verify_admin)) -> dict:
     """Перенести queued upload → ``etalons_uploaded.jsonl``."""
     from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
 
@@ -1325,7 +1418,11 @@ class RejectRequest(BaseModel):
 
 
 @app.post("/admin/uploads/{upload_id}/reject", tags=["admin"])
-def admin_reject_upload(upload_id: str, req: RejectRequest | None = None) -> dict:
+def admin_reject_upload(
+    upload_id: str,
+    req: RejectRequest | None = None,
+    admin: str = Depends(verify_admin),
+) -> dict:
     """Пометить queued upload как нерелевантный."""
     from pump_calculator.etl.dataset_enrichment import DatasetEnricher  # noqa: PLC0415
 
@@ -1338,7 +1435,7 @@ def admin_reject_upload(upload_id: str, req: RejectRequest | None = None) -> dic
 
 
 @app.post("/admin/uploads/merge", tags=["admin"])
-def admin_merge_uploads() -> dict:
+def admin_merge_uploads(admin: str = Depends(verify_admin)) -> dict:
     """Merge ``etalons_uploaded.jsonl`` → ``etalons_from_uploads.json``.
 
     Manual trigger для ежедневного pipeline. Возвращает

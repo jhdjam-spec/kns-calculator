@@ -18,6 +18,8 @@ dependencies = [
     "numpy>=1.26",
     # Phase 28 PDF РПЗ: matplotlib для Q-H графиков в reports/qh_chart.py
     "matplotlib>=3.8",
+    # Phase 33+ security: rate-limit per IP (Sc.D. Architecture HIGH, 2026-05-13)
+    "slowapi>=0.1.9,<1.0",
 ]
 
 # numpy-only friction factor (Swamee-Jain) — fluids/scipy убраны ради размера

@@ -479,6 +479,111 @@ class ClassifyResponse(BaseModel):
     )
 
 
+# ----------------------- Request wrappers (Sc.D. P0 security 2026-05-13) -----------------------
+# Pydantic-обёртки для endpoint'ов, которые раньше принимали `payload: dict` без
+# валидации. Цель: OpenAPI-схема, автоматическая валидация, защита от prototype
+# pollution / type-confusion атак. См. backend/pump_calculator/api.py.
+
+
+def _build_fire_water_calc_request():
+    """Ленивая фабрика FireWaterCalcRequest — подтягивает FireScenarioInput
+    из pump_calculator.fire_water.models и расширяет полем H_design_m.
+
+    Делается лениво, чтобы avoid circular import (schemas → fire_water).
+    """
+    from pump_calculator.fire_water.models import FireScenarioInput
+
+    class FireWaterCalcRequest(FireScenarioInput):  # type: ignore[misc, valid-type]
+        """Запрос для /fire-water/calc.
+
+        Расширяет FireScenarioInput полем H_design_m — расчётный напор насосной
+        пожаротушения (не входит в саму сценарную модель).
+        """
+
+        H_design_m: float = Field(
+            60.0, ge=0, le=500,
+            description="Расчётный напор насосной пожаротушения, м (default 60).",
+        )
+
+    return FireWaterCalcRequest
+
+
+FireWaterCalcRequest = _build_fire_water_calc_request()
+
+
+class SprinklersRequest(BaseModel):
+    """Запрос для /fire-water/sprinklers."""
+
+    group: Literal["1", "2", "3", "4.1", "4.2", "5", "6", "7"] = Field(
+        ..., description="Группа помещения по табл. 5.1 СП 485.",
+    )
+    coverage_area_m2: float | None = Field(
+        None, ge=0, le=100000,
+        description="Реальная площадь защищаемого помещения, м² (опц.).",
+    )
+
+
+class NpshRequest(BaseModel):
+    """Запрос для /physics/npsh."""
+
+    H_suction_m: float = Field(..., ge=-50, le=200, description="Геом. высота всасывания, м.")
+    T_celsius: float = Field(20.0, ge=-10, le=150, description="Температура жидкости, °C.")
+    H_friction_suction_m: float = Field(0.0, ge=0, le=200, description="Потери трения на всасывании, м.")
+    altitude_m: float = Field(0.0, ge=-500, le=8000, description="Высота над уровнем моря, м.")
+    latitude_deg: float = Field(55.0, ge=-90, le=90, description="Широта местности, °.")
+
+
+class WaterHammerRequest(BaseModel):
+    """Запрос для /physics/water-hammer."""
+
+    v_ms: float = Field(..., ge=0, le=20, description="Скорость потока, м/с.")
+    pipe_material: str = Field("pe100_sdr17", min_length=1, max_length=64)
+    pipe_length_m: float = Field(100.0, ge=0, le=100000, description="Длина трубопровода, м.")
+    closure_time_s: float = Field(5.0, ge=0.01, le=3600, description="Время закрытия задвижки, с.")
+    T_celsius: float = Field(15.0, ge=-10, le=150, description="Температура жидкости, °C.")
+
+
+class DarcyWeisbachRequest(BaseModel):
+    """Запрос для /physics/darcy-weisbach."""
+
+    L_m: float = Field(..., ge=0, le=100000, description="Длина трубопровода, м.")
+    D_mm: float = Field(..., gt=0, le=5000, description="Внутренний диаметр, мм.")
+    v_ms: float = Field(..., ge=0, le=20, description="Скорость потока, м/с.")
+    pipe_material: str = Field("pe100", min_length=1, max_length=64)
+    T_celsius: float = Field(15.0, ge=-10, le=150, description="Температура жидкости, °C.")
+
+
+class BurialDepthRequest(BaseModel):
+    """Запрос для /climate/burial-depth."""
+
+    region_city: str = Field(..., min_length=1, max_length=200, description="Город из БД.")
+    soil_type: str = Field("clay_loam", min_length=1, max_length=64)
+    pipe_dn_mm: float = Field(200, ge=50, le=5000, description="DN трубы, мм.")
+    has_groundwater: bool = Field(False, description="Высокий УГВ.")
+
+
+class ClimateLoadsRequest(BaseModel):
+    """Запрос для /climate/loads."""
+
+    region_city: str = Field("Москва", min_length=1, max_length=200)
+    pavilion_area_m2: float = Field(0.0, ge=0, le=100000, description="Площадь крыши, м².")
+    pavilion_height_m: float = Field(3.0, ge=0, le=100, description="Высота павильона, м.")
+    pavilion_facade_area_m2: float | None = Field(
+        None, ge=0, le=100000,
+        description="Площадь фасада, м². Default: height*4.",
+    )
+    seismic_intensity_balls: int = Field(6, ge=4, le=10, description="Сейсмичность, баллы.")
+    object_mass_kg: float = Field(5000, ge=0, le=1_000_000, description="Масса объекта, кг.")
+
+
+class LadderRequest(BaseModel):
+    """Запрос для /structural/ladder."""
+
+    height_m: float = Field(..., ge=0.5, le=50, description="Глубина приямка, м.")
+    pit_diameter_m: float = Field(..., ge=0.5, le=20, description="Диаметр приямка, м.")
+    is_corrosive_environment: bool = Field(True, description="Канализация/химия → AISI 304/316.")
+
+
 # ----------------------- Unit conversion -----------------------
 
 def to_m3h(value: float, unit: QUnit) -> float:
