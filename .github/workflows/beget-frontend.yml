@@ -1,0 +1,78 @@
+name: Beget frontend release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: podborkns-beget-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Test and build
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_BASE: /api/backend
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+          npm run lint
+          npm test
+          npm run build
+          test -s out/index.html
+          test -s out/project/index.html
+          tar -C out -czf ../podborkns-frontend.tar.gz .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: podborkns-frontend
+          path: podborkns-frontend.tar.gz
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: beget-production
+      url: https://podborkns.ru/
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: podborkns-frontend
+      - name: Publish and verify on Beget
+        env:
+          BEGET_HOST: ${{ vars.BEGET_HOST }}
+          BEGET_KNOWN_HOSTS: ${{ secrets.BEGET_KNOWN_HOSTS }}
+          BEGET_DEPLOY_KEY: ${{ secrets.BEGET_DEPLOY_KEY }}
+        shell: bash
+        run: |
+          : "${BEGET_HOST:?missing BEGET_HOST}"
+          : "${BEGET_KNOWN_HOSTS:?missing BEGET_KNOWN_HOSTS}"
+          : "${BEGET_DEPLOY_KEY:?missing BEGET_DEPLOY_KEY}"
+          umask 077
+          ssh_dir="$(mktemp -d)"
+          trap 'rm -rf -- "$ssh_dir"' EXIT
+          printf '%s\n' "$BEGET_DEPLOY_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$BEGET_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          sha256="$(sha256sum podborkns-frontend.tar.gz | cut -d ' ' -f1)"
+          ssh -T -i "$ssh_dir/key" -l podborkns-deploy \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o "UserKnownHostsFile=$ssh_dir/known_hosts" -o ConnectTimeout=15 \
+            -- "$BEGET_HOST" "publish $GITHUB_SHA $sha256" < podborkns-frontend.tar.gz
