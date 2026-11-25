@@ -18,7 +18,7 @@ class PublishFrontendTest(unittest.TestCase):
         (self.root / "initial/index.html").write_text("previous version")
         (self.root / "current").symlink_to("initial")
 
-    def upload(self, paths, digest=None):
+    def upload(self, paths, digest=None, validate=False):
         packet = io.BytesIO()
         with tarfile.open(fileobj=packet, mode="w:gz") as archive:
             for path in paths:
@@ -29,7 +29,11 @@ class PublishFrontendTest(unittest.TestCase):
         data = packet.getvalue()
         with patch("publish_frontend.sys.stdin") as stdin:
             stdin.buffer = io.BytesIO(data)
-            publisher.publish(self.root, "a" * 40, digest or hashlib.sha256(data).hexdigest())
+            checksum = digest or hashlib.sha256(data).hexdigest()
+            if validate:
+                publisher.validate(self.root, checksum)
+            else:
+                publisher.publish(self.root, "a" * 40, checksum)
 
     @patch("publish_frontend.smoke")
     def test_publishes_checked_release(self, smoke):
@@ -46,6 +50,13 @@ class PublishFrontendTest(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.upload(paths, digest)
                 self.assertEqual((self.root / "current").readlink(), Path("initial"))
+
+    @patch("publish_frontend.smoke")
+    def test_validates_upload_without_switching(self, smoke):
+        self.upload(["index.html", "project/index.html"], validate=True)
+        smoke.assert_called_once_with()
+        self.assertEqual((self.root / "current").readlink(), Path("initial"))
+        self.assertFalse(any(self.root.glob(".validation-*")))
 
     @patch("publish_frontend.smoke", side_effect=RuntimeError("health check"))
     def test_restores_previous_release(self, _smoke):

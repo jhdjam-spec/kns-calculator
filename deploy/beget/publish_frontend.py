@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Receive a checksum-addressed static release over the forced SSH command."""
 
+from __future__ import annotations
+
 import fcntl
 import hashlib
 import json
@@ -76,8 +78,10 @@ def get(path: str) -> str:
     ).stdout
 
 
-def smoke(release: str) -> None:
-    if get("/__release.txt").strip() != release or not get("/") or not get("/project/"):
+def smoke(release: str | None = None) -> None:
+    if release is not None and get("/__release.txt").strip() != release:
+        raise RuntimeError("static release marker does not match")
+    if not get("/") or not get("/project/"):
         raise RuntimeError("static release smoke check failed")
     api = json.loads(get("/api/backend/health"))
     if api.get("status") != "ok" or api.get("pumps_in_db", 0) < 1:
@@ -116,13 +120,28 @@ def publish(root: Path, release: str, digest: str) -> None:
         print(f"Published and verified {release}")
 
 
+def validate(root: Path, digest: str) -> None:
+    with tempfile.TemporaryDirectory(dir=root, prefix=".validation-") as staging:
+        incoming = Path(staging)
+        receive(incoming / "upload.tar.gz", digest)
+        site = incoming / "site"
+        site.mkdir()
+        unpack(incoming / "upload.tar.gz", site)
+    smoke()
+    print("Release archive and live calculator verified; active version retained.")
+
+
 def main() -> None:
     command = os.environ.get("SSH_ORIGINAL_COMMAND", "")
-    match = re.fullmatch(r"publish ([a-f0-9]{40}) ([a-f0-9]{64})", command)
+    match = re.fullmatch(r"(publish|validate) ([a-f0-9]{40}) ([a-f0-9]{64})", command)
     if match is None:
-        sys.exit("Only a signed-in release upload is accepted")
+        sys.exit("Only a release upload is accepted")
+    action, release, digest = match.groups()
     try:
-        publish(ROOT, *match.groups())
+        if action == "publish":
+            publish(ROOT, release, digest)
+        else:
+            validate(ROOT, digest)
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError, tarfile.TarError) as error:
         sys.exit(f"Deploy failed: {error}")
 

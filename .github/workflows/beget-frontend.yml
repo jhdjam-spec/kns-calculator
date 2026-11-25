@@ -2,6 +2,11 @@ name: Beget frontend release
 
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Activate the tested frontend on Beget
+        type: boolean
+        default: false
   pull_request:
     paths:
       - '.github/workflows/beget-frontend.yml'
@@ -64,8 +69,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: podborkns-frontend
-      - name: Publish and verify on Beget
+      - name: Transfer and check the release on Beget
         env:
+          PUBLISH: ${{ inputs.publish }}
           BEGET_HOST: ${{ vars.BEGET_HOST }}
           BEGET_KNOWN_HOSTS: ${{ secrets.BEGET_KNOWN_HOSTS }}
           BEGET_DEPLOY_KEY: ${{ secrets.BEGET_DEPLOY_KEY }}
@@ -80,7 +86,9 @@ jobs:
           printf '%s\n' "$BEGET_DEPLOY_KEY" > "$ssh_dir/key"
           printf '%s\n' "$BEGET_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
           sha256="$(sha256sum podborkns-frontend.tar.gz | cut -d ' ' -f1)"
+          command=validate
+          if [ "$PUBLISH" = true ]; then command=publish; fi
           ssh -T -i "$ssh_dir/key" -l podborkns-deploy \
             -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             -o "UserKnownHostsFile=$ssh_dir/known_hosts" -o ConnectTimeout=15 \
-            -- "$BEGET_HOST" "publish $GITHUB_SHA $sha256" < podborkns-frontend.tar.gz
+            -- "$BEGET_HOST" "$command $GITHUB_SHA $sha256" < podborkns-frontend.tar.gz
