@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Providers } from "./providers";
-import { inter, jetbrainsMono } from "./fonts";
+import "./fonts";
 import { BetaBanner } from "@/components/BetaBanner";
 import { EncyclopediaDrawer } from "@/components/teach/EncyclopediaDrawer";
 import { Analytics } from "@/components/Analytics";
@@ -218,7 +218,6 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>

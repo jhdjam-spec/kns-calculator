@@ -19,6 +19,8 @@
  *   --accent   — secondary brass accent (CTA, KPI)
  */
 :root {
+  --font-body: "Inter Variable";
+  --font-mono: "JetBrains Mono Variable";
   color-scheme: light;
   --bg: 245 248 251;        /* #F5F8FB */
   --fg: 20 44 62;           /* #142C3E */
