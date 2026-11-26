@@ -1,4 +1,5 @@
 import { ClipboardList, Cpu, FileText } from "lucide-react";
+import { PUMP_COUNT } from "@/data/pumpStats";
 
 const steps = [
   {
@@ -11,7 +12,7 @@ const steps = [
     n: "02",
     icon: Cpu,
     title: "Алгоритм считает",
-    body: "Гидравлика по СП 32.13330. Проверка попадания в рабочую зону насоса (AOR — Allowable Operating Range, POR — Preferred Operating Range по ANSI/HI). Фильтр по типу рабочего колеса (импеллера) и проходному сечению — чтобы насос не забивался волокнами или включениями. Сравнение 284 моделей за миллисекунды.",
+    body: `Гидравлика по СП 32.13330. Проверка попадания в рабочую зону насоса (AOR — Allowable Operating Range, POR — Preferred Operating Range по ANSI/HI). Фильтр по типу рабочего колеса (импеллера) и проходному сечению — чтобы насос не забивался волокнами или включениями. Сравнение ${PUMP_COUNT} моделей за миллисекунды.`,
   },
   {
     n: "03",

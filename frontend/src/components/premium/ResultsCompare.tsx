@@ -15,7 +15,6 @@ import {
   downloadBomCsv,
   type BOMItem,
 } from "@/lib/api-extended";
-import { useMode } from "@/components/providers/ModeProvider";
 
 /** Скачивание Blob через временный <a download>. */
 function triggerBlobDownload(blob: Blob, filename: string) {
@@ -91,84 +90,93 @@ const segmentMeta = {
 
 export function ResultsCompare({ result }: ResultsCompareProps) {
   const segments = ["budget", "mid", "premium"] as const;
-  const { mode } = useMode();
-  // Engineer-first порядок: сначала handoff/triggers/suggestions (где
-  // BEP/η/AOR/zone), потом карточки. Manager-first: карточки с ценой/
-  // сроком первыми, инженерные предупреждения — после.
-  const isEngineer = mode === "engineer";
+  const input = result.input as { L0?: { Q_m3h?: number } } | null;
+  const flow = input?.L0?.Q_m3h;
+  const [expandedSegment, setExpandedSegment] = useState<(typeof segments)[number] | null>(null);
 
   return (
-    <section id="results" className="py-20 md:py-24 bg-ink-50 border-t border-ink-200">
-      <div className="max-w-7xl mx-auto px-5 md:px-10">
-        <div className="mb-12 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-ink-500 mb-4">
-            <span className="block w-6 h-px bg-accent-500" />
-            РЕЗУЛЬТАТ
-          </div>
-          <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-950 leading-tight tracking-tight">
-            Топ-3 насоса в трёх сегментах
-          </h2>
-          {result.summary_text && (
-            <p className="mt-3 text-ink-600">{result.summary_text}</p>
-          )}
+    <section id="results" className="kns-results" aria-labelledby="results-title">
+      <div className="kns-results-body">
+        <div className="kns-section-heading">
+          <h2 id="results-title">Варианты насосов</h2>
+          <p className="kns-result-head">
+            {typeof flow === "number" && (
+              <>Расход <strong>{flow.toLocaleString("ru-RU")} м³/ч</strong>{" · "}</>
+            )}
+            Расчётный напор <strong>{result.computed.H_full_m.toLocaleString("ru-RU", { maximumFractionDigits: 1 })} м</strong>
+          </p>
         </div>
 
-        {/* Engineer-first: handoff banner + suggestions ПЕРЕД карточками,
-            чтобы проектировщик сразу видел BEP/AOR/zone/триггеры. */}
-        {isEngineer && result.engineer_handoff_required && (
-          <HandoffBanner reasons={result.trigger_reasons} />
+        {result.assumptions.length > 0 && (
+          <details className="kns-assumptions">
+            <summary>Подставленные параметры ({result.assumptions.length})</summary>
+            <ul>{result.assumptions.map((item, index) => <li key={index}>{item}</li>)}</ul>
+          </details>
         )}
-        {isEngineer && result.suggestions && result.suggestions.length > 0 && (
-          <div className="mb-8">
-            <SuggestionList suggestions={result.suggestions} variant="light" />
-          </div>
-        )}
-
-        {/* Manager-first: handoff после карточек (предупреждение, не блокер). */}
-        {!isEngineer && result.engineer_handoff_required && (
-          <HandoffBanner reasons={result.trigger_reasons} />
-        )}
-        {!isEngineer && result.suggestions && result.suggestions.length > 0 && (
-          <div className="mb-8">
-            <SuggestionList suggestions={result.suggestions} variant="light" />
-          </div>
+        {result.engineer_handoff_required && <HandoffBanner reasons={result.trigger_reasons} />}
+        {result.suggestions.length > 0 && (
+          <div className="mb-5"><SuggestionList suggestions={result.suggestions} variant="light" /></div>
         )}
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-          {segments.map((seg) => {
-            const pump = result.results[seg];
-            const isHighlighted = seg === "mid";
-
-            if (!pump) {
+        <table className="kns-pump-table">
+          <caption className="sr-only">Сравнение насосов по ценовым сегментам</caption>
+          <thead>
+            <tr>
+              <th scope="col">Модель</th>
+              <th scope="col">Мощность, кВт</th>
+              <th scope="col">DN, мм</th>
+              <th scope="col">Оценка комплекта, ₽</th>
+            </tr>
+          </thead>
+          <tbody>
+            {segments.map((segment) => {
+              const pump = result.results[segment];
               return (
-                <div
-                  key={seg}
-                  className="rounded-card border border-dashed border-ink-300 p-6 bg-ink-100/50 flex items-center justify-center min-h-[280px]"
-                >
-                  <div className="text-center">
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-ink-500 mb-2">
-                      {segmentMeta[seg].label}
-                    </div>
-                    <p className="text-ink-500 text-sm">
-                      Нет подходящих моделей в этом сегменте
-                    </p>
-                  </div>
-                </div>
+                <tr key={segment}>
+                  <th scope="row">
+                    <span className="kns-segment">{segmentMeta[segment].label}</span>
+                    {pump ? (
+                      <a href={`#pump-${segment}`} onClick={() => setExpandedSegment(segment)}>
+                        {pump.brand} {pump.model}
+                      </a>
+                    ) : <span>Подходящих моделей нет</span>}
+                  </th>
+                  <td><span className="kns-mobile-label">Мощность, кВт</span>{pump?.P_kW?.toLocaleString("ru-RU") ?? "—"}</td>
+                  <td><span className="kns-mobile-label">DN, мм</span>{pump?.discharge_DN_mm ?? "—"}</td>
+                  <td><span className="kns-mobile-label">Оценка комплекта, ₽</span>{pump && pump.price_estimate_rub > 0 ? formatRubFull(pump.price_estimate_rub) : "—"}</td>
+                </tr>
               );
-            }
+            })}
+          </tbody>
+        </table>
 
-            return (
-              <PumpCard
-                key={seg}
-                pump={pump}
-                segment={seg}
-                isHighlighted={isHighlighted}
-                Q_m3h={pump.duty_point?.Q_m3h ?? 0}
-                H_m={pump.duty_point?.H_m ?? 0}
-              />
-            );
-          })}
-        </div>
+        {segments.map((segment) => {
+          const pump = result.results[segment];
+          if (!pump) return null;
+          const expanded = expandedSegment === segment;
+          return (
+            <div key={segment} id={`pump-${segment}`} className="kns-model-details">
+              <button
+                type="button"
+                aria-expanded={expanded}
+                aria-controls={`pump-panel-${segment}`}
+                onClick={() => setExpandedSegment(expanded ? null : segment)}
+              >
+                Подробнее о {pump.brand} {pump.model}
+                <ChevronDown size={16} aria-hidden="true" />
+              </button>
+              <div id={`pump-panel-${segment}`} hidden={!expanded}>
+                <PumpCard
+                  pump={pump}
+                  segment={segment}
+                  isHighlighted={segment === "mid"}
+                  Q_m3h={pump.duty_point?.Q_m3h ?? 0}
+                  H_m={pump.duty_point?.H_m ?? 0}
+                />
+              </div>
+            </div>
+          );
+        })}
 
         {/* Кнопки экспорта по выбранному (рекомендуемому) насосу */}
         {result.results.mid && <ExportActions pump={result.results.mid} />}
@@ -209,18 +217,6 @@ export function ResultsCompare({ result }: ResultsCompareProps) {
           </div>
         )}
 
-        {result.assumptions && result.assumptions.length > 0 && (
-          <div className="mt-8 p-4 rounded-card bg-ink-100 border border-ink-200">
-            <div className="text-xs font-mono uppercase tracking-wider text-ink-500 mb-2">
-              Использованы дефолты
-            </div>
-            <ul className="text-sm text-ink-700 space-y-1">
-              {result.assumptions.map((a, i) => (
-                <li key={i}>· {a}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </section>
   );
@@ -364,9 +360,9 @@ function PumpCard({
   return (
     <div
       className={clsx(
-        "relative rounded-card bg-white border-t-2 p-6 md:p-8 transition-all duration-base hover:shadow-premium-md",
+        "kns-result-card relative min-w-0 rounded-card bg-white border-t-4 p-5 lg:p-7",
         meta.className,
-        isHighlighted && "md:scale-[1.02] shadow-premium-lg ring-1 ring-accent-500/20",
+        isHighlighted && "ring-1 ring-accent-500/30",
       )}
     >
       <div className="flex items-center justify-between mb-4">
@@ -399,7 +395,7 @@ function PumpCard({
           title="Мощность электродвигателя — кликните для справки"
           className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
         >
-          <div className="uppercase tracking-wider text-[9px]">P, мощн.</div>
+          <div className="uppercase tracking-wider text-[9px]">Мощность</div>
           <div className="text-ink-950 text-sm tabular-nums">{pump.P_kW} кВт</div>
         </button>
         <button
@@ -414,7 +410,7 @@ function PumpCard({
           title="Диаметр напорного патрубка (Diameter Nominal)"
           className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
         >
-          <div className="uppercase tracking-wider text-[9px]">DN, патруб.</div>
+          <div className="uppercase tracking-wider text-[9px]">Патрубок DN</div>
           <div className="text-ink-950 text-sm tabular-nums">
             {pump.discharge_DN_mm ? `${pump.discharge_DN_mm} мм` : "–"}
           </div>
@@ -431,7 +427,7 @@ function PumpCard({
           title="Тип рабочего колеса. Vortex — открытое для волокон, channel — канальное, cutter — с режущим механизмом"
           className="text-left hover:bg-ink-100 rounded p-1 -m-1 transition-colors"
         >
-          <div className="uppercase tracking-wider text-[9px]">Тип к/к</div>
+          <div className="uppercase tracking-wider text-[9px]">Рабочее колесо</div>
           <div className="text-ink-950 text-sm">{pump.impeller || "–"}</div>
         </button>
       </div>

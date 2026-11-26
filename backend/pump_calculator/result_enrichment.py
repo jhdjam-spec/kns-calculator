@@ -197,9 +197,10 @@ def build_summary_text(
             found_segments.append(seg)
 
     if not prices:
+        from pump_calculator.format_helpers import fmt_q, fmt_wastewater_type
         return (
-            f"По вашим параметрам (Q={L0.Q_m3h:g} м³/ч, "
-            f"тип = {L0.wastewater_type or 'не указан'}) подходящих насосов в "
+            f"По вашим параметрам (Q={fmt_q(L0.Q_m3h)} м³/ч, "
+            f"тип: {fmt_wastewater_type(L0.wastewater_type)}) подходящих насосов в "
             f"базе не найдено. Передайте инженеру для индивидуального подбора."
         )
 

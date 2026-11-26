@@ -1,9 +1,15 @@
-# INSERVO · Серво-Юг — KNS Calculator
+# Серво-Юг — Калькулятор подбора КНС / ЛОС / СПД
 # Open for crawlers including AI search engines.
 
 User-agent: *
 Allow: /
 Allow: /privacy
+# Игнорировать utm/track-параметры (Yandex)
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content /
+Clean-param: gclid&yclid&fbclid&_openstat /
+
+# Host для Yandex (главное зеркало)
+Host: podborkns.ru
 
 # AI search / LLM crawlers — explicitly allowed
 User-agent: GPTBot
@@ -39,6 +45,14 @@ Allow: /
 User-agent: Yandex
 Allow: /
 
+# YandexAdditional — отдельный краулер для Yazeka/AI Search, не дублирует YandexBot
+User-agent: YandexAdditional
+Allow: /
+
+# Yandex Direct preview bot — для контекстной рекламы
+User-agent: YandexDirect
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 
@@ -54,4 +68,4 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://kns-calculator-frontend.website.yandexcloud.net/sitemap.xml
+Sitemap: https://podborkns.ru/sitemap.xml

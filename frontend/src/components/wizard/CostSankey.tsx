@@ -189,10 +189,14 @@ function buildMinimalSelection(pump: PumpResult): unknown {
   // Минимальная заглушка SelectionResult — backend возьмёт указанный сегмент.
   // Реальный SelectionResult приходит из useSelection / результата подбора,
   // но прямой клик «Стоимость на 10 лет» из карточки даёт минимум.
+  // Backend требует input.L0.Q_m3h обязательно (Pydantic validation 422) —
+  // берём Q из рабочей точки насоса (или 1 м³/ч как защита).
   const empty: PumpResult | null = null;
+  const Q_fallback =
+    pump.duty_point?.Q_m3h ?? pump.envelope?.Q_BEP_m3h ?? 1;
   return {
     schema_version: "1.2",
-    input: {},
+    input: { L0: { Q_m3h: Q_fallback } },
     computed: {
       D_mm: 0, v_ms: 0, Re: 0, friction_factor: 0,
       H_tr_m: 0, sum_zeta: 0, H_m_m: 0, H_full_m: 0, safety_factor: 1.0,

@@ -23,8 +23,7 @@ from reportlab.platypus import (
 
 from pump_calculator import catalog
 from pump_calculator.handoff._pdf_base import (
-    DEFAULT_BOLD,
-    DEFAULT_FONT,
+    get_font_names,
     get_styles,
     register_cyrillic_fonts,
 )
@@ -201,12 +200,13 @@ def generate_bom_pdf(result: SelectionResult) -> bytes:
     story = []
 
     # Шапка
+    from pump_calculator.format_helpers import fmt_q, fmt_wastewater_type
     L0 = result.input.L0
     story.append(Paragraph("BOM-черновик: спецификация оборудования", styles["title"]))
     story.append(Paragraph(
         f"Сформирован {datetime.now().strftime('%d.%m.%Y %H:%M')}. "
-        f"Параметры: Q={L0.Q_m3h:g} м³/ч, ΔH={L0.dH_m:g} м, L={L0.L_m:g} м, "
-        f"тип стоков: {L0.wastewater_type}. "
+        f"Параметры: Q={fmt_q(L0.Q_m3h)} м³/ч, ΔH={L0.dH_m:g} м, L={L0.L_m:g} м, "
+        f"тип стоков: {fmt_wastewater_type(L0.wastewater_type)}. "
         f"Расчёт: D={result.computed.D_mm:g} мм, H_full={result.computed.H_full_m:.1f} м.",
         styles["small"]
     ))
@@ -236,19 +236,20 @@ def generate_bom_pdf(result: SelectionResult) -> bytes:
 
         col_widths = (1.2 * cm, 5.5 * cm, 3 * cm, 5 * cm, 1.5 * cm, 3 * cm, 3.5 * cm)
         table = Table(all_rows, colWidths=col_widths, repeatRows=1)
+        font, bold = get_font_names()
         table.setStyle(TableStyle([
-            ("FONTNAME", (0, 0), (-1, -1), DEFAULT_FONT),
+            ("FONTNAME", (0, 0), (-1, -1), font),
             ("FONTSIZE", (0, 0), (-1, -1), 8),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             # header
-            ("FONTNAME", (0, 0), (-1, 0), DEFAULT_BOLD),
+            ("FONTNAME", (0, 0), (-1, 0), bold),
             ("BACKGROUND", (0, 0), (-1, 0), SEGMENT_COLORS[segment]),
             ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
             # body
             ("ROWBACKGROUNDS", (0, 1), (-1, -2), [colors.white, colors.HexColor("#f9fafb")]),
             ("GRID", (0, 0), (-1, -2), 0.3, colors.HexColor("#d1d5db")),
             # итого
-            ("FONTNAME", (0, -1), (-1, -1), DEFAULT_BOLD),
+            ("FONTNAME", (0, -1), (-1, -1), bold),
             ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#f3f4f6")),
             ("TOPPADDING", (0, -1), (-1, -1), 6),
             ("LINEABOVE", (0, -1), (-1, -1), 1, colors.HexColor("#374151")),

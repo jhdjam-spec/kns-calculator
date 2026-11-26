@@ -19,12 +19,14 @@
  *   --accent   — secondary brass accent (CTA, KPI)
  */
 :root {
+  --font-body: "Inter Variable";
+  --font-mono: "JetBrains Mono Variable";
   color-scheme: light;
-  --bg: 250 250 249;        /* ink-50  #FAFAF9 */
-  --fg: 18 18 16;           /* ink-900 #121210 */
+  --bg: 245 248 251;        /* #F5F8FB */
+  --fg: 20 44 62;           /* #142C3E */
   --surface: 255 255 255;   /* pure white card */
-  --muted: 117 117 113;     /* ink-500 #757571 */
-  --border: 209 209 204;    /* ink-300 #D1D1CC */
+  --muted: 75 93 112;       /* #4B5D70 */
+  --border: 213 223 232;    /* #D5DFE8 */
   --brand: 44 111 130;      /* brand-500 #2C6F82 */
   --accent: 201 162 74;     /* accent-500 #C9A24A */
 }
@@ -68,15 +70,46 @@ body {
   outline: none;
 }
 
+/* Унифицированный focus-ring — clover (бренд), offset 3px, скруглён под элементом.
+   По motion-эксперту: НЕ убирать, НЕ заменять box-shadow. */
 :focus-visible {
-  outline: 2px solid rgb(var(--brand));
-  outline-offset: 2px;
+  outline: 2px solid #1F7A4D;
+  outline-offset: 3px;
+  border-radius: inherit;
 }
 
-/* Selection color — brand */
+/* prefers-reduced-motion: уважаем системную настройку */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selection color — clover brand */
 ::selection {
-  background-color: theme("colors.brand.700");
-  color: theme("colors.ink.50");
+  background-color: #1F7A4D;
+  color: #FAFAF9;
+}
+
+/* Shimmer keyframes для skeleton loaders */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgba(231,231,231,0) 0%,
+    rgba(231,231,231,0.6) 50%,
+    rgba(231,231,231,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
 }
 
 /* Hide scrollbars on horizontal scroll-snap rails */
@@ -113,4 +146,398 @@ body {
   textarea {
     font-size: 16px;
   }
+}
+
+/*
+ * View Transitions API — cross-fade между страницами /teach/*.
+ * Поддержка: Chrome 111+, Edge 111+, Safari 18+, Firefox 130+.
+ * В неподдерживаемых браузерах TeachLink делает обычный router.push.
+ *
+ * 180ms ощущается «бумажным» (книжный переход страниц), не SPA-jank.
+ * prefers-reduced-motion: TeachLink сам отключает startViewTransition,
+ * но дублируем правилом ниже как страховку от других триггеров.
+ */
+@keyframes teach-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes teach-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-6px); }
+}
+::view-transition-old(root) {
+  animation: teach-fade-out 180ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+::view-transition-new(root) {
+  animation: teach-fade-in 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* Shared surfaces and the pump selection workspace. */
+:root {
+  --kns-navy: #142c3e;
+  --kns-blue: #175f9e;
+  --kns-line: #d5dfe8;
+}
+
+.kns-shell {
+  width: min(100% - 2.5rem, 76rem);
+  margin-inline: auto;
+}
+
+.kns-site-nav {
+  border-bottom: 1px solid rgb(var(--border) / .7);
+}
+
+.kns-hero {
+  padding-block: clamp(3rem, 6vw, 6.25rem);
+  background: rgb(var(--surface));
+}
+
+.kns-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.kns-hero h1 {
+  max-width: 12ch;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4.4vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.025;
+  letter-spacing: -.04em;
+  color: var(--kns-navy);
+}
+
+.kns-hero h1 span {
+  color: var(--kns-blue);
+  white-space: nowrap;
+}
+
+.kns-hero-intro {
+  margin-block: 1.25rem 1.7rem;
+  max-width: 40ch;
+  font-size: clamp(1rem, 1.65vw, 1.25rem);
+  line-height: 1.55;
+  color: #43576b;
+}
+
+.kns-quick-form {
+  max-width: 34rem;
+}
+
+.kns-quick-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .65rem;
+}
+
+.kns-quick-field {
+  display: grid;
+  padding: .45rem .8rem;
+  border: 1px solid #899daf;
+  border-radius: .25rem;
+  background: #f8fafc;
+}
+
+.kns-quick-field:focus-within {
+  outline: 2px solid var(--kns-blue);
+  outline-offset: 2px;
+}
+
+.kns-quick-field:has([aria-invalid="true"]) {
+  border-color: #b42318;
+}
+
+.kns-quick-field label {
+  color: #43576b;
+  font-size: .8125rem;
+  font-weight: 650;
+}
+
+.kns-quick-field input {
+  width: 100%;
+  min-height: 1.65rem;
+  background: transparent;
+  color: var(--kns-navy);
+  font-family: var(--font-mono), monospace;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.kns-quick-field input:focus {
+  outline: none;
+}
+
+.kns-primary {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding-inline: 1.15rem;
+  border-radius: .25rem;
+  background: #175b94;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.kns-primary:hover:not(:disabled) {
+  background: #104978;
+}
+
+.kns-primary:disabled {
+  background: #e2e8ef;
+  color: #4d6072;
+  cursor: not-allowed;
+}
+
+.kns-form-hint,
+.kns-error {
+  margin-top: .65rem;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.kns-form-hint { color: #43576b; }
+.kns-error { color: #a51d17; }
+
+.kns-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.1rem;
+  margin-top: .65rem;
+  font-size: .875rem;
+}
+
+.kns-hero-actions :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 2.75rem;
+  color: var(--kns-blue);
+  font-weight: 650;
+}
+
+.kns-hero-actions :is(a, button):hover {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.kns-calculator,
+.kns-results {
+  padding-block: clamp(2.75rem, 5.5vw, 5rem);
+  scroll-margin-top: 5rem;
+}
+
+.kns-calculator {
+  background: #142c3e;
+  color: #f7faff;
+}
+
+.kns-section-heading { max-width: 50rem; margin-bottom: 1.6rem; }
+.kns-section-heading h2 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(1.95rem, 3.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+}
+.kns-section-heading p { margin-top: .65rem; line-height: 1.6; }
+.kns-calculator .kns-section-heading p { color: #cfdeeb; }
+
+.kns-calculator-card {
+  padding: clamp(1rem, 3vw, 2.4rem);
+  border: 1px solid #3b566b;
+  border-radius: .35rem;
+  background: #19364b;
+}
+
+.kns-calculator-card input[id^="calc-"] {
+  border-color: #7d96a9;
+  background: #122b3d;
+}
+
+.kns-calculator-card input[id^="calc-"][aria-invalid="true"] { border-color: #ffa9a0; }
+.kns-calculator-card input[id^="calc-"]:focus-visible { outline-color: #a7d8ff; }
+.kns-calculator-card .text-ink-400,
+.kns-calculator-card .text-ink-500 { color: #b8cbd9; }
+.kns-calculator-card button[aria-pressed="true"] { font-weight: 700; }
+
+.kns-preview {
+  padding: clamp(.9rem, 2vw, 1.7rem);
+  border: 1px solid #3b566b;
+  border-radius: .25rem;
+  background: #122a3d;
+}
+
+.kns-results {
+  color: #142c3e;
+  border-top: 1px solid var(--kns-line);
+  background: #f0f5f9;
+}
+
+.kns-result-card { border-radius: .35rem; box-shadow: none; }
+
+
+.dark .kns-hero h1 { color: #f4f8fb; }
+.dark .kns-hero h1 span,
+.dark .kns-hero-actions :is(a, button) { color: #a7d8ff; }
+.dark .kns-hero-intro { color: #cbdceb; }
+.dark .kns-hero-copy > .kns-error { color: #ffb5ab; }
+
+@media (max-width: 850px) {
+  .kns-hero-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .kns-shell { width: calc(100% - 2rem); }
+  .kns-quick-fields { grid-template-columns: minmax(0, 1fr); }
+  .kns-hero-actions { gap: 0 .75rem; }
+}
+
+/* Shared page titles follow the same type scale in the project and tools. */
+main:not(:has(.kns-hero)) h1.font-display {
+  font-size: clamp(2.1rem, 4.25vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+@media (max-width: 360px) {
+  .kns-site-nav a[href^="tel:"] { display: none; }
+}
+
+.kns-reading { align-self: center; border-top: 2px solid rgb(var(--brand)); }
+.kns-reading h2, .kns-contact h2 { font-size: 1.35rem; font-weight: 700; }
+.kns-reading h2 { margin: .9rem 0 .25rem; }
+.kns-reading dl > div { padding-block: .75rem; border-bottom: 1px solid rgb(var(--border)); }
+.kns-reading dt { font-weight: 650; }
+.kns-reading dd { margin-top: .2rem; color: rgb(var(--muted)); font-size: .9rem; }
+.kns-contact { padding-block: 2.5rem; border-block: 1px solid rgb(var(--border)); }
+.kns-contact p { margin-top: .45rem; }
+.kns-contact a, .kns-contact button { color: rgb(var(--brand)); }
+.dark .kns-contact :is(a, button) { color: #a7d8ff; }
+.dark .kns-quick-form .kns-form-hint { color: #cbdceb; }
+.dark .kns-quick-form .kns-error { color: #ffb5ab; }
+
+@media (max-width: 850px) {
+  .kns-reading { max-width: 34rem; }
+}
+
+/* Technical worksheet: one input column and one result column. */
+.kns-hero { padding-block: clamp(2.25rem, 4vw, 4rem); }
+.kns-hero-grid { align-items: start; }
+.kns-hero h1 { max-width: none; font-size: clamp(1.875rem, 3.55vw, 2.5rem); line-height: 1.15; }
+.kns-hero h1 span { color: inherit; }
+.kns-reading { border-top-color: #1f7a4d; }
+.kns-primary { background: #1f7a4d; }
+.kns-primary:hover:not(:disabled) { background: #176140; }
+
+.kns-calculator {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  border-block: 1px solid rgb(var(--border));
+}
+
+.kns-calculator .kns-section-heading p { color: rgb(var(--muted)); }
+
+.kns-calculator-card {
+  padding: 0;
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--surface));
+}
+
+.kns-worksheet-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+.kns-worksheet-input, .kns-worksheet-output { padding: clamp(.85rem, 2vw, 1.5rem); }
+.kns-worksheet-input { border-bottom: 1px solid rgb(var(--border)); }
+.kns-field-label { font-size: .875rem; font-weight: 600; color: rgb(var(--fg)); }
+
+.kns-calculator-card input[id^="calc-"],
+.kns-worksheet-input select {
+  color: rgb(var(--fg));
+  background: rgb(var(--bg));
+  border-color: rgb(var(--border));
+}
+
+.kns-calculator-card input[id^="calc-"][aria-invalid="true"] { border-color: #a42a22; }
+.kns-calculator-card input[id^="calc-"]:focus-visible { outline-color: #1f7a4d; }
+.kns-calculator-card .text-ink-400,
+.kns-calculator-card .text-ink-500,
+.kns-worksheet-input .text-ink-300 { color: rgb(var(--muted)); }
+
+.kns-worksheet-input .bg-white\/5 {
+  background-color: rgb(var(--fg) / .055);
+}
+
+.kns-worksheet-input button[aria-expanded="true"],
+.kns-worksheet-input button[aria-expanded="false"] { color: rgb(var(--fg)); }
+.kns-worksheet-input button[aria-pressed="true"] { color: #123e28; background: #dcefe3; }
+.kns-worksheet-input .text-red-400, .kns-worksheet-error { color: #a42a22; }
+.dark .kns-worksheet-input .text-red-400, .dark .kns-worksheet-error { color: #ffb7af; }
+
+.kns-worksheet-error { margin-bottom: 1rem; padding-block: .65rem; border-bottom: 1px solid currentColor; }
+.kns-worksheet-output .kns-results {
+  color: rgb(var(--fg));
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.kns-worksheet-output .kns-section-heading h2 { font-size: clamp(1.4rem, 2vw, 1.65rem); }
+
+.kns-assumptions { margin-bottom: 1rem; color: rgb(var(--muted)); font-size: .875rem; }
+.kns-assumptions summary { cursor: pointer; padding-block: .35rem; }
+.kns-assumptions ul { margin: .4rem 0 0 1.2rem; list-style: disc; }
+
+.kns-pump-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+.kns-pump-table :is(th, td) { padding: .65rem .4rem; border-bottom: 1px solid rgb(var(--border)); }
+.kns-pump-table thead { border-top: 1px solid rgb(var(--border)); }
+.kns-pump-table thead th { color: rgb(var(--muted)); font-weight: 600; }
+.kns-pump-table :is(th, td):not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+.kns-pump-table th:first-child { text-align: left; overflow-wrap: anywhere; }
+.kns-pump-table a { text-decoration: underline; text-underline-offset: .2em; }
+.kns-segment { display: block; font-size: .72rem; color: rgb(var(--muted)); }
+.kns-mobile-label { display: none; }
+
+.kns-model-details { border-bottom: 1px solid rgb(var(--border)); scroll-margin-top: 5rem; }
+.kns-model-details > button {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; min-height: 2.75rem; gap: .5rem; text-align: left; font-size: .875rem;
+}
+.kns-model-details > button svg { flex: none; }
+.kns-model-details > button[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.kns-document {
+  padding-block-start: clamp(2rem, 5vw, 4rem);
+  background: rgb(var(--bg));
+}
+.kns-document > div,
+.kns-document > article { max-width: 75rem; }
+.kns-document h1.font-display {
+  font-size: clamp(1.875rem, 3.55vw, 2.5rem);
+  letter-spacing: -.035em;
+}
+.kns-document :is(input, select, textarea) { border-radius: .25rem; }
+.kns-document :is(section, form) { scroll-margin-top: 5rem; }
+
+@media (min-width: 960px) {
+  .kns-worksheet-grid { grid-template-columns: minmax(20rem, 22rem) minmax(0, 1fr); }
+  .kns-worksheet-input { border-bottom: 0; border-right: 1px solid rgb(var(--border)); }
+}
+
+@media (max-width: 620px) {
+  .kns-pump-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .kns-pump-table tbody tr { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .kns-pump-table tbody th { grid-column: 1 / -1; border-bottom: 0; padding-bottom: .25rem; }
+  .kns-pump-table tbody td:not(:first-child) { text-align: left; }
+  .kns-pump-table tbody td:last-child { grid-column: 1 / -1; }
+  .kns-mobile-label { display: block; color: rgb(var(--muted)); font-size: .75rem; }
 }

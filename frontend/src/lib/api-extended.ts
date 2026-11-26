@@ -322,19 +322,50 @@ export const failureModesApi = {
 export interface StructuralInput {
   diameter_m: number;
   height_m: number;
-  material: string;
+  /** Поддерживаемые backend материалы корпуса (см. structural/models.py CorpusMaterial). */
+  material:
+    | "polypropylene"
+    | "hdpe"
+    | "fiberglass"
+    | "concrete"
+    | "concrete_monolith"
+    | "steel"
+    | "stainless";
   wall_thickness_mm?: number;
   groundwater_depth_m?: number;
   burial_depth_m: number;
-  soil_type?: string;
+  soil_density_kg_m3?: number;
+  soil_friction_angle_deg?: number;
+  contents_density_kg_m3?: number;
   fill_level_pct?: number;
+}
+
+export interface BallastResult {
+  is_required: boolean;
+  archimedes_force_kn: number;
+  self_weight_kn: number;
+  contents_weight_kn: number;
+  friction_resistance_kn: number;
+  safety_factor: number;
+  ballast_concrete_volume_m3: number;
+  ballast_concrete_thickness_m: number;
+  notes: string[];
+  references: { regulation_code: string; section: string; purpose: string }[];
+}
+
+export interface WallThicknessResult {
+  required_thickness_mm: number;
+  is_current_sufficient: boolean;
+  sn_class: string;
+  safety_margin_pct: number;
+  notes: string[];
 }
 
 export const structuralApi = {
   ballast: (input: StructuralInput) =>
-    postJSON<Record<string, unknown>>("/structural/ballast", input),
+    postJSON<BallastResult>("/structural/ballast", input),
   wallThickness: (input: StructuralInput) =>
-    postJSON<Record<string, unknown>>("/structural/wall-thickness", input),
+    postJSON<WallThicknessResult>("/structural/wall-thickness", input),
   ladder: (input: { height_m: number; pit_diameter_m: number; is_corrosive_environment?: boolean }) =>
     postJSON<Record<string, unknown>>("/structural/ladder", input),
 };

@@ -83,7 +83,7 @@ export default function FailureModesPage() {
       <SiteNav />
       <main
         id="main"
-        className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10"
+        className="kns-document min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">

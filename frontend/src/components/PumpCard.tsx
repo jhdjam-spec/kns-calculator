@@ -3,10 +3,35 @@
 import clsx from "clsx";
 import type { PumpResult } from "@/schemas/result";
 import { segmentLabels } from "@/schemas/result";
+import { AnimatedNumber } from "@/components/AnimatedNumber";
 
 export interface PumpCardProps {
   segment: "budget" | "mid" | "premium";
   pump: PumpResult | null;
+}
+
+// Человекочитаемые названия типов насосов (приходят из БД enum-ключами).
+// Если ключ отсутствует — fallback на исходное значение с заменой _ на пробел.
+const PUMP_TYPE_LABELS: Record<string, string> = {
+  submersible_dry_pit: "Погружной (сухой колодец)",
+  submersible_wet_pit: "Погружной (мокрая яма)",
+  submersible: "Погружной",
+  dry_pit: "Сухой колодец",
+  surface: "Поверхностный",
+  inline: "In-line (на трубопроводе)",
+  vertical_inline: "Вертикальный in-line",
+  horizontal: "Горизонтальный",
+  vertical: "Вертикальный",
+  multistage: "Многоступенчатый",
+  centrifugal: "Центробежный",
+  self_priming: "Самовсасывающий",
+  diaphragm: "Мембранный",
+  screw: "Винтовой",
+  jet: "Струйный",
+};
+
+function pumpTypeLabel(type: string): string {
+  return PUMP_TYPE_LABELS[type] ?? type.replace(/_/g, " ");
 }
 
 const SEGMENT_BORDERS = {
@@ -88,7 +113,8 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
   return (
     <article
       className={clsx(
-        "rounded-lg border-2 p-5 flex flex-col gap-3",
+        "rounded-lg border-2 p-5 flex flex-col gap-3 transition-[transform,box-shadow] duration-200 ease-out",
+        "hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(31,122,77,0.18)]",
         SEGMENT_BORDERS[segment],
         SEGMENT_BG[segment]
       )}
@@ -113,12 +139,67 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
             <p className="text-base text-gray-700">{pump.model}</p>
           </div>
 
+          {/* Hero-strip ключевых цифр — паттерн с emkosti.pro (крупная плашка
+              «Ø/L/V» над спецификацией). У нас Q/H/P/КПД — основные
+              характеристики для быстрого сравнения сегментов. */}
+          {/* Hero-strip с тик-анимацией (framer-motion useSpring).
+              При смене pump числа плавно «переезжают» — Stripe-style. */}
+          <div className="grid grid-cols-4 gap-2 rounded-md bg-white/60 dark:bg-white/5 px-3 py-2.5">
+            <div className="text-center">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-ink-900 dark:text-ink-100 leading-tight">
+                {pump.duty_point?.Q_m3h != null ? (
+                  <AnimatedNumber value={pump.duty_point.Q_m3h} decimals={1} />
+                ) : (
+                  "—"
+                )}
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-gray-500 dark:text-ink-500">
+                Q, м³/ч
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-ink-900 dark:text-ink-100 leading-tight">
+                {pump.duty_point?.H_m != null ? (
+                  <AnimatedNumber value={pump.duty_point.H_m} decimals={1} />
+                ) : (
+                  "—"
+                )}
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-gray-500 dark:text-ink-500">
+                H, м
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-ink-900 dark:text-ink-100 leading-tight">
+                <AnimatedNumber value={pump.P_kW} decimals={1} />
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-gray-500 dark:text-ink-500">
+                P, кВт
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-ink-900 dark:text-ink-100 leading-tight">
+                {pump.envelope.eta_BEP_pct != null ? (
+                  <>
+                    <AnimatedNumber value={pump.envelope.eta_BEP_pct} decimals={0} />
+                    <span className="text-xs ml-0.5">%</span>
+                  </>
+                ) : (
+                  "—"
+                )}
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-wider text-gray-500 dark:text-ink-500">
+                КПД
+              </div>
+            </div>
+          </div>
+
           <dl className="text-sm grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
             <dt className="text-gray-500">Мощность</dt>
             <dd>{pump.P_kW} кВт</dd>
 
             <dt className="text-gray-500">Тип</dt>
-            <dd>{pump.type.replace(/_/g, " ")}</dd>
+            <dd>{pumpTypeLabel(pump.type)}</dd>
 
             <dt className="text-gray-500">Колесо</dt>
             <dd>{pump.impeller ?? "—"}</dd>
@@ -130,13 +211,6 @@ export function PumpCard({ segment, pump }: PumpCardProps) {
               <>
                 <dt className="text-gray-500">Напорный DN</dt>
                 <dd>DN{pump.discharge_DN_mm}</dd>
-              </>
-            )}
-
-            {pump.envelope.eta_BEP_pct !== null && pump.envelope.eta_BEP_pct !== undefined && (
-              <>
-                <dt className="text-gray-500">КПД (BEP)</dt>
-                <dd>{pump.envelope.eta_BEP_pct}%</dd>
               </>
             )}
           </dl>

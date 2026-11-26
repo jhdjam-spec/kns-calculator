@@ -1,8 +1,9 @@
 import { Award, Building2, MapPin, Clock } from "lucide-react";
+import { PUMP_COUNT } from "@/data/pumpStats";
 
 const kpis = [
   { value: "17", label: "лет на рынке", icon: Clock },
-  { value: "284", label: "модели насосов в базе", icon: Building2 },
+  { value: String(PUMP_COUNT), label: "моделей насосов в базе", icon: Building2 },
   { value: "1400+", label: "станций введено в эксплуатацию", icon: Award },
   { value: "7", label: "регионов поставки", icon: MapPin },
 ];

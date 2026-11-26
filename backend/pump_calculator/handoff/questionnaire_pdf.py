@@ -21,8 +21,7 @@ from reportlab.platypus import (
 )
 
 from pump_calculator.handoff._pdf_base import (
-    DEFAULT_BOLD,
-    DEFAULT_FONT,
+    get_font_names,
     get_styles,
     register_cyrillic_fonts,
 )
@@ -38,12 +37,12 @@ WASTEWATER_LABELS = {
 
 def _empty_field_table(rows: list[tuple[str, str]], col_widths: tuple[float, float] = (6 * cm, 11 * cm)) -> Table:
     """Таблица 'label | пустое поле для заполнения' — для опросника."""
-    register_cyrillic_fonts()
+    font, bold = get_font_names()
     data = [[label, value if value else "_________________________________"] for label, value in rows]
     table = Table(data, colWidths=col_widths)
     table.setStyle(
         TableStyle([
-            ("FONTNAME", (0, 0), (-1, -1), DEFAULT_FONT),
+            ("FONTNAME", (0, 0), (-1, -1), font),
             ("FONTSIZE", (0, 0), (-1, -1), 9),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("ALIGN", (0, 0), (0, -1), "LEFT"),
@@ -52,7 +51,7 @@ def _empty_field_table(rows: list[tuple[str, str]], col_widths: tuple[float, flo
             ("TOPPADDING", (0, 0), (-1, -1), 3),
             ("LINEBELOW", (1, 0), (1, -1), 0.3, colors.HexColor("#d1d5db")),
             # Жирная label-колонка
-            ("FONTNAME", (0, 0), (0, -1), DEFAULT_BOLD),
+            ("FONTNAME", (0, 0), (0, -1), bold),
             ("TEXTCOLOR", (0, 0), (0, -1), colors.HexColor("#374151")),
         ])
     )
@@ -215,8 +214,9 @@ def generate_questionnaire_pdf(
         ["Должность", "_________________________________", "Подпись", "____________"],
     ]
     sig_table = Table(sig_data, colWidths=(3 * cm, 8 * cm, 1.5 * cm, 4 * cm))
+    sig_font, _ = get_font_names()
     sig_table.setStyle(TableStyle([
-        ("FONTNAME", (0, 0), (-1, -1), DEFAULT_FONT),
+        ("FONTNAME", (0, 0), (-1, -1), sig_font),
         ("FONTSIZE", (0, 0), (-1, -1), 9),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
         ("TOPPADDING", (0, 0), (-1, -1), 4),

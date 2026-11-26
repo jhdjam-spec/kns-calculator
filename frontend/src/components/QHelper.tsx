@@ -311,13 +311,18 @@ export function QHelper({ onCalculate }: QHelperProps) {
 
   const preset = PRESETS.find((p) => p.id === presetId)!;
   const unitsNum = parseFloat(units);
-  const isDomesticValid = !isNaN(unitsNum) && unitsNum > 0;
+  // Number.isFinite отсеивает NaN, +Infinity, -Infinity и нечисловые значения.
+  // Дополнительно ограничиваем 1 млн чел — больше расчёт не имеет смысла.
+  const isDomesticValid =
+    Number.isFinite(unitsNum) && unitsNum > 0 && unitsNum <= 1_000_000;
   const domesticQ = isDomesticValid ? calculateQ(preset, unitsNum) : null;
 
   const region = RAIN_REGIONS.find((r) => r.id === regionId)!;
   const surface = SURFACE_TYPES.find((s) => s.id === surfaceId)!;
   const areaM2Num = parseFloat(areaM2);
-  const isDrainageValid = !isNaN(areaM2Num) && areaM2Num > 0;
+  // Потолок 10 000 000 м² = 10 км² — реалистичный максимум водосбора.
+  const isDrainageValid =
+    Number.isFinite(areaM2Num) && areaM2Num > 0 && areaM2Num <= 10_000_000;
   const areaHa = isDrainageValid ? areaM2Num / 10000 : 0;
   const drainageQ = isDrainageValid
     ? calculateDrainageQ(areaHa, region.q20, surface.psi)

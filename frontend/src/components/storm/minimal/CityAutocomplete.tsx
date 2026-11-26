@@ -60,14 +60,41 @@ export function CityAutocomplete({ selected, onSelect }: Props) {
         type="text"
         value={query}
         onChange={(e) => {
-          setQuery(e.target.value);
+          const val = e.target.value;
+          setQuery(val);
           setShowSuggestions(true);
-          if (!CITIES.includes(e.target.value as (typeof CITIES)[number])) {
+          // Если введён точный матч (case-insensitive) — сразу селектим, не ждём клика.
+          const exact = CITIES.find((c) => c.toLowerCase() === val.toLowerCase());
+          if (exact) {
+            onSelect(exact);
+          } else {
             onSelect(null);
           }
         }}
         onFocus={() => setShowSuggestions(true)}
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+        onBlur={() => {
+          setShowSuggestions(false);
+          // На blur: если уникальный точный или префиксный матч — автоселект.
+          // Это закрывает UX-баг где пользователь печатает «Москва» + Tab/blur,
+          // а кнопка остаётся disabled пока он не кликнет опцию в dropdown.
+          if (!query.trim()) return;
+          const exact = CITIES.find(
+            (c) => c.toLowerCase() === query.toLowerCase(),
+          );
+          if (exact) {
+            setQuery(exact);
+            onSelect(exact);
+            return;
+          }
+          const prefixMatches = CITIES.filter((c) =>
+            c.toLowerCase().startsWith(query.toLowerCase()),
+          );
+          if (prefixMatches.length === 1) {
+            setQuery(prefixMatches[0]);
+            onSelect(prefixMatches[0]);
+          }
+        }}
+        autoComplete="off"
         placeholder="Начните печатать название..."
         className="w-full px-3 py-2 rounded-md bg-white border border-ink-200 text-ink-900 dark:bg-white/[0.04] dark:border-white/10 dark:text-ink-100 focus:border-brand-500 dark:focus:border-accent-500 focus:outline-none"
       />
@@ -77,7 +104,13 @@ export function CityAutocomplete({ selected, onSelect }: Props) {
             <li key={city}>
               <button
                 type="button"
-                onClick={() => handleSelect(city)}
+                // onMouseDown срабатывает ДО input.onBlur — поэтому handleSelect
+                // успевает применить выбор до того, как лист скроется. preventDefault
+                // не даёт input потерять фокус прежде времени.
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  handleSelect(city);
+                }}
                 className="w-full text-left px-3 py-2 text-sm text-ink-800 dark:text-ink-200 hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-accent-500/10 dark:hover:text-accent-500"
               >
                 {city}

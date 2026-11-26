@@ -61,7 +61,7 @@ export function HorizontalTankForm() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Inputs */}
       <section>
-        <h3 className="text-lg font-semibold mb-3">Параметры ёмкости</h3>
+        <h2 className="text-lg font-semibold mb-3">Параметры ёмкости</h2>
         <div className="grid grid-cols-2 gap-3">
           <NumberField label="Длина L, мм" field="L_mm" min={1500} max={20000} />
 
@@ -125,8 +125,8 @@ export function HorizontalTankForm() {
 
         <h4 className="text-sm font-semibold mt-5 mb-2 text-gray-700">Цены (₽/ед)</h4>
         <div className="grid grid-cols-2 gap-3">
-          <NumberField label="ПП, ₽/кг" field="price_pp_kg" min={0} />
-          <NumberField label="Профиль, ₽/м" field="price_profile_m" min={0} />
+          <NumberField label="ПП, ₽/кг" field="price_pp_kg" min={0} max={10000} />
+          <NumberField label="Профиль, ₽/м" field="price_profile_m" min={0} max={50000} />
         </div>
       </section>
 
@@ -156,14 +156,14 @@ export function HorizontalTankForm() {
 
           <div className="grid grid-cols-2 gap-y-2 text-sm">
             <span className="text-gray-600">Стоимость ПП</span>
-            <span className="font-semibold">{result.cost_pp_rub.toLocaleString("ru")} ₽</span>
+            <span className="font-semibold">{Math.round(result.cost_pp_rub).toLocaleString("ru")} ₽</span>
 
             <span className="text-gray-600">Стоимость профилей</span>
-            <span className="font-semibold">{result.cost_profiles_rub.toLocaleString("ru")} ₽</span>
+            <span className="font-semibold">{Math.round(result.cost_profiles_rub).toLocaleString("ru")} ₽</span>
 
             <span className="text-gray-700 font-medium text-base">Итого</span>
             <span className="font-bold text-base">
-              {result.cost_total_rub.toLocaleString("ru")} ₽
+              {Math.round(result.cost_total_rub).toLocaleString("ru")} ₽
             </span>
           </div>
         </div>

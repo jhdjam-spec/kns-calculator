@@ -11,6 +11,7 @@ import { useEncyclopediaTopic } from "@/hooks/useProject";
 import { MarkdownView } from "@/components/teach/MarkdownView";
 import { SiteNav } from "@/components/premium/SiteNav";
 import { SiteFooter } from "@/components/premium/SiteFooter";
+import { TeachLink } from "@/components/TeachLink";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "/api/backend";
 
@@ -36,15 +37,15 @@ export default function TeachTopicPage() {
   return (
     <>
       <SiteNav />
-      <main id="main" className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
+      <main id="main" className="kns-document min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
-            <a
+            <TeachLink
               href="/teach"
               className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
             >
               ← Все темы
-            </a>
+            </TeachLink>
             <a
               href="/"
               className="text-sm text-ink-600 dark:text-ink-500 hover:text-ink-900 dark:hover:text-ink-200 transition-colors"

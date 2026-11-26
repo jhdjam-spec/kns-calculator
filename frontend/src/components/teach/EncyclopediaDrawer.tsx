@@ -120,7 +120,7 @@ export function EncyclopediaDrawer() {
           <button
             type="button"
             onClick={closeEncyclopediaDrawer}
-            className="text-ink-400 hover:text-ink-50 transition-colors p-1"
+            className="inline-flex items-center justify-center h-11 w-11 -mr-2 rounded-md text-ink-400 hover:text-ink-50 hover:bg-white/5 transition-colors"
             aria-label="Закрыть"
           >
             <X size={20} />

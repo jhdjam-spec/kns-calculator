@@ -42,10 +42,12 @@ jobs:
 
       - name: Vitest
         working-directory: frontend
+        env:
+          NODE_OPTIONS: ${{ matrix.node-version == '22' && '--no-experimental-webstorage' || '' }}
         run: npx vitest run
 
       - name: Build
         working-directory: frontend
-        run: npx next build
+        run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: "1"

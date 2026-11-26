@@ -3,14 +3,14 @@ import { checkRouteOk, checkSkipLink, checkTitle, collectPageErrors, ROUTES } fr
 
 /**
  * Главная страница `/` — Hero, calculator CTA, FAQ.
- * LIVE: https://kns-calculator-frontend.website.yandexcloud.net/
+ * LIVE: https://podborkns.ru/
  */
 test.describe("Home page /", () => {
   test("loads with 200, has title, no JS errors", async ({ page }) => {
     const { errors } = collectPageErrors(page);
     await checkRouteOk(page, ROUTES.home);
     const title = await checkTitle(page);
-    expect(title).toContain("ИНСЕРВО");
+    expect(title).toContain("Серво-Юг");
     await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
     expect(errors, `JS errors on home: ${errors.join("\n")}`).toEqual([]);
   });

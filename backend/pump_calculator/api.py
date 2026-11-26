@@ -1145,14 +1145,15 @@ def generate_rpz_gost_endpoint(inputs: RPZGostInput) -> Response:
     гос/негосэкспертизе (ст. 49 ГрК РФ).
     Спецификация — по форме 7 ГОСТ 21.110-2013 (8 колонок).
     """
+    from pump_calculator.format_helpers import cd_filename
     from pump_calculator.reports import generate_rpz_gost_pdf
     pdf_bytes = generate_rpz_gost_pdf(inputs)
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": (
-                f'attachment; filename="РПЗ_{inputs.project_code or "kns"}.pdf"'
+            "Content-Disposition": cd_filename(
+                f"РПЗ_{inputs.project_code or 'kns'}.pdf"
             ),
         },
     )
@@ -1161,13 +1162,16 @@ def generate_rpz_gost_endpoint(inputs: RPZGostInput) -> Response:
 @app.post("/reports/calculation-pdf", tags=["reports"], response_class=Response)
 def calc_report_pdf_endpoint(inputs: CalculationReportInput) -> Response:
     """Генерация PDF расчётной записки на основе результатов всех модулей."""
+    from pump_calculator.format_helpers import cd_filename
     from pump_calculator.reports import generate_calculation_report_pdf
     pdf_bytes = generate_calculation_report_pdf(inputs)
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": f'attachment; filename="Расчётная_записка_{inputs.project_code or "kns"}.pdf"',
+            "Content-Disposition": cd_filename(
+                f"Расчётная_записка_{inputs.project_code or 'kns'}.pdf"
+            ),
         },
     )
 

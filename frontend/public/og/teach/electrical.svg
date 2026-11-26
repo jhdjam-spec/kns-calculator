@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A0F0D"/>
+      <stop offset="100%" stop-color="#11201A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Clover marker -->
+  <g transform="translate(80,80)">
+    <circle cx="20" cy="20" r="22" fill="#1F7A4D"/>
+    <text x="20" y="27" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="white">88</text>
+  </g>
+  <text x="140" y="100" font-family="Inter,sans-serif" font-size="22" font-weight="600" fill="#5CB389">Серво-Юг · Подбор насоса для КНС</text>
+  <text x="140" y="126" font-family="Inter,sans-serif" font-size="16" fill="#7A8B83">podborkns.ru — справочник по СП и ГОСТ</text>
+
+  <!-- Title -->
+  <text x="80" y="320" font-family="Inter,sans-serif" font-size="72" font-weight="700" fill="white" letter-spacing="-2">Электрика КНС</text>
+  <text x="80" y="380" font-family="Inter,sans-serif" font-size="32" fill="#5CB389">ПУЭ · IP65 · VFD</text>
+
+  <!-- Norm tag -->
+  <rect x="80" y="430" width="360" height="48" rx="24" fill="#1F7A4D" opacity="0.18"/>
+  <text x="100" y="461" font-family="Inter,sans-serif" font-size="20" font-weight="500" fill="#5CB389">I/II категория · Селективность</text>
+
+  <!-- Thematic icon (320×280, top-right) -->
+  <g transform="translate(720,140) scale(1.0)">
+    <path d="M260,40 L160,160 L240,160 L220,260 L320,140 L240,140 Z" fill="#5CB389" stroke="#FFB400" stroke-width="3"/>
+  </g>
+
+  <!-- Footer -->
+  <text x="80" y="580" font-family="Inter,sans-serif" font-size="18" fill="#5A6B63">17 лет · 1400+ объектов · Чисто, надёжно, надолго</text>
+</svg>

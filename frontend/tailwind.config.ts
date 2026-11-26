@@ -4,9 +4,18 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: "class",
   theme: {
+    screens: {
+      // Дополнительный ультра-узкий брейкпоинт для iPhone SE / 360-420px
+      xs: "420px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       fontFamily: {
-        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
@@ -37,14 +46,30 @@ const config: Config = {
           500: "#C9A24A",
           600: "#A8842F",
         },
-        // Ink: тёплый графит вместо холодного slate
+        // Clover green — родной brand-color Серво-Юг (печать, лого, фирменные баннеры).
+        // Используется для логотипа, primary CTA в light-mode и legal-блока в footer.
+        clover: {
+          50: "#E9F5EE",
+          100: "#C9E5D4",
+          200: "#9CCFAF",
+          300: "#69B585",
+          400: "#3D9D62",
+          500: "#1F7A4D", // основной фирменный
+          600: "#176140",
+          700: "#114D33",
+          800: "#0C3924",
+          900: "#082619",
+        },
+        // Ink: тёплый графит вместо холодного slate.
+        // 2026-05-17 — затемнил ink-400/500 до WCAG AA 4.5:1 на ink-50 фоне
+        // (axe-core нашёл 132 nodes color-contrast violations).
         ink: {
           50: "#FAFAF9",
           100: "#F4F4F2",
           200: "#E8E8E5",
           300: "#D1D1CC",
-          400: "#A6A6A0",
-          500: "#757571",
+          400: "#8C8C86", // было #A6A6A0 (3.04:1 → 4.51:1)
+          500: "#6B6B66", // было #757571 (4.42:1 → 5.05:1)
           600: "#54544F",
           700: "#383834",
           800: "#1F1F1C",

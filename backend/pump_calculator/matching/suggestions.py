@@ -701,8 +701,9 @@ def build_suggestions(
             f"💡 30 мДж/см² — стандарт general_use; для fishery_water "
             f"требуется 80-120 мДж/см² с предобработкой."
         )
+        from pump_calculator.format_helpers import fmt_q, fmt_target_discharge
         mgr = (
-            f"🦠 Q={L0.Q_m3h} м³/ч хоз-бытовых, сброс в '{target}' — "
+            f"🦠 Q={fmt_q(L0.Q_m3h)} м³/ч хоз-бытовых, сброс в {fmt_target_discharge(target)} — "
             f"по СанПиН требуется УФ-доза {uv_dose} мДж/см².\n"
             f"💰 Варианты:\n"
             f"  • УФ-стерилизатор Sita / Wedeco на Q=100-200 — 380-650 тыс ₽\n"

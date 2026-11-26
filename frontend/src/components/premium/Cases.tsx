@@ -1,8 +1,22 @@
 "use client";
 
-const cases = [
+import { type CaseKind } from "./CaseIllustration";
+import { CasePhoto } from "./CasePhoto";
+
+interface Case {
+  type: string;
+  kind: CaseKind;
+  location: string;
+  rooms: string;
+  Q: string;
+  H: string;
+  model: string;
+}
+
+const cases: Case[] = [
   {
     type: "Гостиница 4★",
+    kind: "hotel",
     location: "Анапа · 2025",
     rooms: "120 номеров",
     Q: "26 м³/ч",
@@ -11,6 +25,7 @@ const cases = [
   },
   {
     type: "ЖК",
+    kind: "residential",
     location: "Краснодар · 2024",
     rooms: "320 квартир",
     Q: "45 м³/ч",
@@ -19,6 +34,7 @@ const cases = [
   },
   {
     type: "ТРЦ",
+    kind: "mall",
     location: "Ростов-на-Дону · 2024",
     rooms: "30 000 м²",
     Q: "120 м³/ч",
@@ -27,6 +43,7 @@ const cases = [
   },
   {
     type: "Дренаж кровли",
+    kind: "roof_drain",
     location: "Сочи · 2025",
     rooms: "5 га асфальта",
     Q: "974 м³/ч",
@@ -59,56 +76,22 @@ export function Cases() {
           </h2>
         </div>
 
-        <div className="scroll-rail flex gap-4 md:gap-6 overflow-x-auto -mx-5 md:-mx-10 px-5 md:px-10 pb-4 snap-x snap-mandatory">
+        <div
+          role="region"
+          aria-label="Кейсы — горизонтальная карусель, прокручивается стрелками клавиатуры"
+          tabIndex={0}
+          className="scroll-rail flex gap-4 md:gap-6 overflow-x-auto -mx-5 md:-mx-10 px-5 md:px-10 pb-4 snap-x snap-mandatory focus:outline-none focus-visible:ring-2 focus-visible:ring-clover-500"
+        >
           {cases.map((c) => (
             <div
               key={`${c.type}-${c.location}`}
               className="snap-start shrink-0 w-[300px] md:w-[360px] rounded-card bg-surface dark:bg-white/[0.03] border border-border dark:border-white/[0.08] overflow-hidden hover:border-accent-500/30 transition-colors duration-base"
             >
-              {/* Wireframe top */}
+              {/* Stock-фото + SVG-wireframe overlay + clover-gradient */}
               <div className="aspect-[4/3] bg-gradient-to-br from-ink-900 to-ink-800 relative overflow-hidden">
-                <svg
-                  viewBox="0 0 200 150"
-                  className="absolute inset-0 w-full h-full"
-                  style={{ filter: "drop-shadow(0 0 12px rgba(212,178,107,0.1))" }}
-                >
-                  {/* Изометрический wireframe КНС */}
-                  <g
-                    stroke="rgba(255,255,255,0.5)"
-                    strokeWidth="0.75"
-                    fill="none"
-                    strokeLinejoin="round"
-                  >
-                    {/* Резервуар (ellipsoid top + cylinder body) */}
-                    <ellipse cx="100" cy="60" rx="38" ry="10" />
-                    <line x1="62" y1="60" x2="62" y2="115" />
-                    <line x1="138" y1="60" x2="138" y2="115" />
-                    <ellipse cx="100" cy="115" rx="38" ry="10" />
-                    {/* Ось верхняя задняя */}
-                    <ellipse
-                      cx="100"
-                      cy="60"
-                      rx="38"
-                      ry="10"
-                      strokeDasharray="2 2"
-                      opacity="0.4"
-                    />
-                    {/* Насос подвес 1 */}
-                    <line x1="80" y1="60" x2="80" y2="100" strokeWidth="1" />
-                    <rect x="74" y="100" width="12" height="14" />
-                    {/* Насос подвес 2 */}
-                    <line x1="120" y1="60" x2="120" y2="100" strokeWidth="1" />
-                    <rect x="114" y="100" width="12" height="14" />
-                    {/* Напорный коллектор */}
-                    <path d="M 80 60 L 80 30 L 138 30" />
-                    <circle cx="138" cy="30" r="2" fill="rgba(212,178,107,0.6)" />
-                    {/* Поплавки */}
-                    <line x1="55" y1="60" x2="55" y2="90" strokeDasharray="1 1" opacity="0.5" />
-                    <circle cx="55" cy="80" r="1.5" fill="rgba(212,178,107,0.4)" />
-                    <circle cx="55" cy="95" r="1.5" fill="rgba(212,178,107,0.4)" />
-                  </g>
-                </svg>
-                <div className="absolute top-3 left-3 text-[10px] font-mono uppercase tracking-wider text-accent-500">
+                <CasePhoto kind={c.kind} alt={`${c.type} — ${c.location}, ${c.rooms}`} />
+                <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-clover-700/80 backdrop-blur-sm text-[10px] font-mono uppercase tracking-wider text-clover-50 z-10 shadow-lg">
+                  <span className="block w-1.5 h-1.5 rounded-full bg-clover-300 shadow-[0_0_6px_rgba(154,224,184,0.9)]" />
                   {c.type}
                 </div>
               </div>

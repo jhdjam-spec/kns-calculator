@@ -86,12 +86,16 @@ export const operatingModeLabels: Record<OperatingMode, string> = {
   level_based: "По уровню (поплавки)",
 };
 
-/** L1Input — расширенные параметры (Phase 13: добавлены operating_mode, inflow, n_pumps). */
+/** L1Input — расширенные параметры (Phase 13: добавлены operating_mode, inflow, n_pumps;
+ *  2026-05-17: добавлен pipe_D_mm по запросу Кости — критичен для Дарси-Вейсбаха). */
 export const l1InputSchema = z.object({
   corpus_material: corpusMaterialSchema.optional(),
   operating_mode: operatingModeSchema.optional(),
   inflow_per_hour_m3: z.number().min(0).max(10000).optional(),
   pumps_total_override: z.number().int().min(1).max(10).optional(),
+  pipe_D_mm: z.number().min(25).max(2000).optional(),
+  n_bends: z.number().int().min(0).max(50).optional(),
+  n_valves: z.number().int().min(0).max(20).optional(),
 });
 
 export type L1Input = z.infer<typeof l1InputSchema>;
