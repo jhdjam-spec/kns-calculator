@@ -23,18 +23,17 @@ import { BetaBanner } from "@/components/BetaBanner";
 describe("INSERVO Signature presence", () => {
   it("InservoSignature рендерит data-атрибут авторства", () => {
     const { container } = render(<InservoSignature />);
-    const signatureEl = container.querySelector("[data-inservo-signature]");
+    const signatureEl = container.querySelector("[data-author-signature]");
     expect(signatureEl).not.toBeNull();
-    expect(signatureEl?.getAttribute("data-inservo-signature")).toBe("km-2026");
-    expect(signatureEl?.getAttribute("data-inservo-url")).toBe("https://inservo.ru");
+    expect(signatureEl?.getAttribute("data-author-signature")).toBe("km-2026");
+    expect(signatureEl?.getAttribute("data-author-url")).toBe("https://inservo.ru");
   });
 
   it("InservoSignature содержит имя студии и автора", () => {
     const { container } = render(<InservoSignature />);
     const text = container.textContent ?? "";
-    expect(text).toContain("Константина Морозова");
-    expect(text).toContain("INSERVO");
-    expect(text).toContain("Apache".replace("Apache", "MIT")); // лицензия должна быть MIT
+    expect(text).toContain("Морозов Константин");
+    expect(text).toContain("Layout Stars Studio");
     expect(text).toContain("MIT");
   });
 
@@ -52,8 +51,8 @@ describe("INSERVO Signature presence", () => {
   it("Константа INSERVO_SIGNATURE экспортируется и содержит ключевые поля", () => {
     expect(INSERVO_SIGNATURE.url).toBe("https://inservo.ru");
     expect(INSERVO_SIGNATURE.license).toBe("MIT");
-    expect(INSERVO_SIGNATURE.author).toBe("Konstantin Morozov");
-    expect(INSERVO_SIGNATURE.studioShort).toBe("INSERVO Studio");
+    expect(INSERVO_SIGNATURE.author).toBe("Морозов Константин");
+    expect(INSERVO_SIGNATURE.studioShort).toBe("Layout Stars Studio");
   });
 
   it("Ссылка на inservo.ru открывается в новой вкладке с rel=noopener", () => {

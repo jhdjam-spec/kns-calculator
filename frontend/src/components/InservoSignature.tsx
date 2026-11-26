@@ -1,13 +1,13 @@
 // ╭───────────────────────────────────────────────────────────────────────╮
-// │ INSERVO Studio — Калькулятор подбора КНС/НС/ЛОС                       │
-// │ Автор: Константин Морозов · https://inservo.ru                        │
+// │ Layout Stars Studio by inservo.ru — Калькулятор подбора КНС/НС/ЛОС    │
+// │ Автор: Морозов Константин · https://inservo.ru                        │
 // │ Лицензия: MIT (см. LICENSE и NOTICE)                                  │
 // │ Просьба сохранять авторство при использовании производных работ       │
 // ╰───────────────────────────────────────────────────────────────────────╯
 
 /**
- * Подпись авторства INSERVO. Прибита к Layout без feature-flag и без условного
- * рендера. См. docs/adr/0002-inservo-signature.md.
+ * Подпись авторства Layout Stars Studio. Прибита к Layout без feature-flag
+ * и без условного рендера. См. docs/adr/0002-inservo-signature.md.
  *
  * MIT не требует сохранять JSX-комментарии в исходниках (только LICENSE).
  * Просьба к разработчикам производных работ — оставить эту подпись из
@@ -16,9 +16,9 @@
 const COPYRIGHT_START_YEAR = 2026;
 
 export const INSERVO_SIGNATURE = {
-  studio: "INSERVO — Студия интеграции умных решений Константина Морозова",
-  studioShort: "INSERVO Studio",
-  author: "Konstantin Morozov",
+  studio: "Layout Stars Studio by inservo.ru",
+  studioShort: "Layout Stars Studio",
+  author: "Морозов Константин",
   url: "https://inservo.ru",
   license: "MIT",
   motto: "Каждая КНС — как картина: всё точно, ничего лишнего.",
@@ -35,25 +35,25 @@ export function InservoSignature() {
   const years = getCopyrightYears();
   return (
     <div
-      data-inservo-signature="km-2026"
-      data-inservo-url={INSERVO_SIGNATURE.url}
+      data-author-signature="km-2026"
+      data-author-url={INSERVO_SIGNATURE.url}
       className="text-xs text-ink-500 leading-relaxed space-y-1"
     >
       <p>
-        Калькулятор разработан и реализован{" "}
+        Калькулятор разработан{" "}
         <a
           href={INSERVO_SIGNATURE.url}
           className="text-ink-300 hover:text-accent-500 transition-colors duration-fast"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Студией интеграции умных решений Константина Морозова
+          {INSERVO_SIGNATURE.studio}
         </a>
-        {" "}— INSERVO Studio.
+        {" "}— автор Морозов Константин.
       </p>
       <p className="italic text-ink-400">«{INSERVO_SIGNATURE.motto}»</p>
       <p className="font-mono tabular-nums">
-        Opensource · Лицензия {INSERVO_SIGNATURE.license} · © {years} K. Morozov
+        Открытый исходный код · Лицензия {INSERVO_SIGNATURE.license} · © {years} К. Морозов
       </p>
     </div>
   );

@@ -1,16 +1,9 @@
-import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
-
-export const manrope = Manrope({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-display",
-  weight: ["600", "700", "800"],
-  display: "swap",
-});
+import { Inter, JetBrains_Mono } from "next/font/google";
 
 export const inter = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 

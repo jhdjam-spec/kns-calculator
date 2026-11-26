@@ -7,6 +7,7 @@
 import { useEncyclopediaTopics, useEncyclopediaExamples } from "@/hooks/useProject";
 import { SiteNav } from "@/components/premium/SiteNav";
 import { SiteFooter } from "@/components/premium/SiteFooter";
+import { TeachLink } from "@/components/TeachLink";
 
 export default function TeachPage() {
   const topics = useEncyclopediaTopics();
@@ -15,40 +16,41 @@ export default function TeachPage() {
   return (
     <>
       <SiteNav />
-      <main id="main" className="min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
+      <main id="main" className="kns-document min-h-screen bg-ink-50 dark:bg-ink-950 px-5 md:px-10 pt-24 md:pt-28 pb-10">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-sm font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500">
-              INSERVO · Энциклопедия инженера ВК
-            </h1>
+          <div className="mb-12 flex items-center justify-between">
             <a
               href="/"
-              className="text-sm text-ink-700 dark:text-ink-400 hover:text-brand-700 dark:hover:text-accent-500 transition-colors"
+              className="text-sm text-ink-700 dark:text-ink-400 hover:text-clover-700 dark:hover:text-clover-300 transition-colors"
             >
               ← На главную
             </a>
           </div>
 
-          <div className="mb-12 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-ink-900 dark:text-ink-50 mb-4">
-              Учебник по инженерным расчётам ВК
-            </h2>
-            <p className="text-ink-700 dark:text-ink-400 leading-relaxed">
-              6 тематических справочников по гидравлике, пожарной защите, водоснабжению,
-              электрике, корпусу и ЛОС. Каждая статья основана на актуальных редакциях
-              СП и ГОСТ. Можно запустить эталонные примеры из реальных проектов.
+          <div className="mb-14 max-w-3xl">
+            <h1 className="font-display text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-medium text-ink-900 dark:text-ink-50 leading-[0.95] tracking-[-0.04em] mb-6">
+              Справочник по{" "}
+              <span className="font-normal italic font-serif text-clover-700 dark:text-clover-300">
+                СП и ГОСТ
+              </span>
+              <span className="text-ink-400 dark:text-ink-500">.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-ink-700 dark:text-ink-300 leading-relaxed max-w-2xl">
+              7 разделов: гидравлика, пожарная защита, водоснабжение, электрика,
+              конструктив, ЛОС, документация. Каждая статья — с цитатами из
+              актуальных редакций нормативов и ссылками на cntd.ru.
             </p>
           </div>
 
           {/* 6 топиков */}
           <section className="mb-16">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
+            <h2 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
               Тематические разделы
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {topics.isLoading && <div className="text-ink-700 dark:text-ink-400">Загрузка тем…</div>}
               {topics.data?.topics.map((t) => (
-                <a
+                <TeachLink
                   key={t.key}
                   href={`/teach/${t.key}`}
                   className="flex flex-col p-5 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group shadow-premium-sm"
@@ -84,14 +86,14 @@ export default function TeachPage() {
                   <div className="mt-auto text-xs font-mono text-ink-600 dark:text-ink-500">
                     {t.sections_count} разделов
                   </div>
-                </a>
+                </TeachLink>
               ))}
             </div>
           </section>
 
           {/* Failure Mode Library — отдельная карточка */}
           <section className="mb-16">
-            <a
+            <TeachLink
               href="/teach/failure-modes"
               className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 bg-white border border-ink-200 dark:bg-ink-900 dark:border-ink-800 rounded-lg hover:border-brand-400 dark:hover:border-accent-500/50 transition-colors group shadow-premium-sm"
             >
@@ -104,14 +106,14 @@ export default function TeachPage() {
                 </div>
               </div>
               <span className="text-brand-700 dark:text-accent-500 group-hover:translate-x-1 transition-transform">→</span>
-            </a>
+            </TeachLink>
           </section>
 
           {/* Эталонные примеры */}
           <section>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
+            <h2 className="text-xs font-mono uppercase tracking-wider text-ink-600 dark:text-ink-500 mb-4">
               Эталонные примеры из реальных проектов
-            </h3>
+            </h2>
             <p className="text-ink-700 dark:text-ink-400 text-sm mb-6">
               Каждый пример запускает калькулятор с реальными параметрами.
               Используйте для сравнения и обучения.

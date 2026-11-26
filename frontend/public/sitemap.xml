@@ -1,58 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/</loc>
+    <loc>https://podborkns.ru/</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/project</loc>
+    <loc>https://podborkns.ru/project</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/tanks</loc>
+    <loc>https://podborkns.ru/tanks</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/storm/minimal</loc>
+    <loc>https://podborkns.ru/storm/minimal</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach</loc>
+    <loc>https://podborkns.ru/import</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/fire</loc>
+    <loc>https://podborkns.ru/teach</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://podborkns.ru/teach/fire</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/water</loc>
+    <loc>https://podborkns.ru/teach/water</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/electrical</loc>
+    <loc>https://podborkns.ru/teach/electrical</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/hydraulics</loc>
+    <loc>https://podborkns.ru/teach/hydraulics</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/corpus</loc>
+    <loc>https://podborkns.ru/teach/structural</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://kns-calculator-frontend.website.yandexcloud.net/teach/los</loc>
+    <loc>https://podborkns.ru/teach/los</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://podborkns.ru/teach/documentation</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://podborkns.ru/teach/failure-modes</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://podborkns.ru/legal</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

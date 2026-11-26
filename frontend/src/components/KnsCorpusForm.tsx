@@ -9,6 +9,7 @@ import {
   type KnsCorpusInput,
   type KnsCorpusResult,
 } from "@/lib/tankFormulas";
+import { StrengthCheck } from "@/components/StrengthCheck";
 
 const DEFAULT_INPUT: KnsCorpusInput = {
   D_mm: 1590,
@@ -88,6 +89,7 @@ export function KnsCorpusForm() {
             <input
               type="number"
               min={0}
+              max={10000}
               value={input.price_pp_kg}
               onChange={(e) => setInput((p) => ({ ...p, price_pp_kg: Number(e.target.value) }))}
               className="rounded-md border border-gray-300 px-3 py-2"
@@ -124,7 +126,7 @@ export function KnsCorpusForm() {
 
             <span className="text-gray-700 font-medium text-base">Стоимость ПП</span>
             <span className="font-bold text-base">
-              {result.cost_pp_rub.toLocaleString("ru")} ₽
+              {Math.round(result.cost_pp_rub).toLocaleString("ru")} ₽
             </span>
           </div>
         </div>
@@ -146,6 +148,16 @@ export function KnsCorpusForm() {
           бокового давления грунта.
         </p>
       </section>
+
+      {/* Прочностной расчёт — раскрывается по клику, на полную ширину */}
+      <div className="lg:col-span-2">
+        <StrengthCheck
+          diameter_mm={input.D_mm}
+          height_mm={input.H_mm}
+          wall_thickness_mm={input.t_wall_mm}
+          material="polypropylene"
+        />
+      </div>
     </div>
   );
 }

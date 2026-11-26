@@ -57,16 +57,17 @@ export function ProjectWizard() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Шаги */}
-      <div className="flex items-center justify-between mb-8">
+      {/* Шаги. На mobile <sm — скрываем description (длинные тексты ломали layout),
+          оставляем только номер + заголовок. На md+ показываем полное. */}
+      <div className="flex items-stretch justify-between mb-8 gap-1 sm:gap-0">
         {STEPS.map((s, idx) => (
           <div
             key={s.key}
-            className={`flex-1 ${idx < STEPS.length - 1 ? "border-r border-ink-200 dark:border-ink-800" : ""}`}
+            className={`flex-1 min-w-0 ${idx < STEPS.length - 1 ? "border-r border-ink-200 dark:border-ink-800" : ""}`}
           >
             <div className="px-2 md:px-4">
               <div
-                className={`text-xs font-mono uppercase tracking-wider ${
+                className={`text-xs font-mono uppercase tracking-wider truncate ${
                   idx === currentStepIdx
                     ? "text-brand-700 dark:text-accent-500"
                     : idx < currentStepIdx
@@ -74,9 +75,12 @@ export function ProjectWizard() {
                     : "text-ink-400 dark:text-ink-600"
                 }`}
               >
-                {idx + 1}. {s.title}
+                <span className="sm:hidden">{idx + 1}</span>
+                <span className="hidden sm:inline">{idx + 1}. {s.title}</span>
               </div>
-              <div className="text-sm text-ink-600 dark:text-ink-500 mt-1">{s.description}</div>
+              <div className="hidden md:block text-sm text-ink-600 dark:text-ink-500 mt-1 truncate">
+                {s.description}
+              </div>
             </div>
           </div>
         ))}

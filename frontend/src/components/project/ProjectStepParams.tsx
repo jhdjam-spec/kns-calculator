@@ -87,6 +87,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
             className="form-input"
             value={data.population || 0}
             min={0}
+            max={1000000}
             onChange={(e) => setData({ ...data, population: Number(e.target.value) })}
           />
         </Field>
@@ -99,6 +100,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
             className="form-input"
             value={data.floors || 1}
             min={1}
+            max={100}
             onChange={(e) => setData({ ...data, floors: Number(e.target.value) })}
           />
         </Field>
@@ -114,6 +116,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
             className="form-input"
             value={data.volume_m3 || 0}
             min={0}
+            max={10000000}
             onChange={(e) => setData({ ...data, volume_m3: Number(e.target.value) })}
           />
         </Field>
@@ -129,6 +132,7 @@ export function ProjectStepParams({ data, setData, onNext, onBack }: Props) {
             className="form-input"
             value={data.area_m2 || 0}
             min={0}
+            max={10000000}
             onChange={(e) => setData({ ...data, area_m2: Number(e.target.value) })}
           />
         </Field>

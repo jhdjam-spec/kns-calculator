@@ -51,8 +51,14 @@ test.describe("Teach index /teach", () => {
       return;
     }
     const href = await topicLink.getAttribute("href");
+    // Условие: pathname должен начинаться с href, но НЕ быть просто /teach/ —
+    // т.е. waitForURL должен дождаться именно перехода на тему (/teach/fire),
+    // а не остаться на /teach/. Иначе условие срабатывает сразу (false-positive).
     await Promise.all([
-      page.waitForURL((url) => url.pathname.startsWith("/teach/"), { timeout: 10_000 }),
+      page.waitForURL(
+        (url) => url.pathname.startsWith(href!) && url.pathname !== "/teach/",
+        { timeout: 10_000 },
+      ),
       topicLink.click(),
     ]);
     expect(page.url()).toContain(href!);

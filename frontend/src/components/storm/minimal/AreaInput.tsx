@@ -28,11 +28,17 @@ export function AreaInput({ area_ha, onChange }: Props) {
 
   const handleChange = (raw: string) => {
     const num = parseFloat(raw.replace(",", "."));
-    if (isNaN(num) || num <= 0) {
+    if (!Number.isFinite(num) || num <= 0) {
       onChange(null);
       return;
     }
     const ha = unit === "m2" ? m2ToHa(num) : num;
+    // Реалистичный потолок: 1000 га = 10 км² (огромный микрорайон).
+    // Больше — почти наверняка опечатка; молча обрезаем.
+    if (ha > 1000) {
+      onChange(null);
+      return;
+    }
     onChange(ha);
   };
 

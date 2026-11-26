@@ -677,7 +677,7 @@ function BomTable({ items }: { items: BOMItem[] }) {
         <div className="text-right">
           <div className="text-xs text-ink-600 dark:text-ink-500">Итого ориентировочно</div>
           <div className="font-mono text-xl text-brand-700 dark:text-accent-500">
-            {total.toLocaleString("ru-RU")} ₽
+            {Math.round(total).toLocaleString("ru-RU")} ₽
           </div>
         </div>
       </div>
@@ -718,10 +718,10 @@ function BomTable({ items }: { items: BOMItem[] }) {
                     {it.quantity ?? 1} {it.units || "шт"}
                   </td>
                   <td className="py-2 px-3 text-right text-ink-700 dark:text-ink-300 font-mono hidden md:table-cell">
-                    {(it.price_rub_2026 ?? 0).toLocaleString("ru-RU")}
+                    {Math.round(it.price_rub_2026 ?? 0).toLocaleString("ru-RU")}
                   </td>
                   <td className="py-2 px-3 text-right text-ink-900 dark:text-ink-50 font-mono">
-                    {sum.toLocaleString("ru-RU")}
+                    {Math.round(sum).toLocaleString("ru-RU")}
                   </td>
                 </tr>
               );
@@ -733,7 +733,7 @@ function BomTable({ items }: { items: BOMItem[] }) {
                 ИТОГО
               </td>
               <td className="py-3 px-3 text-right font-mono text-lg text-brand-700 dark:text-accent-500 font-semibold">
-                {total.toLocaleString("ru-RU")} ₽
+                {Math.round(total).toLocaleString("ru-RU")} ₽
               </td>
             </tr>
           </tfoot>

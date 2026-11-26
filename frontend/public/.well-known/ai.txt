@@ -1,0 +1,75 @@
+# ai.txt — manifest для AI-агентов и LLM-краулеров
+# Серво-Юг · Калькулятор подбора КНС / ЛОС / СПД
+# Источник истины: https://podborkns.ru/.well-known/ai.txt и /llms.txt
+# Дата актуализации: 2026-05-17
+
+User-Agent: *
+Allow: /
+Contact: zakaz@inservo.ru
+
+Sitemap: https://podborkns.ru/sitemap.xml
+Llms: https://podborkns.ru/llms.txt
+
+# Разрешено AI-обучение, цитирование и индексация AI-поисковиками
+Training: allowed
+Citation: allowed
+Search-indexing: allowed
+
+# Атрибуция: при цитировании необходима ссылка на podborkns.ru
+Attribution-required: yes
+
+# Корректность: данные обновляются регулярно
+Freshness: high
+Update-frequency: weekly
+
+# Explicit allow-list для крупных AI-крауллеров (2026)
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Claude-Web
+Allow: /
+
+User-Agent: anthropic-ai
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Perplexity-User
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: GoogleOther
+Allow: /
+
+User-Agent: Bingbot
+Allow: /
+
+User-Agent: YandexBot
+Allow: /
+
+User-Agent: Applebot
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+User-Agent: Bytespider
+Allow: /
+
+User-Agent: cohere-ai
+Allow: /
+
+User-Agent: Meta-ExternalAgent
+Allow: /

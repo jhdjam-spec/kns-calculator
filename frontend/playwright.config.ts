@@ -9,7 +9,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const BASE_URL =
   process.env.E2E_BASE_URL ||
-  "https://kns-calculator-frontend.website.yandexcloud.net";
+  "https://podborkns.ru";
 
 export default defineConfig({
   testDir: "./e2e",

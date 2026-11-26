@@ -429,9 +429,10 @@ def select_pumps(L0: L0Input, L1: L1Input | None = None) -> SelectionResult:
             f"Рекомендуется песколовка/гидроциклон до КНС (СП 32 §7.4)."
         ))
     if "auto_disinfection_required" in triggers:
+        from pump_calculator.format_helpers import fmt_q, fmt_target_discharge
         _uv_dose, _target = _ext_8_uv_dose_required(L1)
         warnings.insert(0, (
-            f"⚠ Q={L0.Q_m3h} м³/ч хоз-бытовых, сброс в '{_target}' — "
+            f"⚠ Q={fmt_q(L0.Q_m3h)} м³/ч хоз-бытовых, сброс в {fmt_target_discharge(_target)} — "
             f"по СанПиН 2.1.5.980-00 обязательно обеззараживание "
             f"(УФ ≥{_uv_dose} мДж/см² или озон ≥5 мг/л) "
             f"перед сбросом в водоём. Иначе штраф 250-500 тыс ₽ (КоАП 8.13)."

@@ -25,27 +25,28 @@ export function QHCurve({ qNormalized = 0.4 }: { qNormalized?: number }) {
   }
   const pumpCurve = points.join(" ");
 
-  // Системная кривая (что нужно проекту): pieced как линейная нарастающая
+  // Условная характеристика системы проходит через отмеченную точку.
+  const pointX = Math.max(0.05, Math.min(qNormalized, 0.95));
+  const pointY = 0.15 + 0.7 * pointX * pointX;
+  const slope = Math.min(0.55, (pointY - 0.035) / (1 - pointX), (0.965 - pointY) / pointX);
   const sysPoints: string[] = [];
   for (let i = 0; i <= 50; i++) {
     const t = i / 50;
     const x = padX + t * (W - 2 * padX);
-    const y = padY + (0.85 - 0.55 * t) * (H - 2 * padY);
+    const y = padY + (pointY + slope * (pointX - t)) * (H - 2 * padY);
     sysPoints.push(`${x.toFixed(1)},${y.toFixed(1)}`);
   }
   const sysCurve = sysPoints.join(" ");
 
-  // Точка пересечения (приблизительно)
-  const intersectX = padX + qNormalized * (W - 2 * padX);
-  const tIntersect = qNormalized;
-  const intersectY = padY + (0.15 + 0.7 * tIntersect * tIntersect) * (H - 2 * padY);
+  const intersectX = padX + pointX * (W - 2 * padX);
+  const intersectY = padY + pointY * (H - 2 * padY);
 
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
       className="w-full h-full text-ink-700 dark:text-white"
       role="img"
-      aria-label="Характеристика насоса Q-H"
+      aria-label="Схема характеристики Q–H насоса и напорной линии"
     >
       <defs>
         {/* Dark mode: brass-gold pump curve gradient */}
@@ -271,7 +272,7 @@ export function QHCurve({ qNormalized = 0.4 }: { qNormalized?: number }) {
           fontSize="10"
           fontFamily="var(--font-mono)"
         >
-          ваша система
+          напорная линия
         </text>
       </g>
     </svg>
